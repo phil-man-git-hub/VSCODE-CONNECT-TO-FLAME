@@ -42,3 +42,9 @@ Notes
 
 - The listener must be started by Flame's Python startup process — the `startup_flame_listener.py` hook will start the listener in a background thread.
 - If you prefer to manually install files, copy the three files above into your project's `setups/python/` directory and ensure the `.flame.secrets.json` token is present.
+
+## Debugging / Next steps 🔧
+
+- The deployed listener currently attempts to start `debugpy` on demand, but `debugpy` is not installed inside Flame by default. To enable debugging, install `debugpy` into Flame's Python environment (or stage `debugpy` into the project's `setups/python/`) and then use **Flame: Start debug server** from the extension to start the attachable debug server.
+- **Warning:** Breakpoints and long-running pauses can freeze Flame's UI because Flame runs an embedded single-threaded Python interpreter. Test non-blocking/debug patterns first and document caveats.
+- See `docs/TODO.md` for the installation and verification tasks.

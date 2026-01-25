@@ -15,3 +15,8 @@ Goals
 - Support secure local-only communication (localhost or Unix domain socket).
 
 For details, see `docs/vision.md`, `docs/architecture.md`, `docs/protocol.md`, and `docs/roadmap.md`.
+
+## Status ✅
+
+- E2E demo working: the Flame listener runs inside Flame and responds to `ping`/`execute` requests. The VS Code extension can connect and run code; output appears in the `Flame` Output channel.
+- Next: enable remote debugging by installing `debugpy` into Flame's Python environment (see `docs/TODO.md`).
