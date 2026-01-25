@@ -76,14 +76,24 @@ def handle_execute(code, timeout=5.0):
 
     try:
         if HAS_FLAME:
-            # Schedule execution on Flame's main thread and wait for completion
-            try:
-                flame.execute_on_main_thread(_run_exec)
-            except Exception:
-                # If execute_on_main_thread doesn't run synchronously, try running
-                # and waiting on the event (some Flame versions may schedule async)
-                threading.Thread(target=flame.execute_on_main_thread, args=(_run_exec,), daemon=True).start()
-                finished.wait(timeout)
+            # Prefer Flame's main-thread executor when available
+            if hasattr(flame, 'execute_on_main_thread'):
+                try:
+                    flame.execute_on_main_thread(_run_exec)
+                except Exception:
+                    # Some Flame versions may schedule asynchronously; fall back to starting
+                    # a background thread which calls the executor with our runnable.
+                    try:
+                        threading.Thread(target=flame.execute_on_main_thread, args=(_run_exec,), daemon=True).start()
+                        finished.wait(timeout)
+                    except Exception:
+                        # Last-resort: run directly but append a warning to stderr
+                        _run_exec()
+                        result['err'] = (result.get('err') or '') + '\nWarning: execute_on_main_thread failed; executed directly.'
+            else:
+                # execute_on_main_thread not provided by this Flame build; run directly and warn
+                _run_exec()
+                result['err'] = (result.get('err') or '') + '\nWarning: execute_on_main_thread not available; executed on current thread.'
         else:
             _run_exec()
         return result['out'], result['err'], result['exc']
