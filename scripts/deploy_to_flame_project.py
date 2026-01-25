@@ -44,12 +44,25 @@ def copy_file(src: Path, dst: Path):
     dst.chmod(dst.stat().st_mode | stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
 
 
-def main(dry_run: bool):
-    cfg = load_project_config()
-    scripts_dir = cfg.get('scriptsDir')
-    if not scripts_dir:
-        raise ValueError('scriptsDir is not configured in flame.project.json')
-    target = Path(scripts_dir)
+def main(dry_run: bool, scripts_dir_arg: str = None):
+    """Deploy files to `scripts_dir_arg` if provided, else fall back to `flame.project.json`.
+
+    This makes it easy to deploy to any Flame project's `setups/python/` without
+    requiring a committed per-project configuration file.
+    """
+    if scripts_dir_arg:
+        target = Path(scripts_dir_arg)
+    else:
+        # Try to load from flame.project.json (optional convenience)
+        try:
+            cfg = load_project_config()
+            scripts_dir = cfg.get('scriptsDir')
+            if not scripts_dir:
+                raise ValueError('scriptsDir is not configured in flame.project.json')
+            target = Path(scripts_dir)
+        except FileNotFoundError:
+            raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or flame.project.json')
+
     print(f'Target scripts dir: {target}')
     if dry_run:
         print('Dry run: the following files would be copied:')
@@ -78,10 +91,11 @@ def main(dry_run: bool):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--scripts-dir', help='Target scripts directory to copy files into')
     parser.add_argument('--dry-run', action='store_true', help='Show what will be copied')
     parser.add_argument('--copy', action='store_true', help='Actually copy files')
     args = parser.parse_args()
     if args.copy:
-        main(dry_run=False)
+        main(dry_run=False, scripts_dir_arg=args.scripts_dir)
     else:
-        main(dry_run=True)
+        main(dry_run=True, scripts_dir_arg=args.scripts_dir)
