@@ -1,0 +1,31 @@
+{
+  "name": "flame-vscode",
+  "displayName": "Flame for VS Code",
+  "description": "Run Python code in Autodesk Flame directly from VS Code.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "activationEvents": [
+    "onCommand:flame.connect",
+    "onCommand:flame.runInFlame"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "flame.connect",
+        "title": "Flame: Connect"
+      },
+      {
+        "command": "flame.runInFlame",
+        "title": "Flame: Run in Flame"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./"
+  },
+  "devDependencies": {}
+}

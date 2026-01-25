@@ -1,0 +1,13 @@
+# Node
+node_modules/
+out/
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Misc
+.env
