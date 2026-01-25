@@ -42,7 +42,3 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
   // cleanup
 }
-
-export function deactivate() {
-  // cleanup
-}
