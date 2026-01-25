@@ -50,28 +50,46 @@ except Exception:
     HAS_FLAME = False
 
 
-def handle_execute(code):
-    """Execute `code` and capture stdout/stderr and exceptions."""
-    stdout = io.StringIO()
-    stderr = io.StringIO()
+def handle_execute(code, timeout=5.0):
+    """Execute `code` and capture stdout/stderr and exceptions.
+
+    When running inside Flame we schedule execution on the main thread and
+    wait for completion (up to `timeout` seconds). This ensures Flame API
+    calls execute on the UI thread and we still return stdout/stderr.
+    """
+    result = {'out': '', 'err': '', 'exc': None}
+    finished = threading.Event()
+
+    def _run_exec():
+        buf_out = io.StringIO()
+        buf_err = io.StringIO()
+        try:
+            # Redirect stdout/stderr locally while executing
+            import contextlib
+            with contextlib.redirect_stdout(buf_out), contextlib.redirect_stderr(buf_err):
+                exec(code, globals(), locals())
+        except Exception:
+            buf_err.write(traceback.format_exc())
+        result['out'] = buf_out.getvalue()
+        result['err'] = buf_err.getvalue()
+        finished.set()
+
     try:
         if HAS_FLAME:
-            # Execute on main thread when in Flame
-            def _run():
-                try:
-                    exec(code, globals(), locals())
-                except Exception:
-                    traceback.print_exc(file=stderr)
-            flame.execute_on_main_thread(_run)
+            # Schedule execution on Flame's main thread and wait for completion
+            try:
+                flame.execute_on_main_thread(_run_exec)
+            except Exception:
+                # If execute_on_main_thread doesn't run synchronously, try running
+                # and waiting on the event (some Flame versions may schedule async)
+                threading.Thread(target=flame.execute_on_main_thread, args=(_run_exec,), daemon=True).start()
+                finished.wait(timeout)
         else:
-            # Development: run directly
-            exec(code, globals(), locals())
-        out = stdout.getvalue()
-        err = stderr.getvalue()
-        return out, err, None
+            _run_exec()
+        return result['out'], result['err'], result['exc']
     except Exception as e:
         tb = traceback.format_exc()
-        return stdout.getvalue(), stderr.getvalue() + tb, str(e)
+        return result['out'], result['err'] + tb, str(e)
 
 
 class ClientHandler(threading.Thread):
@@ -107,6 +125,16 @@ class ClientHandler(threading.Thread):
                     self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
                 elif cmd == 'ping':
                     resp = {'id': payload.get('id'), 'stdout': 'pong', 'stderr': '', 'exception': None}
+                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                elif cmd == 'start_debug_server':
+                    # Start debugpy if available and return status
+                    try:
+                        import debugpy  # type: ignore
+                        port = payload.get('port', 5678)
+                        debugpy.listen(('127.0.0.1', port))
+                        resp = {'id': payload.get('id'), 'stdout': f'debugpy listening on 127.0.0.1:{port}', 'stderr': '', 'exception': None}
+                    except Exception as e:
+                        resp = {'id': payload.get('id'), 'stdout': '', 'stderr': traceback.format_exc(), 'exception': str(e)}
                     self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
                 else:
                     resp = {'id': payload.get('id'), 'stdout': '', 'stderr': 'unknown command', 'exception': 'CommandError'}

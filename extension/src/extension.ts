@@ -25,7 +25,22 @@ export function activate(context: vscode.ExtensionContext) {
     const code = editor.document.getText(editor.selection.isEmpty ? undefined : editor.selection);
     await runInFlame(client!, code);
   });
-  context.subscriptions.push(connectCmd, runCmd);
+
+  const startDebugCmd = vscode.commands.registerCommand('flame.startDebug', async () => {
+    const id = 'start-debug-' + Date.now();
+    try {
+      const resp = await client!.sendAndWait({ command: 'start_debug_server', id, port: 5678 }, 10000);
+      vscode.window.showInformationMessage(`${resp.stdout || resp.stderr}`);
+    } catch (e) {
+      vscode.window.showErrorMessage(`Failed to start debug server: ${e}`);
+    }
+  });
+
+  context.subscriptions.push(connectCmd, runCmd, startDebugCmd);
+}
+
+export function deactivate() {
+  // cleanup
 }
 
 export function deactivate() {
