@@ -20,7 +20,28 @@ import io
 
 HOST = '127.0.0.1'
 PORT = 5555
-AUTH_TOKEN = None  # Set to a value for token-based auth
+
+# Authentication token used to validate incoming requests. Default lookup order:
+# 1) FLAME_TOKEN environment variable
+# 2) .flame.secrets.json file (token field) in the same directory as the script
+# If no token is found, the server will run without token validation (not recommended).
+import os
+import json
+
+AUTH_TOKEN = None
+env_token = os.environ.get('FLAME_TOKEN')
+if env_token:
+    AUTH_TOKEN = env_token
+else:
+    # Try to load .flame.secrets.json from the current directory
+    try:
+        here = os.path.dirname(__file__)
+        secrets_path = os.path.join(here, '.flame.secrets.json')
+        with open(secrets_path, 'r') as sf:
+            data = json.load(sf)
+            AUTH_TOKEN = data.get('token')
+    except Exception:
+        AUTH_TOKEN = None
 
 try:
     import flame  # type: ignore
