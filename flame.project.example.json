@@ -1,0 +1,11 @@
+{
+  "projectId": "888_flame_code",
+  "flameProjectPath": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo",
+  "scriptsDir": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo/setups/python/",
+  "autoSync": false,
+  "syncMethod": "rsync",
+  "listener": {
+    "host": "127.0.0.1",
+    "port": 5555
+  }
+}

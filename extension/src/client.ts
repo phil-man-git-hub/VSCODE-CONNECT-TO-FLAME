@@ -4,6 +4,7 @@ export class FlameClient {
   private socket: net.Socket | null = null;
   private host: string = '127.0.0.1';
   private port: number = 5555;
+  private token: string | null = null;
 
   async connect(host?: string, port?: number) {
     if (host) this.host = host;
@@ -14,8 +15,13 @@ export class FlameClient {
     });
   }
 
-  send(payload: object) {
+  setAuthToken(token: string) {
+    this.token = token;
+  }
+
+  send(payload: any) {
     if (!this.socket) throw new Error('Not connected');
+    if (this.token) payload.token = this.token;
     this.socket.write(JSON.stringify(payload));
   }
 
