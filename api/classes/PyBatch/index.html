@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Class: PyBatch - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Class: PyBatch";
+        var mkdocs_page_input_path = "api/classes/PyBatch.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Class: PyBatch</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-pybatch">Class: PyBatch</h1>
+<p><strong>Module</strong>: <code>flame</code></p>
+<p><strong>Inherits from</strong>: <a href="../PyFlameObject/">PyFlameObject</a>, instance, object</p>
+<h2 id="description">Description</h2>
+<p>Class derived from PyFlameObject. This class represents a Batch Group.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>attributes</code></td>
+<td>The attributes of a python object.</td>
+</tr>
+<tr>
+<td><code>batch_iterations</code></td>
+<td>Return a list of Batch Iteration objects of the Batch Group.</td>
+</tr>
+<tr>
+<td><code>contexts</code></td>
+<td>Return a dictionary of Context views registered in the Batch Group. Dictionary {key:value} -- {Context ID : {Batch node name:socket name} }</td>
+</tr>
+<tr>
+<td><code>current_iteration</code></td>
+<td>Return the current Batch Iteration object of the Batch Group.</td>
+</tr>
+<tr>
+<td><code>current_iteration_number</code></td>
+<td>Return the iteration number of the current Batch Iteration.</td>
+</tr>
+<tr>
+<td><code>cursor_position</code></td>
+<td>Return a tuple that provides the cursor position in the Batch Schematic.</td>
+</tr>
+<tr>
+<td><code>node_types</code></td>
+<td>Return a list of the names of the Batch node types available to the Batch schematic.</td>
+</tr>
+<tr>
+<td><code>nodes</code></td>
+<td>Return the list of Batch node objects from the Batch schematic.</td>
+</tr>
+<tr>
+<td><code>opened</code></td>
+<td>Return True if the Batch Group is loaded in memory.</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td>The parent object of this object.</td>
+</tr>
+<tr>
+<td><code>reels</code></td>
+<td>Return the list of reel objects (as Schematic Reels) for the Batch Group.</td>
+</tr>
+<tr>
+<td><code>shelf_reels</code></td>
+<td>Return the list of reel objects (as Shelf Reels) for the Batch Group.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="methods">Methods</h2>
+<h3 id="append_setup"><code>append_setup</code></h3>
+<pre><code class="language-python">append_setup
+</code></pre>
+<p>append_setup( (PyBatch)arg1, (str)setup_path [, (bool)confirm=True]) -&gt; bool :</p>
+<pre><code>Append a Batch setup file to the existing Batch setup.
+
+Keywords arguments:
+
+setup_path -- A path and a filename must be defined as arguments.
+
+confirm -- Set to True (default) to display a dialogue box in case of
+</code></pre>
+<hr />
+<h3 id="append_to_batch"><code>append_to_batch</code></h3>
+<pre><code class="language-python">append_to_batch
+</code></pre>
+<p>append_to_batch( (PyBatch)arg1, (PyBatchIteration)batch_iteration) -&gt; bool :</p>
+<pre><code>Append a Batch Iteration object to the current Batch Group. A duplicate Batch Iteration object is renamed to the next available *vDD*. Batch Iteration objects are displayed in the Iterations folder. Iterations folder is a UI construction, not accessible directly.
+</code></pre>
+<hr />
+<h3 id="append_to_setup"><code>append_to_setup</code></h3>
+<pre><code class="language-python">append_to_setup
+</code></pre>
+<p>append_to_setup( (PyBatch)arg1, (PyBatchIteration)batch_iteration) -&gt; bool :</p>
+<pre><code>Append a Batch Iteration object to the Batch Group's setup.
+</code></pre>
+<hr />
+<h3 id="clear"><code>clear</code></h3>
+<pre><code class="language-python">clear
+</code></pre>
+<p>clear( (PyBatch)arg1 [, (bool)confirm=True]) -&gt; bool :</p>
+<pre><code>Clear the Batch Group.
+</code></pre>
+<hr />
+<h3 id="clear_all_contexts"><code>clear_all_contexts</code></h3>
+<pre><code class="language-python">clear_all_contexts
+</code></pre>
+<p>clear_all_contexts( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Clear all registered Context views in the Batch Group.
+</code></pre>
+<hr />
+<h3 id="clear_colour"><code>clear_colour</code></h3>
+<pre><code class="language-python">clear_colour
+</code></pre>
+<p>clear_colour( (PyBatch)arg1) -&gt; None :</p>
+<pre><code>Clear the colour of an object in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="clear_context"><code>clear_context</code></h3>
+<pre><code class="language-python">clear_context
+</code></pre>
+<p>clear_context( (PyBatch)arg1, (int)index) -&gt; bool :</p>
+<pre><code>Clear a specific Context view in the Batch Group.
+</code></pre>
+<hr />
+<h3 id="clear_setup"><code>clear_setup</code></h3>
+<pre><code class="language-python">clear_setup
+</code></pre>
+<p>clear_setup( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Clear the Batch Group's setup.
+</code></pre>
+<hr />
+<h3 id="close"><code>close</code></h3>
+<pre><code class="language-python">close
+</code></pre>
+<p>close( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Close the Batch Group. You cannot close the Batch Group currently selected.
+
+Closing a Batch Group frees up the application it occupies when open. The size of the used memory is significant if in Batch Group schematic hosts many Action nodes with textures or 3D geoms.
+</code></pre>
+<hr />
+<h3 id="connect_nodes"><code>connect_nodes</code></h3>
+<pre><code class="language-python">connect_nodes
+</code></pre>
+<p>connect_nodes( (PyBatch)arg1, (PyNode)output_node, (str)output_socket_name='Default', (PyNode)input_node [, (str)input_socket_name='Default']) -&gt; bool :</p>
+<pre><code>Connect two nodes in the Batch schematic.
+
+Keyword arguments:
+
+output_node -- The Batch node object, the origin of the connection.
+
+output_socket_name -- The name of the output socket where the connector starts; use *Default* to use the first output socket, usually *Result*.
+
+input_node -- The child Batch node object, the target of the connection.
+
+input_socket_name -- The name of the input socket where the connector ends; use *Default* to use the first input socket, usually *Front*. Using *Default* on an Action node connects to the Background socket. To connect to an Action media node, use &lt;ActionNode&gt;.media_nodes[].
+</code></pre>
+<hr />
+<h3 id="create_batch_group"><code>create_batch_group</code></h3>
+<pre><code class="language-python">create_batch_group
+</code></pre>
+<p>create_batch_group( (PyBatch)arg1, (str)name [, (object)nb_reels=None [, (object)nb_shelf_reels=None [, (list)reels=[] [, (list)shelf_reels=[] [, (int)start_frame=1 [, (object)duration=None]]]]]]) -&gt; object :</p>
+<pre><code>Create a new Batch Group object in the Desktop catalogue.
+
+Keyword arguments:
+
+name -- Name of the Batch Group.
+
+nb_reels -- Number of reels created. *reels* overrides *nb_reels*.
+
+nb_shelf_reels -- Number of shelf reels. The first shelf reel created is named Batch Renders. *shelf_reels* ovverides *nb_shelf_reels*.
+
+reels -- A list of reel names. Overrides *nb_reels*.
+
+shelf_reels -- A list of shelf reel names. Overrides *nb_shelf_reels*.
+
+start_frame -- The Batch Group's start frame. No timecodes, only a frame value.
+
+duration -- The number of frames. Sets the Duration field in the Batch UI. Will be set to the first clip duration when not specified.
+</code></pre>
+<hr />
+<h3 id="create_node"><code>create_node</code></h3>
+<pre><code class="language-python">create_node
+</code></pre>
+<p>create_node( (PyBatch)arg1, (str)node_type [, (str)file_path='']) -&gt; object :</p>
+<pre><code>Create a Batch node object in the Batch schematic.
+
+ Keyword argument:
+
+node_type -- Must be a value from the PyBatch.node_types or the name of a node in the User, Project, or Shared bin.
+</code></pre>
+<hr />
+<h3 id="create_reel"><code>create_reel</code></h3>
+<pre><code class="language-python">create_reel
+</code></pre>
+<p>create_reel( (PyBatch)arg1, (str)name) -&gt; object :</p>
+<pre><code>Create a new Schematic Reel in the Batch Gtroup.
+</code></pre>
+<hr />
+<h3 id="create_shelf_reel"><code>create_shelf_reel</code></h3>
+<pre><code class="language-python">create_shelf_reel
+</code></pre>
+<p>create_shelf_reel( (PyBatch)arg1, (str)name) -&gt; object :</p>
+<pre><code>Create a new Shelf Reel in the Batch Group.
+</code></pre>
+<hr />
+<h3 id="disconnect_node"><code>disconnect_node</code></h3>
+<pre><code class="language-python">disconnect_node
+</code></pre>
+<p>disconnect_node( (PyBatch)arg1, (PyNode)node [, (str)input_socket_name='']) -&gt; bool :</p>
+<pre><code>Disconnect the input links of a given node, given an input socket.
+
+Keyword arguments:
+
+node -- The Batch node object, the origin of the connection.
+
+input_socket_name -- The name of the input socket to disconnect.
+</code></pre>
+<hr />
+<h3 id="encompass_nodes"><code>encompass_nodes</code></h3>
+<pre><code class="language-python">encompass_nodes
+</code></pre>
+<p>encompass_nodes( (PyBatch)arg1, (list)nodes) -&gt; object :</p>
+<pre><code>Create a Compass around a list of nodes in the Batch schematic.
+
+ Keyword argument:
+
+nodes -- List of strings of node names.
+</code></pre>
+<hr />
+<h3 id="frame_all"><code>frame_all</code></h3>
+<pre><code class="language-python">frame_all
+</code></pre>
+<p>frame_all( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Set the Batch schematic view to frame all the nodes in the Batch schematic.
+</code></pre>
+<hr />
+<h3 id="frame_selected"><code>frame_selected</code></h3>
+<pre><code class="language-python">frame_selected
+</code></pre>
+<p>frame_selected( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Set the Batch schematic view to frame the nodes selected in the Batch schematic.
+</code></pre>
+<hr />
+<h3 id="get_node"><code>get_node</code></h3>
+<pre><code class="language-python">get_node
+</code></pre>
+<p>get_node( (PyBatch)arg1, (str)node_name) -&gt; object :</p>
+<pre><code>Return a Batch node object with a name matching the parameter. Every node in a Batch schematic has a unique name: no duplicates allowed.
+
+Keyword argument:
+
+node_name -- Node name.
+</code></pre>
+<hr />
+<h3 id="go_to"><code>go_to</code></h3>
+<pre><code class="language-python">go_to
+</code></pre>
+<p>go_to( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Display and set the Batch tab as the active environment.
+</code></pre>
+<hr />
+<h3 id="import_clip"><code>import_clip</code></h3>
+<pre><code class="language-python">import_clip
+</code></pre>
+<p>import_clip( (PyBatch)arg1, (str)file_path, (str)reel_name) -&gt; object :</p>
+<pre><code>Import a clip using the Import node, and create a Clip node.
+
+Keyword arguments:
+
+file_path -- The path to the media can be:
+
+ - A path to a single media file.
+
+ - A path to a sequence of media files (ie "/dir/clip.[100-2000].dpx").
+
+ - A pattern to media files (ie "/dir/name_v{version}.{frame}.{extension}").reel_name -- The name of the destination Schematic Reel.
+</code></pre>
+<hr />
+<h3 id="import_clips"><code>import_clips</code></h3>
+<pre><code class="language-python">import_clips
+</code></pre>
+<p>import_clips( (PyBatch)arg1, (object)file_paths, (str)reel_name) -&gt; object :</p>
+<pre><code>Import clips using the Import node, and then create Clip nodes in the Schematic Reel.
+
+Keyword arguments:
+
+file_paths -- A path, or a list of paths, to the media that can be:
+
+ - A path to a single media file.
+
+ - A path to a sequence of media files (ie "/dir/clip.[100-2000].dpx").
+
+ - A pattern to media files (ie "/dir/name_v{version}.{frame}.{extension}").reel_name -- The name of the destination Schematic Reel.
+</code></pre>
+<hr />
+<h3 id="iterate"><code>iterate</code></h3>
+<pre><code class="language-python">iterate
+</code></pre>
+<p>iterate( (PyBatch)arg1 [, (int)index=-1]) -&gt; object :</p>
+<pre><code>Iterate the current Batch Setup, creating a new iteration named BatchSetupName_X, where X is the Batch Iteration's index, and starts at 001.
+
+ Keyword argument:
+
+index -- Specifies the iteration's index. If none is specified, the iteration is assigned the next available index (max index + 1). If the index matches that of an existing Batch Iteration, its overwrites the iteration without warning.
+</code></pre>
+<hr />
+<h3 id="load_setup"><code>load_setup</code></h3>
+<pre><code class="language-python">load_setup
+</code></pre>
+<p>load_setup( (PyBatch)arg1, (str)setup_path) -&gt; bool :</p>
+<pre><code>Load a Batch setup from disk and replace the current Batch Group's setup.
+
+ Keyword argument:
+
+setup_path -- Filepath + Batch Setup filename.
+</code></pre>
+<hr />
+<h3 id="mimic_link"><code>mimic_link</code></h3>
+<pre><code class="language-python">mimic_link
+</code></pre>
+<p>mimic_link( (PyBatch)arg1, (PyNode)leader_node, (PyNode)follower_node) -&gt; bool :</p>
+<pre><code>Create a Mimic Link between two Batch nodes. They must be of the same node_type.
+
+Keyword arguments:
+
+leader_node -- The node being mimicked.
+
+follower_node -- The node doing the mimicking.
+</code></pre>
+<hr />
+<h3 id="open"><code>open</code></h3>
+<pre><code class="language-python">open
+</code></pre>
+<p>open( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Open the Batch Group and display it in the Batch view.
+</code></pre>
+<hr />
+<h3 id="open_as_batch_group"><code>open_as_batch_group</code></h3>
+<pre><code class="language-python">open_as_batch_group
+</code></pre>
+<p>open_as_batch_group( (PyBatch)arg1 [, (bool)confirm=True]) -&gt; bool :</p>
+<pre><code>Open a Batch Group as a new Batch Group, adding it to PyDesktop.batch_groups. Can only be called from a Library.
+</code></pre>
+<hr />
+<h3 id="organize"><code>organize</code></h3>
+<pre><code class="language-python">organize
+</code></pre>
+<p>organize( (PyBatch)arg1) -&gt; bool :</p>
+<pre><code>Clean up the nodes layout in the Batch schematic.
+</code></pre>
+<hr />
+<h3 id="render"><code>render</code></h3>
+<pre><code class="language-python">render
+</code></pre>
+<p>render( (PyBatch)arg1 [, (str)render_option='Foreground' [, (bool)generate_proxies=False [, (bool)include_history=False]]]) -&gt; bool :</p>
+<pre><code>Trigger the rendering of the Batch Group setup. Every active Render and Write File nodes render. If specified render_option is not supported by the workstation, returns an error.
+
+Keyword arguments:
+
+render_option -- Defines the rendering method used. (Foreground, Background Reactor, Burn)
+
+generate_proxies -- Set to True to render at proxy resolution. (Default: False)
+
+include_history -- Set to True to create History with the rendering. (Default:False)
+</code></pre>
+<hr />
+<h3 id="replace_setup"><code>replace_setup</code></h3>
+<pre><code class="language-python">replace_setup
+</code></pre>
+<p>replace_setup( (PyBatch)arg1, (PyBatchIteration)batch_iteration [, (bool)confirm=True]) -&gt; bool :</p>
+<pre><code>Replace the Batch Group setup with the specified Batch Iteration. Cannot be called on the Batch Group currently selected and displayed in the Batch view.
+</code></pre>
+<hr />
+<h3 id="save"><code>save</code></h3>
+<pre><code class="language-python">save
+</code></pre>
+<p>save( (PyBatch)arg1) -&gt; object :</p>
+<pre><code>Save the Batch Group to the location defined by PyDesktop.destination.
+</code></pre>
+<hr />
+<h3 id="save_current_iteration"><code>save_current_iteration</code></h3>
+<pre><code class="language-python">save_current_iteration
+</code></pre>
+<p>save_current_iteration( (PyBatch)arg1) -&gt; object :</p>
+<pre><code>Save the current Batch Group setup to the location defined by PyDesktop.destination.
+</code></pre>
+<hr />
+<h3 id="save_setup"><code>save_setup</code></h3>
+<pre><code class="language-python">save_setup
+</code></pre>
+<p>save_setup( (PyBatch)arg1, (str)setup_path) -&gt; bool :</p>
+<pre><code>Save the Batch Group setup to disk. Includes media paths for clip node object, but not the media files themselves.
+
+Keyword argument:
+
+setup_path -- The filepath includes the filename. File extension must be .batch.
+</code></pre>
+<hr />
+<h3 id="select_nodes"><code>select_nodes</code></h3>
+<pre><code class="language-python">select_nodes
+</code></pre>
+<p>select_nodes( (PyBatch)arg1, (object)nodes) -&gt; bool :</p>
+<pre><code>Select nodes.
+
+Keyword argument:
+
+nodes -- A list of the names of Batch node objects.
+</code></pre>
+<hr />
+<h3 id="set_viewport_layout"><code>set_viewport_layout</code></h3>
+<pre><code class="language-python">set_viewport_layout
+</code></pre>
+<p>set_viewport_layout( (PyBatch)arg1, (object)num_views) -&gt; bool :</p>
+<pre><code>Set the viewport layout for Batch.
+
+Keyword argument:
+
+num_views -- The layout used. (1-Up, 2-Up, 3-Up, 3-Up Split Top, 3-Up Split Left, 3-Up Split Right, 3-Up Split Bottom, 4-Up Split, 4-Up)
+</code></pre>
+<hr />
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

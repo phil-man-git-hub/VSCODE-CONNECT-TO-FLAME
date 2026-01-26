@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Class: PyProject - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Class: PyProject";
+        var mkdocs_page_input_path = "api/classes/PyProject.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Class: PyProject</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-pyproject">Class: PyProject</h1>
+<p><strong>Module</strong>: <code>flame</code></p>
+<p><strong>Inherits from</strong>: <a href="../PyArchiveEntry/">PyArchiveEntry</a>, <a href="../PyFlameObject/">PyFlameObject</a>, instance, object</p>
+<h2 id="description">Description</h2>
+<p>Object representing a Project.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>attributes</code></td>
+<td>The attributes of a python object.</td>
+</tr>
+<tr>
+<td><code>current_workspace</code></td>
+<td>Return the current Workspace.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Return the Project description.</td>
+</tr>
+<tr>
+<td><code>media_folder</code></td>
+<td>The path where the project media is located.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Return the Project name.</td>
+</tr>
+<tr>
+<td><code>nickname</code></td>
+<td>Return the Project nickname.</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td>The parent object of this object.</td>
+</tr>
+<tr>
+<td><code>project_folder</code></td>
+<td>The path where the project is located.</td>
+</tr>
+<tr>
+<td><code>project_name</code></td>
+<td>Deprecated / use name instead</td>
+</tr>
+<tr>
+<td><code>setups_folder</code></td>
+<td>The path where the project setups are located.</td>
+</tr>
+<tr>
+<td><code>shared_libraries</code></td>
+<td>Return a list of Shared Libraries inside the Project.</td>
+</tr>
+<tr>
+<td><code>workspaces_count</code></td>
+<td>Return the amount of Project Workspaces.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="methods">Methods</h2>
+<h3 id="clear_colour"><code>clear_colour</code></h3>
+<pre><code class="language-python">clear_colour
+</code></pre>
+<p>clear_colour( (PyArchiveEntry)arg1) -&gt; None :</p>
+<pre><code>Clear the colour of an object in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="commit"><code>commit</code></h3>
+<pre><code class="language-python">commit
+</code></pre>
+<p>commit( (PyArchiveEntry)arg1) -&gt; None :</p>
+<pre><code>Commit to disk the Media Panel object or its closest container possible.
+</code></pre>
+<hr />
+<h3 id="create_shared_library"><code>create_shared_library</code></h3>
+<pre><code class="language-python">create_shared_library
+</code></pre>
+<p>create_shared_library( (PyProject)arg1, (str)name) -&gt; object :</p>
+<pre><code>Create a new Shared Library in the Project.
+</code></pre>
+<hr />
+<h3 id="export_ocio_config"><code>export_ocio_config</code></h3>
+<pre><code class="language-python">export_ocio_config
+</code></pre>
+<p>export_ocio_config( (PyProject)arg1, (str)config_name [, (str)destination_folder='' [, (bool)overwrite_existing=False [, (bool)export_as_locked=False [, (bool)generate_ocioz=False]]]]) -&gt; bool :</p>
+<pre><code>Export the OCIO config file.
+
+Keyword arguments:
+
+config_name -- Specifies the name that will be written inside the exported OCIO config and used as the parent folder name where the config will be exported. It should not contain the '.ocio' extension. Mandatory.
+
+destination_folder -- Specifies the absolute destination folder for the exported OCIO config. It will use the default colour management shared path if empty.
+
+overwrite_existing -- Specifies if the export should overwrite an existing OCIO config with the same name located in the same destination_folder.
+
+export_as_locked -- Specifies if the exported OCIO config should be locked (the 'LockedPolicy' parameter inside the settings.cfg sidecar file).
+
+generate_ocioz -- Specifies if an OCIOZ archive should be created alongside the exported OCIO config.
+</code></pre>
+<hr />
+<h3 id="get_context_variables"><code>get_context_variables</code></h3>
+<pre><code class="language-python">get_context_variables
+</code></pre>
+<p>get_context_variables( (PyProject)arg1) -&gt; dict :</p>
+<pre><code>Get the context variables in a dictionary.
+</code></pre>
+<hr />
+<h3 id="get_wiretap_node_id"><code>get_wiretap_node_id</code></h3>
+<pre><code class="language-python">get_wiretap_node_id
+</code></pre>
+<p>get_wiretap_node_id( (PyArchiveEntry)arg1) -&gt; str :</p>
+<pre><code>Return the Wiretap Node ID of the Flame object, but only if the object is in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="get_wiretap_storage_id"><code>get_wiretap_storage_id</code></h3>
+<pre><code class="language-python">get_wiretap_storage_id
+</code></pre>
+<p>get_wiretap_storage_id( (PyArchiveEntry)arg1) -&gt; str :</p>
+<pre><code>Return the Wiretap server's storage ID for the Flame object, but only if the object is in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="refresh_shared_libraries"><code>refresh_shared_libraries</code></h3>
+<pre><code class="language-python">refresh_shared_libraries
+</code></pre>
+<p>refresh_shared_libraries( (PyProject)arg1) -&gt; bool :</p>
+<pre><code>Refresh the Shared Libraries list in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="reload_ocio_config"><code>reload_ocio_config</code></h3>
+<pre><code class="language-python">reload_ocio_config
+</code></pre>
+<p>reload_ocio_config( (PyProject)arg1 [, (bool)reset_colour_policy=False]) -&gt; bool :</p>
+<pre><code>Reload the OCIO config file.
+
+Keyword argument:
+
+reset_colour_policy -- Delete the project's custom colour spaces, roles, and rules (false by default).
+</code></pre>
+<hr />
+<h3 id="reset_context_variables"><code>reset_context_variables</code></h3>
+<pre><code class="language-python">reset_context_variables
+</code></pre>
+<p>reset_context_variables( (PyProject)arg1) -&gt; None :</p>
+<pre><code>Reset the context variables to their initial state from the ocio config.
+</code></pre>
+<hr />
+<h3 id="set_context_variable"><code>set_context_variable</code></h3>
+<pre><code class="language-python">set_context_variable
+</code></pre>
+<p>set_context_variable( (PyProject)arg1, (str)name, (str)value) -&gt; None :</p>
+<pre><code>Set the value for the specified context variable.
+</code></pre>
+<hr />
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

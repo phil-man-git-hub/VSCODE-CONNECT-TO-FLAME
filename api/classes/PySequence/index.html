@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Class: PySequence - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Class: PySequence";
+        var mkdocs_page_input_path = "api/classes/PySequence.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Class: PySequence</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-pysequence">Class: PySequence</h1>
+<p><strong>Module</strong>: <code>flame</code></p>
+<p><strong>Inherits from</strong>: <a href="../PyClip/">PyClip</a>, <a href="../PyArchiveEntry/">PyArchiveEntry</a>, <a href="../PyFlameObject/">PyFlameObject</a>, instance, object</p>
+<h2 id="description">Description</h2>
+<p>Object representing a Sequence.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>archive_date</code></td>
+<td>Return the Clip's last archive date.</td>
+</tr>
+<tr>
+<td><code>archive_error</code></td>
+<td>Return the Clip's last archive error.</td>
+</tr>
+<tr>
+<td><code>attributes</code></td>
+<td>The attributes of a python object.</td>
+</tr>
+<tr>
+<td><code>audio_tracks</code></td>
+<td>Return a list of the Clip's Audio Tracks.</td>
+</tr>
+<tr>
+<td><code>bit_depth</code></td>
+<td>Return the Clip's bit depth.</td>
+</tr>
+<tr>
+<td><code>cached</code></td>
+<td>Return the Clip's cache status.</td>
+</tr>
+<tr>
+<td><code>colour_primaries</code></td>
+<td>Deduce the Clip's 'colour primaries' export attribute.</td>
+</tr>
+<tr>
+<td><code>creation_date</code></td>
+<td>Return the Clip's creation date.</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>Return the Clip's duration.</td>
+</tr>
+<tr>
+<td><code>essence_uid</code></td>
+<td>Return the Clip's essence uid.</td>
+</tr>
+<tr>
+<td><code>frame_rate</code></td>
+<td>Return the Clip's frame rate.</td>
+</tr>
+<tr>
+<td><code>groups</code></td>
+<td>Return a list of the sequence's PySequenceGroups.</td>
+</tr>
+<tr>
+<td><code>has_deliverables</code></td>
+<td>Return the existence of deliverables on the Clip.</td>
+</tr>
+<tr>
+<td><code>has_history</code></td>
+<td>Return the existence of history inside the Clip.</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Return the Clip's height.</td>
+</tr>
+<tr>
+<td><code>markers</code></td>
+<td>Return a list of the Clip's Markers.</td>
+</tr>
+<tr>
+<td><code>matrix_coefficients</code></td>
+<td>Deduce the Clip's 'matrix coefficients' export attribute.</td>
+</tr>
+<tr>
+<td><code>original_source_uid</code></td>
+<td>Return the Clip's original source UID.</td>
+</tr>
+<tr>
+<td><code>parent</code></td>
+<td>The parent object of this object.</td>
+</tr>
+<tr>
+<td><code>proxy_resolution</code></td>
+<td>Return the Clip's proxy resolution if it has proxies.</td>
+</tr>
+<tr>
+<td><code>ratio</code></td>
+<td>Return the Clip's frame ratio.</td>
+</tr>
+<tr>
+<td><code>sample_rate</code></td>
+<td>Return the Clip's audio sample rate.</td>
+</tr>
+<tr>
+<td><code>scan_mode</code></td>
+<td>Return the Clip's scan mode.</td>
+</tr>
+<tr>
+<td><code>source_uid</code></td>
+<td>Return the Clip's source uid.</td>
+</tr>
+<tr>
+<td><code>start_frame</code></td>
+<td>Return the Clip's start frame.</td>
+</tr>
+<tr>
+<td><code>subtitles</code></td>
+<td>Return a list of the Clip's Subtitles Tracks.</td>
+</tr>
+<tr>
+<td><code>transfer_characteristics</code></td>
+<td>Deduce the Clip's 'transfer characteristics' export attribute.</td>
+</tr>
+<tr>
+<td><code>unlinked</code></td>
+<td>Return the Clip's unlinked status.</td>
+</tr>
+<tr>
+<td><code>versions</code></td>
+<td>Return a list of the Clip's versions.</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>Return the Clip's width.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="methods">Methods</h2>
+<h3 id="cache_media"><code>cache_media</code></h3>
+<pre><code class="language-python">cache_media
+</code></pre>
+<p>cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool :</p>
+<pre><code>Cache the Clip's linked media.
+
+Keyword argument:
+
+mode -- Determine the version to cache (currently selected or all versions). All Versions is only useful with to multi-version clips (Current, All Versions)
+</code></pre>
+<hr />
+<h3 id="change_dominance"><code>change_dominance</code></h3>
+<pre><code class="language-python">change_dominance
+</code></pre>
+<p>change_dominance( (PyClip)arg1, (str)scan_mode) -&gt; None :</p>
+<pre><code>Change the Clip's dominance. Changes only the clip's metadata.
+
+Keyword argument:
+
+scan_mode -- Field dominance. (P, F1, F2)
+</code></pre>
+<hr />
+<h3 id="change_start_frame"><code>change_start_frame</code></h3>
+<pre><code class="language-python">change_start_frame
+</code></pre>
+<p>change_start_frame( (PyClip)arg1, (int)start_frame [, (bool)use_segment_connections=True]) -&gt; None :</p>
+<pre><code>Modify the start frame of a source Clip.
+
+Keywords argument:
+
+start_frame -- New start frame of the clip.
+
+use_segment_connections -- Sync the start frame of connected segments.
+</code></pre>
+<hr />
+<h3 id="clear_cache_media"><code>clear_cache_media</code></h3>
+<pre><code class="language-python">clear_cache_media
+</code></pre>
+<p>clear_cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool :</p>
+<pre><code>Clear the Clip's media cache.
+
+Keyword argument:
+
+mode -- Determine the version's cache to clear. (Current, All Versions, All But Current)
+</code></pre>
+<hr />
+<h3 id="clear_colour"><code>clear_colour</code></h3>
+<pre><code class="language-python">clear_colour
+</code></pre>
+<p>clear_colour( (PyArchiveEntry)arg1) -&gt; None :</p>
+<pre><code>Clear the colour of an object in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="clear_renders"><code>clear_renders</code></h3>
+<pre><code class="language-python">clear_renders
+</code></pre>
+<p>clear_renders( (PyClip)arg1) -&gt; None :</p>
+<pre><code>Clear the Clip's Timeline FX renders.
+</code></pre>
+<hr />
+<h3 id="close_container"><code>close_container</code></h3>
+<pre><code class="language-python">close_container
+</code></pre>
+<p>close_container( (PyClip)arg1) -&gt; None :</p>
+<pre><code>Close the container timeline if the Clip is inside a container.
+</code></pre>
+<hr />
+<h3 id="commit"><code>commit</code></h3>
+<pre><code class="language-python">commit
+</code></pre>
+<p>commit( (PyArchiveEntry)arg1) -&gt; None :</p>
+<pre><code>Commit to disk the Media Panel object or its closest container possible.
+</code></pre>
+<hr />
+<h3 id="copy_selection_to_media_panel"><code>copy_selection_to_media_panel</code></h3>
+<pre><code class="language-python">copy_selection_to_media_panel
+</code></pre>
+<p>copy_selection_to_media_panel( (PySequence)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object :</p>
+<pre><code>Create a new clip by copying the currently selected segments.
+
+Return the new PyClip.
+
+Keyword arguments:
+
+destination -- The PyObject that acts as the destination.
+
+duplicate_action -- Action to take when an object with the same name already exists (add or replace).
+</code></pre>
+<hr />
+<h3 id="create_audio"><code>create_audio</code></h3>
+<pre><code class="language-python">create_audio
+</code></pre>
+<p>create_audio( (PySequence)arg1 [, (bool)stereo=False]) -&gt; object :</p>
+<pre><code>Add an Audio Track to the Sequence.
+</code></pre>
+<hr />
+<h3 id="create_container"><code>create_container</code></h3>
+<pre><code class="language-python">create_container
+</code></pre>
+<p>create_container( (PySequence)arg1) -&gt; object :</p>
+<pre><code>Create a container with the selected segments or between the in and out marks.
+</code></pre>
+<hr />
+<h3 id="create_group"><code>create_group</code></h3>
+<pre><code class="language-python">create_group
+</code></pre>
+<p>create_group( (PySequence)arg1, (str)name) -&gt; object :</p>
+<pre><code>Creates a new PySequenceGroup.
+
+The group name must be supplied as argument.
+</code></pre>
+<hr />
+<h3 id="create_marker"><code>create_marker</code></h3>
+<pre><code class="language-python">create_marker
+</code></pre>
+<p>create_marker( (PyClip)arg1, (object)location) -&gt; object :</p>
+<pre><code>Add a Marker to the Clip.Keyword argument:
+
+location -- The frame where the marker gets created.
+</code></pre>
+<hr />
+<h3 id="create_subtitle"><code>create_subtitle</code></h3>
+<pre><code class="language-python">create_subtitle
+</code></pre>
+<p>create_subtitle( (PySequence)arg1) -&gt; object :</p>
+<pre><code>Add a Subtitle Track to the Sequence.
+</code></pre>
+<hr />
+<h3 id="create_version"><code>create_version</code></h3>
+<pre><code class="language-python">create_version
+</code></pre>
+<p>create_version( (PySequence)arg1 [, (bool)stereo=False]) -&gt; object :</p>
+<pre><code>Add a Version to the Sequence.
+</code></pre>
+<hr />
+<h3 id="cut"><code>cut</code></h3>
+<pre><code class="language-python">cut
+</code></pre>
+<p>cut( (PyClip)arg1, (PyTime)cut_time) -&gt; None :</p>
+<pre><code>Cut all tracks of the Clip.
+</code></pre>
+<hr />
+<h3 id="extract_selection_to_media_panel"><code>extract_selection_to_media_panel</code></h3>
+<pre><code class="language-python">extract_selection_to_media_panel
+</code></pre>
+<p>extract_selection_to_media_panel( (PySequence)arg1 [, (PyArchiveEntry)destination=None [, (str)duplicate_action='add']]) -&gt; object :</p>
+<pre><code>Extract the selection from the sequence.
+
+Return the new PyClip created from the selection when a destination is supplied.
+
+Keyword arguments:
+
+destination -- The PyObject that acts as the destination.
+
+duplicate_action -- Action to take when an object with the same name already exists (add or replace).
+</code></pre>
+<hr />
+<h3 id="flush_cache_media"><code>flush_cache_media</code></h3>
+<pre><code class="language-python">flush_cache_media
+</code></pre>
+<p>flush_cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool :</p>
+<pre><code>Clear the Clip's media cache.
+
+Keyword argument:
+
+mode -- Determine the version's cache to clear. (Current, All Versions, All But Current)(Deprecated: use 'clear_cache_media' instead.)
+</code></pre>
+<hr />
+<h3 id="flush_renders"><code>flush_renders</code></h3>
+<pre><code class="language-python">flush_renders
+</code></pre>
+<p>flush_renders( (PyClip)arg1) -&gt; None :</p>
+<pre><code>Clear the Clip's Timeline FX renders.(Deprecated: use 'clear_renders' instead.)
+</code></pre>
+<hr />
+<h3 id="get_colour_space"><code>get_colour_space</code></h3>
+<pre><code class="language-python">get_colour_space
+</code></pre>
+<p>get_colour_space( (PyClip)arg1 [, (PyTime)time=None]) -&gt; str :</p>
+<pre><code>Return the colour space at the requested time. Use current_time when no time is supplied.
+</code></pre>
+<hr />
+<h3 id="get_metadata"><code>get_metadata</code></h3>
+<pre><code class="language-python">get_metadata
+</code></pre>
+<p>get_metadata( (PyClip)arg1 [, (str)key='' [, (PyTime)time=None]]) -&gt; object :</p>
+<pre><code>Return the metadata of the clip.
+
+Keywords argument:
+
+key -- Key of the requested metadata. All metadata is returned when not specified.
+
+time -- Must be a PyTime. If not specified, the current clip time is used.
+</code></pre>
+<hr />
+<h3 id="get_wiretap_node_id"><code>get_wiretap_node_id</code></h3>
+<pre><code class="language-python">get_wiretap_node_id
+</code></pre>
+<p>get_wiretap_node_id( (PyArchiveEntry)arg1) -&gt; str :</p>
+<pre><code>Return the Wiretap Node ID of the Flame object, but only if the object is in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="get_wiretap_storage_id"><code>get_wiretap_storage_id</code></h3>
+<pre><code class="language-python">get_wiretap_storage_id
+</code></pre>
+<p>get_wiretap_storage_id( (PyArchiveEntry)arg1) -&gt; str :</p>
+<pre><code>Return the Wiretap server's storage ID for the Flame object, but only if the object is in the Media Panel.
+</code></pre>
+<hr />
+<h3 id="import_subtitles_file"><code>import_subtitles_file</code></h3>
+<pre><code class="language-python">import_subtitles_file
+</code></pre>
+<p>import_subtitles_file( (PySequence)arg1, (str)file_name [, (object)file_type=None [, (bool)align_first_event_to_clip_start=False [, (object)convert_from_frame_rate=None]]]) -&gt; object :</p>
+<pre><code>Import a subtitles file into a new Subtitles Track.
+
+Return the new PySubtitleTrack.
+
+Keyword arguments:
+
+file_name -- The path and name of the file to import.
+
+file_type -- The type of subtitle if it is not the file extension (srt or txt).
+
+align_first_event_to_clip_start -- Force the first event to be aligned with the clip start.
+
+convert_from_frame_rate -- frame rate of the imported file (for txt files only).
+</code></pre>
+<hr />
+<h3 id="insert"><code>insert</code></h3>
+<pre><code class="language-python">insert
+</code></pre>
+<p>insert( (PySequence)arg1, (PyClip)source_clip [, (PyTime)insert_time=None [, (PyTrack)destination_track=None]]) -&gt; bool :</p>
+<pre><code>Creates a new PySequenceGroup.
+
+The group name must be supplied as argument.
+</code></pre>
+<hr />
+<h3 id="is_rendered"><code>is_rendered</code></h3>
+<pre><code class="language-python">is_rendered
+</code></pre>
+<p>is_rendered( (PyClip)arg1 [, (bool)top_only=False [, (str)render_quality='Full Resolution']]) -&gt; bool :</p>
+<pre><code>Return if a Clip is rendered.
+
+The following attributes can be defined: top_only, render_quality.
+</code></pre>
+<hr />
+<h3 id="lift_selection_to_media_panel"><code>lift_selection_to_media_panel</code></h3>
+<pre><code class="language-python">lift_selection_to_media_panel
+</code></pre>
+<p>lift_selection_to_media_panel( (PySequence)arg1 [, (PyArchiveEntry)destination=None [, (str)duplicate_action='add']]) -&gt; object :</p>
+<pre><code>Lift the selection from the sequence.
+
+Return the new PyClip created from the selection when a destination is supplied.
+
+Keyword arguments:
+
+destination -- The PyObject that acts as the destination.
+
+duplicate_action -- Action to take when an object with the same name already exists (add or replace).
+</code></pre>
+<hr />
+<h3 id="open"><code>open</code></h3>
+<pre><code class="language-python">open
+</code></pre>
+<p>open( (PySequence)arg1) -&gt; bool :</p>
+<pre><code>Open the Sequence.
+</code></pre>
+<hr />
+<h3 id="open_as_sequence"><code>open_as_sequence</code></h3>
+<pre><code class="language-python">open_as_sequence
+</code></pre>
+<p>open_as_sequence( (PyClip)arg1) -&gt; object :</p>
+<pre><code>Open the Clip as a Sequence. Mutates the PyClip object into a PySequence object.
+</code></pre>
+<hr />
+<h3 id="open_container"><code>open_container</code></h3>
+<pre><code class="language-python">open_container
+</code></pre>
+<p>open_container( (PyClip)arg1) -&gt; bool :</p>
+<pre><code>Open the container timeline if the Clip is inside a container.
+</code></pre>
+<hr />
+<h3 id="overwrite"><code>overwrite</code></h3>
+<pre><code class="language-python">overwrite
+</code></pre>
+<p>overwrite( (PySequence)arg1, (PyClip)source_clip [, (PyTime)overwrite_time=None [, (PyTrack)destination_track=None]]) -&gt; bool :</p>
+<pre><code>Creates a new PySequenceGroup.
+
+The group name must be supplied as argument.
+</code></pre>
+<hr />
+<h3 id="reformat"><code>reformat</code></h3>
+<pre><code class="language-python">reformat
+</code></pre>
+<p>reformat( (PyClip)arg1 [, (int)width=0 [, (int)height=0 [, (float)ratio=0.0 [, (int)bit_depth=0 [, (str)scan_mode='' [, (str)frame_rate='' [, (str)resize_mode='Letterbox']]]]]]]) -&gt; None :</p>
+<pre><code>Reformat the Clip to the specified format.
+
+Keywords arguments:
+
+width -- Integer between 24 and 16384.
+
+height -- Integer between 24 and 16384.
+
+ratio -- Frame aspect ratio. Float between 0.01 and 100.
+
+bit_depth -- Bit depth. (8, 10, 12, 16 or 32)
+
+scan_mode -- Scan mode of the sequence. (F1, F2, P)
+
+frame_rate -- Frame rate. (60 fps, 59.54 NDF, 59.94 DF, 50 fps, 30 fps, 29.97 NDF, 29.97 DF, 25 fps, 24 fps, 23.976 fps)
+
+resize_mode -- Resize mode. (Letterbox, Crop Edges, Fill, Centre)
+</code></pre>
+<hr />
+<h3 id="render"><code>render</code></h3>
+<pre><code class="language-python">render
+</code></pre>
+<p>render( (PyClip)arg1 [, (str)render_mode='All' [, (str)render_option='Foreground' [, (str)render_quality='Full Resolution' [, (str)effect_type='' [, (str)effect_caching_mode='Current' [, (bool)include_handles=False]]]]]]) -&gt; bool :</p>
+<pre><code>Trigger a render of the Clip
+
+The following attributes can be defined: render_mode, render_option, render_quality, effect_type, effect_caching_mode and include_handles.
+</code></pre>
+<hr />
+<h3 id="save"><code>save</code></h3>
+<pre><code class="language-python">save
+</code></pre>
+<p>save( (PyClip)arg1) -&gt; bool :</p>
+<pre><code>Save the Clip to the defined save destination.
+</code></pre>
+<hr />
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
