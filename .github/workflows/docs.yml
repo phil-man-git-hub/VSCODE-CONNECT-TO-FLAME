@@ -17,8 +17,11 @@ jobs:
         run: python -m pip install mkdocs mkdocs-material
       - name: Build site
         run: mkdocs build --clean
-      - name: Upload site artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: mkdocs-site
-          path: site/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          user_name: 'github-actions'
+          user_email: 'github-actions@github.com'
