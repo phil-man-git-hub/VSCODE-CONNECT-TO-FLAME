@@ -1,8 +1,46 @@
+
 # Class: PySequence
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Contains:** PySequenceGroup, PyClip, PyTrack, PySubtitleTrack, etc.
+
+## Functional Role & Context
+* **Functional Role:** Represents a timeline sequence, providing access to groups, tracks, and editing operations.
+* **Context:** Used for programmatic editing, versioning, and management of sequences in Flame.
+
+## Description
+The PySequence class provides access to timeline sequences, enabling automation of editing, group management, and track operations in the Flame environment.
+
+
 Object representing a Sequence.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PySequence` is a timeline object (inherits from `PyClip`) used for editing, conforming, and programmatic timeline manipulation. It exposes tracks, segments, timeline FX, and methods to add clips, split frames, and manage tracks.
+
+**Key methods:** `create_track(name)`, `add_clip(clip, track, start_frame)`, `split(frame)`, `get_segment_at_frame(track, frame)`, `open()`.
+
+**Example:**
+
+```python
+# Add a new track and insert a clip at frame 1001
+new_track = seq.create_track('V2_FX')
+new_seg = seq.add_clip(source_clip, new_track, 1001)
+print('Inserted segment:', new_seg.attributes.name)
+```
+
+## Attributes
+| Attribute   | Type   | Description |
+|-------------|--------|-------------|
+| name        | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
+| uid         | str    | The unique identifier of an object in the Media Panel. |
+| token_name  | str    | The tokenized name of an object in the Media Panel. |
+| expanded    | bool   | The expanded state of an object in the Media Panel. True or False. |
+| colour      | tuple  | The colour of an object in the Media Panel. |
 
 ## Methods
 ### Properties

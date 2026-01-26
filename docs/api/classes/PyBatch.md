@@ -1,8 +1,69 @@
+
 # Class: PyBatch
 
 **Module**: `flame`
 
-Class derived from PyFlameObject. This class represents a Batch Group.
+## Inheritance & Hierarchy
+* **Base class:** `PyFlameObject`
+* **Functional Role:** Represents an entire Batch Group or setup, containing nodes and iterations in the schematic.
+
+## Description
+Represents a Batch Group, the top-level container for node-based compositing and effects in the Batch environment.
+
+
+## API Insight: Definition, Attributes, Methods, and Usage
+The **PyBatch** class is the central object for the Batch Group environment, representing a complete node-based compositing setup.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyBatch       | Represents a Batch Group. |
+| Parent Class  | PyFlameObject | Inherits basic object properties. |
+| Primary Role  | Node Graph Container | Manages the node schematic and setup. |
+| Location      | Contained by PyDesktop | Found in PyDesktop.batch_groups. |
+
+### Core Properties
+| Attribute         | Type                    | Access     | Description |
+|-------------------|------------------------|------------|-------------|
+| nodes             | list of PyNode         | Read-only  | All nodes in the schematic. |
+| selected_nodes    | list of PyNode         | Read-only  | Nodes currently selected in UI. |
+| iterations        | list of PyBatchIteration| Read-only  | All Batch Iterations for the group. |
+| cursor_position   | tuple (float, float)   | Read-only  | Cursor position in schematic view. |
+| attributes        | PyAttribute            | Read-only  | Metadata like name and colour. |
+| parent            | PyDesktop              | Read-only  | Container object. |
+
+### Key Methods
+| Method                | Arguments                        | Returns   | Description |
+|-----------------------|----------------------------------|-----------|-------------|
+| create_node()         | node_type                        | PyNode    | Create a new node in the schematic. |
+| connect_nodes()       | output_node, output_socket, input_node, input_socket | bool | Connect nodes in the schematic. |
+| disconnect_nodes()    | output_node, output_socket, input_node, input_socket | bool | Remove a connection between nodes. |
+| get_node()            | node_name                        | PyNode/None | Retrieve a node by name. |
+| clear()               | [confirm=True]                   | bool      | Clear the entire schematic. |
+| close()               | None                             | bool      | Close the Batch Group. |
+| load_setup()          | setup_path                       | bool      | Load a Batch setup file. |
+| save_setup()          | file_name                        | bool      | Save the schematic to a file. |
+| append_setup()        | setup_path                       | bool      | Append a setup file to the schematic. |
+| clear_context()       | index                            | bool      | Clear a specific Context View. |
+
+### Usage Context
+PyBatch is the entry point for procedural compositing, allowing scripts to build and manage complex node graphs dynamically.
+
+```python
+# Example: Creating a simple node chain in Batch
+# Assumes 'batch' is a PyBatch object
+
+# 1. Create source and output nodes
+read_node = batch.create_node("Read File") 
+action_node = batch.create_node("Action")
+write_node = batch.create_node("Write File")
+
+# 2. Connect the nodes in sequence
+batch.connect_nodes(read_node, "Default", action_node, "Front")
+batch.connect_nodes(action_node, "Default", write_node, "Input")
+
+print(f"Node graph created in Batch: {batch.attributes.name}")
+```
 
 ## Methods
 ### Properties

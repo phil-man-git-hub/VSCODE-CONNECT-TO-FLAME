@@ -1,8 +1,55 @@
+
 # Class: PyBrowser
 
 **Module**: `flame`
 
-This class represents the file browser.
+## Functional Role & Context
+* **Functional Role:** Represents the file browser interface for selecting and importing files in Flame.
+
+## Description
+Provides access to the file browser UI, allowing users to select files, directories, and set import options.
+
+
+## API Insight: Definition, Methods, and Usage
+The **PyBrowser** class represents the file browser object, used to interact with the file system and retrieve user-selected paths.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyBrowser     | System file browser dialog. |
+| Parent Class  | None          | Standalone utility class. |
+| Access Point  | flame.browser | Accessed as a static object from the flame module. |
+
+### Core Methods
+| Method              | Arguments                        | Returns   | Description |
+|---------------------|----------------------------------|-----------|-------------|
+| open_file()         | title, directory                 | str/None  | Open single file selection dialog. |
+| open_files()        | title, directory                 | list/None | Open multiple file selection dialog. |
+| open_directory()    | title, directory                 | str/None  | Open directory selection dialog. |
+| save_file()         | title, directory                 | str/None  | Open file saving dialog. |
+
+### Usage Context
+PyBrowser is essential for scripts that need to reference external media, setups, or files, providing a programmatic interface to the OS file selection dialogs.
+
+**Examples:**
+
+```python
+import flame
+
+# Open a single file selection dialog
+file_path = flame.browser.open_file('Select source', '/mnt/assets')
+
+# Open multiple file selection dialog
+files = flame.browser.open_files('Select frames', '/mnt/assets')
+
+# Open a directory selection
+dir_path = flame.browser.open_directory('Choose folder', '/mnt/assets')
+
+# Or use the generic show() for more options
+flame.browser.show('/mnt/assets', extension='exr', multi_selection=True, title='Import Files')
+```
+
+
 
 ## Methods
 ### Properties

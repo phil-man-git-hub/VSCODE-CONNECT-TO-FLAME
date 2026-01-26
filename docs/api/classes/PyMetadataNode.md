@@ -1,6 +1,20 @@
+
 # Class: PyMetadataNode
 
 **Module**: `flame`
+
+## Inheritance & Hierarchy
+* **Base Class:** PyNode
+* **Context:** Used in Batch and TimelineFX for metadata management.
+
+## Functional Role & Context
+* **Functional Role:** Represents a Metadata node, providing programmatic access to metadata key/value management on nodes.
+* **Context:** Used for automating metadata operations, including setting, discarding, and renaming metadata keys and values in node-based compositing.
+
+## Description
+The PyMetadataNode class enables advanced metadata management for nodes, supporting automation of metadata editing, discarding, and renaming in the Flame environment.
+
+---
 
 Class derived from PyNode. This class represents a Metadata node.
 
@@ -40,4 +54,21 @@ load_node_setup( (PyMetadataNode)arg1, (str)file_name [, (bool)edited_keys=True 
     added_keys -- apply added keys from the setup.
     replaced_keys -- apply replaced keys from the setup.
 
+## API Insight
+
+- The Metadata node exposes methods to set, rename and discard metadata keys on node sockets and to load saved setups from disk.
+- Calling `set_metadata_value(..., value=None)` reverts the key to its original value.
+
+**Example:**
+
+```python
+# Set a metadata key on a node's default socket
+node.set_metadata_value(socket_name='Default', key='shot', value='001')
+# Discard a key from output
+node.set_metadata_discarded(key='old_key', discarded=True)
+# Rename a key
+node.set_metadata_key(key='old_name', name='new_name')
+# Load a saved metadata setup from disk
+node.load_node_setup('/path/to/setup.json')
+```
 

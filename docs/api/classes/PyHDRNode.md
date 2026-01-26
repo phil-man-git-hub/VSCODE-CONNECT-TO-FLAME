@@ -1,8 +1,17 @@
+
 # Class: PyHDRNode
 
 **Module**: `flame`
 
-Object representing a HDR node.
+## Inheritance & Hierarchy
+* **Base class:** `PyNode` (inherits from `PyFlameObject`)
+* **Functional Role:** High Dynamic Range (HDR) processing node in the schematic, used for HDR analysis and Dolby Vision workflows.
+
+## Description
+Represents an HDR node, providing tools for HDR analysis, trims, and Dolby Vision XML import/export in the node graph.
+
+---
+
 
 ## Methods
 ### Properties
@@ -59,4 +68,17 @@ has_trim( (PyHDRNode)arg1, (int)target_display_id) -> bool :
 l2_from_l8( (PyHDRNode)arg1) -> object :
     Dictionary containing the L2 values based on L8 values. Not valid in Dolby Vision 2.9.
 
+## API Insight
+
+- HDR nodes provide analysis tools (`analyze`, `reset_analysis`, `keep_analysis`) and Dolby Vision XML import/export helpers.
+- Call `analyze()` to run an HDR analysis; use `export_DolbyVision_xml()` / `import_DolbyVision_xml()` to exchange metadata files.
+
+**Example:**
+
+```python
+# Run HDR analysis and export Dolby Vision XML if available
+node.analyze()
+if node.analysis_status:
+    node.export_DolbyVision_xml('/tmp/hdr_export.xml')
+```
 

@@ -1,6 +1,20 @@
+
 # Class: PyMetadataTimelineFX
 
 **Module**: `flame`
+
+## Inheritance & Hierarchy
+* **Base Class:** PyTimelineFX
+* **Context:** Used for timeline-based metadata effects and automation.
+
+## Functional Role & Context
+* **Functional Role:** Represents a Metadata Timeline FX, providing access to timeline-based metadata key/value management.
+* **Context:** Used for automating metadata operations, including setting, discarding, and renaming metadata keys and values in timeline effects.
+
+## Description
+The PyMetadataTimelineFX class enables advanced metadata management for timeline effects, supporting automation of metadata editing, discarding, and renaming in the Flame timeline.
+
+---
 
 Object representing a Metadata Timeline FX.
 
@@ -43,4 +57,16 @@ load_setup( (PyMetadataTimelineFX)arg1, (str)file_name [, (bool)edited_keys=True
     discarded_keys -- apply discarded keys from the setup.
     added_keys -- apply added keys from the setup.
 
+## API Insight
+
+- Metadata Timeline FX mirrors the Metadata node API but operates on timeline frames; use `set_metadata_value` and `get_metadata` for frame-specific metadata.
+- Passing `value=None` to `set_metadata_value` will revert the key to its original value.
+
+**Example:**
+
+```python
+# Set a metadata value on frame 100 and read it back
+fx.set_metadata_value('shot', 'A001')
+print(fx.get_metadata('shot', frame=100))
+```
 

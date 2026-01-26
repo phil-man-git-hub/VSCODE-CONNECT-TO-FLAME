@@ -1,8 +1,27 @@
+
 # Class: PyClipNode
 
 **Module**: `flame`
 
-Class derived from PyNode. This class represents a Clip node.
+## Inheritance & Hierarchy
+* **Base class:** `PyNode` (inherits from `PyFlameObject`)
+* **Functional Role:** Node representing a clip input in the Batch schematic.
+
+
+## Description
+Represents a Clip node, used to bring media into the Batch schematic for processing and compositing.
+
+---
+
+## Attributes
+| Attribute           | Type | Description |
+|---------------------|------|-------------|
+| shot_name           | str  | The shot name of a node in the Batch schematic, resolving tokens if any are present. |
+| tokenized_shot_name | str  | The shot name of a clip node, including unresolved tokens if present. |
+| dynamic_shot_name   | str  | The Dynamic attribute of a clip node. Automatically disabled when shot_name is set. Values: True/False |
+
+---
+
 
 ## Methods
 ### Properties
@@ -11,6 +30,18 @@ None( (flame.PyClipNode)arg1) -> object
 
 - `version_uids(...)` — None( (flame.PyClipNode)arg1) -> list 
 None( (flame.PyClipNode)arg1) -> list
+
+### Example
+```python
+# Example: Set the clip node to a specific version and add metadata
+# Assume 'clip_node' is a PyClipNode object
+
+# Set the current version UID (string retrieved from a PyReel or external source)
+clip_node.set_version_uid('1234-5678-90ab')
+
+# Add or update a metadata key on the default output socket
+clip_node.set_metadata_value(socket_name='Default', key='SceneID', value='SCN010')
+```
 
 - `version_uid(...)` — None( (flame.PyClipNode)arg1) -> object 
 None( (flame.PyClipNode)arg1) -> object

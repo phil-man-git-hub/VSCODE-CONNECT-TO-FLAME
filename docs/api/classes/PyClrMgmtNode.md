@@ -1,8 +1,27 @@
+
 # Class: PyClrMgmtNode
 
 **Module**: `flame`
 
-Object representing a Colour Mgmt node.
+## Inheritance & Hierarchy
+* **Base class:** `PyNode` (inherits from `PyFlameObject`)
+* **Functional Role:** Color Management node in the Batch schematic, used for color space conversions and management.
+
+## Description
+Represents a Colour Management node, providing color space and transform operations in the node graph.
+
+---
+
+### Example
+```python
+# Example: Import a colour transform into a Colour Management node
+# Assume 'clr_node' is a PyClrMgmtNode object
+clr_node.import_transform('/mnt/ocio/transforms/rec709_to_acescg.cube')
+
+# Use context variables to set runtime behaviour
+clr_node.set_context_variable('use_gpu', 'True')
+print(clr_node.get_context_variables())
+```
 
 ## Methods
 ### Built-in methods

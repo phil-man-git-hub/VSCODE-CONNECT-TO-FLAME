@@ -1,8 +1,46 @@
+
+
 # Class: PyProject
 
 **Module**: `flame`
 
-Object representing a Project.
+## Inheritance & Hierarchy
+* **Base Class:** PyArchiveEntry (inherits from PyFlameObject)
+* **Contains:** PyWorkspace, PyLibrary, PyDesktop
+
+## Functional Role & Context
+* **Functional Role:** Represents the entire active project in Flame, serving as the root organizational object for all media, sequences, and settings.
+* **Context:** Used for project-level automation, management, and access to all major project components.
+
+## Description
+The PyProject class provides programmatic access to the Flame project, enabling automation of project-wide operations, workspace/library/desktop management, and access to project metadata and folders.
+
+
+## Key Attributes
+| Attribute                | Type   | Description                                      |
+|--------------------------|--------|--------------------------------------------------|
+| name                     | str    | The name of the project.                         |
+| nickname                 | str    | The nickname of the project.                     |
+| description              | str    | The description of the project.                  |
+| project_name             | str    | The project name.                                |
+| shotgrid_project_name    | str    | Name of the linked Flow Production Tracking project. |
+| working_colour_space     | str    | The working colour space of the Project.         |
+| action_colour_space      | str    | The colour space used to render in Action.       |
+| workspaces_count         | int    | Number of workspaces in the project.             |
+| current_workspace        | object | The current workspace object.                    |
+| shared_libraries         | list   | List of shared libraries in the project.         |
+| project_folder           | str    | Path to the project folder.                      |
+| setups_folder            | str    | Path to the setups folder.                       |
+| media_folder             | str    | Path to the media folder.                        |
+
+## Attributes (Authoritative)
+| Attribute                | Type   | Description                                      |
+|--------------------------|--------|--------------------------------------------------|
+| shotgrid_project_name    | str    | The name of the linked Flow Production Tracking project. |
+| working_colour_space     | str    | The working colour space of the Project.         |
+| action_colour_space      | str    | The colour space used to render in Action.       |
+
+
 
 ## Methods
 ### Properties
@@ -73,5 +111,27 @@ get_context_variables( (PyProject)arg1) -> dict :
 - `reset_context_variables(...)` — reset_context_variables( (PyProject)arg1) -> None : 
 reset_context_variables( (PyProject)arg1) -> None :
     Reset the context variables to their initial state from the ocio config.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PyProject` is the root object used for project-wide automation and configuration. It centralises control of OCIO, workspaces, shared libraries, and project folders. When automating project operations consider these practical guidelines:
+
+- `export_ocio_config(config_name, destination_folder='', overwrite_existing=False, export_as_locked=False, generate_ocioz=False)` — Use `overwrite_existing=True` and `export_as_locked=True` when publishing to shared locations; `generate_ocioz=True` packages the config for distribution.
+- `reload_ocio_config(reset_colour_policy=False)` — Reload the in-memory OCIO configuration. Pass `reset_colour_policy=True` to clear custom colour policies and restore defaults when necessary.
+- `set_context_variable(name, value)` / `get_context_variables()` — Use these for lightweight, session-scoped flags for automation scripts; they are not a substitute for persistent configuration.
+- `create_shared_library(name)` + `refresh_shared_libraries()` — Newly created shared libraries may require a refresh before they appear in the Media Panel.
+- `delete([confirm=True])` — Deleting the project (or other top-level containers) is destructive; require explicit confirmation in automation.
+
+**Example: Export the OCIO configuration and refresh libraries**
+
+```python
+p = flame.project
+ok = p.export_ocio_config('Company_OCIO_v2', destination_folder='/mnt/shared/ocio', overwrite_existing=True, export_as_locked=True, generate_ocioz=True)
+if ok:
+    p.refresh_shared_libraries()
+```
+
+> **Safety note:** Always test configuration changes in a non-production workspace or with a project backup before applying them globally. Use caution with `delete()` or any destructive operations.
 
 

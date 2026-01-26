@@ -1,8 +1,42 @@
+
 # Class: PyNode
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Derived Classes:** Many node types in Batch, TimelineFX, and Schematic inherit from PyNode.
+
+## Functional Role & Context
+* **Functional Role:** Represents a generic node in the Flame compositing, schematic, or effects graph. Nodes are the building blocks for effects, processing, and data flow in Batch and TimelineFX.
+* **Context:** Used for manipulating, connecting, and querying nodes in the schematic. Provides access to sockets, metadata, and node setup operations.
+
+## Description
+The PyNode class is the core abstraction for all node-based operations in Flame. It provides methods for managing node connections, loading/saving setups, duplicating, deleting, and accessing node-specific metadata. Most effect, processing, and utility nodes in Flame derive from PyNode.
+
+---
+
+
+## Attributes
+| Attribute   | Type | Description |
+|-------------|------|-------------|
+| pos_x       | int  | The x position of a node in the Batch schematic. Range: -2147483647 to 2147483647 |
+| pos_y       | int  | The y position of a node in the Batch schematic. Range: -2147483647 to 2147483647 |
+| name        | str  | The name of the node in the Batch schematic. |
+| shot_name   | str  | The shot name of the node in the Batch schematic, resolving tokens if any are present. |
+| collapsed   | bool | The collapsed status of a node in the Batch schematic. Values: True/False |
+
+---
 Object representing a Node.
+
+### Example
+```python
+# Example: Duplicate a node and save its node setup
+# Assume 'node' is a PyNode object
+copy = node.duplicate(keep_node_connections=False)
+node.save_node_setup('/tmp/node_setup.xml')
+print('Duplicated node:', copy.attributes.name)
+```
 
 ## Methods
 ### Properties

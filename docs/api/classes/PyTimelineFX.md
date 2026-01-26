@@ -1,8 +1,40 @@
+
 # Class: PyTimelineFX
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Context:** Used in the timeline for effects processing.
+
+## Functional Role & Context
+* **Functional Role:** Represents a Timeline FX, providing access to effect setup, cache, and keyframe operations.
+* **Context:** Used for automating and managing timeline effects in Flame.
+
+## Description
+The PyTimelineFX class provides access to timeline effects, enabling automation of effect setup, cache management, and keyframe operations in the timeline.
+
+---
+
 Object representing a Timeline FX.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PyTimelineFX` is the base class for all timeline effects (Action, Keyer, Timewarp, etc.). It exposes effect identification (type), cache status (`has_maps_cache_media`), and universal methods for setup and keyframe handling.
+
+**Common methods:** `load_setup(file_name)`, `save_setup(file_name)`, `clear_maps_cache_media()`, `slide_keyframes(offset, sync=False)`, `sync_connected_segments()`.
+
+**Example:**
+
+```python
+# Iterate effects on a segment and clear maps cache if necessary
+for fx in segment.effects:
+    print('FX:', fx.type)
+    if fx.has_maps_cache_media:
+        fx.clear_maps_cache_media()
+```
+
 
 ## Methods
 ### Properties

@@ -1,8 +1,78 @@
+
 # Class: PyFolder
 
 **Module**: `flame`
 
-Class derived from PyArchiveEntry. This class represents a Folder.
+## Inheritance & Hierarchy
+* **Base class:** `PyArchiveEntry` (inherits from `PyFlameObject`)
+* **Functional Role:** Generic container for organization in a Flame project.
+* **Contained by:** `PyLibrary`, `PyFolder`, `PyDesktop`
+* **Contains:** Nested `PyFolder`s, `PyReelGroup`, `PyReel`, `PyClip`, `PySequence`
+
+## Description
+Represents a Folder, used to organize media, reels, and sequences within a Library or Desktop.
+
+
+## API Insight: Definition, Attributes, Methods, and Usage
+The **PyFolder** class represents a standard organizational folder, serving as a container for other objects and media elements in the Media Panel.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyFolder      | Object representing a Folder. |
+| Parent Class  | PyArchiveEntry| Inherits foundational media management attributes and methods. |
+| Primary Role  | Organizational Container | Used for nested hierarchy and grouping media. |
+
+### Inherited and Core Attributes
+| Attribute         | Type           | Access     | Inherited From | Description |
+|-------------------|---------------|------------|---------------|-------------|
+| attributes        | PyAttribute    | Read-only  | PyFlameObject | Dynamic properties (name, colour, etc.). |
+| parent            | PyArchiveEntry | Read-only  | PyFlameObject | Container object. |
+| id                | str            | Read-only  | PyArchiveEntry| Unique database identifier. |
+| name              | str            | Read/Write | PyArchiveEntry| Display name of the folder. |
+| colour            | tuple          | Read/Write | PyArchiveEntry| Color label in the UI. |
+
+### Container and Management Methods
+| Method                | Arguments                        | Returns   | Description |
+|-----------------------|----------------------------------|-----------|-------------|
+| create_folder()       | name                             | PyFolder  | Create a nested folder. |
+| create_reel_group()   | name                             | PyReelGroup| Create a Reel Group inside the folder. |
+| get_children()        | None                             | list      | List all objects directly contained. |
+| delete([confirm=True])| confirm                          | bool      | Delete the folder and its contents. |
+| duplicate()           | None                             | PyFolder  | Duplicate the folder and its contents. |
+| move()                | destination                      | bool      | Move the folder to a new container. |
+
+### Usage Context
+PyFolder is the building block for organizational scripts, enabling deep folder structures for media management.
+
+```python
+# Example: Creating a nested folder structure
+# Assume 'desktop' is a PyDesktop object (e.g., flame.project.desktop)
+
+client_folder = desktop.create_folder("CLIENT_X_SHOW")
+
+# Create a sub-folder for editorial sequences
+edit_folder = client_folder.create_folder("EDL_TIMELINES")
+
+# Create a sub-folder for rendered outputs
+renders_folder = client_folder.create_folder("RENDERS")
+```
+
+**Notes**
+- The `colour` attribute is stored as an `(R, G, B, A)` tuple.
+- Use `create_reel_group()` when grouping multiple reel versions inside folders.
+
+## Attributes
+| Attribute    | Type   | Description |
+|--------------|--------|-------------|
+| name         | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
+| uid          | str    | The unique identifier of an object in the Media Panel. |
+| token_name   | str    | The tokenized name of an object in the Media Panel. |
+| expanded     | bool   | The expanded state of an object in the Media Panel. Values: True/False |
+| colour       | tuple  | The colour of an object in the Media Panel. |
+
+---
+
 
 ## Methods
 ### Properties

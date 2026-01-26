@@ -1,8 +1,66 @@
+
 # Class: PyExporter
 
 **Module**: `flame`
 
-Object holding export settings.
+## Functional Role & Context
+* **Functional Role:** Holds export settings and manages export operations for media and timelines.
+
+## Description
+Provides access to export configuration and execution for clips, sequences, and timelines in Flame.
+
+
+## API Insight: Definition, Attributes, Methods, and Usage
+The **PyExporter** class is a specialized utility for managing export settings and controlling the output process for media.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyExporter    | Holds and manages export settings. |
+| Parent Class  | None          | Standalone utility class. |
+| Access Point  | flame.exporter| Accessed as a static object from the flame module. |
+
+### Core Methods
+| Method                | Arguments                        | Returns   | Description |
+|-----------------------|----------------------------------|-----------|-------------|
+| load_setup()          | file_path                        | bool      | Load export settings from a setup file. |
+| save_setup()          | file_path                        | bool      | Save current export settings to a file. |
+| reset()               | None                             | None      | Reset all export settings to defaults. |
+| execute()             | target_objects, destination      | bool      | Start the export process. |
+
+### Export Settings (Attributes)
+| Attribute Name        | Data Type        | Description |
+|----------------------|------------------|-------------|
+| export_type           | str              | Export preset/format. |
+| output_resolution     | PyResolution     | Resolution of exported media. |
+| colour_space          | str              | Output color space. |
+| bit_depth             | str              | Bit depth of exported file. |
+| custom_filename       | str              | Custom filename for output. |
+| start_frame           | int              | Starting frame number. |
+| frame_range           | str              | Exported range method. |
+| version_name          | str              | Name for exported version clip. |
+| include_audio         | bool             | Include audio tracks. |
+| destination_path      | str (read-only)  | Destination path on disk. |
+
+### Usage Context
+PyExporter is used to prepare, modify, and execute exports programmatically, mirroring the Flame Export dialog.
+
+**Example:**
+
+```python
+# Configure a simple exporter and run an export for a list of clips
+exporter.export_type = 'OpenEXR Sequence'
+exporter.output_resolution = flame.PyResolution('HD 1080')
+exporter.colour_space = 'Rec.709'
+exporter.custom_filename = '%name_v%version'
+
+clips = [clip1, clip2]
+export_success = exporter.execute(clips, '/mnt/exports')
+if export_success:
+    print('Export started successfully')
+```
+
+You can also provide hook overrides to customize pre/post export behavior by passing an object that implements the expected hook methods.
 
 ## Methods
 ### Properties

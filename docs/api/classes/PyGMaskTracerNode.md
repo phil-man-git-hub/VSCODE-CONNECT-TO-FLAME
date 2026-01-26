@@ -1,8 +1,17 @@
+
 # Class: PyGMaskTracerNode
 
 **Module**: `flame`
 
-Class derived from PyActionFamilyNode. Represents a GMask Tracer node object.
+## Inheritance & Hierarchy
+* **Base class:** `PyActionFamilyNode` (inherits from `PyNode` → `PyFlameObject`)
+* **Functional Role:** Represents a GMask Tracer node in the schematic, used for advanced masking and roto work.
+
+## Description
+Represents a GMask Tracer node, providing tools for creating and editing masks in the node graph.
+
+---
+
 
 ## Methods
 ### Properties
@@ -62,4 +71,16 @@ disable_output( (PyActionFamilyNode)arg1, (str)output_type) -> bool :
     Keyword argument:
     output_type -- The output to enable. (Comp, Matte, 3D Motion, Albedo, AO, Background, Emissive, GMask, Lens Flare, Motion Vectors, Normals, Object ID, Occluder, Position, Projectors Matte, Reflection, Roughness, Shadow, Specular, UV, Z-Depth HQ, Z-Depth)
 
+## API Insight
+
+- The GMask Tracer node provides import and export capabilities for 3D formats (FBX, ABC) plus PSD; use `import_fbx/read_fbx` or `import_abc/read_abc` when bringing geometry into the schematic.
+- Use `enable_output(output_type)` / `disable_output(output_type)` to toggle render outputs such as `Matte` or `Comp`.
+
+**Example:**
+
+```python
+# Import an FBX and enable the Matte output
+node.import_fbx('/path/to/scene.fbx', input_colour_space='sRGB')
+node.enable_output('Matte')
+```
 

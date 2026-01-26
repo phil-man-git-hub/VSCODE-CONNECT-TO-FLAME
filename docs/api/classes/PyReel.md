@@ -1,8 +1,51 @@
+
 # Class: PyReel
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Contained By:** PyReelGroup, PyLibrary, PyFolder
+
+## Functional Role & Context
+* **Functional Role:** Represents a Reel, providing access to sequences, clips, and child objects.
+* **Context:** Used for organizing, creating, and managing sequences and clips in the Flame environment.
+
+## Description
+The PyReel class provides programmatic access to reels, supporting automation of sequence and clip management, and organization in libraries and folders.
+
+
 Object representing a Reel.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PyReel` is a container representing a single version of an asset, holding the actual media objects (e.g., `PyClip`, `PySequence`). It is typically accessed as a child of a `PyReelGroup`.
+
+**Core members & behaviour:**
+- `children`, `clips`, `sequences` — access the contained media items.
+- `is_current` (bool) — mark this reel as the current version in its `PyReelGroup`.
+- `get_clips()`, `get_sequences()` — convenience accessors for contained media.
+
+**Example:**
+
+```python
+# Mark a reel as the current version and inspect its media
+shot_group = my_folder.get_item('SHOT_010')
+v002 = shot_group.reels[1]
+v002.is_current = True
+current = v002.get_clips()[0]
+print('Current clip:', current.attributes.name)
+```
+
+## Attributes
+| Attribute   | Type   | Description |
+|-------------|--------|-------------|
+| name        | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
+| uid         | str    | The unique identifier of an object in the Media Panel. |
+| token_name  | str    | The tokenized name of an object in the Media Panel. |
+| expanded    | bool   | The expanded state of an object in the Media Panel. True or False. |
+| colour      | tuple  | The colour of an object in the Media Panel. |
 
 ## Methods
 ### Properties

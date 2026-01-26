@@ -1,9 +1,23 @@
+
 # Class: PyActionFamilyNode
 
 **Module**: `flame`
 
-Class derived from PyNode. Represents an Action Family node object.
+## Inheritance & Hierarchy
+* **Base class:** `PyNode` (inherits from `PyFlameObject`)
+* **Functional Role:** Base class for schematic containers (Action, Image, GMask Tracer) in the Batch environment.
 
+## Description
+Represents an Action Family node object, providing a container for Action, Image, and GMask Tracer environments in the schematic.
+
+---
+### Example
+```python
+# Example: Create a new Read File node inside an Action family schematic
+# Assume 'action_family' is a PyActionFamilyNode object
+read_node = action_family.create_node('Read File', '/mnt/assets/plate.exr')
+print('Created node:', read_node.attributes.name)
+```
 ## Methods
 ### Properties
 - `node_types(...)` — None( (flame.PyActionFamilyNode)arg1) -> list 

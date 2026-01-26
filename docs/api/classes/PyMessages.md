@@ -1,8 +1,38 @@
+
 # Class: PyMessages
 
 **Module**: `flame`
 
-Module handling message bar in application UI.
+## Functional Role & Context
+* **Functional Role:** Handles the message bar and dialogs in the application UI.
+
+## Description
+Provides access to the message bar and dialog system, allowing display and management of messages and dialogs in Flame.
+
+---
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+The **`PyMessages`** utility exposes methods for sending user-facing messages and console logs from scripts, categorized by severity (info, warning, error) and with support for dialog boxes.
+
+**Example:**
+
+```python
+# Log to console and notify the user via the message bar
+flame.messages.log('Starting render batch...')
+flame.messages.info('Render started: Check back in 10 minutes')
+if errors:
+    flame.messages.warning(f"Completed with {len(errors)} non-fatal issues")
+if critical_failure:
+    flame.messages.error('Critical: export failed, check logs')
+
+# Display a confirmation dialog
+choice = flame.messages.show_in_dialog('Confirm', 'Start export now?', 'question', ['Yes', 'No'], cancel_button='No')
+if choice == 'Yes':
+    start_export()
+```
+
 
 ## Methods
 ### Built-in methods

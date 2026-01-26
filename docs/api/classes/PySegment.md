@@ -1,8 +1,47 @@
+
 # Class: PySegment
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Contained By:** PyTrack, PySequence, PyTimeline
+
+## Functional Role & Context
+* **Functional Role:** Represents a segment in a track or sequence, providing access to source properties, editing, and metadata.
+* **Context:** Used for programmatic editing, source management, and segment operations in the timeline or sequence.
+
+## Description
+The PySegment class provides programmatic access to segments, supporting automation of editing, source management, and metadata operations in the Flame environment.
+
+
 Object representing a Segment.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PySegment` represents a clip instance on a sequence timeline and exposes timeline-accurate properties (record_in/out, duration, head/tail) and editing methods (`trim_head`, `trim_tail`, `slip`, `slide_keyframes`). It also exposes source metadata (file path, frame rate, bit depth) useful for conform and verification scripts.
+
+**Common methods:** `trim_head(offset, ripple=False, sync=False, keyframes_move_mode='Shift')`, `trim_tail(...)`, `slip(offset)`, `get_colour_space(time=None)`.
+
+**Example:**
+
+```python
+# Trim 10 frames from the head of a selected segment and ripple subsequent segments
+segment = seq.get_segment_at_frame(track, 100)
+segment.trim_head(10, ripple=True)
+print('New duration:', segment.record_duration)
+```
+
+## Attributes
+| Attribute         | Type   | Description |
+|-------------------|--------|-------------|
+| name              | str    | The name of the Segment. |
+| tokenized_name    | str    | The name of the Segment, including any unresolved tokens, if present. |
+| dynamic_name      | bool   | The Dynamic attribute of a Segment's name. Automatically disabled when the name attribute is set. True or False. |
+| shot_name         | str    | The shot name of the Segment. |
+| tokenized_shot_name | str  | The shot name of the Segment, including any unresolved tokens, if present. |
+| dynamic_shot_name | bool   | The Dynamic attribute of a Segment's shot name. Automatically disabled when the shot_name attribute is set. True or False. |
 
 ## Methods
 ### Properties

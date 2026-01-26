@@ -1,8 +1,90 @@
+
 # Class: PyClip
 
 **Module**: `flame`
 
-CLass derived from PyArchiveEntry. This class represents a Clip.
+## Inheritance & Hierarchy
+* **Base class:** `PyArchiveEntry` (inherits from `PyFlameObject`)
+* **Functional Role:** Represents a simple media asset or file reference in a Flame project.
+* **Contained by:** `PyReel`, `PyFolder`, `PyLibrary`
+* **Contains:** `PyVersion`
+
+## Description
+Represents a Clip, a media asset or file reference, as seen in the Media Panel.
+
+
+## API Insight: Definition, Attributes, Methods, and Usage
+The **PyClip** class is a fundamental object representing a media asset (clip, sequence, or timeline) stored in the Media Panel.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyClip        | Represents a Clip. |
+| Parent Class  | PyArchiveEntry| Inherits organizational management methods. |
+| Primary Role  | Media Asset   | Represents a contiguous piece of media with defined characteristics. |
+| Location      | Contained by PyReel | Typically located inside a PyReel. |
+
+### Core Properties
+| Attribute         | Type           | Access     | Description |
+|-------------------|---------------|------------|-------------|
+| duration          | int           | Read-only  | Duration of the clip in frames. |
+| start_frame       | int           | Read/Write | Start frame of the clip's timeline. |
+| end_frame         | int           | Read/Write | End frame of the clip's timeline. |
+| frame_rate        | float         | Read-only  | Frame rate of the clip. |
+| resolution        | PyResolution  | Read-only  | Details like width, height, scan format. |
+| colour_space      | str           | Read/Write | Color space of the clip. |
+| parent            | PyReel        | Read-only  | Container object. |
+| attributes        | PyAttribute   | Read-only  | Metadata including name and colour. |
+
+### Key Methods
+| Method                | Arguments                        | Returns   | Description |
+|-----------------------|----------------------------------|-----------|-------------|
+| create_version()      | name                             | PyReel    | Create a new version in the parent group. |
+| get_markers()         | None                             | list      | Get all markers associated with the clip. |
+| import_setup()        | file_name                        | bool      | Load a clip setup file. |
+| save_setup()          | file_name                        | bool      | Save the clip's current setup. |
+| export_clip()         | path, file_name, ...             | PyExporter| Export the clip with specified parameters. |
+| open()                | None                             | bool      | Open the clip in the application. |
+| delete([confirm=True])| confirm                          | bool      | Delete the clip object. |
+
+### Usage Context
+PyClip objects are frequently targeted for automation, rendering, conforming, and metadata management.
+
+```python
+# Example: Checking clip length and resolution
+# Assume 'clip' is a PyClip object
+
+print(f"Clip Name: {clip.attributes.name}")
+print(f"Duration: {clip.duration} frames")
+print(f"Frame Rate: {clip.frame_rate} FPS")
+
+res = clip.resolution
+print(f"Resolution: {res.width}x{res.height}")
+
+# Exporting a clip and checking result
+# Many implementations return an exporter-like object or job handle
+export_job = clip.export_clip(
+    path="/mnt/exports/shot010",
+    file_name="shot010_v003",
+    options={'export_type': 'OpenEXR Sequence', 'colour_space':'Rec.709'}
+)
+if hasattr(export_job, 'execute'):
+    export_job.execute([clip], '/mnt/exports')
+else:
+    print('Export job handle returned:', export_job)
+```
+
+## Attributes
+| Attribute            | Type   | Description |
+|----------------------|--------|-------------|
+| name                 | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
+| shot_name            | str    | The shot name of an object in the Media Panel, resolving tokens if any are present. |
+| tokenized_shot_name  | str    | The shot name including unresolved tokens, if present. |
+| dynamic_shot_name    | str    | Dynamic attribute; auto-disabled when shot_name is set. Values: True/False |
+| uid                  | str    | Unique identifier of the object in the Media Panel. |
+
+---
+
 
 ## Methods
 ### Properties
@@ -178,6 +260,13 @@ change_start_frame( (PyClip)arg1, (int)start_frame [, (bool)use_segment_connecti
     Keywords argument:
     start_frame -- New start frame of the clip.
     use_segment_connections -- Sync the start frame of connected segments.
+
+- `export_clip(...)` — export_clip( (PyClip)arg1, (str)path, (str)file_name [, (dict)options={}]) -> object : 
+export_clip( (PyClip)arg1, (str)path, (str)file_name [, (dict)options={}]) -> object :
+    Initiate an export of the Clip using the provided parameters. Returns a `PyExporter`-like object or export job handle. Keyword arguments:
+    path -- Destination directory for the exported files.
+    file_name -- Base filename or template to use for output.
+    options -- Optional dictionary containing export settings (format, codec, color_space, render_quality, include_handles, etc.).
 
 - `get_metadata(...)` — get_metadata( (PyClip)arg1 [, (str)key='' [, (PyTime)time=None]]) -> object : 
 get_metadata( (PyClip)arg1 [, (str)key='' [, (PyTime)time=None]]) -> object :

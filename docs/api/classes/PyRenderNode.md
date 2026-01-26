@@ -1,6 +1,20 @@
+
 # Class: PyRenderNode
 
 **Module**: `flame`
+
+## Inheritance & Hierarchy
+* **Base Class:** PyNode
+* **Context:** Used for rendering outputs in node-based compositing.
+
+## Functional Role & Context
+* **Functional Role:** Represents a Render node, providing access to rendering and output channel management operations.
+* **Context:** Used for automating render output, channel naming, and metadata management in Batch and TimelineFX.
+
+## Description
+The PyRenderNode class provides programmatic access to render nodes, supporting automation of output channel management and rendering operations in node-based workflows.
+
+---
 
 Class derived from PyNode. This class represents a Render node.
 
@@ -46,3 +60,11 @@ set_metadata_key( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (
     name -- The new metadata key name. If None, the current key name will revert to its original value.
 
 
+### Example
+```python
+# Rename a render channel and add a metadata tag
+# Assume 'render_node' is a PyRenderNode object
+render_node.set_channel_name(0, 'RGBA')
+render_node.set_metadata_value(socket_name='Default', key='Shot', value='SH_010')
+print('Channels:', render_node.channels)
+```

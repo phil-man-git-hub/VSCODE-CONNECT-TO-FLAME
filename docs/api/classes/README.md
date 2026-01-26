@@ -71,3 +71,10 @@
 - [PyVersion](./PyVersion.md)
 - [PyWorkspace](./PyWorkspace.md)
 - [PyWriteFileNode](./PyWriteFileNode.md)
+## Example
+
+```python
+# Example: inspect available Py* classes from the Flame module
+import flame
+print([c for c in dir(flame) if c.startswith('Py')])
+```

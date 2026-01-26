@@ -1,6 +1,20 @@
+
 # Class: PySearch
 
 **Module**: `flame`
+
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Context:** Used for searching and managing tool visibility and favorites in Flame.
+
+## Functional Role & Context
+* **Functional Role:** Represents the search system, providing access to tool search, favorites, and visibility management.
+* **Context:** Used for automating search, tool management, and UI customization in Flame.
+
+## Description
+The PySearch class provides programmatic access to the search system, supporting automation of tool search, favorites, and visibility management in the Flame environment.
+
+---
 
 This class represents the search.
 
@@ -31,4 +45,18 @@ search_results( (PySearch)arg1 [, (str)search_str='*' [, (str)tab='Tools']]) -> 
 activate_search_result( (PySearch)arg1, (str)name, (str)type [, (str)tab='Tools']) -> None :
     Activate a search result.
 
+## API Insight
+
+- `search_results(search_str='*', tab='Tools')` returns a list of matches; `activate_search_result(name, type, tab='Tools')` triggers the selected tool or panel.
+- Use `set_tool_favorite`/`set_tool_hidden`/`set_tool_weight` to manage tool availability and prioritisation in the UI.
+
+**Example:**
+
+```python
+# Find tools matching 'color' and activate the first result
+results = search.search_results('color')
+if results:
+    name, type = results[0]['name'], results[0]['type']
+    search.activate_search_result(name, type)
+```
 

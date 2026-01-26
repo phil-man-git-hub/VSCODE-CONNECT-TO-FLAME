@@ -1,8 +1,41 @@
+
 # Class: PyTransition
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Contained By:** PyTrack, PyTimeline
+
+## Functional Role & Context
+* **Functional Role:** Represents a transition between segments in a track, providing access to type, timing, and editing operations.
+* **Context:** Used for programmatic management of transitions, including type, duration, and alignment in the timeline or sequence.
+
+## Description
+The PyTransition class provides access to transitions in a track or timeline, enabling automation of transition management, type changes, and timing adjustments in Flame.
+
+---
+
 Object representing a Transition.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PyTransition` models the cut transition between two adjacent `PySegment` objects on a `PyTrack`. It exposes its type, alignment, timing, and convenience methods to replace or slide the transition and to set dissolve/fade parameters.
+
+**Core attributes:** `type`, `record_time`, `in_offset`, `attributes`.
+
+**Common methods:** `set_transition(type, duration=10, alignment='Centred', in_offset=0)`, `slide(offset, sync=False)`, `set_dissolve_to_from_colour(r,g,b)`, `set_fade_to_from_silence()`.
+
+**Example:**
+
+```python
+# Replace a transition with a Dissolve and slide it by 2 frames
+transition.set_transition('Dissolve', duration=12)
+transition.slide(2)
+# Set dissolve to fade to black
+transition.set_dissolve_to_from_colour(0.0, 0.0, 0.0)
+```
 
 ## Methods
 ### Properties

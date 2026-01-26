@@ -1,8 +1,61 @@
+
 # Class: PyActionNode
 
 **Module**: `flame`
 
-Class derived from PyActionFamilyNode. Represents an Action node object.
+## Inheritance & Hierarchy
+* **Base class:** `PyActionFamilyNode` (inherits from `PyNode` → `PyFlameObject`)
+* **Functional Role:** The main 3D compositing node in the schematic (Action environment).
+
+## API Foundation & Inherited Features
+PyActionNode ultimately inherits from `PyArchiveEntry` via `PyNode` and `PyFlameObject`. This means it shares foundational properties and methods common to all objects managed in the Flame Media Panel:
+
+### Common Attributes (from PyArchiveEntry)
+| Attribute   | Type   | Description |
+|-------------|--------|-------------|
+| id          | str    | Unique database identifier for the node. |
+| name        | str    | Display name in the Media Panel. |
+| colour      | tuple  | Colour assigned for labelling. |
+| modified    | datetime | Last modified timestamp. |
+| archived    | bool   | Archive status. |
+| online      | bool   | Media availability status. |
+
+### Common Methods (from PyArchiveEntry)
+| Method                | Returns         | Description |
+|-----------------------|----------------|-------------|
+| delete([confirm=True])| bool           | Deletes the node, optionally with confirmation. |
+| duplicate()           | PyArchiveEntry | Creates a copy of the node. |
+| move(destination)     | bool           | Moves the node to a new container. |
+| reveal_in_ui()        | bool           | Selects and displays the node in the UI. |
+| get_children()        | list           | Retrieves immediate children of the node. |
+
+This inheritance ensures PyActionNode supports robust media management, organization, and UI integration consistent with all Flame database objects.
+
+
+## Description
+Represents an Action node object, providing the core compositing and 3D environment in the schematic.
+
+---
+
+## Attributes
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| pos_x     | int  | The x position of a node in the Batch schematic. Range: -2147483647 to 2147483647 |
+| pos_y     | int  | The y position of a node in the Batch schematic. Range: -2147483647 to 2147483647 |
+| name      | str  | The name of the node in the Batch schematic. |
+| collapsed | bool | The collapsed status of a node in the Batch schematic. Values: True/False |
+| note      | str  | The Node's note. |
+
+---
+
+### Example
+```python
+# Example: Import an FBX into Action and enable outputs
+# Assume 'action' is a PyActionNode object
+fbx_result = action.import_fbx('/mnt/assets/scene_001.fbx', lights=True, cameras=True)
+action.enable_output('Comp')
+print('Imported FBX result:', fbx_result)
+```
 
 ## Methods
 ### Properties

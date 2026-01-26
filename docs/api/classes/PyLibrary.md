@@ -1,8 +1,75 @@
+
 # Class: PyLibrary
 
 **Module**: `flame`
 
-Class derived from PyArchiveEntry. This class represents a Library.
+## Inheritance & Hierarchy
+* **Base class:** `PyArchiveEntry` (inherits from `PyFlameObject`)
+* **Functional Role:** The central shared media container in a Flame project.
+* **Contained by:** `PyProject`
+* **Contains:** `PyFolder`, `PyReelGroup`, `PyReel`
+
+## Description
+Represents a Library, a top-level container for organizing media, folders, reels, and sequences in a Flame project.
+
+
+## API Insight: Definition, Attributes, Methods, and Usage
+The **PyLibrary** class represents a Shared Library container, serving as a top-level collaborative structure for media and folders.
+
+### Definition and Hierarchy
+| Property      | Value         | Description |
+|-------------- |-------------- |-------------|
+| Class Name    | PyLibrary     | Shared Library container. |
+| Parent Class  | PyArchiveEntry| Inherits foundational attributes and methods. |
+| Grandparent   | PyFlameObject | Inherits base attributes and parent property. |
+| Primary Role  | Shared Media Container | Top-level container for folders and reel groups. |
+| Location      | Contained by PyProject | Direct child of the project object. |
+
+### Inherited and Core Attributes
+| Attribute         | Type           | Access     | Inherited From | Description |
+|-------------------|---------------|------------|---------------|-------------|
+| attributes        | PyAttribute    | Read-only  | PyFlameObject | Dynamic access to object properties. |
+| parent            | PyProject      | Read-only  | PyFlameObject | Container project object. |
+| id                | str            | Read-only  | PyArchiveEntry| Unique database identifier. |
+| name              | str            | Read/Write | PyArchiveEntry| Display name in the Media Panel. |
+| online            | bool           | Read-only  | PyArchiveEntry| Database entry availability. |
+
+### Container and Management Methods
+| Method                | Arguments                        | Returns   | Description |
+|-----------------------|----------------------------------|-----------|-------------|
+| create_folder()       | name                             | PyFolder  | Create a folder inside the library. |
+| create_reel_group()   | name                             | PyReelGroup| Create a reel group inside the library. |
+| get_children()        | None                             | list      | List all immediate children. |
+| delete([confirm=True])| confirm                          | bool      | Delete the library. |
+| duplicate()           | None                             | PyLibrary | Duplicate the library and contents. |
+| move()                | destination                      | bool      | Move the library to a new container. |
+
+### Usage Context
+PyLibrary is used in automation scripts to manage shared resources and structure project organization, often accessed after retrieving the PyProject object.
+
+**Example:**
+
+```python
+library = flame.project.library
+# Acquire exclusive access to the library if needed
+if library.acquire_exclusive_access():
+    assets = library.create_folder('01_ASSETS')
+    render_grp = library.create_reel_group('02_RENDERS')
+    library.release_exclusive_access()
+```
+
+
+## Attributes
+| Attribute    | Type   | Description |
+|--------------|--------|-------------|
+| name         | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
+| uid          | str    | The unique identifier of an object in the Media Panel. |
+| token_name   | str    | The tokenized name of an object in the Media Panel. |
+| expanded     | bool   | The expanded state of an object in the Media Panel. Values: True/False |
+| colour       | tuple  | The colour of an object in the Media Panel. |
+
+---
+
 
 ## Methods
 ### Properties

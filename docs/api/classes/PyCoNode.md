@@ -1,8 +1,17 @@
+
 # Class: PyCoNode
 
 **Module**: `flame`
 
-Class derived from PyFlameObject. This class represents an Action node in the Action schematic.
+## Inheritance & Hierarchy
+* **Base class:** `PyNode` (inherits from `PyFlameObject`)
+* **Functional Role:** Base class for Connectionist Nodes (e.g., Compass, Camera Analysis) in the schematic.
+
+## Description
+Represents a Connectionist Node, providing advanced node types for grouping, analysis, and connections in the schematic.
+
+---
+
 
 ## Methods
 ### Properties
@@ -41,5 +50,14 @@ children( (PyCoNode)arg1 [, (str)link_type='Default']) -> list :
     Return a list of PyCoNode objects that are the children of the action node.
     Keyword argument:
     link_type -- The type of link used to connect the nodes (default, look at, gmask, gmask exclusive, light, light exclusive, mimic)
+
+### Example
+```python
+# Example: Assign a media layer and cache an analysis range
+# Assume 'co_node' is a PyCoNode object
+co_node.assign_media('Diffuse')
+co_node.cache_range(start=100, end=200)
+print('Assigned media and cached analysis range')
+```
 
 

@@ -1,8 +1,47 @@
+
 # Class: PySubtitleTrack
 
 **Module**: `flame`
 
+## Inheritance & Hierarchy
+* **Base Class:** PyFlameObject
+* **Contained By:** PySequence, PyTrack
+
+## Functional Role & Context
+* **Functional Role:** Represents a subtitle track, providing access to subtitle export and management operations.
+* **Context:** Used for automating subtitle export, alignment, and color management in the timeline or sequence.
+
+## Description
+The PySubtitleTrack class provides programmatic access to subtitle tracks, supporting automation of subtitle export, alignment, and color management in the Flame environment.
+
+---
+
 Object representing a Subtitle Track.
+
+## API Insight
+### Autodesk Flame API Insight (2026)
+
+`PySubtitleTrack` is a specialized `PyTrack` that manages subtitle content, language, and text encoding on a sequence timeline. It exposes track-level controls (language, encoding) and inherits standard track methods (`set_muted`, `set_locked`, `segments`).
+
+**Core attributes:**
+- `language` (str) — Read/Write, the language code for the track (e.g., 'en', 'fr').
+- `encoding_type` (str) — Read/Write, subtitle text encoding (e.g., 'UTF-8').
+- `segments` (list of PySegment) — Read-only, subtitle segments on the track.
+
+**Common methods:**
+- `set_language(language_code)` — Set the track language.
+- `set_encoding_type(encoding)` — Set the subtitle encoding.
+- `remove_all_segments()` — Remove all subtitle segments.
+
+**Example:**
+
+```python
+# Configure a subtitle track for export
+subtitle_track.set_language('fr')
+subtitle_track.set_encoding_type('UTF-8')
+subtitle_track.export_as_srt_file('/tmp/shot01_fr.srt', character_based_attributes=True, export_colours=False)
+```
+
 
 ## Methods
 ### Built-in methods
