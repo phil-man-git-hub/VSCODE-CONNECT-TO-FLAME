@@ -17,8 +17,32 @@ def test_start_debug_server():
         _s.bind((HOST, 0))
         port = _s.getsockname()[1]
 
-    proc = subprocess.Popen([sys.executable, server_py, str(port)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    time.sleep(0.1)
+    # Run the mock server with unbuffered stdout so we can detect readiness via its startup message.
+    proc = subprocess.Popen([sys.executable, '-u', server_py, str(port)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    # Wait for the mock server to print a startup message indicating it's ready.
+    import select
+    deadline = time.time() + 3.0
+    ready = False
+    while time.time() < deadline:
+        if proc.poll() is not None:
+            out, err = proc.communicate()
+            raise AssertionError(f"Mock server exited prematurely. stdout={out!r} stderr={err!r}")
+        r, _, _ = select.select([proc.stdout.fileno()], [], [], 0.05)
+        if r:
+            line = proc.stdout.readline()
+            if 'Running mock_flame_server' in line:
+                ready = True
+                break
+    if not ready:
+        try:
+            out, err = proc.communicate(timeout=1)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait(timeout=1)
+            out, err = proc.communicate()
+        raise AssertionError(f"Mock server did not print readiness message. stdout={out!r} stderr={err!r}")
+
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((HOST, port))
@@ -37,7 +61,13 @@ def test_start_debug_server():
                 except json.JSONDecodeError:
                     continue
     finally:
-        proc.wait(timeout=1)
+        try:
+            proc.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait(timeout=1)
+        # Ensure we drain stdout/stderr to avoid zombies
+        proc.communicate()
 
 if __name__ == '__main__':
     sys.exit(0 if test_start_debug_server() is None else 1)
