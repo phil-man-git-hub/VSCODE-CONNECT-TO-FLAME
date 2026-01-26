@@ -35,7 +35,10 @@ def render_module_md(module_name, data):
             if c.get('methods'):
                 lines.append('#### Methods\n')
                 for m in c['methods']:
-                    lines.append(f"- `{m['name']}{m['signature']}` — { (m.get('doc','').splitlines()[0] if m.get('doc') else '') }\n")
+                    k = m.get('kind')
+                    kind_label = f" ({k})" if k else ''
+                    doc_snip = (m.get('doc','').splitlines()[0] + ' ') if m.get('doc') else ''
+                    lines.append(f"- `{m['name']}{m['signature']}`{kind_label} — {doc_snip}\n")
                 lines.append('\n')
     if data.get('functions'):
         lines.append('## Functions\n')
@@ -74,10 +77,36 @@ def render_class_md(module_name, cls):
         lines.append(cls['doc'] + '\n\n')
     if cls.get('methods'):
         lines.append('## Methods\n')
-        for m in cls['methods']:
-            lines.append(f"### `{m['name']}{m['signature']}`\n\n")
-            if m.get('doc'):
-                lines.append(m['doc'] + '\n\n')
+        methods = cls['methods']
+        # Group by kind for clearer presentation
+        groups = {}
+        for m in methods:
+            kind = m.get('kind', 'function')
+            groups.setdefault(kind, []).append(m)
+        kind_order = ['property', 'classmethod', 'staticmethod', 'builtin', 'method_descriptor', 'callable', 'function', 'attribute']
+        kind_titles = {
+            'property': 'Properties',
+            'classmethod': 'Class methods',
+            'staticmethod': 'Static methods',
+            'builtin': 'Built-in methods',
+            'method_descriptor': 'Method descriptors',
+            'callable': 'Callable attributes',
+            'function': 'Functions',
+            'attribute': 'Attributes',
+        }
+        for k in kind_order:
+            ms = groups.get(k, [])
+            if not ms:
+                continue
+            lines.append(f"### {kind_titles.get(k, k.title())}\n")
+            for m in ms:
+                sig = m.get('signature','')
+                doc_snip = (m.get('doc','').splitlines()[0] + ' ') if m.get('doc') else ''
+                lines.append(f"- `{m['name']}{sig}` — {doc_snip}\n")
+                if m.get('doc'):
+                    # include the doc block for detail
+                    lines.append(m['doc'].strip() + '\n\n')
+            lines.append('\n')
     return ''.join(lines)
 
 

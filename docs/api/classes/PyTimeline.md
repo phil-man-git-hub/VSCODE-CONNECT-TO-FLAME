@@ -5,27 +5,23 @@
 This class represents the Timeline.
 
 ## Methods
-### `clip(...)`
-
+### Properties
+- `clip(...)` — None( (flame.PyTimeline)arg1) -> object 
 None( (flame.PyTimeline)arg1) -> object
 
-### `current_segment(...)`
-
+- `current_segment(...)` — None( (flame.PyTimeline)arg1) -> object 
 None( (flame.PyTimeline)arg1) -> object
 
-### `current_marker(...)`
-
+- `current_marker(...)` — None( (flame.PyTimeline)arg1) -> object 
 None( (flame.PyTimeline)arg1) -> object
 
-### `current_effect(...)`
-
+- `current_effect(...)` — None( (flame.PyTimeline)arg1) -> object 
 None( (flame.PyTimeline)arg1) -> object
 
-### `current_transition(...)`
-
+- `current_transition(...)` — None( (flame.PyTimeline)arg1) -> object 
 None( (flame.PyTimeline)arg1) -> object
 
-### `type(...)`
-
+- `type(...)` — None( (flame.PyTimeline)arg1) -> str 
 None( (flame.PyTimeline)arg1) -> str
+
 

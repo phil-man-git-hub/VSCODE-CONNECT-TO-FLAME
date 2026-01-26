@@ -5,65 +5,54 @@
 Object representing a Project.
 
 ## Methods
-### `name(...)`
-
+### Properties
+- `name(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `nickname(...)`
-
+- `nickname(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `description(...)`
-
+- `description(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `project_name(...)`
-
+- `project_name(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `workspaces_count(...)`
-
+- `workspaces_count(...)` — None( (flame.PyProject)arg1) -> int 
 None( (flame.PyProject)arg1) -> int
 
-### `current_workspace(...)`
-
+- `current_workspace(...)` — None( (flame.PyProject)arg1) -> object 
 None( (flame.PyProject)arg1) -> object
 
-### `shared_libraries(...)`
-
+- `shared_libraries(...)` — None( (flame.PyProject)arg1) -> list 
 None( (flame.PyProject)arg1) -> list
 
-### `project_folder(...)`
-
+- `project_folder(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `setups_folder(...)`
-
+- `setups_folder(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `media_folder(...)`
-
+- `media_folder(...)` — None( (flame.PyProject)arg1) -> str 
 None( (flame.PyProject)arg1) -> str
 
-### `create_shared_library(...)`
 
+### Built-in methods
+- `create_shared_library(...)` — create_shared_library( (PyProject)arg1, (str)name) -> object : 
 create_shared_library( (PyProject)arg1, (str)name) -> object :
     Create a new Shared Library in the Project.
 
-### `refresh_shared_libraries(...)`
-
+- `refresh_shared_libraries(...)` — refresh_shared_libraries( (PyProject)arg1) -> bool : 
 refresh_shared_libraries( (PyProject)arg1) -> bool :
     Refresh the Shared Libraries list in the Media Panel.
 
-### `reload_ocio_config(...)`
-
+- `reload_ocio_config(...)` — reload_ocio_config( (PyProject)arg1 [, (bool)reset_colour_policy=False]) -> bool : 
 reload_ocio_config( (PyProject)arg1 [, (bool)reset_colour_policy=False]) -> bool :
     Reload the OCIO config file.
     Keyword argument:
     reset_colour_policy -- Delete the project's custom colour spaces, roles, and rules (false by default).
 
-### `export_ocio_config(...)`
-
+- `export_ocio_config(...)` — export_ocio_config( (PyProject)arg1, (str)config_name [, (str)destination_folder='' [, (bool)overwrite_existing=False [, (bool)export_as_locked=False [, (bool)generate_ocioz=False]]]]) -> bool : 
 export_ocio_config( (PyProject)arg1, (str)config_name [, (str)destination_folder='' [, (bool)overwrite_existing=False [, (bool)export_as_locked=False [, (bool)generate_ocioz=False]]]]) -> bool :
     Export the OCIO config file.
     Keyword arguments:
@@ -73,18 +62,16 @@ export_ocio_config( (PyProject)arg1, (str)config_name [, (str)destination_folder
     export_as_locked -- Specifies if the exported OCIO config should be locked (the 'LockedPolicy' parameter inside the settings.cfg sidecar file).
     generate_ocioz -- Specifies if an OCIOZ archive should be created alongside the exported OCIO config.
 
-### `set_context_variable(...)`
-
+- `set_context_variable(...)` — set_context_variable( (PyProject)arg1, (str)name, (str)value) -> None : 
 set_context_variable( (PyProject)arg1, (str)name, (str)value) -> None :
     Set the value for the specified context variable.
 
-### `get_context_variables(...)`
-
+- `get_context_variables(...)` — get_context_variables( (PyProject)arg1) -> dict : 
 get_context_variables( (PyProject)arg1) -> dict :
     Get the context variables in a dictionary.
 
-### `reset_context_variables(...)`
-
+- `reset_context_variables(...)` — reset_context_variables( (PyProject)arg1) -> None : 
 reset_context_variables( (PyProject)arg1) -> None :
     Reset the context variables to their initial state from the ocio config.
+
 
