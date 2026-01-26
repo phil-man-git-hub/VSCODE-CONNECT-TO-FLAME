@@ -13,8 +13,9 @@ export function activate(context: vscode.ExtensionContext) {
     const port = cfg.listener?.port || 5555;
     const token = await getAuthToken();
     if (token) client?.setAuthToken(token);
-    await client?.connect(host, port);
-    vscode.window.showInformationMessage(`Connected to Flame at ${host}:${port}`);
+    // Use shared connect command to provide consistent logging in Flame output
+    const { connect } = await import('./commands/connect');
+    await connect(client!, host, port);
   });
   const runCmd = vscode.commands.registerCommand('flame.runInFlame', async () => {
     const editor = vscode.window.activeTextEditor;
