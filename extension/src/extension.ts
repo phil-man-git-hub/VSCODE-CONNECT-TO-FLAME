@@ -42,7 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
     await testConnection(client!);
   });
 
-  context.subscriptions.push(connectCmd, runCmd, startDebugCmd, testConnCmd);
+  const debugStatusCmd = vscode.commands.registerCommand('flame.debugStatus', async () => {
+    const { debugStatus } = await import('./commands/debugStatus');
+    await debugStatus(client!);
+  });
+
+  context.subscriptions.push(connectCmd, runCmd, startDebugCmd, testConnCmd, debugStatusCmd);
 }
 
 export function deactivate() {

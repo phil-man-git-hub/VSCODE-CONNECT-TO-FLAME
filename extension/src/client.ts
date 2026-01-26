@@ -8,6 +8,17 @@ export class FlameClient extends EventEmitter {
   private token: string | null = null;
   private buffer: string = '';
 
+  // Utility for debugging: return connection status details
+  getStatus() {
+    return {
+      connected: !!this.socket,
+      host: this.host,
+      port: this.port,
+      token_present: !!this.token,
+      buffer_len: this.buffer.length,
+    };
+  }
+
   constructor() {
     super();
   }

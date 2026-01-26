@@ -27,6 +27,10 @@
         "title": "Flame: Test connection (ping)"
       },
       {
+        "command": "flame.debugStatus",
+        "title": "Flame: Debug status"
+      },
+      {
         "command": "flame.startDebug",
         "title": "Flame: Start debug server"
       }
