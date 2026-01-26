@@ -6,7 +6,7 @@ thread so it doesn't block Flame's UI thread.
 """
 
 # Version metadata for easier diagnosis of which startup hook is active
-__version__ = "0.0.0"
+__version__ = '0.0.1'
 
 import threading
 try:

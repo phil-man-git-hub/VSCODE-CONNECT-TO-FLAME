@@ -26,7 +26,9 @@ from datetime import datetime
 # Increment rule: patch increments until 9, then patch resets to 0 and minor +=1.
 # When minor hits 10 it resets to 0 and major +=1. This keeps a compact numeric
 # progression that's easy to spot when deployed inside Flame.
-__version__ = "0.0.0"
+__version__ = '0.0.1'
+# Default receive timeout (seconds) that the listener uses when a client doesn't provide one
+DEFAULT_RECV_TIMEOUT = 5.0
 
 
 def next_version(v: str) -> str:
@@ -209,7 +211,7 @@ class ClientHandler(threading.Thread):
             with self.conn:
                 # Ensure we don't block forever on recv from a misbehaving client
                 try:
-                    recv_timeout = float(os.environ.get('FLAME_LISTENER_RECV_TIMEOUT', '5.0'))
+                    recv_timeout = float(os.environ.get('FLAME_LISTENER_RECV_TIMEOUT', str(DEFAULT_RECV_TIMEOUT)))
                     self.conn.settimeout(recv_timeout)
                 except Exception:
                     pass
