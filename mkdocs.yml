@@ -1,0 +1,6 @@
+site_name: Flame API Docs
+nav:
+  - Home: index.md
+  - API: 
+      - Flame: docs/api/flame.md
+theme: readthedocs
