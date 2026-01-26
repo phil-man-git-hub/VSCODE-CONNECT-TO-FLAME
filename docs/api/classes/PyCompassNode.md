@@ -5,7 +5,8 @@
 Class derived from PyNode. This class represents a Compass node.
 
 ## Methods
-### `nodes(...)`
-
+### Properties
+- `nodes(...)` — None( (flame.PyCompassNode)arg1) -> list 
 None( (flame.PyCompassNode)arg1) -> list
+
 

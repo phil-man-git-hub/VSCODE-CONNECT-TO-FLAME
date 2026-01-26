@@ -5,11 +5,11 @@
 This class represents the MediaHub.
 
 ## Methods
-### `files(...)`
-
+### Properties
+- `files(...)` — None( (flame.PyMediaHub)arg1) -> flame.PyMediaHubFilesTab 
 None( (flame.PyMediaHub)arg1) -> flame.PyMediaHubFilesTab
 
-### `archives(...)`
-
+- `archives(...)` — None( (flame.PyMediaHub)arg1) -> flame.PyMediaHubTab 
 None( (flame.PyMediaHub)arg1) -> flame.PyMediaHubTab
+
 

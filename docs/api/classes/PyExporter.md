@@ -5,70 +5,59 @@
 Object holding export settings.
 
 ## Methods
-### `use_top_video_track(...)`
-
+### Properties
+- `use_top_video_track(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `export_between_marks(...)`
-
+- `export_between_marks(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `foreground(...)`
-
+- `foreground(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `include_subtitles(...)`
-
+- `include_subtitles(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `export_subtitles_as_files(...)`
-
+- `export_subtitles_as_files(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `export_all_subtitles(...)`
-
+- `export_all_subtitles(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_unlinked(...)`
-
+- `warn_on_unlinked(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_unrendered(...)`
-
+- `warn_on_unrendered(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_pending_render(...)`
-
+- `warn_on_pending_render(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_no_media(...)`
-
+- `warn_on_no_media(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_mixed_colour_space(...)`
-
+- `warn_on_mixed_colour_space(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `warn_on_reimport_unsupported(...)`
-
+- `warn_on_reimport_unsupported(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `keep_timeline_fx_renders(...)`
-
+- `keep_timeline_fx_renders(...)` — None( (flame.PyExporter)arg1) -> bool 
 None( (flame.PyExporter)arg1) -> bool
 
-### `get_presets_base_dir(...)`
 
+### Static methods
+- `get_presets_base_dir(...)` — get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -> str : 
 get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -> str :
     Get a presets base directory.
 
-### `get_presets_dir(...)`
-
+- `get_presets_dir(...)` — get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -> str : 
 get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -> str :
     Get a presets directory.
 
-### `export(...)`
 
+### Built-in methods
+- `export(...)` — export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -> None : 
 export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -> None :
     Perform export.
     Keyword arguments:
@@ -103,12 +92,12 @@ export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directo
     
     hooks_user_data -- User data object passed to the export python hooks. This object can be modified by the PythonHookOverride methods but cannot be re-assigned
 
-### `BackgroundJobSettings(...)`
 
+### Callable attributes
+- `BackgroundJobSettings(...)` — Object holding background export job settings. These settings refer to the Backburner job, server and manager. 
 Object holding background export job settings. These settings refer to the Backburner job, server and manager.
 
-### `PresetType(...)`
-
+- `PresetType(...)` — int([x]) -> integer 
 int([x]) -> integer
 int(x, base=10) -> integer
 
@@ -124,18 +113,7 @@ Base 0 means to interpret the base from the string as an integer literal.
 >>> int('0b100', base=0)
 4
 
-### `Image_Sequence(...)`
-
-### `Audio(...)`
-
-### `Movie(...)`
-
-### `Sequence_Publish(...)`
-
-### `Distribution_Package(...)`
-
-### `PresetVisibility(...)`
-
+- `PresetVisibility(...)` — int([x]) -> integer 
 int([x]) -> integer
 int(x, base=10) -> integer
 
@@ -151,15 +129,17 @@ Base 0 means to interpret the base from the string as an integer literal.
 >>> int('0b100', base=0)
 4
 
-### `User(...)`
 
-### `Project(...)`
-
-### `Shared(...)`
-
-### `Autodesk(...)`
-
-### `Flow_Production_Tracking(...)`
-
-### `Shotgun(...)`
+### Attributes
+- `Image_Sequence(...)` — 
+- `Audio(...)` — 
+- `Movie(...)` — 
+- `Sequence_Publish(...)` — 
+- `Distribution_Package(...)` — 
+- `User(...)` — 
+- `Project(...)` — 
+- `Shared(...)` — 
+- `Autodesk(...)` — 
+- `Flow_Production_Tracking(...)` — 
+- `Shotgun(...)` — 
 

@@ -5,7 +5,8 @@
 Object representing the User manager.
 
 ## Methods
-### `current_user(...)`
-
+### Properties
+- `current_user(...)` — None( (flame.PyUsers)arg1) -> object 
 None( (flame.PyUsers)arg1) -> object
+
 

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Module: flame - Flame API Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Module: flame";
+        var mkdocs_page_input_path = "api/flame.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Module: flame</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="module-flame">Module: flame</h1>
+<h2 id="classes">Classes</h2>
+<h3 id="class-pyactionfamilynode">class <a href="../classes/PyActionFamilyNode/">PyActionFamilyNode</a></h3>
+<p>Class derived from PyNode. Represents an Action Family node object.</p>
+<h4 id="methods">Methods</h4>
+<ul>
+<li><code>node_types(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>nodes(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>cursor_position(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; tuple </li>
+<li><code>all_tabs(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>left_tabs(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>right_tabs(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>create_node(...)</code> (builtin) — create_node( (PyActionFamilyNode)arg1, (str)node_type [, (str)file_path='' [, (bool)is_udim=False [, (int)tile_resolution=0 [, (str)input_colour_space='']]]]) -&gt; object : </li>
+<li><code>organize(...)</code> (builtin) — organize( (PyActionFamilyNode)arg1) -&gt; bool : </li>
+<li><code>get_node(...)</code> (builtin) — get_node( (PyActionFamilyNode)arg1, (str)node_name) -&gt; object : </li>
+<li><code>connect_nodes(...)</code> (builtin) — connect_nodes( (PyActionFamilyNode)arg1, (PyFlameObject)parent_node, (PyFlameObject)child_node [, (str)link_type='Default']) -&gt; bool : </li>
+<li><code>disconnect_nodes(...)</code> (builtin) — disconnect_nodes( (PyActionFamilyNode)arg1, (PyFlameObject)parent_node, (PyFlameObject)child_node [, (str)link_type='Default']) -&gt; bool : </li>
+<li><code>media_layers(...)</code> (property) — None( (flame.PyActionFamilyNode)arg1) -&gt; list </li>
+<li><code>clear_schematic(...)</code> (builtin) — clear_schematic( (PyActionFamilyNode)arg1) -&gt; bool : </li>
+<li><code>encompass_nodes(...)</code> (builtin) — encompass_nodes( (PyActionFamilyNode)arg1, (list)node_list) -&gt; object : </li>
+</ul>
+<h3 id="class-pyactionnode">class <a href="../classes/PyActionNode/">PyActionNode</a></h3>
+<p>Class derived from PyActionFamilyNode. Represents an Action node object.</p>
+<h4 id="methods_1">Methods</h4>
+<ul>
+<li><code>media_nodes(...)</code> (property) — None( (flame.PyActionNode)arg1) -&gt; list </li>
+<li><code>add_media(...)</code> (builtin) — add_media( (PyActionFamilyNode)arg1) -&gt; object : </li>
+<li><code>import_fbx(...)</code> (builtin) — import_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (bool)keep_frame_rate=True [, (bool)bake_animation=False [, (bool)object_properties=True [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)create_media=True [, (bool)is_udim=False [, (bool)relink_material=True [, (str)input_colour_space='']]]]]]]]]]]]]]) -&gt; list : </li>
+<li><code>export_fbx(...)</code> (builtin) — export_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)only_selected_nodes=False [, (float)pixel_to_units=0.10000000149011612 [, (str)frame_rate='23.976 fps' [, (bool)bake_animation=False [, (bool)export_axes=True [, (bool)export_point_locators=False [, (bool)combine_material=True [, (bool)duplicate_material=False]]]]]]]]) -&gt; bool : </li>
+<li><code>read_fbx(...)</code> (builtin) — read_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (bool)keep_frame_rate=True [, (bool)bake_animation=False [, (bool)object_properties=True [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)is_udim=False [, (bool)relink_material=True [, (str)input_colour_space='']]]]]]]]]]]]]) -&gt; object : </li>
+<li><code>import_abc(...)</code> (builtin) — import_abc( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (str)frame_rate='23.976 fps' [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)consolidate_geometry=True [, (bool)create_object_group=False]]]]]]]]]]) -&gt; list : </li>
+<li><code>read_abc(...)</code> (builtin) — read_abc( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (str)frame_rate='23.976 fps' [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)consolidate_geometry=True [, (bool)create_object_group=False]]]]]]]]]]) -&gt; object : </li>
+<li><code>import_psd(...)</code> (builtin) — import_psd( (PyActionFamilyNode)arg1, (str)file_path [, (str)input_colour_space='']) -&gt; list : </li>
+<li><code>enable_output(...)</code> (builtin) — enable_output( (PyActionFamilyNode)arg1, (str)output_type) -&gt; bool : </li>
+<li><code>disable_output(...)</code> (builtin) — disable_output( (PyActionFamilyNode)arg1, (str)output_type) -&gt; bool : </li>
+<li><code>output_types(...)</code> (property) — None( (flame.PyActionNode)arg1) -&gt; list </li>
+</ul>
+<h3 id="class-pyarchiveentry">class <a href="../classes/PyArchiveEntry/">PyArchiveEntry</a></h3>
+<p>Class derived from PyFlameObject. Base class for any object displayed in the Media Panel.</p>
+<h4 id="methods_2">Methods</h4>
+<ul>
+<li><code>get_wiretap_storage_id(...)</code> (builtin) — get_wiretap_storage_id( (PyArchiveEntry)arg1) -&gt; str : </li>
+<li><code>get_wiretap_node_id(...)</code> (builtin) — get_wiretap_node_id( (PyArchiveEntry)arg1) -&gt; str : </li>
+<li><code>commit(...)</code> (builtin) — commit( (PyArchiveEntry)arg1) -&gt; None : </li>
+<li><code>clear_colour(...)</code> (builtin) — clear_colour( (PyArchiveEntry)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pyattribute">class <a href="../classes/PyAttribute/">PyAttribute</a></h3>
+<h4 id="methods_3">Methods</h4>
+<ul>
+<li><code>values(...)</code> (property) — None( (flame.PyAttribute)arg1) -&gt; object </li>
+<li><code>set_value(...)</code> (builtin) — set_value( (PyAttribute)arg1, (object)arg2) -&gt; bool : </li>
+<li><code>get_value(...)</code> (builtin) — get_value( (PyAttribute)arg1) -&gt; object : </li>
+</ul>
+<h3 id="class-pyaudiotrack">class <a href="../classes/PyAudioTrack/">PyAudioTrack</a></h3>
+<p>Object representing an Audio Track.</p>
+<h4 id="methods_4">Methods</h4>
+<ul>
+<li><code>channels(...)</code> (property) — None( (flame.PyAudioTrack)arg1) -&gt; list </li>
+<li><code>stereo(...)</code> (property) — None( (flame.PyAudioTrack)arg1) -&gt; bool </li>
+<li><code>copy_to_media_panel(...)</code> (builtin) — copy_to_media_panel( (PyAudioTrack)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+</ul>
+<h3 id="class-pybatch">class <a href="../classes/PyBatch/">PyBatch</a></h3>
+<p>Class derived from PyFlameObject. This class represents a Batch Group.</p>
+<h4 id="methods_5">Methods</h4>
+<ul>
+<li><code>nodes(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; list </li>
+<li><code>node_types(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; list </li>
+<li><code>reels(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; list </li>
+<li><code>shelf_reels(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; list </li>
+<li><code>batch_iterations(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; list </li>
+<li><code>current_iteration(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; object </li>
+<li><code>contexts(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; dict </li>
+<li><code>cursor_position(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; tuple </li>
+<li><code>opened(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; bool </li>
+<li><code>current_iteration_number(...)</code> (property) — None( (flame.PyBatch)arg1) -&gt; int </li>
+<li><code>get_node(...)</code> (builtin) — get_node( (PyBatch)arg1, (str)node_name) -&gt; object : </li>
+<li><code>create_node(...)</code> (builtin) — create_node( (PyBatch)arg1, (str)node_type [, (str)file_path='']) -&gt; object : </li>
+<li><code>connect_nodes(...)</code> (builtin) — connect_nodes( (PyBatch)arg1, (PyNode)output_node, (str)output_socket_name='Default', (PyNode)input_node [, (str)input_socket_name='Default']) -&gt; bool : </li>
+<li><code>disconnect_node(...)</code> (builtin) — disconnect_node( (PyBatch)arg1, (PyNode)node [, (str)input_socket_name='']) -&gt; bool : </li>
+<li><code>mimic_link(...)</code> (builtin) — mimic_link( (PyBatch)arg1, (PyNode)leader_node, (PyNode)follower_node) -&gt; bool : </li>
+<li><code>clear_context(...)</code> (builtin) — clear_context( (PyBatch)arg1, (int)index) -&gt; bool : </li>
+<li><code>clear_all_contexts(...)</code> (builtin) — clear_all_contexts( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>organize(...)</code> (builtin) — organize( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>frame_selected(...)</code> (builtin) — frame_selected( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>frame_all(...)</code> (builtin) — frame_all( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>import_clip(...)</code> (builtin) — import_clip( (PyBatch)arg1, (str)file_path, (str)reel_name) -&gt; object : </li>
+<li><code>import_clips(...)</code> (builtin) — import_clips( (PyBatch)arg1, (object)file_paths, (str)reel_name) -&gt; object : </li>
+<li><code>save_setup(...)</code> (builtin) — save_setup( (PyBatch)arg1, (str)setup_path) -&gt; bool : </li>
+<li><code>append_setup(...)</code> (builtin) — append_setup( (PyBatch)arg1, (str)setup_path [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>set_viewport_layout(...)</code> (builtin) — set_viewport_layout( (PyBatch)arg1, (object)num_views) -&gt; bool : </li>
+<li><code>create_batch_group(...)</code> (builtin) — create_batch_group( (PyBatch)arg1, (str)name [, (object)nb_reels=None [, (object)nb_shelf_reels=None [, (list)reels=[] [, (list)shelf_reels=[] [, (int)start_frame=1 [, (object)duration=None]]]]]]) -&gt; object : </li>
+<li><code>encompass_nodes(...)</code> (builtin) — encompass_nodes( (PyBatch)arg1, (list)nodes) -&gt; object : </li>
+<li><code>select_nodes(...)</code> (builtin) — select_nodes( (PyBatch)arg1, (object)nodes) -&gt; bool : </li>
+<li><code>open(...)</code> (builtin) — open( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>close(...)</code> (builtin) — close( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyBatch)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>save(...)</code> (builtin) — save( (PyBatch)arg1) -&gt; object : </li>
+<li><code>append_to_setup(...)</code> (builtin) — append_to_setup( (PyBatch)arg1, (PyBatchIteration)batch_iteration) -&gt; bool : </li>
+<li><code>append_to_batch(...)</code> (builtin) — append_to_batch( (PyBatch)arg1, (PyBatchIteration)batch_iteration) -&gt; bool : </li>
+<li><code>open_as_batch_group(...)</code> (builtin) — open_as_batch_group( (PyBatch)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>replace_setup(...)</code> (builtin) — replace_setup( (PyBatch)arg1, (PyBatchIteration)batch_iteration [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>create_reel(...)</code> (builtin) — create_reel( (PyBatch)arg1, (str)name) -&gt; object : </li>
+<li><code>create_shelf_reel(...)</code> (builtin) — create_shelf_reel( (PyBatch)arg1, (str)name) -&gt; object : </li>
+<li><code>clear_colour(...)</code> (builtin) — clear_colour( (PyBatch)arg1) -&gt; None : </li>
+<li><code>go_to(...)</code> (builtin) — go_to( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>load_setup(...)</code> (builtin) — load_setup( (PyBatch)arg1, (str)setup_path) -&gt; bool : </li>
+<li><code>clear_setup(...)</code> (builtin) — clear_setup( (PyBatch)arg1) -&gt; bool : </li>
+<li><code>iterate(...)</code> (builtin) — iterate( (PyBatch)arg1 [, (int)index=-1]) -&gt; object : </li>
+<li><code>save_current_iteration(...)</code> (builtin) — save_current_iteration( (PyBatch)arg1) -&gt; object : </li>
+<li><code>render(...)</code> (builtin) — render( (PyBatch)arg1 [, (str)render_option='Foreground' [, (bool)generate_proxies=False [, (bool)include_history=False]]]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pybatchiteration">class <a href="../classes/PyBatchIteration/">PyBatchIteration</a></h3>
+<p>Class derived from PyArchiveEntry. This class represents a Batch Iteration.</p>
+<h4 id="methods_6">Methods</h4>
+<ul>
+<li><code>iteration_number(...)</code> (property) — None( (flame.PyBatchIteration)arg1) -&gt; int </li>
+<li><code>open_as_batch_group(...)</code> (builtin) — open_as_batch_group( (PyBatchIteration)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pybrowser">class <a href="../classes/PyBrowser/">PyBrowser</a></h3>
+<p>This class represents the file browser.</p>
+<h4 id="methods_7">Methods</h4>
+<ul>
+<li><code>show(...)</code> (builtin) — show( (PyBrowser)arg1, (str)default_path [, (object)extension='' [, (bool)select_directory=False [, (bool)multi_selection=False [, (object)include_resolution=False [, (str)title='Load']]]]]) -&gt; None : </li>
+<li><code>selection(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>sequence_mode(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; bool </li>
+<li><code>width(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>height(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>scaling_presets_value(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>bit_depth(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>frame_ratio(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; object </li>
+<li><code>scan_mode(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; str </li>
+<li><code>colour_space(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; str </li>
+<li><code>resize_mode(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; str </li>
+<li><code>resize_filter(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; str </li>
+<li><code>resolution(...)</code> (property) — None( (flame.PyBrowser)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pyclip">class <a href="../classes/PyClip/">PyClip</a></h3>
+<p>CLass derived from PyArchiveEntry. This class represents a Clip.</p>
+<h4 id="methods_8">Methods</h4>
+<ul>
+<li><code>frame_rate(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; object </li>
+<li><code>duration(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; object </li>
+<li><code>versions(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; list </li>
+<li><code>audio_tracks(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; list </li>
+<li><code>markers(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; list </li>
+<li><code>subtitles(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; list </li>
+<li><code>width(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>height(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>bit_depth(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>ratio(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; float </li>
+<li><code>scan_mode(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>colour_primaries(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>transfer_characteristics(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>matrix_coefficients(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>proxy_resolution(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; object </li>
+<li><code>has_deliverables(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; bool </li>
+<li><code>has_history(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; bool </li>
+<li><code>unlinked(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>creation_date(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>archive_date(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>archive_error(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>essence_uid(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>source_uid(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>original_source_uid(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>sample_rate(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>cached(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; str </li>
+<li><code>start_frame(...)</code> (property) — None( (flame.PyClip)arg1) -&gt; int </li>
+<li><code>open_as_sequence(...)</code> (builtin) — open_as_sequence( (PyClip)arg1) -&gt; object : </li>
+<li><code>open_container(...)</code> (builtin) — open_container( (PyClip)arg1) -&gt; bool : </li>
+<li><code>close_container(...)</code> (builtin) — close_container( (PyClip)arg1) -&gt; None : </li>
+<li><code>reformat(...)</code> (builtin) — reformat( (PyClip)arg1 [, (int)width=0 [, (int)height=0 [, (float)ratio=0.0 [, (int)bit_depth=0 [, (str)scan_mode='' [, (str)frame_rate='' [, (str)resize_mode='Letterbox']]]]]]]) -&gt; None : </li>
+<li><code>create_marker(...)</code> (builtin) — create_marker( (PyClip)arg1, (object)location) -&gt; object : </li>
+<li><code>change_dominance(...)</code> (builtin) — change_dominance( (PyClip)arg1, (str)scan_mode) -&gt; None : </li>
+<li><code>cache_media(...)</code> (builtin) — cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool : </li>
+<li><code>flush_cache_media(...)</code> (builtin) — flush_cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool : </li>
+<li><code>clear_cache_media(...)</code> (builtin) — clear_cache_media( (PyClip)arg1 [, (str)mode='current']) -&gt; bool : </li>
+<li><code>render(...)</code> (builtin) — render( (PyClip)arg1 [, (str)render_mode='All' [, (str)render_option='Foreground' [, (str)render_quality='Full Resolution' [, (str)effect_type='' [, (str)effect_caching_mode='Current' [, (bool)include_handles=False]]]]]]) -&gt; bool : </li>
+<li><code>flush_renders(...)</code> (builtin) — flush_renders( (PyClip)arg1) -&gt; None : </li>
+<li><code>clear_renders(...)</code> (builtin) — clear_renders( (PyClip)arg1) -&gt; None : </li>
+<li><code>is_rendered(...)</code> (builtin) — is_rendered( (PyClip)arg1 [, (bool)top_only=False [, (str)render_quality='Full Resolution']]) -&gt; bool : </li>
+<li><code>save(...)</code> (builtin) — save( (PyClip)arg1) -&gt; bool : </li>
+<li><code>cut(...)</code> (builtin) — cut( (PyClip)arg1, (PyTime)cut_time) -&gt; None : </li>
+<li><code>get_colour_space(...)</code> (builtin) — get_colour_space( (PyClip)arg1 [, (PyTime)time=None]) -&gt; str : </li>
+<li><code>change_start_frame(...)</code> (builtin) — change_start_frame( (PyClip)arg1, (int)start_frame [, (bool)use_segment_connections=True]) -&gt; None : </li>
+<li><code>get_metadata(...)</code> (builtin) — get_metadata( (PyClip)arg1 [, (str)key='' [, (PyTime)time=None]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pyclipnode">class <a href="../classes/PyClipNode/">PyClipNode</a></h3>
+<p>Class derived from PyNode. This class represents a Clip node.</p>
+<h4 id="methods_9">Methods</h4>
+<ul>
+<li><code>clip(...)</code> (property) — None( (flame.PyClipNode)arg1) -&gt; object </li>
+<li><code>version_uids(...)</code> (property) — None( (flame.PyClipNode)arg1) -&gt; list </li>
+<li><code>version_uid(...)</code> (property) — None( (flame.PyClipNode)arg1) -&gt; object </li>
+<li><code>set_version_uid(...)</code> (builtin) — set_version_uid( (PyClipNode)arg1, (str)version_uid) -&gt; bool : </li>
+<li><code>set_metadata_value(...)</code> (builtin) — set_metadata_value( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)value=None]]]) -&gt; None : </li>
+<li><code>set_metadata_discarded(...)</code> (builtin) — set_metadata_discarded( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (bool)discarded=True]]]) -&gt; None : </li>
+<li><code>set_metadata_key(...)</code> (builtin) — set_metadata_key( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)name=None]]]) -&gt; None : </li>
+</ul>
+<h3 id="class-pyclrmgmtnode">class <a href="../classes/PyClrMgmtNode/">PyClrMgmtNode</a></h3>
+<p>Object representing a Colour Mgmt node.</p>
+<h4 id="methods_10">Methods</h4>
+<ul>
+<li><code>set_context_variable(...)</code> (builtin) — set_context_variable( (PyClrMgmtNode)arg1, (str)name, (str)value) -&gt; None : </li>
+<li><code>get_context_variables(...)</code> (builtin) — get_context_variables( (PyClrMgmtNode)arg1) -&gt; dict : </li>
+<li><code>reset_context_variables(...)</code> (builtin) — reset_context_variables( (PyClrMgmtNode)arg1) -&gt; None : </li>
+<li><code>import_transform(...)</code> (builtin) — import_transform( (PyClrMgmtNode)arg1, (str)file_path) -&gt; None : </li>
+</ul>
+<h3 id="class-pycocameraanalysis">class <a href="../classes/PyCoCameraAnalysis/">PyCoCameraAnalysis</a></h3>
+<p>Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic.</p>
+<h4 id="methods_11">Methods</h4>
+<ul>
+<li><code>resetAnalysis(...)</code> (builtin) — resetAnalysis( (PyCoCameraAnalysis)arg1) -&gt; bool : </li>
+<li><code>analyseRange(...)</code> (builtin) — analyseRange( (PyCoCameraAnalysis)arg1, (object)arg2, (object)start) -&gt; bool : </li>
+</ul>
+<h3 id="class-pycocompass">class <a href="../classes/PyCoCompass/">PyCoCompass</a></h3>
+<p>Class derived from PyCoNode. This class represents the compass node in the Action schematic.</p>
+<h4 id="methods_12">Methods</h4>
+<ul>
+<li><code>nodes(...)</code> (property) — None( (flame.PyCoCompass)arg1) -&gt; list </li>
+</ul>
+<h3 id="class-pyconode">class <a href="../classes/PyCoNode/">PyCoNode</a></h3>
+<p>Class derived from PyFlameObject. This class represents an Action node in the Action schematic.</p>
+<h4 id="methods_13">Methods</h4>
+<ul>
+<li><code>assign_media(...)</code> (builtin) — assign_media( (PyCoNode)arg1, (object)media_name) -&gt; bool : </li>
+<li><code>cache_range(...)</code> (builtin) — cache_range( (PyCoNode)arg1, (object)arg2, (object)start) -&gt; bool : </li>
+<li><code>add_reference(...)</code> (builtin) — add_reference( (PyCoNode)arg1, (object)frame) -&gt; bool : </li>
+<li><code>parents(...)</code> (builtin) — parents( (PyCoNode)arg1 [, (str)link_type='Default']) -&gt; list : </li>
+<li><code>children(...)</code> (builtin) — children( (PyCoNode)arg1 [, (str)link_type='Default']) -&gt; list : </li>
+<li><code>type(...)</code> (property) — None( (flame.PyCoNode)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pycolourmgttimelinefx">class <a href="../classes/PyColourMgtTimelineFX/">PyColourMgtTimelineFX</a></h3>
+<p>Object representing a Colour Mgmt Timeline FX.</p>
+<h4 id="methods_14">Methods</h4>
+<ul>
+<li><code>set_context_variable(...)</code> (builtin) — set_context_variable( (PyColourMgtTimelineFX)arg1, (str)name, (str)value) -&gt; None : </li>
+<li><code>get_context_variables(...)</code> (builtin) — get_context_variables( (PyColourMgtTimelineFX)arg1) -&gt; dict : </li>
+<li><code>import_transform(...)</code> (builtin) — import_transform( (PyColourMgtTimelineFX)arg1, (str)file_path) -&gt; None : </li>
+<li><code>reset_context_variables(...)</code> (builtin) — reset_context_variables( (PyColourMgtTimelineFX)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pycompassnode">class <a href="../classes/PyCompassNode/">PyCompassNode</a></h3>
+<p>Class derived from PyNode. This class represents a Compass node.</p>
+<h4 id="methods_15">Methods</h4>
+<ul>
+<li><code>nodes(...)</code> (property) — None( (flame.PyCompassNode)arg1) -&gt; list </li>
+</ul>
+<h3 id="class-pydesktop">class <a href="../classes/PyDesktop/">PyDesktop</a></h3>
+<p>Class derived from PyArchiveEntry. This class represents a Desktop.</p>
+<h4 id="methods_16">Methods</h4>
+<ul>
+<li><code>children(...)</code> (property) — None( (flame.PyDesktop)arg1) -&gt; list </li>
+<li><code>batch_groups(...)</code> (property) — None( (flame.PyDesktop)arg1) -&gt; list </li>
+<li><code>reel_groups(...)</code> (property) — None( (flame.PyDesktop)arg1) -&gt; list </li>
+<li><code>create_reel_group(...)</code> (builtin) — create_reel_group( (PyDesktop)arg1, (str)name) -&gt; object : </li>
+<li><code>save(...)</code> (builtin) — save( (PyDesktop)arg1) -&gt; bool : </li>
+<li><code>create_batch_group(...)</code> (builtin) — create_batch_group( (PyDesktop)arg1, (str)name [, (object)nb_reels=None [, (object)nb_shelf_reels=None [, (list)reels=[] [, (list)shelf_reels=[] [, (int)start_frame=1 [, (object)duration=None]]]]]]) -&gt; object : </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyDesktop)arg1) -&gt; bool : </li>
+</ul>
+<h3 id="class-pyexporter">class <a href="../classes/PyExporter/">PyExporter</a></h3>
+<p>Object holding export settings.</p>
+<h4 id="methods_17">Methods</h4>
+<ul>
+<li><code>use_top_video_track(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>export_between_marks(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>foreground(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>include_subtitles(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>export_subtitles_as_files(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>export_all_subtitles(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_unlinked(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_unrendered(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_pending_render(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_no_media(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_mixed_colour_space(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>warn_on_reimport_unsupported(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>keep_timeline_fx_renders(...)</code> (property) — None( (flame.PyExporter)arg1) -&gt; bool </li>
+<li><code>get_presets_base_dir(...)</code> (staticmethod) — get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -&gt; str : </li>
+<li><code>get_presets_dir(...)</code> (staticmethod) — get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -&gt; str : </li>
+<li><code>export(...)</code> (builtin) — export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -&gt; None : </li>
+<li><code>BackgroundJobSettings(...)</code> (callable) — Object holding background export job settings. These settings refer to the Backburner job, server and manager. </li>
+<li><code>PresetType(...)</code> (callable) — int([x]) -&gt; integer </li>
+<li><code>Image_Sequence(...)</code> (attribute) — </li>
+<li><code>Audio(...)</code> (attribute) — </li>
+<li><code>Movie(...)</code> (attribute) — </li>
+<li><code>Sequence_Publish(...)</code> (attribute) — </li>
+<li><code>Distribution_Package(...)</code> (attribute) — </li>
+<li><code>PresetVisibility(...)</code> (callable) — int([x]) -&gt; integer </li>
+<li><code>User(...)</code> (attribute) — </li>
+<li><code>Project(...)</code> (attribute) — </li>
+<li><code>Shared(...)</code> (attribute) — </li>
+<li><code>Autodesk(...)</code> (attribute) — </li>
+<li><code>Flow_Production_Tracking(...)</code> (attribute) — </li>
+<li><code>Shotgun(...)</code> (attribute) — </li>
+</ul>
+<h3 id="class-pyflameobject">class <a href="../classes/PyFlameObject/">PyFlameObject</a></h3>
+<p>The basic type of all accessible Flame objects from the python API.</p>
+<h4 id="methods_18">Methods</h4>
+<ul>
+<li><code>attributes(...)</code> (property) — None( (flame.PyFlameObject)arg1) -&gt; list </li>
+<li><code>parent(...)</code> (property) — None( (flame.PyFlameObject)arg1) -&gt; object </li>
+</ul>
+<h3 id="class-pyfolder">class <a href="../classes/PyFolder/">PyFolder</a></h3>
+<p>Class derived from PyArchiveEntry. This class represents a Folder.</p>
+<h4 id="methods_19">Methods</h4>
+<ul>
+<li><code>children(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>folders(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>batch_iterations(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>desktops(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>reel_groups(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>reels(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>sequences(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>clips(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>batch_groups(...)</code> (property) — None( (flame.PyFolder)arg1) -&gt; list </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyFolder)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>create_reel_group(...)</code> (builtin) — create_reel_group( (PyFolder)arg1, (str)name) -&gt; object : </li>
+<li><code>create_reel(...)</code> (builtin) — create_reel( (PyFolder)arg1, (str)name) -&gt; object : </li>
+<li><code>create_folder(...)</code> (builtin) — create_folder( (PyFolder)arg1, (str)name) -&gt; object : </li>
+<li><code>create_sequence(...)</code> (builtin) — create_sequence( (PyFolder)arg1 [, (str)name='Untitled Sequence' [, (int)video_tracks=1 [, (bool)video_stereo=False [, (object)width=None [, (object)height=None [, (object)ratio=None [, (object)bit_depth=None [, (object)scan_mode=None [, (object)frame_rate=None [, (object)start_at=00:00:00+00 [, (object)duration=00:00:00+01 [, (int)audio_tracks=1 [, (bool)audio_stereo=True]]]]]]]]]]]]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pygmasktracernode">class <a href="../classes/PyGMaskTracerNode/">PyGMaskTracerNode</a></h3>
+<p>Class derived from PyActionFamilyNode. Represents a GMask Tracer node object.</p>
+<h4 id="methods_20">Methods</h4>
+<ul>
+<li><code>import_fbx(...)</code> (builtin) — import_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (bool)keep_frame_rate=True [, (bool)bake_animation=False [, (bool)object_properties=True [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)create_media=True [, (bool)is_udim=False [, (bool)relink_material=True [, (str)input_colour_space='']]]]]]]]]]]]]]) -&gt; list : </li>
+<li><code>export_fbx(...)</code> (builtin) — export_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)only_selected_nodes=False [, (float)pixel_to_units=0.10000000149011612 [, (str)frame_rate='23.976 fps' [, (bool)bake_animation=False [, (bool)export_axes=True [, (bool)export_point_locators=False [, (bool)combine_material=True [, (bool)duplicate_material=False]]]]]]]]) -&gt; bool : </li>
+<li><code>read_fbx(...)</code> (builtin) — read_fbx( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (bool)keep_frame_rate=True [, (bool)bake_animation=False [, (bool)object_properties=True [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)is_udim=False [, (bool)relink_material=True [, (str)input_colour_space='']]]]]]]]]]]]]) -&gt; object : </li>
+<li><code>import_abc(...)</code> (builtin) — import_abc( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (str)frame_rate='23.976 fps' [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)consolidate_geometry=True [, (bool)create_object_group=False]]]]]]]]]]) -&gt; list : </li>
+<li><code>read_abc(...)</code> (builtin) — read_abc( (PyActionFamilyNode)arg1, (str)file_path [, (bool)lights=True [, (bool)cameras=True [, (bool)models=True [, (bool)normals=True [, (bool)mesh_animations=True [, (str)frame_rate='23.976 fps' [, (bool)auto_fit=False [, (float)unit_to_pixels=10.0 [, (bool)consolidate_geometry=True [, (bool)create_object_group=False]]]]]]]]]]) -&gt; object : </li>
+<li><code>import_psd(...)</code> (builtin) — import_psd( (PyActionFamilyNode)arg1, (str)file_path [, (str)input_colour_space='']) -&gt; list : </li>
+<li><code>enable_output(...)</code> (builtin) — enable_output( (PyActionFamilyNode)arg1, (str)output_type) -&gt; bool : </li>
+<li><code>disable_output(...)</code> (builtin) — disable_output( (PyActionFamilyNode)arg1, (str)output_type) -&gt; bool : </li>
+<li><code>output_types(...)</code> (property) — None( (flame.PyGMaskTracerNode)arg1) -&gt; list </li>
+</ul>
+<h3 id="class-pyhdrnode">class <a href="../classes/PyHDRNode/">PyHDRNode</a></h3>
+<p>Object representing a HDR node.</p>
+<h4 id="methods_21">Methods</h4>
+<ul>
+<li><code>analysis_status(...)</code> (property) — None( (flame.PyHDRNode)arg1) -&gt; object </li>
+<li><code>analyze(...)</code> (builtin) — analyze( (PyHDRNode)arg1 [, (str)analyze_mode='Current Shot']) -&gt; None : </li>
+<li><code>keep_analysis(...)</code> (builtin) — keep_analysis( (PyHDRNode)arg1) -&gt; None : </li>
+<li><code>reset_analysis(...)</code> (builtin) — reset_analysis( (PyHDRNode)arg1) -&gt; None : </li>
+<li><code>interpolate_trims(...)</code> (builtin) — interpolate_trims( (PyHDRNode)arg1) -&gt; None : </li>
+<li><code>reset_trims(...)</code> (builtin) — reset_trims( (PyHDRNode)arg1) -&gt; None : </li>
+<li><code>export_DolbyVision_xml(...)</code> (builtin) — export_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)comment='']) -&gt; None : </li>
+<li><code>import_DolbyVision_xml(...)</code> (builtin) — import_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -&gt; None : </li>
+<li><code>mastering_display_ids(...)</code> (property) — None( (flame.PyHDRNode)arg1) -&gt; list </li>
+<li><code>target_display_ids(...)</code> (property) — None( (flame.PyHDRNode)arg1) -&gt; list </li>
+<li><code>mastering_display_info(...)</code> (property) — None( (flame.PyHDRNode)arg1) -&gt; object </li>
+<li><code>target_display_info(...)</code> (property) — None( (flame.PyHDRNode)arg1) -&gt; object </li>
+<li><code>has_trim(...)</code> (builtin) — has_trim( (PyHDRNode)arg1, (int)target_display_id) -&gt; bool : </li>
+<li><code>l2_from_l8(...)</code> (builtin) — l2_from_l8( (PyHDRNode)arg1) -&gt; object : </li>
+</ul>
+<h3 id="class-pyhdrtimelinefx">class <a href="../classes/PyHDRTimelineFX/">PyHDRTimelineFX</a></h3>
+<p>Object representing a HDR Timeline FX.</p>
+<h4 id="methods_22">Methods</h4>
+<ul>
+<li><code>analysis_status(...)</code> (property) — None( (flame.PyHDRTimelineFX)arg1) -&gt; object </li>
+<li><code>analyze(...)</code> (builtin) — analyze( (PyHDRTimelineFX)arg1 [, (str)analyze_mode='Current Shot']) -&gt; None : </li>
+<li><code>keep_analysis(...)</code> (builtin) — keep_analysis( (PyHDRTimelineFX)arg1) -&gt; None : </li>
+<li><code>reset_analysis(...)</code> (builtin) — reset_analysis( (PyHDRTimelineFX)arg1) -&gt; None : </li>
+<li><code>interpolate_trims(...)</code> (builtin) — interpolate_trims( (PyHDRTimelineFX)arg1, (str)arg2) -&gt; None : </li>
+<li><code>reset_trims(...)</code> (builtin) — reset_trims( (PyHDRTimelineFX)arg1) -&gt; None : </li>
+<li><code>export_DolbyVision_xml(...)</code> (builtin) — export_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (bool)shot_only=False [, (str)comment='']]) -&gt; None : </li>
+<li><code>import_DolbyVision_xml(...)</code> (builtin) — import_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -&gt; None : </li>
+<li><code>mastering_display_ids(...)</code> (property) — None( (flame.PyHDRTimelineFX)arg1) -&gt; list </li>
+<li><code>target_display_ids(...)</code> (property) — None( (flame.PyHDRTimelineFX)arg1) -&gt; list </li>
+<li><code>mastering_display_info(...)</code> (property) — None( (flame.PyHDRTimelineFX)arg1) -&gt; object </li>
+<li><code>target_display_info(...)</code> (property) — None( (flame.PyHDRTimelineFX)arg1) -&gt; object </li>
+<li><code>has_trim(...)</code> (builtin) — has_trim( (PyHDRTimelineFX)arg1, (int)target_display_id) -&gt; bool : </li>
+<li><code>l2_from_l8(...)</code> (builtin) — l2_from_l8( (PyHDRTimelineFX)arg1) -&gt; object : </li>
+</ul>
+<h3 id="class-pyimagenode">class <a href="../classes/PyImageNode/">PyImageNode</a></h3>
+<p>Class derived from PyActionFamilyNode. Represents an Image node object.</p>
+<h4 id="methods_23">Methods</h4>
+<ul>
+<li><code>media_nodes(...)</code> (property) — None( (flame.PyImageNode)arg1) -&gt; list </li>
+<li><code>add_media(...)</code> (builtin) — add_media( (PyActionFamilyNode)arg1) -&gt; object : </li>
+</ul>
+<h3 id="class-pylensdistortionnode">class <a href="../classes/PyLensDistortionNode/">PyLensDistortionNode</a></h3>
+<p>Object representing a Lens Distortion node.</p>
+<h4 id="methods_24">Methods</h4>
+<ul>
+<li><code>import_lens_distortion(...)</code> (builtin) — import_lens_distortion( (PyLensDistortionNode)arg1, (str)filename) -&gt; None : </li>
+<li><code>calculate(...)</code> (builtin) — calculate( (PyLensDistortionNode)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pylibrary">class <a href="../classes/PyLibrary/">PyLibrary</a></h3>
+<p>Class derived from PyArchiveEntry. This class represents a Library.</p>
+<h4 id="methods_25">Methods</h4>
+<ul>
+<li><code>children(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>folders(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>batch_iterations(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>desktops(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>reel_groups(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>reels(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>sequences(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>clips(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>batch_groups(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; list </li>
+<li><code>opened(...)</code> (property) — None( (flame.PyLibrary)arg1) -&gt; bool </li>
+<li><code>open(...)</code> (builtin) — open( (PyLibrary)arg1) -&gt; bool : </li>
+<li><code>close(...)</code> (builtin) — close( (PyLibrary)arg1) -&gt; bool : </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyLibrary)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>acquire_exclusive_access(...)</code> (builtin) — acquire_exclusive_access( (PyLibrary)arg1) -&gt; bool : </li>
+<li><code>release_exclusive_access(...)</code> (builtin) — release_exclusive_access( (PyLibrary)arg1) -&gt; bool : </li>
+<li><code>create_reel_group(...)</code> (builtin) — create_reel_group( (PyLibrary)arg1, (str)name) -&gt; object : </li>
+<li><code>create_reel(...)</code> (builtin) — create_reel( (PyLibrary)arg1, (str)name) -&gt; object : </li>
+<li><code>create_folder(...)</code> (builtin) — create_folder( (PyLibrary)arg1, (str)name) -&gt; object : </li>
+<li><code>create_sequence(...)</code> (builtin) — create_sequence( (PyLibrary)arg1 [, (str)name='Untitled Sequence' [, (int)video_tracks=1 [, (bool)video_stereo=False [, (object)width=None [, (object)height=None [, (object)ratio=None [, (object)bit_depth=None [, (object)scan_mode=None [, (object)frame_rate=None [, (object)start_at=00:00:00+00 [, (object)duration=00:00:00+01 [, (int)audio_tracks=1 [, (bool)audio_stereo=True]]]]]]]]]]]]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pymarker">class <a href="../classes/PyMarker/">PyMarker</a></h3>
+<p>Object representing a Marker.</p>
+<h4 id="methods_26">Methods</h4>
+<ul>
+<li><code>has_annotations(...)</code> (property) — None( (flame.PyMarker)arg1) -&gt; bool </li>
+<li><code>clear_annotations(...)</code> (builtin) — clear_annotations( (PyMarker)arg1) -&gt; None : </li>
+<li><code>sync_connected_segments(...)</code> (builtin) — sync_connected_segments( (PyMarker)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pymediahub">class <a href="../classes/PyMediaHub/">PyMediaHub</a></h3>
+<p>This class represents the MediaHub.</p>
+<h4 id="methods_27">Methods</h4>
+<ul>
+<li><code>files(...)</code> (property) — None( (flame.PyMediaHub)arg1) -&gt; flame.PyMediaHubFilesTab </li>
+<li><code>archives(...)</code> (property) — None( (flame.PyMediaHub)arg1) -&gt; flame.PyMediaHubTab </li>
+</ul>
+<h3 id="class-pymediahubfilesentry">class <a href="../classes/PyMediaHubFilesEntry/">PyMediaHubFilesEntry</a></h3>
+<p>Object representing a clip in the MediaHub Files tabs</p>
+<h4 id="methods_28">Methods</h4>
+<ul>
+<li><code>path(...)</code> (property) — None( (flame.PyMediaHubFilesEntry)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pymediahubfilesfolder">class <a href="../classes/PyMediaHubFilesFolder/">PyMediaHubFilesFolder</a></h3>
+<p>Object representing a folder in the MediaHub Files tabs</p>
+<h4 id="methods_29">Methods</h4>
+<ul>
+<li><code>path(...)</code> (property) — None( (flame.PyMediaHubFilesFolder)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pymediahubfilestab">class <a href="../classes/PyMediaHubFilesTab/">PyMediaHubFilesTab</a></h3>
+<p>This class represents the MediaHub Files tab.</p>
+<h4 id="methods_30">Methods</h4>
+<ul>
+<li><code>options(...)</code> (property) — None( (flame.PyMediaHubFilesTab)arg1) -&gt; flame.PyMediaHubFilesTabOptions </li>
+</ul>
+<h3 id="class-pymediahubfilestaboptions">class <a href="../classes/PyMediaHubFilesTabOptions/">PyMediaHubFilesTabOptions</a></h3>
+<p>This class represents the MediaHub Files tab options.</p>
+<h4 id="methods_31">Methods</h4>
+<ul>
+<li><code>multi_channel_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>sequence_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; bool </li>
+<li><code>cache_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; bool </li>
+<li><code>proxies_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; bool </li>
+<li><code>cache_and_proxies_all_versions(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; bool </li>
+<li><code>resize_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>resize_filter(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>resolution(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>width(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>height(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>scaling_presets_value(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>frame_ratio(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>bit_depth(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>scan_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>pixel_ratio(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; object </li>
+<li><code>colour_mgmt_mode(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>colour_mgmt_view(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>tagged_colour_space(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>colour_mgmt_display(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>colour_mgmt_working_space(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; str </li>
+<li><code>colour_mgmt_invert(...)</code> (property) — None( (flame.PyMediaHubFilesTabOptions)arg1) -&gt; bool </li>
+<li><code>import_transform(...)</code> (builtin) — import_transform( (PyMediaHubFilesTabOptions)arg1, (str)file_path) -&gt; None : </li>
+<li><code>set_tagged_colour_space(...)</code> (builtin) — set_tagged_colour_space( (PyMediaHubFilesTabOptions)arg1, (str)colour_space) -&gt; None : </li>
+</ul>
+<h3 id="class-pymediahubprojectsentry">class <a href="../classes/PyMediaHubProjectsEntry/">PyMediaHubProjectsEntry</a></h3>
+<p>Object representing a clip in the MediaHub Projects tabs</p>
+<h4 id="methods_32">Methods</h4>
+<ul>
+<li><code>uid(...)</code> (property) — None( (flame.PyMediaHubProjectsEntry)arg1) -&gt; str </li>
+<li><code>path(...)</code> (property) — None( (flame.PyMediaHubProjectsEntry)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pymediahubprojectsfolder">class <a href="../classes/PyMediaHubProjectsFolder/">PyMediaHubProjectsFolder</a></h3>
+<p>Object representing a folder in the MediaHub Projects tabs</p>
+<h4 id="methods_33">Methods</h4>
+<ul>
+<li><code>uid(...)</code> (property) — None( (flame.PyMediaHubProjectsFolder)arg1) -&gt; str </li>
+<li><code>path(...)</code> (property) — None( (flame.PyMediaHubProjectsFolder)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pymediahubtab">class <a href="../classes/PyMediaHubTab/">PyMediaHubTab</a></h3>
+<p>This class represents a MediaHub tab.</p>
+<h4 id="methods_34">Methods</h4>
+<ul>
+<li><code>get_path(...)</code> (builtin) — get_path( (PyMediaHubTab)arg1) -&gt; str : </li>
+<li><code>set_path(...)</code> (builtin) — set_path( (PyMediaHubTab)arg1, (str)arg2 [, (bool)allow_partial_success=False]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pymediapanel">class <a href="../classes/PyMediaPanel/">PyMediaPanel</a></h3>
+<p>This class represents the media panel.</p>
+<h4 id="methods_35">Methods</h4>
+<ul>
+<li><code>selected_entries(...)</code> (property) — None( (flame.PyMediaPanel)arg1) -&gt; object </li>
+<li><code>visible(...)</code> (property) — None( (flame.PyMediaPanel)arg1) -&gt; bool </li>
+<li><code>full_height(...)</code> (property) — None( (flame.PyMediaPanel)arg1) -&gt; bool </li>
+<li><code>full_width(...)</code> (property) — None( (flame.PyMediaPanel)arg1) -&gt; bool </li>
+<li><code>dual(...)</code> (property) — None( (flame.PyMediaPanel)arg1) -&gt; bool </li>
+<li><code>move(...)</code> (builtin) — move( (PyMediaPanel)arg1, (object)source_entries, (object)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+<li><code>copy(...)</code> (builtin) — copy( (PyMediaPanel)arg1, (object)source_entries, (object)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+</ul>
+<h3 id="class-pymessages">class <a href="../classes/PyMessages/">PyMessages</a></h3>
+<p>Module handling message bar in application UI.</p>
+<h4 id="methods_36">Methods</h4>
+<ul>
+<li><code>show_in_console(...)</code> (builtin) — show_in_console( (PyMessages)arg1, (str)message [, (str)type='info' [, (int)duration=-1]]) -&gt; None : </li>
+<li><code>clear_console(...)</code> (builtin) — clear_console( (PyMessages)arg1) -&gt; None : </li>
+<li><code>show_in_dialog(...)</code> (builtin) — show_in_dialog( (PyMessages)arg1, (str)title, (str)message, (str)type, (list)buttons [, (str)cancel_button='']) -&gt; str : </li>
+</ul>
+<h3 id="class-pymetadatanode">class <a href="../classes/PyMetadataNode/">PyMetadataNode</a></h3>
+<p>Class derived from PyNode. This class represents a Metadata node.</p>
+<h4 id="methods_37">Methods</h4>
+<ul>
+<li><code>set_metadata_value(...)</code> (builtin) — set_metadata_value( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)value=None]]]) -&gt; None : </li>
+<li><code>set_metadata_discarded(...)</code> (builtin) — set_metadata_discarded( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (bool)discarded=True]]]) -&gt; None : </li>
+<li><code>set_metadata_key(...)</code> (builtin) — set_metadata_key( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)name=None]]]) -&gt; None : </li>
+<li><code>load_node_setup(...)</code> (builtin) — load_node_setup( (PyMetadataNode)arg1, (str)file_name [, (bool)edited_keys=True [, (bool)discarded_keys=True [, (bool)added_keys=True [, (bool)replaced_keys=True [, (bool)update_tokens=True]]]]]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pymetadatatimelinefx">class <a href="../classes/PyMetadataTimelineFX/">PyMetadataTimelineFX</a></h3>
+<p>Object representing a Metadata Timeline FX.</p>
+<h4 id="methods_38">Methods</h4>
+<ul>
+<li><code>get_metadata(...)</code> (builtin) — get_metadata( (PyMetadataTimelineFX)arg1 [, (str)key='' [, (int)frame=1]]) -&gt; object : </li>
+<li><code>set_metadata_value(...)</code> (builtin) — set_metadata_value( (PyMetadataTimelineFX)arg1, (str)key [, (object)value=None]) -&gt; None : </li>
+<li><code>set_metadata_discarded(...)</code> (builtin) — set_metadata_discarded( (PyMetadataTimelineFX)arg1 [, (str)key='' [, (bool)discarded=True]]) -&gt; None : </li>
+<li><code>set_metadata_key(...)</code> (builtin) — set_metadata_key( (PyMetadataTimelineFX)arg1 [, (str)key='' [, (object)name=None]]) -&gt; None : </li>
+<li><code>load_setup(...)</code> (builtin) — load_setup( (PyMetadataTimelineFX)arg1, (str)file_name [, (bool)edited_keys=True [, (bool)discarded_keys=True [, (bool)added_keys=True [, (bool)update_tokens=True]]]]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pymetadatavalue">class <a href="../classes/PyMetadataValue/">PyMetadataValue</a></h3>
+<p>This class holds the metadata of a specific data type.</p>
+<h4 id="methods_39">Methods</h4>
+<ul>
+<li><code>get_value(...)</code> (builtin) — get_value( (PyMetadataValue)arg1) -&gt; object : </li>
+<li><code>set_value(...)</code> (builtin) — set_value( (PyMetadataValue)arg1, (object)value) -&gt; None : </li>
+<li><code>type(...)</code> (property) — None( (flame.PyMetadataValue)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pymorphnode">class <a href="../classes/PyMorphNode/">PyMorphNode</a></h3>
+<p>Object representing a Morph node.</p>
+<h4 id="methods_40">Methods</h4>
+<ul>
+<li><code>set_mix_to_range(...)</code> (builtin) — set_mix_to_range( (PyMorphNode)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pynode">class <a href="../classes/PyNode/">PyNode</a></h3>
+<p>Object representing a Node.</p>
+<h4 id="methods_41">Methods</h4>
+<ul>
+<li><code>sockets(...)</code> (property) — None( (flame.PyNode)arg1) -&gt; dict </li>
+<li><code>input_sockets(...)</code> (property) — None( (flame.PyNode)arg1) -&gt; list </li>
+<li><code>output_sockets(...)</code> (property) — None( (flame.PyNode)arg1) -&gt; list </li>
+<li><code>load_node_setup(...)</code> (builtin) — load_node_setup( (PyNode)arg1, (str)file_name) -&gt; bool : </li>
+<li><code>save_node_setup(...)</code> (builtin) — save_node_setup( (PyNode)arg1, (str)file_name) -&gt; bool : </li>
+<li><code>delete(...)</code> (builtin) — delete( (PyFlameObject)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>duplicate(...)</code> (builtin) — duplicate( (PyNode)arg1 [, (bool)keep_node_connections=False]) -&gt; object : </li>
+<li><code>set_context(...)</code> (builtin) — set_context( (PyNode)arg1, (int)index [, (str)socket_name='Default']) -&gt; bool : </li>
+<li><code>clear_schematic_colour(...)</code> (builtin) — clear_schematic_colour( (PyNode)arg1) -&gt; None : </li>
+<li><code>get_metadata(...)</code> (builtin) — get_metadata( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)frame=None]]]) -&gt; object : </li>
+<li><code>cache_range(...)</code> (builtin) — cache_range( (PyNode)arg1 [, (object)start=None [, (object)end=None]]) -&gt; int : </li>
+<li><code>output_channel_as_metadata_key(...)</code> (builtin) — output_channel_as_metadata_key( (PyNode)arg1, (str)channel_name [, (bool)enable=True]) -&gt; None : </li>
+</ul>
+<h3 id="class-pyofxnode">class <a href="../classes/PyOFXNode/">PyOFXNode</a></h3>
+<p>Object representing a OpenFX node.</p>
+<h4 id="methods_42">Methods</h4>
+<ul>
+<li><code>change_plugin(...)</code> (builtin) — change_plugin( (PyOFXNode)arg1, (str)plugin_name) -&gt; bool : </li>
+</ul>
+<h3 id="class-pypaintnode">class <a href="../classes/PyPaintNode/">PyPaintNode</a></h3>
+<p>Object representing a Paint node.</p>
+<h4 id="methods_43">Methods</h4>
+<ul>
+<li><code>add_source(...)</code> (builtin) — add_source( (PyPaintNode)arg1) -&gt; object : </li>
+</ul>
+<h3 id="class-pyproject">class <a href="../classes/PyProject/">PyProject</a></h3>
+<p>Object representing a Project.</p>
+<h4 id="methods_44">Methods</h4>
+<ul>
+<li><code>name(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>nickname(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>description(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>project_name(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>workspaces_count(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; int </li>
+<li><code>current_workspace(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; object </li>
+<li><code>shared_libraries(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; list </li>
+<li><code>project_folder(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>setups_folder(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>media_folder(...)</code> (property) — None( (flame.PyProject)arg1) -&gt; str </li>
+<li><code>create_shared_library(...)</code> (builtin) — create_shared_library( (PyProject)arg1, (str)name) -&gt; object : </li>
+<li><code>refresh_shared_libraries(...)</code> (builtin) — refresh_shared_libraries( (PyProject)arg1) -&gt; bool : </li>
+<li><code>reload_ocio_config(...)</code> (builtin) — reload_ocio_config( (PyProject)arg1 [, (bool)reset_colour_policy=False]) -&gt; bool : </li>
+<li><code>export_ocio_config(...)</code> (builtin) — export_ocio_config( (PyProject)arg1, (str)config_name [, (str)destination_folder='' [, (bool)overwrite_existing=False [, (bool)export_as_locked=False [, (bool)generate_ocioz=False]]]]) -&gt; bool : </li>
+<li><code>set_context_variable(...)</code> (builtin) — set_context_variable( (PyProject)arg1, (str)name, (str)value) -&gt; None : </li>
+<li><code>get_context_variables(...)</code> (builtin) — get_context_variables( (PyProject)arg1) -&gt; dict : </li>
+<li><code>reset_context_variables(...)</code> (builtin) — reset_context_variables( (PyProject)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pyprojectselector">class <a href="../classes/PyProjectSelector/">PyProjectSelector</a></h3>
+<p>Object representing the Project manager.</p>
+<h4 id="methods_45">Methods</h4>
+<ul>
+<li><code>current_project(...)</code> (property) — None( (flame.PyProjectSelector)arg1) -&gt; object </li>
+</ul>
+<h3 id="class-pyreadfilenode">class <a href="../classes/PyReadFileNode/">PyReadFileNode</a></h3>
+<p>Class derived from PyNode. This class represents a ReadFile node.</p>
+<h3 id="class-pyreel">class <a href="../classes/PyReel/">PyReel</a></h3>
+<p>Object representing a Reel.</p>
+<h4 id="methods_46">Methods</h4>
+<ul>
+<li><code>children(...)</code> (property) — None( (flame.PyReel)arg1) -&gt; list </li>
+<li><code>sequences(...)</code> (property) — None( (flame.PyReel)arg1) -&gt; list </li>
+<li><code>clips(...)</code> (property) — None( (flame.PyReel)arg1) -&gt; list </li>
+<li><code>type(...)</code> (property) — None( (flame.PyReel)arg1) -&gt; object </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyReel)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>create_sequence(...)</code> (builtin) — create_sequence( (PyReel)arg1 [, (str)name='Untitled Sequence' [, (int)video_tracks=1 [, (bool)video_stereo=False [, (object)width=None [, (object)height=None [, (object)ratio=None [, (object)bit_depth=None [, (object)scan_mode=None [, (object)frame_rate=None [, (object)start_at=00:00:00+00 [, (object)duration=00:00:00+01 [, (int)audio_tracks=1 [, (bool)audio_stereo=True]]]]]]]]]]]]]) -&gt; object : </li>
+<li><code>save(...)</code> (builtin) — save( (PyReel)arg1) -&gt; bool : </li>
+</ul>
+<h3 id="class-pyreelgroup">class <a href="../classes/PyReelGroup/">PyReelGroup</a></h3>
+<p>Object representing a Reel Group.</p>
+<h4 id="methods_47">Methods</h4>
+<ul>
+<li><code>children(...)</code> (property) — None( (flame.PyReelGroup)arg1) -&gt; list </li>
+<li><code>reels(...)</code> (property) — None( (flame.PyReelGroup)arg1) -&gt; list </li>
+<li><code>clear(...)</code> (builtin) — clear( (PyReelGroup)arg1 [, (bool)confirm=True]) -&gt; bool : </li>
+<li><code>create_reel(...)</code> (builtin) — create_reel( (PyReelGroup)arg1, (str)name [, (bool)sequence=False]) -&gt; object : </li>
+<li><code>save(...)</code> (builtin) — save( (PyReelGroup)arg1) -&gt; bool : </li>
+</ul>
+<h3 id="class-pyrendernode">class <a href="../classes/PyRenderNode/">PyRenderNode</a></h3>
+<p>Class derived from PyNode. This class represents a Render node.</p>
+<h4 id="methods_48">Methods</h4>
+<ul>
+<li><code>channels(...)</code> (property) — None( (flame.PyRenderNode)arg1) -&gt; list </li>
+<li><code>set_channel_name(...)</code> (builtin) — set_channel_name( (PyRenderNode)arg1, (object)channel, (object)name) -&gt; None : </li>
+<li><code>set_metadata_value(...)</code> (builtin) — set_metadata_value( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)value=None [, (bool)is_dynamic=False]]]]) -&gt; None : </li>
+<li><code>set_metadata_discarded(...)</code> (builtin) — set_metadata_discarded( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (bool)discarded=True]]]) -&gt; None : </li>
+<li><code>set_metadata_key(...)</code> (builtin) — set_metadata_key( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)name=None]]]) -&gt; None : </li>
+</ul>
+<h3 id="class-pyresolution">class <a href="../classes/PyResolution/">PyResolution</a></h3>
+<p>Object representing a resolution</p>
+<h4 id="methods_49">Methods</h4>
+<ul>
+<li><code>resolution(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; str </li>
+<li><code>width(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; int </li>
+<li><code>height(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; int </li>
+<li><code>frame_ratio(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; float </li>
+<li><code>scan_mode(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; str </li>
+<li><code>bit_depth(...)</code> (property) — None( (flame.PyResolution)arg1) -&gt; int </li>
+</ul>
+<h3 id="class-pysearch">class <a href="../classes/PySearch/">PySearch</a></h3>
+<p>This class represents the search.</p>
+<h4 id="methods_50">Methods</h4>
+<ul>
+<li><code>use_weight(...)</code> (property) — None( (flame.PySearch)arg1) -&gt; bool </li>
+<li><code>set_tool_favorite(...)</code> (builtin) — set_tool_favorite( (PySearch)arg1, (str)arg2, (str)name, (bool)type) -&gt; None : </li>
+<li><code>set_tool_hidden(...)</code> (builtin) — set_tool_hidden( (PySearch)arg1, (str)arg2, (str)name, (bool)type) -&gt; None : </li>
+<li><code>set_tool_weight(...)</code> (builtin) — set_tool_weight( (PySearch)arg1, (str)arg2, (str)name, (int)type) -&gt; None : </li>
+<li><code>search_results(...)</code> (builtin) — search_results( (PySearch)arg1 [, (str)search_str='*' [, (str)tab='Tools']]) -&gt; list : </li>
+<li><code>activate_search_result(...)</code> (builtin) — activate_search_result( (PySearch)arg1, (str)name, (str)type [, (str)tab='Tools']) -&gt; None : </li>
+</ul>
+<h3 id="class-pysegment">class <a href="../classes/PySegment/">PySegment</a></h3>
+<p>Object representing a Segment.</p>
+<h4 id="methods_51">Methods</h4>
+<ul>
+<li><code>source_name(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_in(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>source_out(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>source_duration(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>source_width(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_height(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_bit_depth(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_ratio(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; float </li>
+<li><code>source_scan_mode(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_frame_rate(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_cached(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_has_history(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; bool </li>
+<li><code>source_unlinked(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_sample_rate(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_audio_track(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_essence_uid(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_uid(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>original_source_uid(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>source_colour_primaries(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_transfer_characteristics(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>source_matrix_coefficients(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>tape_name(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>record_in(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>record_out(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>record_duration(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>start_frame(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; int </li>
+<li><code>file_path(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>markers(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>effect_types(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>effects(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>groups(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>type(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>head(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>tail(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>rgb_channel(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>matte_channel(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>rgb_channels(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>matte_channels(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>version_uid(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>version_uids(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; list </li>
+<li><code>matte_mode(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; str </li>
+<li><code>container_clip(...)</code> (property) — None( (flame.PySegment)arg1) -&gt; object </li>
+<li><code>create_effect(...)</code> (builtin) — create_effect( (PySegment)arg1, (str)effect_type [, (str)after_effect_type='']) -&gt; object : </li>
+<li><code>create_marker(...)</code> (builtin) — create_marker( (PySegment)arg1, (object)location) -&gt; object : </li>
+<li><code>create_connection(...)</code> (builtin) — create_connection( (PySegment)arg1) -&gt; None : </li>
+<li><code>remove_connection(...)</code> (builtin) — remove_connection( (PySegment)arg1) -&gt; None : </li>
+<li><code>sync_connected_segments(...)</code> (builtin) — sync_connected_segments( (PySegment)arg1) -&gt; None : </li>
+<li><code>connected_segments(...)</code> (builtin) — connected_segments( (PySegment)arg1 [, (str)scoping='all reels']) -&gt; object : </li>
+<li><code>duplicate_source(...)</code> (builtin) — duplicate_source( (PySegment)arg1) -&gt; None : </li>
+<li><code>shared_source_segments(...)</code> (builtin) — shared_source_segments( (PySegment)arg1) -&gt; object : </li>
+<li><code>copy_to_media_panel(...)</code> (builtin) — copy_to_media_panel( (PySegment)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+<li><code>trim_head(...)</code> (builtin) — trim_head( (PySegment)arg1, (int)offset [, (bool)ripple=False [, (bool)sync=False [, (str)keyframes_move_mode='Shift']]]) -&gt; bool : </li>
+<li><code>trim_tail(...)</code> (builtin) — trim_tail( (PySegment)arg1, (int)offset [, (bool)ripple=False [, (bool)sync=False [, (str)keyframes_move_mode='Shift']]]) -&gt; bool : </li>
+<li><code>slip(...)</code> (builtin) — slip( (PySegment)arg1, (int)offset [, (bool)sync=False [, (str)keyframes_move_mode='Shift']]) -&gt; bool : </li>
+<li><code>slide_keyframes(...)</code> (builtin) — slide_keyframes( (PySegment)arg1, (int)offset [, (bool)sync=False]) -&gt; bool : </li>
+<li><code>set_gap_colour(...)</code> (builtin) — set_gap_colour( (PySegment)arg1 [, (float)r=0.0 [, (float)g=0.0 [, (float)b=0.0]]]) -&gt; None : </li>
+<li><code>set_gap_bars(...)</code> (builtin) — set_gap_bars( (PySegment)arg1 [, (str)type='smpte' [, (bool)full_luminance=False [, (float)softness=0.0]]]) -&gt; object : </li>
+<li><code>smart_replace(...)</code> (builtin) — smart_replace( (PySegment)arg1, (PyClip)source_clip) -&gt; None : </li>
+<li><code>smart_replace_media(...)</code> (builtin) — smart_replace_media( (PySegment)arg1, (PyClip)source_clip) -&gt; None : </li>
+<li><code>match(...)</code> (builtin) — match( (PySegment)arg1, (PyArchiveEntry)destination [, (bool)preserve_handle=False [, (bool)use_sequence_info=True [, (bool)include_nested_content=False [, (bool)include_timeline_fx=False]]]]) -&gt; object : </li>
+<li><code>clear_colour(...)</code> (builtin) — clear_colour( (PySegment)arg1) -&gt; None : </li>
+<li><code>set_rgb_channel(...)</code> (builtin) — set_rgb_channel( (PySegment)arg1 [, (str)channel_name='' [, (int)channel_index=-1 [, (str)scope='Follow Preferences']]]) -&gt; bool : </li>
+<li><code>set_matte_channel(...)</code> (builtin) — set_matte_channel( (PySegment)arg1 [, (str)channel_name='' [, (int)channel_index=-1 [, (str)scope='Follow Preferences' [, (str)matte_mode='Custom Matte']]]]) -&gt; bool : </li>
+<li><code>set_version_uid(...)</code> (builtin) — set_version_uid( (PySegment)arg1, (str)version_uid [, (str)scope='Follow Source Sharing']) -&gt; bool : </li>
+<li><code>get_colour_space(...)</code> (builtin) — get_colour_space( (PySegment)arg1 [, (PyTime)time=None]) -&gt; str : </li>
+<li><code>create_unlinked_segment(...)</code> (builtin) — create_unlinked_segment( (PySegment)arg1 [, (str)source_name='' [, (str)tape_name='' [, (object)start_time=0 [, (object)source_duration=0 [, (object)head=0 [, (str)file_path='' [, (int)source_audio_track=1 [, (int)width=0 [, (int)height=0 [, (float)ratio=0.0 [, (int)bit_depth=0 [, (str)scan_mode='Same As Sequence' [, (str)frame_rate='Same As Sequence' [, (object)timewarp_speed=None]]]]]]]]]]]]]]) -&gt; None : </li>
+<li><code>change_start_frame(...)</code> (builtin) — change_start_frame( (PySegment)arg1, (int)start_frame [, (bool)use_segment_connections=True]) -&gt; None : </li>
+<li><code>get_metadata(...)</code> (builtin) — get_metadata( (PySegment)arg1 [, (str)key='' [, (PyTime)time=None]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pysequence">class <a href="../classes/PySequence/">PySequence</a></h3>
+<p>Object representing a Sequence.</p>
+<h4 id="methods_52">Methods</h4>
+<ul>
+<li><code>open(...)</code> (builtin) — open( (PySequence)arg1) -&gt; bool : </li>
+<li><code>create_container(...)</code> (builtin) — create_container( (PySequence)arg1) -&gt; object : </li>
+<li><code>create_version(...)</code> (builtin) — create_version( (PySequence)arg1 [, (bool)stereo=False]) -&gt; object : </li>
+<li><code>create_audio(...)</code> (builtin) — create_audio( (PySequence)arg1 [, (bool)stereo=False]) -&gt; object : </li>
+<li><code>create_subtitle(...)</code> (builtin) — create_subtitle( (PySequence)arg1) -&gt; object : </li>
+<li><code>import_subtitles_file(...)</code> (builtin) — import_subtitles_file( (PySequence)arg1, (str)file_name [, (object)file_type=None [, (bool)align_first_event_to_clip_start=False [, (object)convert_from_frame_rate=None]]]) -&gt; object : </li>
+<li><code>create_group(...)</code> (builtin) — create_group( (PySequence)arg1, (str)name) -&gt; object : </li>
+<li><code>insert(...)</code> (builtin) — insert( (PySequence)arg1, (PyClip)source_clip [, (PyTime)insert_time=None [, (PyTrack)destination_track=None]]) -&gt; bool : </li>
+<li><code>overwrite(...)</code> (builtin) — overwrite( (PySequence)arg1, (PyClip)source_clip [, (PyTime)overwrite_time=None [, (PyTrack)destination_track=None]]) -&gt; bool : </li>
+<li><code>copy_selection_to_media_panel(...)</code> (builtin) — copy_selection_to_media_panel( (PySequence)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+<li><code>extract_selection_to_media_panel(...)</code> (builtin) — extract_selection_to_media_panel( (PySequence)arg1 [, (PyArchiveEntry)destination=None [, (str)duplicate_action='add']]) -&gt; object : </li>
+<li><code>lift_selection_to_media_panel(...)</code> (builtin) — lift_selection_to_media_panel( (PySequence)arg1 [, (PyArchiveEntry)destination=None [, (str)duplicate_action='add']]) -&gt; object : </li>
+<li><code>groups(...)</code> (property) — None( (flame.PySequence)arg1) -&gt; list </li>
+</ul>
+<h3 id="class-pysequencegroup">class <a href="../classes/PySequenceGroup/">PySequenceGroup</a></h3>
+<p>Object representing a Group in a Sequence.</p>
+<h4 id="methods_53">Methods</h4>
+<ul>
+<li><code>segments(...)</code> (property) — None( (flame.PySequenceGroup)arg1) -&gt; list </li>
+<li><code>add(...)</code> (builtin) — add( (PySequenceGroup)arg1, (object)segments) -&gt; None : </li>
+<li><code>remove(...)</code> (builtin) — remove( (PySequenceGroup)arg1, (object)segments) -&gt; None : </li>
+</ul>
+<h3 id="class-pysubtitletrack">class <a href="../classes/PySubtitleTrack/">PySubtitleTrack</a></h3>
+<p>Object representing a Subtitle Track.</p>
+<h4 id="methods_54">Methods</h4>
+<ul>
+<li><code>export_as_srt_file(...)</code> (builtin) — export_as_srt_file( (PySubtitleTrack)arg1, (str)file_name [, (bool)character_based_attributes=True [, (bool)export_colours=False [, (str)exclude_colour='' [, (bool)use_original_colours=False [, (bool)use_original_alignment=False [, (bool)export_alignments=False [, (str)alignment_type='an' [, (str)exclude_alignment='' [, (str)start_timecode='Same as Clip']]]]]]]]]) -&gt; None : </li>
+</ul>
+<h3 id="class-pytime">class <a href="../classes/PyTime/">PyTime</a></h3>
+<p>Object representing a time unit</p>
+<h4 id="methods_55">Methods</h4>
+<ul>
+<li><code>frame(...)</code> (property) — None( (flame.PyTime)arg1) -&gt; int </li>
+<li><code>relative_frame(...)</code> (property) — None( (flame.PyTime)arg1) -&gt; int </li>
+<li><code>timecode(...)</code> (property) — None( (flame.PyTime)arg1) -&gt; str </li>
+<li><code>frame_rate(...)</code> (property) — None( (flame.PyTime)arg1) -&gt; object </li>
+</ul>
+<h3 id="class-pytimeline">class <a href="../classes/PyTimeline/">PyTimeline</a></h3>
+<p>This class represents the Timeline.</p>
+<h4 id="methods_56">Methods</h4>
+<ul>
+<li><code>clip(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; object </li>
+<li><code>current_segment(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; object </li>
+<li><code>current_marker(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; object </li>
+<li><code>current_effect(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; object </li>
+<li><code>current_transition(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; object </li>
+<li><code>type(...)</code> (property) — None( (flame.PyTimeline)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pytimelinefx">class <a href="../classes/PyTimelineFX/">PyTimelineFX</a></h3>
+<p>Object representing a Timeline FX.</p>
+<h4 id="methods_57">Methods</h4>
+<ul>
+<li><code>type(...)</code> (property) — None( (flame.PyTimelineFX)arg1) -&gt; object </li>
+<li><code>has_maps_cache_media(...)</code> (property) — None( (flame.PyTimelineFX)arg1) -&gt; bool </li>
+<li><code>load_setup(...)</code> (builtin) — load_setup( (PyTimelineFX)arg1, (str)file_name) -&gt; bool : </li>
+<li><code>save_setup(...)</code> (builtin) — save_setup( (PyTimelineFX)arg1, (str)file_name) -&gt; bool : </li>
+<li><code>flush_maps_cache_media(...)</code> (builtin) — flush_maps_cache_media( (PyTimelineFX)arg1) -&gt; bool : </li>
+<li><code>clear_maps_cache_media(...)</code> (builtin) — clear_maps_cache_media( (PyTimelineFX)arg1) -&gt; bool : </li>
+<li><code>sync_connected_segments(...)</code> (builtin) — sync_connected_segments( (PyTimelineFX)arg1) -&gt; None : </li>
+<li><code>slide_keyframes(...)</code> (builtin) — slide_keyframes( (PyTimelineFX)arg1, (float)offset) -&gt; None : </li>
+<li><code>output_channel_as_metadata_key(...)</code> (builtin) — output_channel_as_metadata_key( (PyTimelineFX)arg1, (str)channel_name [, (bool)enable=True]) -&gt; None : </li>
+</ul>
+<h3 id="class-pytimewarpnode">class <a href="../classes/PyTimewarpNode/">PyTimewarpNode</a></h3>
+<p>Object representing a Timewarp node.</p>
+<h4 id="methods_58">Methods</h4>
+<ul>
+<li><code>get_speed(...)</code> (builtin) — get_speed( (PyTimewarpNode)arg1, (float)frame) -&gt; float : </li>
+<li><code>set_speed(...)</code> (builtin) — set_speed( (PyTimewarpNode)arg1, (float)frame, (float)new_speed) -&gt; None : </li>
+<li><code>set_timing(...)</code> (builtin) — set_timing( (PyTimewarpNode)arg1, (float)frame, (float)new_timing) -&gt; None : </li>
+<li><code>get_timing(...)</code> (builtin) — get_timing( (PyTimewarpNode)arg1, (float)frame) -&gt; float : </li>
+<li><code>get_duration_timing(...)</code> (builtin) — get_duration_timing( (PyTimewarpNode)arg1, (float)frame) -&gt; float : </li>
+<li><code>get_speed_timing(...)</code> (builtin) — get_speed_timing( (PyTimewarpNode)arg1, (float)frame) -&gt; float : </li>
+</ul>
+<h3 id="class-pytimewarptimelinefx">class <a href="../classes/PyTimewarpTimelineFX/">PyTimewarpTimelineFX</a></h3>
+<p>Object representing a Timewarp node.</p>
+<h4 id="methods_59">Methods</h4>
+<ul>
+<li><code>get_speed(...)</code> (builtin) — get_speed( (PyTimewarpTimelineFX)arg1, (float)frame) -&gt; float : </li>
+<li><code>set_speed(...)</code> (builtin) — set_speed( (PyTimewarpTimelineFX)arg1, (float)frame, (float)new_speed) -&gt; None : </li>
+<li><code>set_timing(...)</code> (builtin) — set_timing( (PyTimewarpTimelineFX)arg1, (float)frame, (float)new_timing) -&gt; None : </li>
+<li><code>get_timing(...)</code> (builtin) — get_timing( (PyTimewarpTimelineFX)arg1, (float)frame) -&gt; float : </li>
+<li><code>get_duration_timing(...)</code> (builtin) — get_duration_timing( (PyTimewarpTimelineFX)arg1, (float)frame) -&gt; float : </li>
+<li><code>get_speed_timing(...)</code> (builtin) — get_speed_timing( (PyTimewarpTimelineFX)arg1, (float)frame) -&gt; float : </li>
+</ul>
+<h3 id="class-pytrack">class <a href="../classes/PyTrack/">PyTrack</a></h3>
+<p>Object representing a Track.</p>
+<h4 id="methods_60">Methods</h4>
+<ul>
+<li><code>segments(...)</code> (property) — None( (flame.PyTrack)arg1) -&gt; list </li>
+<li><code>transitions(...)</code> (property) — None( (flame.PyTrack)arg1) -&gt; list </li>
+<li><code>copy_to_media_panel(...)</code> (builtin) — copy_to_media_panel( (PyTrack)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+<li><code>cut(...)</code> (builtin) — cut( (PyTrack)arg1, (PyTime)cut_time [, (bool)sync=False]) -&gt; None : </li>
+<li><code>insert_transition(...)</code> (builtin) — insert_transition( (PyTrack)arg1, (PyTime)record_time, (str)type [, (int)duration=10 [, (str)alignment='Centred' [, (int)in_offset=0 [, (bool)sync=False]]]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pytransition">class <a href="../classes/PyTransition/">PyTransition</a></h3>
+<p>Object representing a Transition.</p>
+<h4 id="methods_61">Methods</h4>
+<ul>
+<li><code>type(...)</code> (property) — None( (flame.PyTransition)arg1) -&gt; str </li>
+<li><code>record_time(...)</code> (property) — None( (flame.PyTransition)arg1) -&gt; object </li>
+<li><code>in_offset(...)</code> (property) — None( (flame.PyTransition)arg1) -&gt; int </li>
+<li><code>set_transition(...)</code> (builtin) — set_transition( (PyTransition)arg1, (str)type [, (int)duration=10 [, (str)alignment='Centred' [, (int)in_offset=0]]]) -&gt; object : </li>
+<li><code>slide(...)</code> (builtin) — slide( (PyTransition)arg1, (int)offset [, (bool)sync=False]) -&gt; bool : </li>
+<li><code>set_dissolve_to_from_colour(...)</code> (builtin) — set_dissolve_to_from_colour( (PyTransition)arg1 [, (float)r=0.0 [, (float)g=0.0 [, (float)b=0.0]]]) -&gt; None : </li>
+<li><code>set_fade_to_from_silence(...)</code> (builtin) — set_fade_to_from_silence( (PyTransition)arg1) -&gt; None : </li>
+</ul>
+<h3 id="class-pytypefx">class <a href="../classes/PyTypeFX/">PyTypeFX</a></h3>
+<p>Object representing a Type Timeline FX.</p>
+<h4 id="methods_62">Methods</h4>
+<ul>
+<li><code>layers(...)</code> (property) — None( (flame.PyTypeFX)arg1) -&gt; list </li>
+<li><code>add_layer(...)</code> (builtin) — add_layer( (PyTypeFX)arg1 [, (str)layer_type='Centre']) -&gt; object : </li>
+<li><code>append_type_setup(...)</code> (builtin) — append_type_setup( (PyTypeFX)arg1, (str)file_name) -&gt; bool : </li>
+</ul>
+<h3 id="class-pytypelayer">class <a href="../classes/PyTypeLayer/">PyTypeLayer</a></h3>
+<p>Object representing a Type Layer.</p>
+<h4 id="methods_63">Methods</h4>
+<ul>
+<li><code>type(...)</code> (property) — None( (flame.PyTypeLayer)arg1) -&gt; object </li>
+</ul>
+<h3 id="class-pytypenode">class <a href="../classes/PyTypeNode/">PyTypeNode</a></h3>
+<p>Object representing a Type node.</p>
+<h4 id="methods_64">Methods</h4>
+<ul>
+<li><code>layers(...)</code> (property) — None( (flame.PyTypeNode)arg1) -&gt; list </li>
+<li><code>add_layer(...)</code> (builtin) — add_layer( (PyTypeNode)arg1 [, (str)layer_type='Centre']) -&gt; object : </li>
+<li><code>append_type_setup(...)</code> (builtin) — append_type_setup( (PyTypeNode)arg1, (str)file_name) -&gt; bool : </li>
+</ul>
+<h3 id="class-pyuser">class <a href="../classes/PyUser/">PyUser</a></h3>
+<p>Object representing a User.</p>
+<h4 id="methods_65">Methods</h4>
+<ul>
+<li><code>name(...)</code> (property) — None( (flame.PyUser)arg1) -&gt; str </li>
+<li><code>nickname(...)</code> (property) — None( (flame.PyUser)arg1) -&gt; str </li>
+<li><code>shortcuts_profile(...)</code> (property) — None( (flame.PyUser)arg1) -&gt; str </li>
+</ul>
+<h3 id="class-pyusers">class <a href="../classes/PyUsers/">PyUsers</a></h3>
+<p>Object representing the User manager.</p>
+<h4 id="methods_66">Methods</h4>
+<ul>
+<li><code>current_user(...)</code> (property) — None( (flame.PyUsers)arg1) -&gt; object </li>
+</ul>
+<h3 id="class-pyversion">class <a href="../classes/PyVersion/">PyVersion</a></h3>
+<p>Object representing a Version.</p>
+<h4 id="methods_67">Methods</h4>
+<ul>
+<li><code>tracks(...)</code> (property) — None( (flame.PyVersion)arg1) -&gt; list </li>
+<li><code>stereo(...)</code> (property) — None( (flame.PyVersion)arg1) -&gt; bool </li>
+<li><code>copy_to_media_panel(...)</code> (builtin) — copy_to_media_panel( (PyVersion)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -&gt; object : </li>
+<li><code>create_track(...)</code> (builtin) — create_track( (PyVersion)arg1 [, (int)track_index=-1 [, (bool)hdr=False]]) -&gt; object : </li>
+<li><code>import_DolbyVision_xml(...)</code> (builtin) — import_DolbyVision_xml( (PyVersion)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)track_index=-1]]) -&gt; object : </li>
+</ul>
+<h3 id="class-pyworkspace">class <a href="../classes/PyWorkspace/">PyWorkspace</a></h3>
+<p>Object representing a Workspace.</p>
+<h4 id="methods_68">Methods</h4>
+<ul>
+<li><code>desktop(...)</code> (property) — None( (flame.PyWorkspace)arg1) -&gt; object </li>
+<li><code>libraries(...)</code> (property) — None( (flame.PyWorkspace)arg1) -&gt; list </li>
+<li><code>create_library(...)</code> (builtin) — create_library( (PyWorkspace)arg1, (str)name) -&gt; object : </li>
+<li><code>replace_desktop(...)</code> (builtin) — replace_desktop( (PyWorkspace)arg1, (PyDesktop)desktop) -&gt; bool : </li>
+<li><code>set_desktop_reels(...)</code> (builtin) — set_desktop_reels( (PyWorkspace)arg1 [, (object)group=None]) -&gt; bool : </li>
+<li><code>set_freeform(...)</code> (builtin) — set_freeform( (PyWorkspace)arg1 [, (object)reel=None]) -&gt; bool : </li>
+</ul>
+<h3 id="class-pywritefilenode">class <a href="../classes/PyWriteFileNode/">PyWriteFileNode</a></h3>
+<p>Class derived from PyRenderNode. This class represents a WriteFile node.</p>
+<h4 id="methods_69">Methods</h4>
+<ul>
+<li><code>get_resolved_media_path(...)</code> (builtin) — get_resolved_media_path( (PyWriteFileNode)arg1 [, (bool)show_extension=True [, (bool)translate_path=True [, (object)frame=None]]]) -&gt; object : </li>
+</ul>
+<h2 id="functions">Functions</h2>
+<ul>
+<li><a href="../functions/clear_graphics_memory/">clear_graphics_memory</a> — <code>clear_graphics_memory(...)</code> — clear_graphics_memory() -&gt; None : </li>
+<li><a href="../functions/clear_unreferenced_cache/">clear_unreferenced_cache</a> — <code>clear_unreferenced_cache(...)</code> — clear_unreferenced_cache([  (bool)all_projects=False]) -&gt; None : </li>
+<li><a href="../functions/delete/">delete</a> — <code>delete(...)</code> — delete( (PyFlameObject)object [, (bool)confirm=True]) -&gt; bool : </li>
+<li><a href="../functions/duplicate/">duplicate</a> — <code>duplicate(...)</code> — duplicate( (PyFlameObject)object [, (bool)keep_node_connections=False]) -&gt; object : </li>
+<li><a href="../functions/duplicate_many/">duplicate_many</a> — <code>duplicate_many(...)</code> — duplicate_many( (list)object_list [, (bool)keep_node_connections=False]) -&gt; list : </li>
+<li><a href="../functions/execute_command/">execute_command</a> — <code>execute_command(...)</code> — execute_command( (str)command [, (bool)blocking=True [, (bool)shell=False [, (bool)capture_stdout=False [, (bool)capture_stderr=False]]]]) -&gt; tuple : </li>
+<li><a href="../functions/execute_shortcut/">execute_shortcut</a> — <code>execute_shortcut(...)</code> — execute_shortcut( (str)description [, (bool)update_list=True]) -&gt; bool : </li>
+<li><a href="../functions/exit/">exit</a> — <code>exit(...)</code> — exit() -&gt; None : </li>
+<li><a href="../functions/find_by_name/">find_by_name</a> — <code>find_by_name(...)</code> — find_by_name( (str)name [, (object)parent=None]) -&gt; list : </li>
+<li><a href="../functions/find_by_uid/">find_by_uid</a> — <code>find_by_uid(...)</code> — find_by_uid( (str)uid) -&gt; object : </li>
+<li><a href="../functions/find_by_wiretap_node_id/">find_by_wiretap_node_id</a> — <code>find_by_wiretap_node_id(...)</code> — find_by_wiretap_node_id( (str)node_id) -&gt; object : </li>
+<li><a href="../functions/flush_graphics_memory/">flush_graphics_memory</a> — <code>flush_graphics_memory(...)</code> — flush_graphics_memory() -&gt; None : </li>
+<li><a href="../functions/get_current_tab/">get_current_tab</a> — <code>get_current_tab(...)</code> — get_current_tab() -&gt; str : </li>
+<li><a href="../functions/get_home_directory/">get_home_directory</a> — <code>get_home_directory(...)</code> — get_home_directory() -&gt; str : </li>
+<li><a href="../functions/get_init_cfg_path/">get_init_cfg_path</a> — <code>get_init_cfg_path(...)</code> — get_init_cfg_path() -&gt; str : </li>
+<li><a href="../functions/get_version/">get_version</a> — <code>get_version(...)</code> — get_version() -&gt; str : </li>
+<li><a href="../functions/get_version_major/">get_version_major</a> — <code>get_version_major(...)</code> — get_version_major() -&gt; str : </li>
+<li><a href="../functions/get_version_minor/">get_version_minor</a> — <code>get_version_minor(...)</code> — get_version_minor() -&gt; str : </li>
+<li><a href="../functions/get_version_patch/">get_version_patch</a> — <code>get_version_patch(...)</code> — get_version_patch() -&gt; str : </li>
+<li><a href="../functions/get_version_stamp/">get_version_stamp</a> — <code>get_version_stamp(...)</code> — get_version_stamp() -&gt; str : </li>
+<li><a href="../functions/go_to/">go_to</a> — <code>go_to(...)</code> — go_to( (str)tab) -&gt; bool : </li>
+<li><a href="../functions/import_clips/">import_clips</a> — <code>import_clips(...)</code> — import_clips( (object)path [, (object)destination=None]) -&gt; list : </li>
+<li><a href="../functions/schedule_idle_event/">schedule_idle_event</a> — <code>schedule_idle_event(...)</code> — schedule_idle_event( (object)function [, (int)delay=0]) -&gt; None : </li>
+<li><a href="../functions/set_current_tab/">set_current_tab</a> — <code>set_current_tab(...)</code> — set_current_tab( (str)arg1) -&gt; bool : </li>
+<li><a href="../functions/set_render_option/">set_render_option</a> — <code>set_render_option(...)</code> — set_render_option( (str)render_option [, (str)render_context='']) -&gt; bool : </li>
+</ul>
+<h2 id="constants-attributes">Constants / Attributes</h2>
+<ul>
+<li><a href="../constants/batch/">batch</a></li>
+<li><a href="../constants/browser/">browser</a></li>
+<li><a href="../constants/media_panel/">media_panel</a></li>
+<li><a href="../constants/mediahub/">mediahub</a></li>
+<li><a href="../constants/messages/">messages</a></li>
+<li><a href="../constants/project/">project</a></li>
+<li><a href="../constants/projects/">projects</a></li>
+<li><a href="../constants/timeline/">timeline</a></li>
+<li><a href="../constants/users/">users</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

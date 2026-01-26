@@ -9,19 +9,17 @@ PyTime(relative_frame)
 PyTime(absolute_frame, frame_rate)
 
 ## Methods
-### `frame(...)`
-
+### Properties
+- `frame(...)` — None( (flame.PyTime)arg1) -> int 
 None( (flame.PyTime)arg1) -> int
 
-### `relative_frame(...)`
-
+- `relative_frame(...)` — None( (flame.PyTime)arg1) -> int 
 None( (flame.PyTime)arg1) -> int
 
-### `timecode(...)`
-
+- `timecode(...)` — None( (flame.PyTime)arg1) -> str 
 None( (flame.PyTime)arg1) -> str
 
-### `frame_rate(...)`
-
+- `frame_rate(...)` — None( (flame.PyTime)arg1) -> object 
 None( (flame.PyTime)arg1) -> object
+
 

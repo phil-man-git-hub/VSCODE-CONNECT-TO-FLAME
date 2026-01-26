@@ -5,15 +5,14 @@
 Object representing a User.
 
 ## Methods
-### `name(...)`
-
+### Properties
+- `name(...)` — None( (flame.PyUser)arg1) -> str 
 None( (flame.PyUser)arg1) -> str
 
-### `nickname(...)`
-
+- `nickname(...)` — None( (flame.PyUser)arg1) -> str 
 None( (flame.PyUser)arg1) -> str
 
-### `shortcuts_profile(...)`
-
+- `shortcuts_profile(...)` — None( (flame.PyUser)arg1) -> str 
 None( (flame.PyUser)arg1) -> str
+
 

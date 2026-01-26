@@ -5,30 +5,27 @@
 Class derived from PyArchiveEntry. This class represents a Desktop.
 
 ## Methods
-### `children(...)`
-
+### Properties
+- `children(...)` — None( (flame.PyDesktop)arg1) -> list 
 None( (flame.PyDesktop)arg1) -> list
 
-### `batch_groups(...)`
-
+- `batch_groups(...)` — None( (flame.PyDesktop)arg1) -> list 
 None( (flame.PyDesktop)arg1) -> list
 
-### `reel_groups(...)`
-
+- `reel_groups(...)` — None( (flame.PyDesktop)arg1) -> list 
 None( (flame.PyDesktop)arg1) -> list
 
-### `create_reel_group(...)`
 
+### Built-in methods
+- `create_reel_group(...)` — create_reel_group( (PyDesktop)arg1, (str)name) -> object : 
 create_reel_group( (PyDesktop)arg1, (str)name) -> object :
     Create a new Reel Group object in the Desktop catalogue.
 
-### `save(...)`
-
+- `save(...)` — save( (PyDesktop)arg1) -> bool : 
 save( (PyDesktop)arg1) -> bool :
     Save the Desktop to the location defined by the *destination* attribute.
 
-### `create_batch_group(...)`
-
+- `create_batch_group(...)` — create_batch_group( (PyDesktop)arg1, (str)name [, (object)nb_reels=None [, (object)nb_shelf_reels=None [, (list)reels=[] [, (list)shelf_reels=[] [, (int)start_frame=1 [, (object)duration=None]]]]]]) -> object : 
 create_batch_group( (PyDesktop)arg1, (str)name [, (object)nb_reels=None [, (object)nb_shelf_reels=None [, (list)reels=[] [, (list)shelf_reels=[] [, (int)start_frame=1 [, (object)duration=None]]]]]]) -> object :
     Create a new Batch Group object in the Desktop catalogue.
     Keyword arguments:
@@ -40,8 +37,8 @@ create_batch_group( (PyDesktop)arg1, (str)name [, (object)nb_reels=None [, (obje
     start_frame -- The Batch Group's start frame. No timecodes, only a frame value.
     duration -- The number of frames. Sets the Duration field in the Batch UI. Will be set to the first clip duration when not specified.
 
-### `clear(...)`
-
+- `clear(...)` — clear( (PyDesktop)arg1) -> bool : 
 clear( (PyDesktop)arg1) -> bool :
     Clear the Desktop.
+
 

@@ -29,13 +29,31 @@ def test_project_snippet():
     assert 'OUT:' in resp.get('stdout','')
 
 
+def test_marker_make_payload():
+    code = "import examples.snippets.marker_snippet as ms; print('OUT:'+str(ms.make_marker_payload(100,'t','red')))"
+    resp = call_execute(code)
+    assert 'OUT:' in resp.get('stdout','')
+
+
 def test_timeline_snippet():
     code = "import examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.list_timelines()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
+def test_timeline_frame_ranges():
+    code = "import examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.timeline_frame_ranges()))"
+    resp = call_execute(code)
+    assert 'OUT:' in resp.get('stdout','')
+
+
 def test_clip_snippet():
     code = "import examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.list_clips_in_current_timeline()))"
+    resp = call_execute(code)
+    assert 'OUT:' in resp.get('stdout','')
+
+
+def test_find_clip_by_name():
+    code = "import examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.find_clip_by_name('nonexistent')) )"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')

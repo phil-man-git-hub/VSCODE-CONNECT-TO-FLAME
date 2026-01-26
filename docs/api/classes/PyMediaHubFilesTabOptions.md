@@ -5,97 +5,78 @@
 This class represents the MediaHub Files tab options.
 
 ## Methods
-### `multi_channel_mode(...)`
-
+### Properties
+- `multi_channel_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `sequence_mode(...)`
-
+- `sequence_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool
 
-### `cache_mode(...)`
-
+- `cache_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool
 
-### `proxies_mode(...)`
-
+- `proxies_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool
 
-### `cache_and_proxies_all_versions(...)`
-
+- `cache_and_proxies_all_versions(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool
 
-### `resize_mode(...)`
-
+- `resize_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `resize_filter(...)`
-
+- `resize_filter(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `resolution(...)`
-
+- `resolution(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `width(...)`
-
+- `width(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `height(...)`
-
+- `height(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `scaling_presets_value(...)`
-
+- `scaling_presets_value(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `frame_ratio(...)`
-
+- `frame_ratio(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `bit_depth(...)`
-
+- `bit_depth(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `scan_mode(...)`
-
+- `scan_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `pixel_ratio(...)`
-
+- `pixel_ratio(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> object 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> object
 
-### `colour_mgmt_mode(...)`
-
+- `colour_mgmt_mode(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `colour_mgmt_view(...)`
-
+- `colour_mgmt_view(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `tagged_colour_space(...)`
-
+- `tagged_colour_space(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `colour_mgmt_display(...)`
-
+- `colour_mgmt_display(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `colour_mgmt_working_space(...)`
-
+- `colour_mgmt_working_space(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> str 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> str
 
-### `colour_mgmt_invert(...)`
-
+- `colour_mgmt_invert(...)` — None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool 
 None( (flame.PyMediaHubFilesTabOptions)arg1) -> bool
 
-### `import_transform(...)`
 
+### Built-in methods
+- `import_transform(...)` — import_transform( (PyMediaHubFilesTabOptions)arg1, (str)file_path) -> None : 
 import_transform( (PyMediaHubFilesTabOptions)arg1, (str)file_path) -> None :
     Import a transform from a file.
 
-### `set_tagged_colour_space(...)`
-
+- `set_tagged_colour_space(...)` — set_tagged_colour_space( (PyMediaHubFilesTabOptions)arg1, (str)colour_space) -> None : 
 set_tagged_colour_space( (PyMediaHubFilesTabOptions)arg1, (str)colour_space) -> None :
     Set the tagged colour space to use upon import.
+
 

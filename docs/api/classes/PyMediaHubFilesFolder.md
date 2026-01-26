@@ -5,7 +5,8 @@
 Object representing a folder in the MediaHub Files tabs
 
 ## Methods
-### `path(...)`
-
+### Properties
+- `path(...)` — None( (flame.PyMediaHubFilesFolder)arg1) -> str 
 None( (flame.PyMediaHubFilesFolder)arg1) -> str
+
 

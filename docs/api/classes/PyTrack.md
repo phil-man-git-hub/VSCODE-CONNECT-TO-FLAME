@@ -5,27 +5,24 @@
 Object representing a Track.
 
 ## Methods
-### `segments(...)`
-
+### Properties
+- `segments(...)` — None( (flame.PyTrack)arg1) -> list 
 None( (flame.PyTrack)arg1) -> list
 
-### `transitions(...)`
-
+- `transitions(...)` — None( (flame.PyTrack)arg1) -> list 
 None( (flame.PyTrack)arg1) -> list
 
-### `copy_to_media_panel(...)`
 
+### Built-in methods
+- `copy_to_media_panel(...)` — copy_to_media_panel( (PyTrack)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -> object : 
 copy_to_media_panel( (PyTrack)arg1, (PyArchiveEntry)destination [, (str)duplicate_action='add']) -> object :
     Create a new clip with a copy of the PyObject.
-    
 
-### `cut(...)`
-
+- `cut(...)` — cut( (PyTrack)arg1, (PyTime)cut_time [, (bool)sync=False]) -> None : 
 cut( (PyTrack)arg1, (PyTime)cut_time [, (bool)sync=False]) -> None :
     Cut the Track.
 
-### `insert_transition(...)`
-
+- `insert_transition(...)` — insert_transition( (PyTrack)arg1, (PyTime)record_time, (str)type [, (int)duration=10 [, (str)alignment='Centred' [, (int)in_offset=0 [, (bool)sync=False]]]]) -> object : 
 insert_transition( (PyTrack)arg1, (PyTime)record_time, (str)type [, (int)duration=10 [, (str)alignment='Centred' [, (int)in_offset=0 [, (bool)sync=False]]]]) -> object :
     Insert a Transition on the Track.
     Returns the new PyTransition if successful.
@@ -36,4 +33,5 @@ insert_transition( (PyTrack)arg1, (PyTime)record_time, (str)type [, (int)duratio
     alignment -- Alignment of the new Transition.
     in_offset -- Number of frames on left side of the cut in custom alignment.
     sync -- Perform the operation on all Tracks part of the sync group.
+
 

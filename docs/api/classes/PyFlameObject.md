@@ -5,11 +5,11 @@
 The basic type of all accessible Flame objects from the python API.
 
 ## Methods
-### `attributes(...)`
-
+### Properties
+- `attributes(...)` — None( (flame.PyFlameObject)arg1) -> list 
 None( (flame.PyFlameObject)arg1) -> list
 
-### `parent(...)`
-
+- `parent(...)` — None( (flame.PyFlameObject)arg1) -> object 
 None( (flame.PyFlameObject)arg1) -> object
+
 

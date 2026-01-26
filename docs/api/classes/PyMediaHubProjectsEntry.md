@@ -5,11 +5,11 @@
 Object representing a clip in the MediaHub Projects tabs
 
 ## Methods
-### `uid(...)`
-
+### Properties
+- `uid(...)` — None( (flame.PyMediaHubProjectsEntry)arg1) -> str 
 None( (flame.PyMediaHubProjectsEntry)arg1) -> str
 
-### `path(...)`
-
+- `path(...)` — None( (flame.PyMediaHubProjectsEntry)arg1) -> str 
 None( (flame.PyMediaHubProjectsEntry)arg1) -> str
+
 

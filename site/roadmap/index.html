@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Roadmap - Flame API Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Roadmap";
+        var mkdocs_page_input_path = "roadmap.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Roadmap</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>Here’s a full, end‑to‑end architecture for exposing <strong>Autodesk Flame’s Python API</strong> inside <strong>VS Code</strong> — the closest possible equivalent to Adobe Script Runner, Maya’s commandPort, Nuke’s TCP bridge, or Houdini’s hrpyc.</p>
+<p>This is a <strong>practical blueprint</strong>, not a hand‑wave. If you wanted to build this, this is exactly what you’d implement.</p>
+<hr />
+<h1 id="1-flameside-component-the-python-listener"><strong>1. Flame‑Side Component: The Python Listener</strong></h1>
+<p>This is the missing piece Flame doesn’t provide natively.</p>
+<p>You embed a small Python server <em>inside Flame’s Python interpreter</em> that:</p>
+<ul>
+<li>Opens a local TCP socket (e.g., <code>localhost:5555</code>)</li>
+<li>Accepts incoming Python code</li>
+<li>Executes it inside Flame’s environment</li>
+<li>Returns stdout, stderr, and exceptions</li>
+<li>Ensures Flame API calls run on the main thread</li>
+</ul>
+<h3 id="core-responsibilities"><strong>Core responsibilities</strong></h3>
+<ul>
+<li><strong>Execution loop</strong><br />
+  Receive → Execute → Return result  </li>
+<li><strong>Thread safety</strong><br />
+  Flame API calls must run on the UI thread; you wrap execution in <code>flame.execute_on_main_thread()</code>.</li>
+<li><strong>Security</strong><br />
+  Bind to localhost only, require a token, or use a Unix domain socket.</li>
+<li><strong>Lifecycle</strong><br />
+  Start automatically via a Flame Python hook.</li>
+</ul>
+<h3 id="where-it-lives"><strong>Where it lives</strong></h3>
+<p>Flame loads Python from:</p>
+<pre><code>/opt/Autodesk/flame_2025/python/
+~/.config/Autodesk/Flame/python/
+</code></pre>
+<p>You’d install the listener as a Flame startup hook:</p>
+<pre><code>python/startup/flame_listener.py
+</code></pre>
+<hr />
+<h1 id="2-communication-protocol"><strong>2. Communication Protocol</strong></h1>
+<p>Keep it simple and robust.</p>
+<h3 id="transport"><strong>Transport</strong></h3>
+<ul>
+<li>TCP socket (easiest)</li>
+<li>Optional: WebSocket (if you want browser‑based tools later)</li>
+<li>Optional: Unix domain socket (secure, local‑only)</li>
+</ul>
+<h3 id="message-format"><strong>Message format</strong></h3>
+<p>Use JSON for structured communication:</p>
+<pre><code class="language-json">{
+  &quot;command&quot;: &quot;execute&quot;,
+  &quot;code&quot;: &quot;import flame\nprint(flame.project.current_project.name)&quot;
+}
+</code></pre>
+<h3 id="response-format"><strong>Response format</strong></h3>
+<pre><code class="language-json">{
+  &quot;stdout&quot;: &quot;MyProject\n&quot;,
+  &quot;stderr&quot;: &quot;&quot;,
+  &quot;exception&quot;: null
+}
+</code></pre>
+<hr />
+<h1 id="3-vs-code-extension"><strong>3. VS Code Extension</strong></h1>
+<p>This is the user‑facing part — the equivalent of Adobe Script Runner.</p>
+<h3 id="capabilities"><strong>Capabilities</strong></h3>
+<ul>
+<li><strong>Run in Flame</strong> command<br />
+  Sends selected text or entire file to the Flame listener.</li>
+<li><strong>Output panel</strong><br />
+  Displays stdout, stderr, exceptions.</li>
+<li><strong>Connection manager</strong><br />
+  Connect/disconnect, show status, auto‑reconnect.</li>
+<li><strong>Keyboard shortcuts</strong><br />
+  e.g., <code>Ctrl+Shift+F</code> to execute in Flame.</li>
+<li><strong>Snippets</strong><br />
+  Quickly insert common Flame API patterns.</li>
+<li><strong>Optional: Debugger integration</strong><br />
+  If you embed <code>debugpy</code> inside Flame.</li>
+</ul>
+<h3 id="extension-structure"><strong>Extension structure</strong></h3>
+<pre><code>flame-vscode/
+  package.json
+  extension.js
+  src/
+    client.js
+    commands/
+      runInFlame.js
+      connect.js
+      disconnect.js
+  syntaxes/
+  snippets/
+  stubs/
+</code></pre>
+<h3 id="user-workflow"><strong>User workflow</strong></h3>
+<ol>
+<li>Open a <code>.py</code> file.</li>
+<li>Press “Run in Flame”.</li>
+<li>Code executes inside Flame instantly.</li>
+<li>Output appears in VS Code.</li>
+</ol>
+<hr />
+<h1 id="4-flame-api-intellisense-stub-files"><strong>4. Flame API IntelliSense (Stub Files)</strong></h1>
+<p>VS Code cannot introspect Flame’s embedded Python, so you generate <code>.pyi</code> stub files.</p>
+<h3 id="stub-generation-approach"><strong>Stub generation approach</strong></h3>
+<p>Inside Flame:</p>
+<pre><code class="language-python">import flame
+dir(flame)
+</code></pre>
+<p>You then generate:</p>
+<pre><code>stubs/flame.pyi
+stubs/PyClip.pyi
+stubs/PySequence.pyi
+stubs/PySegment.pyi
+...
+</code></pre>
+<p>These provide:</p>
+<ul>
+<li>Autocomplete</li>
+<li>Type hints</li>
+<li>Docstrings</li>
+<li>Method signatures</li>
+</ul>
+<h3 id="integration"><strong>Integration</strong></h3>
+<p>The VS Code extension ships with these stubs and configures:</p>
+<pre><code class="language-json">&quot;python.analysis.extraPaths&quot;: [
+    &quot;./stubs&quot;
+]
+</code></pre>
+<hr />
+<h1 id="5-optional-debugger-integration"><strong>5. Optional: Debugger Integration</strong></h1>
+<p>This is advanced but possible.</p>
+<h3 id="approach"><strong>Approach</strong></h3>
+<ul>
+<li>Bundle <code>debugpy</code> with the Flame listener.</li>
+<li>Start a debug server inside Flame.</li>
+<li>VS Code attaches to it.</li>
+</ul>
+<h3 id="limitations"><strong>Limitations</strong></h3>
+<ul>
+<li>Flame’s Python interpreter is embedded and single‑threaded.</li>
+<li>Breakpoints inside Flame API calls may freeze the UI.</li>
+</ul>
+<p>Still, it’s doable for non‑UI‑blocking code.</p>
+<hr />
+<h1 id="6-optional-file-sync-autoreload"><strong>6. Optional: File Sync &amp; Auto‑Reload</strong></h1>
+<p>To mimic Blender/Maya add‑on workflows:</p>
+<h3 id="features"><strong>Features</strong></h3>
+<ul>
+<li>Auto‑sync your VS Code project into Flame’s Python directory.</li>
+<li>Auto‑reload modules when files change.</li>
+<li>One‑click packaging for Flame Python hooks.</li>
+</ul>
+<h3 id="implementation"><strong>Implementation</strong></h3>
+<p>Use VS Code’s file watcher API to push changes to Flame via:</p>
+<ul>
+<li>SFTP</li>
+<li>rsync</li>
+<li>Local mount</li>
+<li>Or the socket protocol itself</li>
+</ul>
+<hr />
+<h1 id="7-optional-batchaction-node-helpers"><strong>7. Optional: Batch/Action Node Helpers</strong></h1>
+<p>You can extend the extension to:</p>
+<ul>
+<li>Create Batch nodes from VS Code</li>
+<li>Modify Action setups</li>
+<li>Inspect clip metadata</li>
+<li>Trigger renders</li>
+<li>Query project structure</li>
+</ul>
+<p>This is where the Flame API becomes extremely powerful.</p>
+<hr />
+<h1 id="8-putting-it-all-together"><strong>8. Putting It All Together</strong></h1>
+<p>Here’s the full architecture in one view:</p>
+<pre><code>┌──────────────────────────────┐
+│          VS Code             │
+│  ┌────────────────────────┐  │
+│  │ Flame VS Code Extension│  │
+│  │  - Run in Flame        │  │
+│  │  - Output Panel        │  │
+│  │  - Autocomplete (stubs)│  │
+│  └──────────┬─────────────┘  │
+└─────────────┼────────────────┘
+              │ TCP / JSON
+┌─────────────┼────────────────┐
+│        Autodesk Flame         │
+│  ┌────────────────────────┐  │
+│  │ Python Listener         │  │
+│  │  - Socket server        │  │
+│  │  - Execute code         │  │
+│  │  - Return results       │  │
+│  └────────────────────────┘  │
+│        Flame Python API       │
+└──────────────────────────────┘
+</code></pre>
+<hr />
+<h1 id="if-you-want-i-can-now-produce">If you want, I can now produce:</h1>
+<ul>
+<li>A <strong>minimal working prototype</strong> of the Flame listener  </li>
+<li>The <strong>VS Code extension skeleton</strong>  </li>
+<li>The <strong>communication protocol spec</strong>  </li>
+<li>The <strong>stub generator script</strong>  </li>
+<li>A <strong>roadmap</strong> for turning this into a production‑ready tool  </li>
+</ul>
+<p>Just tell me which piece you want to see next.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

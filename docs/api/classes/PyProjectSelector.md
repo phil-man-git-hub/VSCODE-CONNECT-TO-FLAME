@@ -5,7 +5,8 @@
 Object representing the Project manager.
 
 ## Methods
-### `current_project(...)`
-
+### Properties
+- `current_project(...)` — None( (flame.PyProjectSelector)arg1) -> object 
 None( (flame.PyProjectSelector)arg1) -> object
+
 

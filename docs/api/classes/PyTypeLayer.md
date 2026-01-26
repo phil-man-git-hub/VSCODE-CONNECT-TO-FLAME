@@ -5,7 +5,8 @@
 Object representing a Type Layer.
 
 ## Methods
-### `type(...)`
-
+### Properties
+- `type(...)` — None( (flame.PyTypeLayer)arg1) -> object 
 None( (flame.PyTypeLayer)arg1) -> object
+
 

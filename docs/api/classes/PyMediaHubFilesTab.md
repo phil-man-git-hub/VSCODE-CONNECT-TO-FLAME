@@ -5,7 +5,8 @@
 This class represents the MediaHub Files tab.
 
 ## Methods
-### `options(...)`
-
+### Properties
+- `options(...)` — None( (flame.PyMediaHubFilesTab)arg1) -> flame.PyMediaHubFilesTabOptions 
 None( (flame.PyMediaHubFilesTab)arg1) -> flame.PyMediaHubFilesTabOptions
+
 
