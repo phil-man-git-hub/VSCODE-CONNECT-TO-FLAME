@@ -38,10 +38,17 @@ for mod_name in mods:
                     sig = str(inspect.signature(member))
                 except Exception:
                     sig = '(...)'
-                doc = inspect.getdoc(member) or ''
-                info['functions'].append({'name': name, 'signature': sig, 'doc': doc.splitlines()[0] if doc else ''})
+                doc_full = inspect.getdoc(member) or ''
+                # Attempt to capture source when possible (C-implemented objects will fail)
+                src = None
+                try:
+                    src = inspect.getsource(member)
+                except Exception:
+                    src = None
+                info['functions'].append({'name': name, 'signature': sig, 'doc': doc_full, 'source': src})
             elif inspect.isclass(member):
-                cls = {'name': name, 'doc': (inspect.getdoc(member) or '').splitlines()[0] if inspect.getdoc(member) else '', 'methods': []}
+                cls_doc_full = inspect.getdoc(member) or ''
+                cls = {'name': name, 'doc': cls_doc_full, 'methods': []}
                 for mname, mobj in inspect.getmembers(member):
                     if mname.startswith('_'):
                         continue
@@ -51,8 +58,13 @@ for mod_name in mods:
                                 msig = str(inspect.signature(mobj))
                             except Exception:
                                 msig = '(...)'
-                            mdoc = inspect.getdoc(mobj) or ''
-                            cls['methods'].append({'name': mname, 'signature': msig, 'doc': mdoc.splitlines()[0] if mdoc else ''})
+                            mdoc_full = inspect.getdoc(mobj) or ''
+                            msrc = None
+                            try:
+                                msrc = inspect.getsource(mobj)
+                            except Exception:
+                                msrc = None
+                            cls['methods'].append({'name': mname, 'signature': msig, 'doc': mdoc_full, 'source': msrc})
                     except Exception:
                         continue
                 info['classes'].append(cls)
