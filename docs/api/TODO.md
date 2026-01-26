@@ -12,9 +12,10 @@ This TODO tracks the work items for building a comprehensive Flame Python API kn
 - [x] API-0008: Add snippets for Project/Timeline/Clip and smoke tests ✅
 - [x] API-0009: Add mkdocs + CI publishing (CI workflow added; deploy on push) ✅
 - [x] API-0016: Remove generated `site/` from the repository and publish site from CI (site is now untracked; `.github/workflows/docs.yml` publishes the site) ✅
-- [x] API-0010: Generate per-symbol Markdown pages: `docs/api/classes/<Class>.md`, `docs/api/functions/<fn>.md`, `docs/api/constants/<c>.md` (completed; initial pages generated)
+- [x] API-0010: Generate per-symbol Markdown pages: `docs/api/classes/<Class>.md`, `docs/api/functions/<fn>.md` (Completed Jan 2026).
+    *   Implemented `collect_flame_api.py` for systematic crawling.
+    *   Implemented `generate_api_docs.py` for JSON-to-Markdown conversion.
 
-> Note: Per-symbol pages were generated from a live Flame process using the collector. Next: add mkdocs nav entries and expand content (method details, examples, cross-links).
 - [ ] API-0011: Add instance attribute probes via allowlist and document safety
 - [ ] API-0012: Improve stub return-type population from probe results
 - [ ] API-0013: Add mkdocs nav entries for symbol directories and symbol index pages
@@ -23,8 +24,3 @@ This TODO tracks the work items for building a comprehensive Flame Python API kn
 
 Notes:
 - Items marked "partial" mean scaffold/implementation exists but further work is needed.
-- I will now implement API-0010 (per-symbol pages) and mark progress as this completes.
-
----
-
-**Paused on 2026-01-25 — next steps:** continue with CI artifact publication, add regression tests for the collector/generator, and enrich per-symbol pages (examples & parameter tables).

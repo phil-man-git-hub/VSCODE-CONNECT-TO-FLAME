@@ -1,201 +1,212 @@
 #!/usr/bin/env python3
-"""Collect API metadata from a running Flame listener via the execute endpoint.
+"""Systematically query the Flame API and generate detailed JSON reports.
 
-This script sends a small introspection payload to the listener which inspects
-specified modules (default: 'flame') and prints a JSON blob with:
- - module name
- - functions: name, signature, doc (first line)
- - classes: name, doc (first line), methods (name, signature, doc)
- - constants: name
+Strategy:
+1. Discovery: Get a list of all symbols in the `flame` module.
+2. Introspection: For each symbol (focusing on classes), send a dedicated 
+   inspection payload to the listener to extract docstrings, methods, and properties.
+3. Reporting: Save individual JSON files and an aggregate index.
 
 Usage:
-  python scripts/collect_flame_api.py --host 127.0.0.1 --port 5555 --modules flame
-
-Output: prints JSON to stdout.
+  python scripts/collect_flame_api.py --limit 10   # Test run
+  python scripts/collect_flame_api.py --all        # Full crawl
 """
 
 import argparse
 import json
 import socket
+import os
+import time
+from datetime import datetime
+from pathlib import Path
 
-PAYLOAD_TEMPLATE = r"""
-import json, inspect
-mods = __MODULES__
-result = {}
-SAFE_PREFIXES = ('get_', 'is_', 'has_', 'list_', 'find_', 'ping', 'version', 'get')
-MAX_REPR_LEN = 500
-DO_PROBES = __DO_PROBES__
-for mod_name in mods:
-    try:
-        m = __import__(mod_name)
-    except Exception as e:
-        result[mod_name] = {'error': repr(e)}
-        continue
-    info = {'functions': [], 'classes': [], 'constants': []}
-    if DO_PROBES:
-        info['probes'] = {}
-    for name, member in inspect.getmembers(m):
-        if name.startswith('_'):
-            continue
-        try:
-            if inspect.isfunction(member) or inspect.ismethod(member) or inspect.isbuiltin(member):
-                try:
-                    sig = str(inspect.signature(member))
-                except Exception:
-                    sig = '(...)'
-                doc_full = inspect.getdoc(member) or ''
-                # Attempt to capture source when possible (C-implemented objects will fail)
-                src = None
-                try:
-                    src = inspect.getsource(member)
-                except Exception:
-                    src = None
-                kind = 'builtin' if inspect.isbuiltin(member) else 'function'
-                info['functions'].append({'name': name, 'signature': sig, 'doc': doc_full, 'source': src, 'kind': kind})
-                # Safe probe: call no-arg simple getters/ping functions
-                if DO_PROBES:
-                    try:
-                        sigobj = inspect.signature(member)
-                        has_required = False
-                        for p in sigobj.parameters.values():
-                            if p.default is inspect._empty and p.kind in (inspect.Parameter.POSITIONAL_ONLY, inspect.Parameter.POSITIONAL_OR_KEYWORD):
-                                has_required = True
-                                break
-                        if (not has_required) and any(name.startswith(pref) for pref in SAFE_PREFIXES):
-                            try:
-                                v = member()
-                                info['probes'][name] = {'type': type(v).__name__, 'repr': repr(v)[:MAX_REPR_LEN]}
-                            except Exception as e:
-                                info['probes'][name] = {'error': repr(e)}
-                    except Exception:
-                        pass
-            elif inspect.isclass(member):
-                cls_doc_full = inspect.getdoc(member) or ''
-                cls = {'name': name, 'doc': cls_doc_full, 'methods': []}
-                # Inspect class __dict__ (using getattr_static) to detect staticmethod/classmethod/property/builtin/descriptor
-                for mname, raw in getattr(member, '__dict__', {}).items():
-                    if mname.startswith('_'):
-                        continue
-                    try:
-                        kind = 'attribute'
-                        signature = ''
-                        mdoc_full = ''
-                        msrc = None
-                        # Use getattr_static to avoid triggering descriptors
-                        attr = inspect.getattr_static(member, mname)
-                        func = None
-                        if isinstance(attr, staticmethod):
-                            kind = 'staticmethod'
-                            func = attr.__func__
-                        elif isinstance(attr, classmethod):
-                            kind = 'classmethod'
-                            func = attr.__func__
-                        elif isinstance(attr, property):
-                            kind = 'property'
-                            func = attr.fget if attr.fget else None
-                        else:
-                            func = attr
-                            if inspect.isbuiltin(attr):
-                                kind = 'builtin'
-                            elif inspect.ismethoddescriptor(attr):
-                                kind = 'method_descriptor'
-                            elif callable(attr):
-                                kind = 'callable'
-                        if func is not None:
-                            try:
-                                signature = str(inspect.signature(func))
-                            except Exception:
-                                signature = '(...)'
-                            mdoc_full = inspect.getdoc(func) or ''
-                            try:
-                                msrc = inspect.getsource(func)
-                            except Exception:
-                                msrc = None
-                        cls['methods'].append({'name': mname, 'signature': signature, 'doc': mdoc_full, 'source': msrc, 'kind': kind})
-                    except Exception:
-                        continue
-                info['classes'].append(cls)
-            else:
-                # heuristically treat as constant/attribute
-                info['constants'].append(name)
-        except Exception:
-            continue
-    result[mod_name] = info
-print(json.dumps(result))
+HOST = '127.0.0.1'
+PORT = 5555
+REPORT_BASE = Path('reports/api_dump')
+
+# Payload to discover all members of the flame module
+DISCOVERY_PAYLOAD = """
+import flame
+import json
+# Get all attributes of the flame module, excluding private ones
+members = [m for m in dir(flame) if not m.startswith('__')]
+print(json.dumps(members))
 """
 
+# Payload template to inspect a specific class/object
+INSPECTION_PAYLOAD_TEMPLATE = """
+import flame
+import inspect
+import json
 
-def send_execute(host, port, code, timeout=10):
-    payload = {'command': 'execute', 'id': 'collect_api', 'code': code}
-    with socket.create_connection((host, port), timeout=5) as s:
-        s.settimeout(timeout)
-        s.sendall(json.dumps(payload).encode('utf-8'))
-        data = b''
-        while True:
+target_name = "{target_name}"
+try:
+    obj = getattr(flame, target_name)
+    
+    data = {{
+        "name": target_name,
+        "type": type(obj).__name__,
+        "doc": getattr(obj, "__doc__", ""),
+        "module": getattr(obj, "__module__", "flame"),
+        "properties": [],
+        "methods": [],
+        "inheritance": [c.__name__ for c in inspect.getmro(obj)] if inspect.isclass(obj) else []
+    }}
+
+    if inspect.isclass(obj):
+        for name in dir(obj):
+            if name.startswith("__"):
+                continue
+            
             try:
-                chunk = s.recv(4096)
-            except Exception:
-                break
-            if not chunk:
-                break
-            data += chunk
-    # The listener returns JSON response object with stdout containing our json.
+                # Use getattr_static if available (Py3) to avoid property execution, 
+                # but fallback to getattr for Boost.Python compatibility if needed.
+                # For Flame API (Boost), direct getattr is usually required to see the proxy type.
+                attr = getattr(obj, name)
+                
+                member_info = {{
+                    "name": name,
+                    "doc": getattr(attr, "__doc__", "") or ""
+                }}
+
+                if isinstance(attr, property) or not callable(attr):
+                    # It's likely a property or attribute
+                    data["properties"].append(member_info)
+                else:
+                    # It's a method
+                    member_info["signature"] = "" # Boost often hides this, but we'll try
+                    try:
+                        member_info["signature"] = str(inspect.signature(attr))
+                    except (ValueError, TypeError):
+                        pass
+                    data["methods"].append(member_info)
+
+            except Exception as e:
+                # If accessing the attribute fails, log it briefly
+                data["properties"].append({{"name": name, "error": str(e)}})
+
+    print(json.dumps(data))
+
+except Exception as e:
+    print(json.dumps({{"name": target_name, "error": str(e)}}))
+"""
+
+def send_payload(code, description):
+    """Send code to the listener and return the parsed JSON stdout."""
+    payload = {
+        "command": "execute",
+        "id": f"crawl_{{int(time.time()*1000)}}",
+        "code": code
+    }
+    
     try:
-        resp = json.loads(data.decode('utf-8'))
-        stdout = resp.get('stdout', '')
-        # The payload printed a JSON string; load it
-        return json.loads(stdout)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(10)
+            s.connect((HOST, PORT))
+            s.sendall((json.dumps(payload) + "\n").encode('utf-8'))
+            
+            buffer = ""
+            while True:
+                chunk = s.recv(4096).decode('utf-8')
+                if not chunk:
+                    break
+                buffer += chunk
+                if "\n" in buffer:
+                    break
+            
+            response = json.loads(buffer.strip())
+            
+            if response.get('exception'):
+                print(f"Error inspecting {description}: {response.get('exception')}")
+                print(f"Stderr: {response.get('stderr')}")
+                return None
+            
+            out = response.get('stdout', '').strip()
+            if not out:
+                return None
+            
+            try:
+                return json.loads(out)
+            except json.JSONDecodeError:
+                print(f"Invalid JSON from {description}: {out[:100]}...")
+                return None
+                
     except Exception as e:
-        raise RuntimeError(f'Failed to parse response: {e}; raw={data!r}')
-
-
-def is_safe_callable(name: str, sig):
-    """Decide conservatively whether it's safe to call a function/method with no args.
-
-    Rules:
-      - Only call if there are no required parameters.
-      - Name must start with a safe prefix (get_, is_, has_, list_, find_, ping, version)
-    """
-    safe_prefixes = ('get_', 'is_', 'has_', 'list_', 'find_', 'ping', 'version', 'get')
-    # no required parameters
-    for p in sig.parameters.values():
-        if p.default is inspect._empty and p.kind in (inspect.Parameter.POSITIONAL_ONLY, inspect.Parameter.POSITIONAL_OR_KEYWORD):
-            return False
-    return any(name.startswith(pref) for pref in safe_prefixes)
-
+        print(f"Connection error during {description}: {e}")
+        return None
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--host', default='127.0.0.1')
-    parser.add_argument('--port', type=int, default=5555)
-    parser.add_argument('--modules', nargs='*', default=['flame'])
-    parser.add_argument('--probe-safe', action='store_true', help='Attempt safe probes to infer return types for no-arg functions')
+    parser = argparse.ArgumentParser(description="Crawl Flame API")
+    parser.add_argument('--limit', type=int, help="Limit number of items to inspect (for testing)")
+    parser.add_argument('--all', action='store_true', help="Inspect standard Py* classes and core managers")
+    parser.add_argument('--include-all', action='store_true', help="Inspect every single discovered symbol (100+)")
     args = parser.parse_args()
-    # Inject module list and probe flag safely into the payload
-    code = PAYLOAD_TEMPLATE.replace('__MODULES__', repr(args.modules)).replace('__DO_PROBES__', 'True' if args.probe_safe else 'False')
-    result = send_execute(args.host, args.port, code)
 
-    # If probe-safe is requested, attempt to call selected safe functions to infer return types
-    if args.probe_safe:
-        for mod_name, data in result.items():
-            for f in data.get('functions', []):
-                try:
-                    name = f['name']
-                    sig = f.get('signature', '')
-                    # parse signature locally to decide (we don't have inspect.Signature here), do light heuristic
-                    if '(' in sig and ')' in sig:
-                        params = sig[sig.find('(')+1:sig.find(')')].strip()
-                    else:
-                        params = ''
-                    no_required = (params == '')
-                    if no_required and is_safe_callable(name, __import__('inspect').signature if False else __import__('inspect').Signature):
-                        # We can't call into Flame here; skip actual probe in this runner. The probe option is implemented for future remote probes.
-                        f['probe_return'] = None
-                except Exception:
-                    continue
+    if not args.all and not args.include_all and args.limit is None:
+        args.limit = 5
+        print("Defaulting to limit=5. Use --all or --include-all for larger crawls.")
 
-    print(json.dumps(result, indent=2))
+    # 1. Setup Report Directory
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    report_dir = REPORT_BASE / timestamp
+    report_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Report Directory: {report_dir}")
 
+    # 2. Discovery Phase
+    print("Phase 1: Discovery...")
+    members = send_payload(DISCOVERY_PAYLOAD, "Discovery")
+    if not members:
+        print("Discovery failed. Aborting.")
+        return
 
-if __name__ == '__main__':
+    print(f"Discovered {len(members)} symbols.")
+    
+    # Filter symbols
+    if args.include_all:
+        targets = members
+    else:
+        # Default behavior: focus on classes and core objects
+        targets = [m for m in members if m.startswith('Py') or m in ['flame', 'batch', 'project', 'projects']]
+    
+    # If limit is set
+    if args.limit:
+        targets = targets[:args.limit]
+    
+    print(f"Targeting {len(targets)} symbols for detailed inspection.")
+
+    # 3. Introspection Phase
+    results = []
+    for i, target in enumerate(targets):
+        print(f"[{i+1}/{len(targets)}] Inspecting: {target}")
+        code = INSPECTION_PAYLOAD_TEMPLATE.format(target_name=target)
+        data = send_payload(code, target)
+        
+        if data:
+            # Save individual file
+            file_path = report_dir / f"{target}.json"
+            with open(file_path, 'w') as f:
+                json.dump(data, f, indent=2)
+            
+            # Add summary to results for index
+            results.append({
+                "name": data.get("name"),
+                "type": data.get("type"),
+                "file": str(file_path.name)
+            })
+        
+        # Be gentle on the socket/server
+        time.sleep(0.05)
+
+    # 4. Index Generation
+    index_data = {
+        "timestamp": timestamp,
+        "count": len(results),
+        "items": results
+    }
+    with open(report_dir / "index.json", 'w') as f:
+        json.dump(index_data, f, indent=2)
+
+    print(f"Done. Reports saved to {report_dir}")
+
+if __name__ == "__main__":
     main()
