@@ -8,3 +8,7 @@ Top tasks (summary)
 - [x] Exclude generated `site/` from the repository and publish docs from CI (built by `.github/workflows/docs.yml` using `mkdocs build` and `peaceiris/actions-gh-pages`) — site is now untracked and CI will deploy on push.
 
 Notes: See `docs/TODO.md` for detailed steps and acceptance criteria.
+
+---
+
+**Paused on 2026-01-25 — next steps:** continue with CI artifact publication, add regression tests for the collector/generator, and enrich per-symbol pages (examples & parameter tables).

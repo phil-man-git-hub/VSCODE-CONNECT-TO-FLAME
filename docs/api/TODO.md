@@ -24,3 +24,7 @@ This TODO tracks the work items for building a comprehensive Flame Python API kn
 Notes:
 - Items marked "partial" mean scaffold/implementation exists but further work is needed.
 - I will now implement API-0010 (per-symbol pages) and mark progress as this completes.
+
+---
+
+**Paused on 2026-01-25 — next steps:** continue with CI artifact publication, add regression tests for the collector/generator, and enrich per-symbol pages (examples & parameter tables).
