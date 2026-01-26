@@ -11,6 +11,7 @@ This TODO tracks the work items for building a comprehensive Flame Python API kn
 - [x] API-0007: Add example hooks (startup/menu/asset-sync) and smoke tests ✅
 - [x] API-0008: Add snippets for Project/Timeline/Clip and smoke tests ✅
 - [x] API-0009: Add mkdocs + CI publishing (CI workflow added; deploy on push) ✅
+- [x] API-0016: Remove generated `site/` from the repository and publish site from CI (site is now untracked; `.github/workflows/docs.yml` publishes the site) ✅
 - [x] API-0010: Generate per-symbol Markdown pages: `docs/api/classes/<Class>.md`, `docs/api/functions/<fn>.md`, `docs/api/constants/<c>.md` (completed; initial pages generated)
 
 > Note: Per-symbol pages were generated from a live Flame process using the collector. Next: add mkdocs nav entries and expand content (method details, examples, cross-links).
