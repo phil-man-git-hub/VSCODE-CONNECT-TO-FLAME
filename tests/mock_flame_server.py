@@ -8,6 +8,18 @@ import json
 
 HOST = '127.0.0.1'
 PORT = 5555
+# Allow overriding the port via argv or FLAME_LISTENER_PORT so tests don't clash with real Flame
+import sys, os
+if len(sys.argv) > 1:
+    try:
+        PORT = int(sys.argv[1])
+    except Exception:
+        pass
+elif os.environ.get('FLAME_LISTENER_PORT'):
+    try:
+        PORT = int(os.environ['FLAME_LISTENER_PORT'])
+    except Exception:
+        pass
 
 
 def run_once():
@@ -22,6 +34,10 @@ def run_once():
             payload = json.loads(data.decode('utf-8'))
             if payload.get('command') == 'ping':
                 conn.sendall((json.dumps({'id': payload.get('id'), 'stdout': 'pong', 'stderr': '', 'exception': None}) + '\n').encode('utf-8'))
+            elif payload.get('command') == 'start_debug_server':
+                port = payload.get('port', 5678)
+                # In a real Flame this would start debugpy; here we simulate success
+                conn.sendall((json.dumps({'id': payload.get('id'), 'stdout': f'Debug server started on port {port}', 'stderr': '', 'exception': None}) + '\n').encode('utf-8'))
             elif payload.get('command') == 'execute':
                 code = payload.get('code', '')
                 try:

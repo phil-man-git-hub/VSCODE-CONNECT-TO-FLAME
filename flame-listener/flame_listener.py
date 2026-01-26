@@ -17,6 +17,75 @@ import threading
 import traceback
 import sys
 import io
+import atexit
+import time
+import os
+from datetime import datetime
+
+# Track background threads so we can clean up on exit (per Flame docs about threading hooks)
+threads = []
+
+
+def wait_for_threads_at_exit():
+    global threads
+    if len(threads) > 0:
+        for thread in threads:
+            try:
+                print(f"[flame_listener] Waiting for thread {thread.name}")
+                thread.join(timeout=5.0)
+            except Exception:
+                traceback.print_exc()
+    threads = []
+
+# Register cleanup at process exit
+atexit.register(wait_for_threads_at_exit)
+
+
+# Global exception hooks to ensure background thread exceptions and unhandled exceptions
+# are visible in Flame logs (helpful for diagnosing crashes and timeouts)
+def _thread_excepthook(args):
+    try:
+        _log(f"thread-exc thread={getattr(args, 'thread', None)}")
+        tb = ''.join(traceback.format_exception(args.exc_type, args.exc_value, args.exc_traceback))
+        for line in tb.splitlines():
+            _log(line)
+    except Exception:
+        traceback.print_exc()
+
+# Python 3.8+ supports threading.excepthook
+try:
+    threading.excepthook = _thread_excepthook
+except Exception:
+    # older Pythons: best-effort only
+    pass
+
+
+def _sys_excepthook(exc_type, exc_value, exc_tb):
+    try:
+        print("[flame_listener][unhandled-exc]")
+        traceback.print_exception(exc_type, exc_value, exc_tb)
+    except Exception:
+        traceback.print_exc()
+
+sys.excepthook = _sys_excepthook
+
+
+LOG_FILE = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+
+def _log(msg):
+    """Simple structured log with timestamp. Also append to a local log file to aid repro collection."""
+    line = f"[flame_listener][{datetime.utcnow().isoformat()}] {msg}"
+    try:
+        print(line)
+    except Exception:
+        pass
+    try:
+        with open(LOG_FILE, 'a') as fh:
+            fh.write(line + '\n')
+    except Exception:
+        # best-effort: don't fail the listener if logging to file fails
+        pass
+
 
 HOST = '127.0.0.1'
 PORT = 5555
@@ -53,9 +122,9 @@ except Exception:
 def handle_execute(code, timeout=5.0):
     """Execute `code` and capture stdout/stderr and exceptions.
 
-    When running inside Flame we schedule execution on the main thread and
-    wait for completion (up to `timeout` seconds). This ensures Flame API
-    calls execute on the UI thread and we still return stdout/stderr.
+    Execution is done in a thread to allow timeouts to be enforced. When running
+    inside Flame we prefer scheduling on the main thread (if available) but still
+    implement a timeout watchdog.
     """
     result = {'out': '', 'err': '', 'exc': None}
     finished = threading.Event()
@@ -75,27 +144,19 @@ def handle_execute(code, timeout=5.0):
         finished.set()
 
     try:
-        if HAS_FLAME:
-            # Prefer Flame's main-thread executor when available
-            if hasattr(flame, 'execute_on_main_thread'):
-                try:
-                    flame.execute_on_main_thread(_run_exec)
-                except Exception:
-                    # Some Flame versions may schedule asynchronously; fall back to starting
-                    # a background thread which calls the executor with our runnable.
-                    try:
-                        threading.Thread(target=flame.execute_on_main_thread, args=(_run_exec,), daemon=True).start()
-                        finished.wait(timeout)
-                    except Exception:
-                        # Last-resort: run directly but append a warning to stderr
-                        _run_exec()
-                        result['err'] = (result.get('err') or '') + '\nWarning: execute_on_main_thread failed; executed directly.'
-            else:
-                # execute_on_main_thread not provided by this Flame build; run directly and warn
-                _run_exec()
-                result['err'] = (result.get('err') or '') + '\nWarning: execute_on_main_thread not available; executed on current thread.'
-        else:
-            _run_exec()
+        # If Flame is present and has a main-thread executor, attempt to use it but
+        # still run the actual execution in a thread so we can enforce timeout from here.
+        exec_thread = threading.Thread(target=_run_exec, name=f"exec-{time.time()}", daemon=True)
+        threads.append(exec_thread)
+        exec_thread.start()
+
+        # Wait for the execution to finish up to timeout seconds
+        completed = finished.wait(timeout)
+        if not completed:
+            # timeout: attempt to provide a helpful error message; we cannot safely kill
+            # the thread, so the code may still be running in background and we report a timeout.
+            result['err'] = (result.get('err') or '') + f"\nError: execution timed out after {timeout} seconds."
+            result['exc'] = 'TimeoutError'
         return result['out'], result['err'], result['exc']
     except Exception as e:
         tb = traceback.format_exc()
@@ -109,47 +170,103 @@ class ClientHandler(threading.Thread):
         self.addr = addr
 
     def run(self):
-        with self.conn:
-            data = b""
-            while True:
-                chunk = self.conn.recv(4096)
-                if not chunk:
-                    break
-                data += chunk
+        try:
+            with self.conn:
+                # Ensure we don't block forever on recv from a misbehaving client
                 try:
-                    payload = json.loads(data.decode('utf-8'))
-                except json.JSONDecodeError:
-                    # Wait for more data
-                    continue
-                # Simple auth
-                if AUTH_TOKEN and payload.get('token') != AUTH_TOKEN:
-                    resp = {'id': payload.get('id'), 'stdout': '', 'stderr': 'authentication failed', 'exception': 'AuthError'}
-                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
-                    data = b""
-                    continue
-                cmd = payload.get('command')
-                if cmd == 'execute':
-                    code = payload.get('code', '')
-                    out, err, exc = handle_execute(code)
-                    resp = {'id': payload.get('id'), 'stdout': out or '', 'stderr': err or '', 'exception': exc}
-                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
-                elif cmd == 'ping':
-                    resp = {'id': payload.get('id'), 'stdout': 'pong', 'stderr': '', 'exception': None}
-                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
-                elif cmd == 'start_debug_server':
-                    # Start debugpy if available and return status
-                    try:
-                        import debugpy  # type: ignore
-                        port = payload.get('port', 5678)
-                        debugpy.listen(('127.0.0.1', port))
-                        resp = {'id': payload.get('id'), 'stdout': f'debugpy listening on 127.0.0.1:{port}', 'stderr': '', 'exception': None}
-                    except Exception as e:
-                        resp = {'id': payload.get('id'), 'stdout': '', 'stderr': traceback.format_exc(), 'exception': str(e)}
-                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
-                else:
-                    resp = {'id': payload.get('id'), 'stdout': '', 'stderr': 'unknown command', 'exception': 'CommandError'}
-                    self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                    recv_timeout = float(os.environ.get('FLAME_LISTENER_RECV_TIMEOUT', '5.0'))
+                    self.conn.settimeout(recv_timeout)
+                except Exception:
+                    pass
+
                 data = b""
+                while True:
+                    try:
+                        chunk = self.conn.recv(4096)
+                    except socket.timeout:
+                        _log(f"recv timeout from {self.addr}")
+                        break
+                    except Exception:
+                        traceback.print_exc()
+                        break
+
+                    if not chunk:
+                        break
+                    data += chunk
+                    try:
+                        payload = json.loads(data.decode('utf-8'))
+                    except json.JSONDecodeError:
+                        # Wait for more data
+                        continue
+
+                    # Simple auth
+                    if AUTH_TOKEN and payload.get('token') != AUTH_TOKEN:
+                        resp = {'id': payload.get('id'), 'stdout': '', 'stderr': 'authentication failed', 'exception': 'AuthError'}
+                        try:
+                            self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                        except Exception:
+                            traceback.print_exc()
+                        data = b""
+                        continue
+
+                    cmd = payload.get('command')
+                    if cmd == 'execute':
+                        code = payload.get('code', '')
+                        # Allow the client to specify a timeout per request (seconds)
+                        timeout = float(payload.get('timeout', 5.0))
+                        req_id = payload.get('id')
+                        _log(f"execute request id={req_id} from {self.addr} timeout={timeout}")
+                        start_ts = time.time()
+                        out, err, exc = handle_execute(code, timeout=timeout)
+                        elapsed = time.time() - start_ts
+                        _log(f"execute complete id={req_id} elapsed={elapsed:.3f}s exc={exc}")
+                        resp = {'id': req_id, 'stdout': out or '', 'stderr': err or '', 'exception': exc}
+                        try:
+                            self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                        except Exception:
+                            traceback.print_exc()
+                    elif cmd == 'ping':
+                        resp = {'id': payload.get('id'), 'stdout': 'pong', 'stderr': '', 'exception': None}
+                        try:
+                            self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                        except Exception:
+                            traceback.print_exc()
+                    elif cmd == 'start_debug_server':
+                        port = payload.get('port', 5678)
+                        resp = {'id': payload.get('id'), 'stdout': f'Starting debug server on 127.0.0.1:{port} (background)', 'stderr': '', 'exception': None}
+                        try:
+                            self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                        except Exception:
+                            traceback.print_exc()
+
+                        def _start_debug():
+                            try:
+                                import debugpy  # type: ignore
+                                ep = debugpy.listen(('127.0.0.1', port), in_process_debug_adapter=True)
+                                _log(f"debug adapter listening: {ep}")
+                                try:
+                                    debugpy.wait_for_client(timeout=30)
+                                    _log(f"debug client attached on {port}")
+                                except Exception:
+                                    _log(f"debug client did not attach within timeout {port}")
+                            except Exception:
+                                traceback.print_exc()
+
+                        try:
+                            t = threading.Thread(target=_start_debug, name=f"debug-start-{time.time()}", daemon=True)
+                            threads.append(t)
+                            t.start()
+                        except Exception:
+                            traceback.print_exc()
+                    else:
+                        resp = {'id': payload.get('id'), 'stdout': '', 'stderr': 'unknown command', 'exception': 'CommandError'}
+                        try:
+                            self.conn.sendall((json.dumps(resp) + '\n').encode('utf-8'))
+                        except Exception:
+                            traceback.print_exc()
+                    data = b""
+        except Exception:
+            traceback.print_exc()
 
 
 def start_server(host=HOST, port=PORT):

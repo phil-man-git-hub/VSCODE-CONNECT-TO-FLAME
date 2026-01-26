@@ -14,4 +14,6 @@ __pycache__/
 .flame.secrets.json
 .flame.project.local.json
 .DS_Store
+.DO_NOT_UPLOAD
+DO_NOT_UPLOAD
 

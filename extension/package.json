@@ -4,7 +4,7 @@
   "description": "Run Python code in Autodesk Flame directly from VS Code.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.70.0"
+    "vscode": "^1.108.0"
   },
   "activationEvents": [
     "onCommand:flame.connect",
@@ -30,7 +30,10 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./"
+    "compile": "tsc -p ./",
+    "package": "npx vsce package",
+    "dev:install": "npm ci",
+    "dev:build": "npm run compile"
   },
   "dependencies": {
     "uuid": "^9.0.0"

@@ -1,0 +1,9 @@
+pytest
+
+debugpy
+
+# Flame runtime-related packages
+PySide6
+OpenColorIO
+OpenImageIO
+OpenTimelineIO
