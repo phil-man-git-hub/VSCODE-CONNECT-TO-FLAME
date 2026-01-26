@@ -1,0 +1,493 @@
+{
+  "PyActionFamilyNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. Represents an Action Family node object."
+  },
+  "PyActionNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyActionFamilyNode. Represents an Action node object."
+  },
+  "PyArchiveEntry": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyFlameObject. Base class for any object displayed in the Media Panel."
+  },
+  "PyAttribute": {
+    "module": "flame",
+    "type": "class",
+    "doc": ""
+  },
+  "PyAudioTrack": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing an Audio Track."
+  },
+  "PyBatch": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyFlameObject. This class represents a Batch Group."
+  },
+  "PyBatchIteration": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyArchiveEntry. This class represents a Batch Iteration."
+  },
+  "PyBrowser": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the file browser."
+  },
+  "PyClip": {
+    "module": "flame",
+    "type": "class",
+    "doc": "CLass derived from PyArchiveEntry. This class represents a Clip."
+  },
+  "PyClipNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. This class represents a Clip node."
+  },
+  "PyClrMgmtNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Colour Mgmt node."
+  },
+  "PyCoCameraAnalysis": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic."
+  },
+  "PyCoCompass": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyCoNode. This class represents the compass node in the Action schematic."
+  },
+  "PyCoNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyFlameObject. This class represents an Action node in the Action schematic."
+  },
+  "PyColourMgtTimelineFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Colour Mgmt Timeline FX."
+  },
+  "PyCompassNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. This class represents a Compass node."
+  },
+  "PyDesktop": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyArchiveEntry. This class represents a Desktop."
+  },
+  "PyExporter": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object holding export settings."
+  },
+  "PyFlameObject": {
+    "module": "flame",
+    "type": "class",
+    "doc": "The basic type of all accessible Flame objects from the python API."
+  },
+  "PyFolder": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyArchiveEntry. This class represents a Folder."
+  },
+  "PyGMaskTracerNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyActionFamilyNode. Represents a GMask Tracer node object."
+  },
+  "PyHDRNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a HDR node."
+  },
+  "PyHDRTimelineFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a HDR Timeline FX."
+  },
+  "PyImageNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyActionFamilyNode. Represents an Image node object."
+  },
+  "PyLensDistortionNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Lens Distortion node."
+  },
+  "PyLibrary": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyArchiveEntry. This class represents a Library."
+  },
+  "PyMarker": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Marker."
+  },
+  "PyMediaHub": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the MediaHub."
+  },
+  "PyMediaHubFilesEntry": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a clip in the MediaHub Files tabs"
+  },
+  "PyMediaHubFilesFolder": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a folder in the MediaHub Files tabs"
+  },
+  "PyMediaHubFilesTab": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the MediaHub Files tab."
+  },
+  "PyMediaHubFilesTabOptions": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the MediaHub Files tab options."
+  },
+  "PyMediaHubProjectsEntry": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a clip in the MediaHub Projects tabs"
+  },
+  "PyMediaHubProjectsFolder": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a folder in the MediaHub Projects tabs"
+  },
+  "PyMediaHubTab": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents a MediaHub tab."
+  },
+  "PyMediaPanel": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the media panel."
+  },
+  "PyMessages": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Module handling message bar in application UI."
+  },
+  "PyMetadataNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. This class represents a Metadata node."
+  },
+  "PyMetadataTimelineFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Metadata Timeline FX."
+  },
+  "PyMetadataValue": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class holds the metadata of a specific data type."
+  },
+  "PyMorphNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Morph node."
+  },
+  "PyNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Node."
+  },
+  "PyOFXNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a OpenFX node."
+  },
+  "PyPaintNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Paint node."
+  },
+  "PyProject": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Project."
+  },
+  "PyProjectSelector": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing the Project manager."
+  },
+  "PyReadFileNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. This class represents a ReadFile node."
+  },
+  "PyReel": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Reel."
+  },
+  "PyReelGroup": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Reel Group."
+  },
+  "PyRenderNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyNode. This class represents a Render node."
+  },
+  "PyResolution": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a resolution"
+  },
+  "PySearch": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the search."
+  },
+  "PySegment": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Segment."
+  },
+  "PySequence": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Sequence."
+  },
+  "PySequenceGroup": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Group in a Sequence."
+  },
+  "PySubtitleTrack": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Subtitle Track."
+  },
+  "PyTime": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a time unit"
+  },
+  "PyTimeline": {
+    "module": "flame",
+    "type": "class",
+    "doc": "This class represents the Timeline."
+  },
+  "PyTimelineFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Timeline FX."
+  },
+  "PyTimewarpNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Timewarp node."
+  },
+  "PyTimewarpTimelineFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Timewarp node."
+  },
+  "PyTrack": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Track."
+  },
+  "PyTransition": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Transition."
+  },
+  "PyTypeFX": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Type Timeline FX."
+  },
+  "PyTypeLayer": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Type Layer."
+  },
+  "PyTypeNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Type node."
+  },
+  "PyUser": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a User."
+  },
+  "PyUsers": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing the User manager."
+  },
+  "PyVersion": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Version."
+  },
+  "PyWorkspace": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Object representing a Workspace."
+  },
+  "PyWriteFileNode": {
+    "module": "flame",
+    "type": "class",
+    "doc": "Class derived from PyRenderNode. This class represents a WriteFile node."
+  },
+  "batch": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "browser": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "clear_graphics_memory": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "clear_unreferenced_cache": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "delete": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "duplicate": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "duplicate_many": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "execute_command": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "execute_shortcut": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "exit": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "find_by_name": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "find_by_uid": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "find_by_wiretap_node_id": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "flush_graphics_memory": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_current_tab": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_home_directory": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_init_cfg_path": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_version": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_version_major": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_version_minor": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_version_patch": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "get_version_stamp": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "go_to": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "import_clips": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "media_panel": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "mediahub": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "messages": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "project": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "projects": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "schedule_idle_event": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "set_current_tab": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "set_render_option": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "timeline": {
+    "module": "flame",
+    "type": "attribute"
+  },
+  "users": {
+    "module": "flame",
+    "type": "attribute"
+  }
+}
