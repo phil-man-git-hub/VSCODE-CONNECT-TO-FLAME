@@ -22,6 +22,34 @@ import time
 import os
 from datetime import datetime
 
+# Semantic-ish version with a deterministic increment rule: starts at 0.0.0
+# Increment rule: patch increments until 9, then patch resets to 0 and minor +=1.
+# When minor hits 10 it resets to 0 and major +=1. This keeps a compact numeric
+# progression that's easy to spot when deployed inside Flame.
+__version__ = "0.0.0"
+
+
+def next_version(v: str) -> str:
+    """Return the next version according to the project's increment rules.
+
+    Examples:
+      0.0.0 -> 0.0.1
+      0.0.9 -> 0.1.0
+      0.9.9 -> 1.0.0
+    """
+    try:
+        major, minor, patch = [int(x) for x in v.split('.')]
+    except Exception:
+        raise ValueError(f"invalid version: {v}")
+    patch += 1
+    if patch >= 10:
+        patch = 0
+        minor += 1
+    if minor >= 10:
+        minor = 0
+        major += 1
+    return f"{major}.{minor}.{patch}"
+
 # Track background threads so we can clean up on exit (per Flame docs about threading hooks)
 threads = []
 
@@ -85,6 +113,13 @@ def _log(msg):
     except Exception:
         # best-effort: don't fail the listener if logging to file fails
         pass
+
+# Announce module and version on import to make deployed versions visible in Flame logs
+try:
+    _log(f"Loaded flame_listener.py version {__version__} at {__file__}")
+except Exception:
+    # Best-effort: do not raise if logging fails
+    pass
 
 
 HOST = '127.0.0.1'
