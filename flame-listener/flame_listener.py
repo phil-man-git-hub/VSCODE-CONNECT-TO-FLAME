@@ -176,18 +176,25 @@ def handle_execute(code, timeout=5.0):
                 exec(code, globals(), locals())
         except Exception:
             buf_err.write(traceback.format_exc())
+            result['exc'] = 'ExecError'
+        
         result['out'] = buf_out.getvalue()
         result['err'] = buf_err.getvalue()
         finished.set()
 
     try:
-        # If Flame is present and has a main-thread executor, attempt to use it but
-        # still run the actual execution in a thread so we can enforce timeout from here.
-        exec_thread = threading.Thread(target=_run_exec, name=f"exec-{time.time()}", daemon=True)
-        threads.append(exec_thread)
-        exec_thread.start()
+        if HAS_FLAME and hasattr(flame, 'schedule_idle_event'):
+             # We are in Flame: must run on main thread
+             flame.schedule_idle_event(_run_exec)
+        else:
+            # Not in Flame or no scheduling available: run in background thread (dev/test mode)
+            exec_thread = threading.Thread(target=_run_exec, name=f"exec-{time.time()}", daemon=True)
+            threads.append(exec_thread)
+            exec_thread.start()
 
         # Wait for the execution to finish up to timeout seconds
+        # Note: If running on main thread via schedule_idle_event, this wait happens
+        # on the listener thread, which is fine.
         completed = finished.wait(timeout)
         if not completed:
             # timeout: attempt to provide a helpful error message; we cannot safely kill

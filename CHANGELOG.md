@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+- **Critical Threading Fix**: Refactored `flame_listener.py` to execute commands on the Flame main thread using `flame.schedule_idle_event`. This prevents crashes caused by accessing the non-thread-safe Flame API from background threads.
+- Added `scripts/test_thread_safety.py` to verify safe execution context.
+
 - Repository scaffolded with docs, listener prototype, extension skeleton, and mock server.
 
 ### Harden listener and diagnostics (flame-listener)
