@@ -14,6 +14,7 @@ export async function runInFlame(client: FlameClient, code: string) {
     if (resp.exception) output.appendLine(`exception:\n${resp.exception}`);
     vscode.window.showInformationMessage('Code executed in Flame (see Flame output)');
   } catch (e) {
+    output.appendLine(`send error: ${e}`);
     vscode.window.showErrorMessage(`Failed to send code: ${e}`);
   }
 }
