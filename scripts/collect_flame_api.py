@@ -38,7 +38,7 @@ for mod_name in mods:
         if name.startswith('_'):
             continue
         try:
-            if inspect.isfunction(member) or inspect.ismethod(member):
+            if inspect.isfunction(member) or inspect.ismethod(member) or inspect.isbuiltin(member):
                 try:
                     sig = str(inspect.signature(member))
                 except Exception:
@@ -50,7 +50,8 @@ for mod_name in mods:
                     src = inspect.getsource(member)
                 except Exception:
                     src = None
-                info['functions'].append({'name': name, 'signature': sig, 'doc': doc_full, 'source': src})
+                kind = 'builtin' if inspect.isbuiltin(member) else 'function'
+                info['functions'].append({'name': name, 'signature': sig, 'doc': doc_full, 'source': src, 'kind': kind})
                 # Safe probe: call no-arg simple getters/ping functions
                 if DO_PROBES:
                     try:
@@ -71,22 +72,46 @@ for mod_name in mods:
             elif inspect.isclass(member):
                 cls_doc_full = inspect.getdoc(member) or ''
                 cls = {'name': name, 'doc': cls_doc_full, 'methods': []}
-                for mname, mobj in inspect.getmembers(member):
+                # Inspect class __dict__ (using getattr_static) to detect staticmethod/classmethod/property/builtin/descriptor
+                for mname, raw in getattr(member, '__dict__', {}).items():
                     if mname.startswith('_'):
                         continue
                     try:
-                        if inspect.isfunction(mobj) or inspect.ismethod(mobj):
+                        kind = 'attribute'
+                        signature = ''
+                        mdoc_full = ''
+                        msrc = None
+                        # Use getattr_static to avoid triggering descriptors
+                        attr = inspect.getattr_static(member, mname)
+                        func = None
+                        if isinstance(attr, staticmethod):
+                            kind = 'staticmethod'
+                            func = attr.__func__
+                        elif isinstance(attr, classmethod):
+                            kind = 'classmethod'
+                            func = attr.__func__
+                        elif isinstance(attr, property):
+                            kind = 'property'
+                            func = attr.fget if attr.fget else None
+                        else:
+                            func = attr
+                            if inspect.isbuiltin(attr):
+                                kind = 'builtin'
+                            elif inspect.ismethoddescriptor(attr):
+                                kind = 'method_descriptor'
+                            elif callable(attr):
+                                kind = 'callable'
+                        if func is not None:
                             try:
-                                msig = str(inspect.signature(mobj))
+                                signature = str(inspect.signature(func))
                             except Exception:
-                                msig = '(...)'
-                            mdoc_full = inspect.getdoc(mobj) or ''
-                            msrc = None
+                                signature = '(...)'
+                            mdoc_full = inspect.getdoc(func) or ''
                             try:
-                                msrc = inspect.getsource(mobj)
+                                msrc = inspect.getsource(func)
                             except Exception:
                                 msrc = None
-                            cls['methods'].append({'name': mname, 'signature': msig, 'doc': mdoc_full, 'source': msrc})
+                        cls['methods'].append({'name': mname, 'signature': signature, 'doc': mdoc_full, 'source': msrc, 'kind': kind})
                     except Exception:
                         continue
                 info['classes'].append(cls)
