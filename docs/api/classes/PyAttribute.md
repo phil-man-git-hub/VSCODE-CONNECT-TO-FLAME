@@ -1,0 +1,4 @@
+# Class: PyAttribute
+
+**Module**: `flame`
+

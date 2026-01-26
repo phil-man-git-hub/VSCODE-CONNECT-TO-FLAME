@@ -2,492 +2,597 @@
   "PyActionFamilyNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. Represents an Action Family node object."
+    "doc": "Class derived from PyNode. Represents an Action Family node object.",
+    "page": "classes/PyActionFamilyNode.md"
   },
   "PyActionNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyActionFamilyNode. Represents an Action node object."
+    "doc": "Class derived from PyActionFamilyNode. Represents an Action node object.",
+    "page": "classes/PyActionNode.md"
   },
   "PyArchiveEntry": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyFlameObject. Base class for any object displayed in the Media Panel."
+    "doc": "Class derived from PyFlameObject. Base class for any object displayed in the Media Panel.",
+    "page": "classes/PyArchiveEntry.md"
   },
   "PyAttribute": {
     "module": "flame",
     "type": "class",
-    "doc": ""
+    "doc": "",
+    "page": "classes/PyAttribute.md"
   },
   "PyAudioTrack": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing an Audio Track."
+    "doc": "Object representing an Audio Track.",
+    "page": "classes/PyAudioTrack.md"
   },
   "PyBatch": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyFlameObject. This class represents a Batch Group."
+    "doc": "Class derived from PyFlameObject. This class represents a Batch Group.",
+    "page": "classes/PyBatch.md"
   },
   "PyBatchIteration": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyArchiveEntry. This class represents a Batch Iteration."
+    "doc": "Class derived from PyArchiveEntry. This class represents a Batch Iteration.",
+    "page": "classes/PyBatchIteration.md"
   },
   "PyBrowser": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the file browser."
+    "doc": "This class represents the file browser.",
+    "page": "classes/PyBrowser.md"
   },
   "PyClip": {
     "module": "flame",
     "type": "class",
-    "doc": "CLass derived from PyArchiveEntry. This class represents a Clip."
+    "doc": "CLass derived from PyArchiveEntry. This class represents a Clip.",
+    "page": "classes/PyClip.md"
   },
   "PyClipNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. This class represents a Clip node."
+    "doc": "Class derived from PyNode. This class represents a Clip node.",
+    "page": "classes/PyClipNode.md"
   },
   "PyClrMgmtNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Colour Mgmt node."
+    "doc": "Object representing a Colour Mgmt node.",
+    "page": "classes/PyClrMgmtNode.md"
   },
   "PyCoCameraAnalysis": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic."
+    "doc": "Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic.",
+    "page": "classes/PyCoCameraAnalysis.md"
   },
   "PyCoCompass": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyCoNode. This class represents the compass node in the Action schematic."
+    "doc": "Class derived from PyCoNode. This class represents the compass node in the Action schematic.",
+    "page": "classes/PyCoCompass.md"
   },
   "PyCoNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyFlameObject. This class represents an Action node in the Action schematic."
+    "doc": "Class derived from PyFlameObject. This class represents an Action node in the Action schematic.",
+    "page": "classes/PyCoNode.md"
   },
   "PyColourMgtTimelineFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Colour Mgmt Timeline FX."
+    "doc": "Object representing a Colour Mgmt Timeline FX.",
+    "page": "classes/PyColourMgtTimelineFX.md"
   },
   "PyCompassNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. This class represents a Compass node."
+    "doc": "Class derived from PyNode. This class represents a Compass node.",
+    "page": "classes/PyCompassNode.md"
   },
   "PyDesktop": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyArchiveEntry. This class represents a Desktop."
+    "doc": "Class derived from PyArchiveEntry. This class represents a Desktop.",
+    "page": "classes/PyDesktop.md"
   },
   "PyExporter": {
     "module": "flame",
     "type": "class",
-    "doc": "Object holding export settings."
+    "doc": "Object holding export settings.",
+    "page": "classes/PyExporter.md"
   },
   "PyFlameObject": {
     "module": "flame",
     "type": "class",
-    "doc": "The basic type of all accessible Flame objects from the python API."
+    "doc": "The basic type of all accessible Flame objects from the python API.",
+    "page": "classes/PyFlameObject.md"
   },
   "PyFolder": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyArchiveEntry. This class represents a Folder."
+    "doc": "Class derived from PyArchiveEntry. This class represents a Folder.",
+    "page": "classes/PyFolder.md"
   },
   "PyGMaskTracerNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyActionFamilyNode. Represents a GMask Tracer node object."
+    "doc": "Class derived from PyActionFamilyNode. Represents a GMask Tracer node object.",
+    "page": "classes/PyGMaskTracerNode.md"
   },
   "PyHDRNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a HDR node."
+    "doc": "Object representing a HDR node.",
+    "page": "classes/PyHDRNode.md"
   },
   "PyHDRTimelineFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a HDR Timeline FX."
+    "doc": "Object representing a HDR Timeline FX.",
+    "page": "classes/PyHDRTimelineFX.md"
   },
   "PyImageNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyActionFamilyNode. Represents an Image node object."
+    "doc": "Class derived from PyActionFamilyNode. Represents an Image node object.",
+    "page": "classes/PyImageNode.md"
   },
   "PyLensDistortionNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Lens Distortion node."
+    "doc": "Object representing a Lens Distortion node.",
+    "page": "classes/PyLensDistortionNode.md"
   },
   "PyLibrary": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyArchiveEntry. This class represents a Library."
+    "doc": "Class derived from PyArchiveEntry. This class represents a Library.",
+    "page": "classes/PyLibrary.md"
   },
   "PyMarker": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Marker."
+    "doc": "Object representing a Marker.",
+    "page": "classes/PyMarker.md"
   },
   "PyMediaHub": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the MediaHub."
+    "doc": "This class represents the MediaHub.",
+    "page": "classes/PyMediaHub.md"
   },
   "PyMediaHubFilesEntry": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a clip in the MediaHub Files tabs"
+    "doc": "Object representing a clip in the MediaHub Files tabs",
+    "page": "classes/PyMediaHubFilesEntry.md"
   },
   "PyMediaHubFilesFolder": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a folder in the MediaHub Files tabs"
+    "doc": "Object representing a folder in the MediaHub Files tabs",
+    "page": "classes/PyMediaHubFilesFolder.md"
   },
   "PyMediaHubFilesTab": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the MediaHub Files tab."
+    "doc": "This class represents the MediaHub Files tab.",
+    "page": "classes/PyMediaHubFilesTab.md"
   },
   "PyMediaHubFilesTabOptions": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the MediaHub Files tab options."
+    "doc": "This class represents the MediaHub Files tab options.",
+    "page": "classes/PyMediaHubFilesTabOptions.md"
   },
   "PyMediaHubProjectsEntry": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a clip in the MediaHub Projects tabs"
+    "doc": "Object representing a clip in the MediaHub Projects tabs",
+    "page": "classes/PyMediaHubProjectsEntry.md"
   },
   "PyMediaHubProjectsFolder": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a folder in the MediaHub Projects tabs"
+    "doc": "Object representing a folder in the MediaHub Projects tabs",
+    "page": "classes/PyMediaHubProjectsFolder.md"
   },
   "PyMediaHubTab": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents a MediaHub tab."
+    "doc": "This class represents a MediaHub tab.",
+    "page": "classes/PyMediaHubTab.md"
   },
   "PyMediaPanel": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the media panel."
+    "doc": "This class represents the media panel.",
+    "page": "classes/PyMediaPanel.md"
   },
   "PyMessages": {
     "module": "flame",
     "type": "class",
-    "doc": "Module handling message bar in application UI."
+    "doc": "Module handling message bar in application UI.",
+    "page": "classes/PyMessages.md"
   },
   "PyMetadataNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. This class represents a Metadata node."
+    "doc": "Class derived from PyNode. This class represents a Metadata node.",
+    "page": "classes/PyMetadataNode.md"
   },
   "PyMetadataTimelineFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Metadata Timeline FX."
+    "doc": "Object representing a Metadata Timeline FX.",
+    "page": "classes/PyMetadataTimelineFX.md"
   },
   "PyMetadataValue": {
     "module": "flame",
     "type": "class",
-    "doc": "This class holds the metadata of a specific data type."
+    "doc": "This class holds the metadata of a specific data type.",
+    "page": "classes/PyMetadataValue.md"
   },
   "PyMorphNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Morph node."
+    "doc": "Object representing a Morph node.",
+    "page": "classes/PyMorphNode.md"
   },
   "PyNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Node."
+    "doc": "Object representing a Node.",
+    "page": "classes/PyNode.md"
   },
   "PyOFXNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a OpenFX node."
+    "doc": "Object representing a OpenFX node.",
+    "page": "classes/PyOFXNode.md"
   },
   "PyPaintNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Paint node."
+    "doc": "Object representing a Paint node.",
+    "page": "classes/PyPaintNode.md"
   },
   "PyProject": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Project."
+    "doc": "Object representing a Project.",
+    "page": "classes/PyProject.md"
   },
   "PyProjectSelector": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing the Project manager."
+    "doc": "Object representing the Project manager.",
+    "page": "classes/PyProjectSelector.md"
   },
   "PyReadFileNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. This class represents a ReadFile node."
+    "doc": "Class derived from PyNode. This class represents a ReadFile node.",
+    "page": "classes/PyReadFileNode.md"
   },
   "PyReel": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Reel."
+    "doc": "Object representing a Reel.",
+    "page": "classes/PyReel.md"
   },
   "PyReelGroup": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Reel Group."
+    "doc": "Object representing a Reel Group.",
+    "page": "classes/PyReelGroup.md"
   },
   "PyRenderNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyNode. This class represents a Render node."
+    "doc": "Class derived from PyNode. This class represents a Render node.",
+    "page": "classes/PyRenderNode.md"
   },
   "PyResolution": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a resolution\n\nPyResolution()\nPyResolution(width, height, bit_depth, frame_ratio, scan_format)"
+    "doc": "Object representing a resolution\n\nPyResolution()\nPyResolution(width, height, bit_depth, frame_ratio, scan_format)",
+    "page": "classes/PyResolution.md"
   },
   "PySearch": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the search."
+    "doc": "This class represents the search.",
+    "page": "classes/PySearch.md"
   },
   "PySegment": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Segment."
+    "doc": "Object representing a Segment.",
+    "page": "classes/PySegment.md"
   },
   "PySequence": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Sequence."
+    "doc": "Object representing a Sequence.",
+    "page": "classes/PySequence.md"
   },
   "PySequenceGroup": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Group in a Sequence."
+    "doc": "Object representing a Group in a Sequence.",
+    "page": "classes/PySequenceGroup.md"
   },
   "PySubtitleTrack": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Subtitle Track."
+    "doc": "Object representing a Subtitle Track.",
+    "page": "classes/PySubtitleTrack.md"
   },
   "PyTime": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a time unit\n\nPyTime(timecode, frame_rate)\nPyTime(relative_frame)\nPyTime(absolute_frame, frame_rate)"
+    "doc": "Object representing a time unit\n\nPyTime(timecode, frame_rate)\nPyTime(relative_frame)\nPyTime(absolute_frame, frame_rate)",
+    "page": "classes/PyTime.md"
   },
   "PyTimeline": {
     "module": "flame",
     "type": "class",
-    "doc": "This class represents the Timeline."
+    "doc": "This class represents the Timeline.",
+    "page": "classes/PyTimeline.md"
   },
   "PyTimelineFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Timeline FX."
+    "doc": "Object representing a Timeline FX.",
+    "page": "classes/PyTimelineFX.md"
   },
   "PyTimewarpNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Timewarp node."
+    "doc": "Object representing a Timewarp node.",
+    "page": "classes/PyTimewarpNode.md"
   },
   "PyTimewarpTimelineFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Timewarp node."
+    "doc": "Object representing a Timewarp node.",
+    "page": "classes/PyTimewarpTimelineFX.md"
   },
   "PyTrack": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Track."
+    "doc": "Object representing a Track.",
+    "page": "classes/PyTrack.md"
   },
   "PyTransition": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Transition."
+    "doc": "Object representing a Transition.",
+    "page": "classes/PyTransition.md"
   },
   "PyTypeFX": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Type Timeline FX."
+    "doc": "Object representing a Type Timeline FX.",
+    "page": "classes/PyTypeFX.md"
   },
   "PyTypeLayer": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Type Layer."
+    "doc": "Object representing a Type Layer.",
+    "page": "classes/PyTypeLayer.md"
   },
   "PyTypeNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Type node."
+    "doc": "Object representing a Type node.",
+    "page": "classes/PyTypeNode.md"
   },
   "PyUser": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a User."
+    "doc": "Object representing a User.",
+    "page": "classes/PyUser.md"
   },
   "PyUsers": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing the User manager."
+    "doc": "Object representing the User manager.",
+    "page": "classes/PyUsers.md"
   },
   "PyVersion": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Version."
+    "doc": "Object representing a Version.",
+    "page": "classes/PyVersion.md"
   },
   "PyWorkspace": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a Workspace."
+    "doc": "Object representing a Workspace.",
+    "page": "classes/PyWorkspace.md"
   },
   "PyWriteFileNode": {
     "module": "flame",
     "type": "class",
-    "doc": "Class derived from PyRenderNode. This class represents a WriteFile node."
+    "doc": "Class derived from PyRenderNode. This class represents a WriteFile node.",
+    "page": "classes/PyWriteFileNode.md"
   },
   "batch": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/batch.md"
   },
   "browser": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/browser.md"
   },
   "clear_graphics_memory": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/clear_graphics_memory.md"
   },
   "clear_unreferenced_cache": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/clear_unreferenced_cache.md"
   },
   "delete": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/delete.md"
   },
   "duplicate": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/duplicate.md"
   },
   "duplicate_many": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/duplicate_many.md"
   },
   "execute_command": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/execute_command.md"
   },
   "execute_shortcut": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/execute_shortcut.md"
   },
   "exit": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/exit.md"
   },
   "find_by_name": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/find_by_name.md"
   },
   "find_by_uid": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/find_by_uid.md"
   },
   "find_by_wiretap_node_id": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/find_by_wiretap_node_id.md"
   },
   "flush_graphics_memory": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/flush_graphics_memory.md"
   },
   "get_current_tab": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_current_tab.md"
   },
   "get_home_directory": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_home_directory.md"
   },
   "get_init_cfg_path": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_init_cfg_path.md"
   },
   "get_version": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_version.md"
   },
   "get_version_major": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_version_major.md"
   },
   "get_version_minor": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_version_minor.md"
   },
   "get_version_patch": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_version_patch.md"
   },
   "get_version_stamp": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/get_version_stamp.md"
   },
   "go_to": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/go_to.md"
   },
   "import_clips": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/import_clips.md"
   },
   "media_panel": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/media_panel.md"
   },
   "mediahub": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/mediahub.md"
   },
   "messages": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/messages.md"
   },
   "project": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/project.md"
   },
   "projects": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/projects.md"
   },
   "schedule_idle_event": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/schedule_idle_event.md"
   },
   "set_current_tab": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/set_current_tab.md"
   },
   "set_render_option": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/set_render_option.md"
   },
   "timeline": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/timeline.md"
   },
   "users": {
     "module": "flame",
-    "type": "attribute"
+    "type": "attribute",
+    "page": "constants/users.md"
   }
 }

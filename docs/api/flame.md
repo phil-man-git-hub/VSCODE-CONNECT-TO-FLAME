@@ -1,294 +1,321 @@
 # Module: flame
 
 ## Classes
-### class PyActionFamilyNode
+### class [PyActionFamilyNode](classes/PyActionFamilyNode.md)
 
 Class derived from PyNode. Represents an Action Family node object.
 
-### class PyActionNode
+### class [PyActionNode](classes/PyActionNode.md)
 
 Class derived from PyActionFamilyNode. Represents an Action node object.
 
-### class PyArchiveEntry
+### class [PyArchiveEntry](classes/PyArchiveEntry.md)
 
 Class derived from PyFlameObject. Base class for any object displayed in the Media Panel.
 
-### class PyAttribute
+### class [PyAttribute](classes/PyAttribute.md)
 
-### class PyAudioTrack
+### class [PyAudioTrack](classes/PyAudioTrack.md)
 
 Object representing an Audio Track.
 
-### class PyBatch
+### class [PyBatch](classes/PyBatch.md)
 
 Class derived from PyFlameObject. This class represents a Batch Group.
 
-### class PyBatchIteration
+### class [PyBatchIteration](classes/PyBatchIteration.md)
 
 Class derived from PyArchiveEntry. This class represents a Batch Iteration.
 
-### class PyBrowser
+### class [PyBrowser](classes/PyBrowser.md)
 
 This class represents the file browser.
 
-### class PyClip
+### class [PyClip](classes/PyClip.md)
 
 CLass derived from PyArchiveEntry. This class represents a Clip.
 
-### class PyClipNode
+### class [PyClipNode](classes/PyClipNode.md)
 
 Class derived from PyNode. This class represents a Clip node.
 
-### class PyClrMgmtNode
+### class [PyClrMgmtNode](classes/PyClrMgmtNode.md)
 
 Object representing a Colour Mgmt node.
 
-### class PyCoCameraAnalysis
+### class [PyCoCameraAnalysis](classes/PyCoCameraAnalysis.md)
 
 Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic.
 
-### class PyCoCompass
+### class [PyCoCompass](classes/PyCoCompass.md)
 
 Class derived from PyCoNode. This class represents the compass node in the Action schematic.
 
-### class PyCoNode
+### class [PyCoNode](classes/PyCoNode.md)
 
 Class derived from PyFlameObject. This class represents an Action node in the Action schematic.
 
-### class PyColourMgtTimelineFX
+### class [PyColourMgtTimelineFX](classes/PyColourMgtTimelineFX.md)
 
 Object representing a Colour Mgmt Timeline FX.
 
-### class PyCompassNode
+### class [PyCompassNode](classes/PyCompassNode.md)
 
 Class derived from PyNode. This class represents a Compass node.
 
-### class PyDesktop
+### class [PyDesktop](classes/PyDesktop.md)
 
 Class derived from PyArchiveEntry. This class represents a Desktop.
 
-### class PyExporter
+### class [PyExporter](classes/PyExporter.md)
 
 Object holding export settings.
 
-### class PyFlameObject
+### class [PyFlameObject](classes/PyFlameObject.md)
 
 The basic type of all accessible Flame objects from the python API.
 
-### class PyFolder
+### class [PyFolder](classes/PyFolder.md)
 
 Class derived from PyArchiveEntry. This class represents a Folder.
 
-### class PyGMaskTracerNode
+### class [PyGMaskTracerNode](classes/PyGMaskTracerNode.md)
 
 Class derived from PyActionFamilyNode. Represents a GMask Tracer node object.
 
-### class PyHDRNode
+### class [PyHDRNode](classes/PyHDRNode.md)
 
 Object representing a HDR node.
 
-### class PyHDRTimelineFX
+### class [PyHDRTimelineFX](classes/PyHDRTimelineFX.md)
 
 Object representing a HDR Timeline FX.
 
-### class PyImageNode
+### class [PyImageNode](classes/PyImageNode.md)
 
 Class derived from PyActionFamilyNode. Represents an Image node object.
 
-### class PyLensDistortionNode
+### class [PyLensDistortionNode](classes/PyLensDistortionNode.md)
 
 Object representing a Lens Distortion node.
 
-### class PyLibrary
+### class [PyLibrary](classes/PyLibrary.md)
 
 Class derived from PyArchiveEntry. This class represents a Library.
 
-### class PyMarker
+### class [PyMarker](classes/PyMarker.md)
 
 Object representing a Marker.
 
-### class PyMediaHub
+### class [PyMediaHub](classes/PyMediaHub.md)
 
 This class represents the MediaHub.
 
-### class PyMediaHubFilesEntry
+### class [PyMediaHubFilesEntry](classes/PyMediaHubFilesEntry.md)
 
 Object representing a clip in the MediaHub Files tabs
 
-### class PyMediaHubFilesFolder
+### class [PyMediaHubFilesFolder](classes/PyMediaHubFilesFolder.md)
 
 Object representing a folder in the MediaHub Files tabs
 
-### class PyMediaHubFilesTab
+### class [PyMediaHubFilesTab](classes/PyMediaHubFilesTab.md)
 
 This class represents the MediaHub Files tab.
 
-### class PyMediaHubFilesTabOptions
+### class [PyMediaHubFilesTabOptions](classes/PyMediaHubFilesTabOptions.md)
 
 This class represents the MediaHub Files tab options.
 
-### class PyMediaHubProjectsEntry
+### class [PyMediaHubProjectsEntry](classes/PyMediaHubProjectsEntry.md)
 
 Object representing a clip in the MediaHub Projects tabs
 
-### class PyMediaHubProjectsFolder
+### class [PyMediaHubProjectsFolder](classes/PyMediaHubProjectsFolder.md)
 
 Object representing a folder in the MediaHub Projects tabs
 
-### class PyMediaHubTab
+### class [PyMediaHubTab](classes/PyMediaHubTab.md)
 
 This class represents a MediaHub tab.
 
-### class PyMediaPanel
+### class [PyMediaPanel](classes/PyMediaPanel.md)
 
 This class represents the media panel.
 
-### class PyMessages
+### class [PyMessages](classes/PyMessages.md)
 
 Module handling message bar in application UI.
 
-### class PyMetadataNode
+### class [PyMetadataNode](classes/PyMetadataNode.md)
 
 Class derived from PyNode. This class represents a Metadata node.
 
-### class PyMetadataTimelineFX
+### class [PyMetadataTimelineFX](classes/PyMetadataTimelineFX.md)
 
 Object representing a Metadata Timeline FX.
 
-### class PyMetadataValue
+### class [PyMetadataValue](classes/PyMetadataValue.md)
 
 This class holds the metadata of a specific data type.
 
-### class PyMorphNode
+### class [PyMorphNode](classes/PyMorphNode.md)
 
 Object representing a Morph node.
 
-### class PyNode
+### class [PyNode](classes/PyNode.md)
 
 Object representing a Node.
 
-### class PyOFXNode
+### class [PyOFXNode](classes/PyOFXNode.md)
 
 Object representing a OpenFX node.
 
-### class PyPaintNode
+### class [PyPaintNode](classes/PyPaintNode.md)
 
 Object representing a Paint node.
 
-### class PyProject
+### class [PyProject](classes/PyProject.md)
 
 Object representing a Project.
 
-### class PyProjectSelector
+### class [PyProjectSelector](classes/PyProjectSelector.md)
 
 Object representing the Project manager.
 
-### class PyReadFileNode
+### class [PyReadFileNode](classes/PyReadFileNode.md)
 
 Class derived from PyNode. This class represents a ReadFile node.
 
-### class PyReel
+### class [PyReel](classes/PyReel.md)
 
 Object representing a Reel.
 
-### class PyReelGroup
+### class [PyReelGroup](classes/PyReelGroup.md)
 
 Object representing a Reel Group.
 
-### class PyRenderNode
+### class [PyRenderNode](classes/PyRenderNode.md)
 
 Class derived from PyNode. This class represents a Render node.
 
-### class PyResolution
+### class [PyResolution](classes/PyResolution.md)
 
 Object representing a resolution
 
-PyResolution()
-PyResolution(width, height, bit_depth, frame_ratio, scan_format)
-
-### class PySearch
+### class [PySearch](classes/PySearch.md)
 
 This class represents the search.
 
-### class PySegment
+### class [PySegment](classes/PySegment.md)
 
 Object representing a Segment.
 
-### class PySequence
+### class [PySequence](classes/PySequence.md)
 
 Object representing a Sequence.
 
-### class PySequenceGroup
+### class [PySequenceGroup](classes/PySequenceGroup.md)
 
 Object representing a Group in a Sequence.
 
-### class PySubtitleTrack
+### class [PySubtitleTrack](classes/PySubtitleTrack.md)
 
 Object representing a Subtitle Track.
 
-### class PyTime
+### class [PyTime](classes/PyTime.md)
 
 Object representing a time unit
 
-PyTime(timecode, frame_rate)
-PyTime(relative_frame)
-PyTime(absolute_frame, frame_rate)
-
-### class PyTimeline
+### class [PyTimeline](classes/PyTimeline.md)
 
 This class represents the Timeline.
 
-### class PyTimelineFX
+### class [PyTimelineFX](classes/PyTimelineFX.md)
 
 Object representing a Timeline FX.
 
-### class PyTimewarpNode
+### class [PyTimewarpNode](classes/PyTimewarpNode.md)
 
 Object representing a Timewarp node.
 
-### class PyTimewarpTimelineFX
+### class [PyTimewarpTimelineFX](classes/PyTimewarpTimelineFX.md)
 
 Object representing a Timewarp node.
 
-### class PyTrack
+### class [PyTrack](classes/PyTrack.md)
 
 Object representing a Track.
 
-### class PyTransition
+### class [PyTransition](classes/PyTransition.md)
 
 Object representing a Transition.
 
-### class PyTypeFX
+### class [PyTypeFX](classes/PyTypeFX.md)
 
 Object representing a Type Timeline FX.
 
-### class PyTypeLayer
+### class [PyTypeLayer](classes/PyTypeLayer.md)
 
 Object representing a Type Layer.
 
-### class PyTypeNode
+### class [PyTypeNode](classes/PyTypeNode.md)
 
 Object representing a Type node.
 
-### class PyUser
+### class [PyUser](classes/PyUser.md)
 
 Object representing a User.
 
-### class PyUsers
+### class [PyUsers](classes/PyUsers.md)
 
 Object representing the User manager.
 
-### class PyVersion
+### class [PyVersion](classes/PyVersion.md)
 
 Object representing a Version.
 
-### class PyWorkspace
+### class [PyWorkspace](classes/PyWorkspace.md)
 
 Object representing a Workspace.
 
-### class PyWriteFileNode
+### class [PyWriteFileNode](classes/PyWriteFileNode.md)
 
 Class derived from PyRenderNode. This class represents a WriteFile node.
 
 ## Constants / Attributes
-batch, browser, clear_graphics_memory, clear_unreferenced_cache, delete, duplicate, duplicate_many, execute_command, execute_shortcut, exit, find_by_name, find_by_uid, find_by_wiretap_node_id, flush_graphics_memory, get_current_tab, get_home_directory, get_init_cfg_path, get_version, get_version_major, get_version_minor, get_version_patch, get_version_stamp, go_to, import_clips, media_panel, mediahub, messages, project, projects, schedule_idle_event, set_current_tab, set_render_option, timeline, users
+- [batch](constants/batch.md)
+- [browser](constants/browser.md)
+- [clear_graphics_memory](constants/clear_graphics_memory.md)
+- [clear_unreferenced_cache](constants/clear_unreferenced_cache.md)
+- [delete](constants/delete.md)
+- [duplicate](constants/duplicate.md)
+- [duplicate_many](constants/duplicate_many.md)
+- [execute_command](constants/execute_command.md)
+- [execute_shortcut](constants/execute_shortcut.md)
+- [exit](constants/exit.md)
+- [find_by_name](constants/find_by_name.md)
+- [find_by_uid](constants/find_by_uid.md)
+- [find_by_wiretap_node_id](constants/find_by_wiretap_node_id.md)
+- [flush_graphics_memory](constants/flush_graphics_memory.md)
+- [get_current_tab](constants/get_current_tab.md)
+- [get_home_directory](constants/get_home_directory.md)
+- [get_init_cfg_path](constants/get_init_cfg_path.md)
+- [get_version](constants/get_version.md)
+- [get_version_major](constants/get_version_major.md)
+- [get_version_minor](constants/get_version_minor.md)
+- [get_version_patch](constants/get_version_patch.md)
+- [get_version_stamp](constants/get_version_stamp.md)
+- [go_to](constants/go_to.md)
+- [import_clips](constants/import_clips.md)
+- [media_panel](constants/media_panel.md)
+- [mediahub](constants/mediahub.md)
+- [messages](constants/messages.md)
+- [project](constants/project.md)
+- [projects](constants/projects.md)
+- [schedule_idle_event](constants/schedule_idle_event.md)
+- [set_current_tab](constants/set_current_tab.md)
+- [set_render_option](constants/set_render_option.md)
+- [timeline](constants/timeline.md)
+- [users](constants/users.md)
+

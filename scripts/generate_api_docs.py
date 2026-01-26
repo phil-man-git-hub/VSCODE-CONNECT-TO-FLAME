@@ -26,13 +26,16 @@ def render_module_md(module_name, data):
     if data.get('classes'):
         lines.append('## Classes\n')
         for c in data['classes']:
-            lines.append(f"### class {c['name']}\n\n")
+            # Link to per-class page
+            lines.append(f"### class [{c['name']}](classes/{c['name']}.md)\n\n")
             if c.get('doc'):
-                lines.append(f"{c['doc']}\n\n")
+                # short doc snippet
+                snippet = (c['doc'].splitlines()[0] + '\n\n') if c.get('doc') else ''
+                lines.append(snippet)
             if c.get('methods'):
                 lines.append('#### Methods\n')
                 for m in c['methods']:
-                    lines.append(f"- `{m['name']}{m['signature']}` — {m['doc']}\n")
+                    lines.append(f"- `{m['name']}{m['signature']}` — { (m.get('doc','').splitlines()[0] if m.get('doc') else '') }\n")
                 lines.append('\n')
     if data.get('functions'):
         lines.append('## Functions\n')
@@ -43,7 +46,8 @@ def render_module_md(module_name, data):
                 rt = f.get('annotations', {}).get('return', '') if f.get('annotations') else ''
             rt_str = f" -> {rt}" if rt else ''
             doc_snip = (f['doc'].splitlines()[0] + ' ') if f.get('doc') else ''
-            lines.append(f"- `{f['name']}{f['signature']}{rt_str}` — {doc_snip}{' ' if doc_snip else ''}\n")
+            # Link to per-function page
+            lines.append(f"- [{f['name']}](functions/{f['name']}.md) — `{f['name']}{f['signature']}{rt_str}` — {doc_snip}\n")
         lines.append('\n')
     if data.get('probes'):
         lines.append('## Probe results (safe calls)\n')
@@ -57,8 +61,45 @@ def render_module_md(module_name, data):
         lines.append('\n')
     if data.get('constants'):
         lines.append('## Constants / Attributes\n')
-        sample = ', '.join(data['constants'][:200])
-        lines.append(sample + '\n')
+        for a in data['constants']:
+            # Link to per-constant page
+            lines.append(f"- [{a}](constants/{a}.md)\n")
+        lines.append('\n')
+    return ''.join(lines)
+
+
+def render_class_md(module_name, cls):
+    lines = [f"# Class: {cls['name']}\n\n", f"**Module**: `{module_name}`\n\n"]
+    if cls.get('doc'):
+        lines.append(cls['doc'] + '\n\n')
+    if cls.get('methods'):
+        lines.append('## Methods\n')
+        for m in cls['methods']:
+            lines.append(f"### `{m['name']}{m['signature']}`\n\n")
+            if m.get('doc'):
+                lines.append(m['doc'] + '\n\n')
+    return ''.join(lines)
+
+
+def render_function_md(module_name, fn):
+    lines = [f"# Function: {fn['name']}\n\n", f"**Module**: `{module_name}`\n\n"]
+    sig = fn.get('signature','')
+    lines.append(f"**Signature**: `{fn['name']}{sig}`\n\n")
+    if fn.get('doc'):
+        lines.append(fn['doc'] + '\n\n')
+    if fn.get('annotations'):
+        lines.append('**Annotations**:\n')
+        for k, v in fn.get('annotations',{}).items():
+            lines.append(f"- `{k}`: `{v}`\n")
+        lines.append('\n')
+    if fn.get('return'):
+        lines.append(f"**Return (probe / annotation)**: `{fn.get('return')}`\n\n")
+    return ''.join(lines)
+
+
+def render_constant_md(module_name, name):
+    lines = [f"# Constant: {name}\n\n", f"**Module**: `{module_name}`\n\n"]
+    lines.append('Documentation for constants is collected from runtime introspection when available.\n')
     return ''.join(lines)
 
 
@@ -68,13 +109,13 @@ def build_index(api_json):
         if 'error' in data:
             continue
         for f in data.get('functions', []):
-            index[f['name']] = {'module': module, 'type': 'function', 'signature': f['signature'], 'doc': f['doc']}
+            index[f['name']] = {'module': module, 'type': 'function', 'signature': f['signature'], 'doc': f.get('doc',''), 'page': f"functions/{f['name']}.md"}
         for c in data.get('classes', []):
-            index[c['name']] = {'module': module, 'type': 'class', 'doc': c.get('doc','')}
+            index[c['name']] = {'module': module, 'type': 'class', 'doc': c.get('doc',''), 'page': f"classes/{c['name']}.md"}
             for m in c.get('methods', []):
-                index[f"{c['name']}.{m['name']}"] = {'module': module, 'type': 'method', 'signature': m['signature'], 'doc': m['doc']}
+                index[f"{c['name']}.{m['name']}"] = {'module': module, 'type': 'method', 'signature': m['signature'], 'doc': m.get('doc','')}
         for a in data.get('constants', []):
-            index[a] = {'module': module, 'type': 'attribute'}
+            index[a] = {'module': module, 'type': 'attribute', 'page': f"constants/{a}.md"}
     return index
 
 
@@ -88,6 +129,9 @@ def main():
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / 'classes').mkdir(parents=True, exist_ok=True)
+    (out_dir / 'functions').mkdir(parents=True, exist_ok=True)
+    (out_dir / 'constants').mkdir(parents=True, exist_ok=True)
 
     # Run the collector
     cmd = ['python3', 'scripts/collect_flame_api.py', '--host', args.host, '--port', str(args.port), '--modules'] + args.modules
@@ -97,12 +141,33 @@ def main():
         return
     api_json = json.loads(proc.stdout)
 
-    # Write per-module Markdown
+    # Write per-module Markdown and per-symbol pages
     for module, data in api_json.items():
         md = render_module_md(module, data)
         md_path = out_dir / f"{module}.md"
         md_path.write_text(md)
         print('Wrote', md_path)
+
+        # Per-class pages
+        for c in data.get('classes', []):
+            cls_md = render_class_md(module, c)
+            cls_path = out_dir / 'classes' / f"{c['name']}.md"
+            cls_path.write_text(cls_md)
+            print('Wrote', cls_path)
+
+        # Per-function pages
+        for f in data.get('functions', []):
+            fn_md = render_function_md(module, f)
+            fn_path = out_dir / 'functions' / f"{f['name']}.md"
+            fn_path.write_text(fn_md)
+            print('Wrote', fn_path)
+
+        # Per-constant pages
+        for a in data.get('constants', []):
+            a_md = render_constant_md(module, a)
+            a_path = out_dir / 'constants' / f"{a}.md"
+            a_path.write_text(a_md)
+            print('Wrote', a_path)
 
     # Write index.json
     index = build_index(api_json)
