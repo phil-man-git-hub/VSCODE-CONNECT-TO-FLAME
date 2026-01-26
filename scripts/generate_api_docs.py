@@ -37,7 +37,23 @@ def render_module_md(module_name, data):
     if data.get('functions'):
         lines.append('## Functions\n')
         for f in data['functions']:
-            lines.append(f"- `{f['name']}{f['signature']}` — {f['doc']}\n")
+            rt = f.get('return', '') or ''
+            if not rt:
+                # try to detect annot
+                rt = f.get('annotations', {}).get('return', '') if f.get('annotations') else ''
+            rt_str = f" -> {rt}" if rt else ''
+            doc_snip = (f['doc'].splitlines()[0] + ' ') if f.get('doc') else ''
+            lines.append(f"- `{f['name']}{f['signature']}{rt_str}` — {doc_snip}{' ' if doc_snip else ''}\n")
+        lines.append('\n')
+    if data.get('probes'):
+        lines.append('## Probe results (safe calls)\n')
+        for pname, pval in data['probes'].items():
+            if pval is None:
+                lines.append(f"- `{pname}`: (no result)\n")
+            elif 'error' in pval:
+                lines.append(f"- `{pname}`: ERROR - {pval['error']}\n")
+            else:
+                lines.append(f"- `{pname}`: {pval.get('type','?')} — {pval.get('repr','')}\n")
         lines.append('\n')
     if data.get('constants'):
         lines.append('## Constants / Attributes\n')

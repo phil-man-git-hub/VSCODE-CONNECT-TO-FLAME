@@ -252,7 +252,7 @@
   "PyResolution": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a resolution"
+    "doc": "Object representing a resolution\n\nPyResolution()\nPyResolution(width, height, bit_depth, frame_ratio, scan_format)"
   },
   "PySearch": {
     "module": "flame",
@@ -282,7 +282,7 @@
   "PyTime": {
     "module": "flame",
     "type": "class",
-    "doc": "Object representing a time unit"
+    "doc": "Object representing a time unit\n\nPyTime(timecode, frame_rate)\nPyTime(relative_frame)\nPyTime(absolute_frame, frame_rate)"
   },
   "PyTimeline": {
     "module": "flame",

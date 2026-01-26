@@ -203,6 +203,9 @@ Class derived from PyNode. This class represents a Render node.
 
 Object representing a resolution
 
+PyResolution()
+PyResolution(width, height, bit_depth, frame_ratio, scan_format)
+
 ### class PySearch
 
 This class represents the search.
@@ -226,6 +229,10 @@ Object representing a Subtitle Track.
 ### class PyTime
 
 Object representing a time unit
+
+PyTime(timecode, frame_rate)
+PyTime(relative_frame)
+PyTime(absolute_frame, frame_rate)
 
 ### class PyTimeline
 
