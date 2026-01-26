@@ -101,10 +101,23 @@ def render_class_md(module_name, cls):
             lines.append(f"### {kind_titles.get(k, k.title())}\n")
             for m in ms:
                 sig = m.get('signature','')
-                doc_snip = (m.get('doc','').splitlines()[0] + ' ') if m.get('doc') else ''
-                lines.append(f"- `{m['name']}{sig}` — {doc_snip}\n")
+                # Pretty signature block
+                lines.append(f"- `{m['name']}` — `{sig}`\n")
+                lines.append('```python\n')
+                lines.append(f"def {m['name']}{sig}\n")
+                lines.append('```\n')
+                # Parameter list (best-effort parsing)
+                param_block = ''
+                if sig and sig not in ('(...)','()') and '(' in sig and ')' in sig:
+                    params = sig[sig.find('(')+1:sig.rfind(')')].strip()
+                    if params:
+                        pnames = [p.strip().split('=')[0].split(':')[0].strip() for p in params.split(',')]
+                        lines.append('**Parameters**:\n')
+                        for pn in pnames:
+                            lines.append(f"- `{pn}`\n")
+                # Docstring
                 if m.get('doc'):
-                    # include the doc block for detail
+                    lines.append('\n')
                     lines.append(m['doc'].strip() + '\n\n')
             lines.append('\n')
     return ''.join(lines)
