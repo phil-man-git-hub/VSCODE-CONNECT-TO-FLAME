@@ -17,3 +17,11 @@ __pycache__/
 .DO_NOT_UPLOAD
 DO_NOT_UPLOAD
 
+# Generated docs/site output
+site/
+
+# Build artifacts
+*.egg-info/
+build/
+dist/
+
