@@ -8,7 +8,8 @@
   },
   "activationEvents": [
     "onCommand:flame.connect",
-    "onCommand:flame.runInFlame"
+    "onCommand:flame.runInFlame",
+    "onCommand:flame.startDebug"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -20,6 +21,10 @@
       {
         "command": "flame.runInFlame",
         "title": "Flame: Run in Flame"
+      },
+      {
+        "command": "flame.startDebug",
+        "title": "Flame: Start debug server"
       }
     ]
   },
@@ -27,5 +32,13 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.108.1",
+    "typescript": "^5.9.3"
+  }
 }

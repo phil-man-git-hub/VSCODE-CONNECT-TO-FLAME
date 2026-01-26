@@ -11,3 +11,7 @@ __pycache__/
 
 # Misc
 .env
+.flame.secrets.json
+.flame.project.local.json
+.DS_Store
+
