@@ -23,6 +23,10 @@
         "title": "Flame: Run in Flame"
       },
       {
+        "command": "flame.testConnection",
+        "title": "Flame: Test connection (ping)"
+      },
+      {
         "command": "flame.startDebug",
         "title": "Flame: Start debug server"
       }

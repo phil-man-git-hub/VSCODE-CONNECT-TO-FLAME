@@ -37,7 +37,12 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
-  context.subscriptions.push(connectCmd, runCmd, startDebugCmd);
+  const testConnCmd = vscode.commands.registerCommand('flame.testConnection', async () => {
+    const { testConnection } = await import('./commands/testConnection');
+    await testConnection(client!);
+  });
+
+  context.subscriptions.push(connectCmd, runCmd, startDebugCmd, testConnCmd);
 }
 
 export function deactivate() {
