@@ -3,4 +3,8 @@ nav:
   - Home: index.md
   - API: 
       - Flame: docs/api/flame.md
+      - Symbols:
+          - Classes: docs/api/classes/README.md
+          - Functions: docs/api/functions/README.md
+          - Constants: docs/api/constants/README.md
 theme: readthedocs
