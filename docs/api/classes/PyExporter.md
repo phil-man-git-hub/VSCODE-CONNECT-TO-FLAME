@@ -1,203 +1,157 @@
-
 # Class: PyExporter
 
 **Module**: `flame`
 
-## Functional Role & Context
-* **Functional Role:** Holds export settings and manages export operations for media and timelines.
+**Inherits from**: instance, object
 
 ## Description
-Provides access to export configuration and execution for clips, sequences, and timelines in Flame.
+Object holding export settings.
 
 
-## API Insight: Definition, Attributes, Methods, and Usage
-The **PyExporter** class is a specialized utility for managing export settings and controlling the output process for media.
+## Properties
+| Name | Description |
+| --- | --- |
+| `Audio` |  |
+| `Autodesk` |  |
+| `Distribution_Package` |  |
+| `Flow_Production_Tracking` |  |
+| `Image_Sequence` |  |
+| `Movie` |  |
+| `Project` |  |
+| `Sequence_Publish` |  |
+| `Shared` |  |
+| `Shotgun` |  |
+| `User` |  |
+| `export_all_subtitles` | Set export option 'All Subtitles Tracks'. |
+| `export_between_marks` | Set export option 'Export between marks'. |
+| `export_subtitles_as_files` | Set subtitles export option 'Export As Files. |
+| `foreground` | Set export option 'Foreground export'. |
+| `include_subtitles` | Set export option 'Include Subtitles'. |
+| `keep_timeline_fx_renders` | Set export option 'Keep Timeline FX Renders'. |
+| `use_top_video_track` | Set export option 'Use top video track'. |
+| `warn_on_mixed_colour_space` | Set export option 'Warn on mixed colour space'. |
+| `warn_on_no_media` | Set export option 'Warn on no media'. |
+| `warn_on_pending_render` | Set export option 'Warn on pending render'. |
+| `warn_on_reimport_unsupported` | Set export option 'Warn on reimport unsupported'. |
+| `warn_on_unlinked` | Set export option 'Warn on unlinked'. |
+| `warn_on_unrendered` | Set export option 'Warn on unrendered'. |
 
-### Definition and Hierarchy
-| Property      | Value         | Description |
-|-------------- |-------------- |-------------|
-| Class Name    | PyExporter    | Holds and manages export settings. |
-| Parent Class  | None          | Standalone utility class. |
-| Access Point  | flame.exporter| Accessed as a static object from the flame module. |
-
-### Core Methods
-| Method                | Arguments                        | Returns   | Description |
-|-----------------------|----------------------------------|-----------|-------------|
-| load_setup()          | file_path                        | bool      | Load export settings from a setup file. |
-| save_setup()          | file_path                        | bool      | Save current export settings to a file. |
-| reset()               | None                             | None      | Reset all export settings to defaults. |
-| execute()             | target_objects, destination      | bool      | Start the export process. |
-
-### Export Settings (Attributes)
-| Attribute Name        | Data Type        | Description |
-|----------------------|------------------|-------------|
-| export_type           | str              | Export preset/format. |
-| output_resolution     | PyResolution     | Resolution of exported media. |
-| colour_space          | str              | Output color space. |
-| bit_depth             | str              | Bit depth of exported file. |
-| custom_filename       | str              | Custom filename for output. |
-| start_frame           | int              | Starting frame number. |
-| frame_range           | str              | Exported range method. |
-| version_name          | str              | Name for exported version clip. |
-| include_audio         | bool             | Include audio tracks. |
-| destination_path      | str (read-only)  | Destination path on disk. |
-
-### Usage Context
-PyExporter is used to prepare, modify, and execute exports programmatically, mirroring the Flame Export dialog.
-
-**Example:**
-
-```python
-# Configure a simple exporter and run an export for a list of clips
-exporter.export_type = 'OpenEXR Sequence'
-exporter.output_resolution = flame.PyResolution('HD 1080')
-exporter.colour_space = 'Rec.709'
-exporter.custom_filename = '%name_v%version'
-
-clips = [clip1, clip2]
-export_success = exporter.execute(clips, '/mnt/exports')
-if export_success:
-    print('Export started successfully')
-```
-
-You can also provide hook overrides to customize pre/post export behavior by passing an object that implements the expected hook methods.
 
 ## Methods
-### Properties
-- `use_top_video_track(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `export_between_marks(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `foreground(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `include_subtitles(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `export_subtitles_as_files(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `export_all_subtitles(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_unlinked(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_unrendered(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_pending_render(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_no_media(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_mixed_colour_space(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `warn_on_reimport_unsupported(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-- `keep_timeline_fx_renders(...)` — None( (flame.PyExporter)arg1) -> bool 
-None( (flame.PyExporter)arg1) -> bool
-
-
-### Static methods
-- `get_presets_base_dir(...)` — get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -> str : 
-get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -> str :
-    Get a presets base directory.
-
-- `get_presets_dir(...)` — get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -> str : 
-get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -> str :
-    Get a presets directory.
-
-
-### Built-in methods
-- `export(...)` — export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -> None : 
-export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -> None :
-    Perform export.
-    Keyword arguments:
-    sources -- Flame clip object, a Flame container object or a list of either first. If a container is passed, a multi-export will be done and structure will be respected as much as possible.
-    preset_path -- Absolute path to the export preset to use.
-    output_directory -- Absolute path to the output directory root.
-    background_job_settings -- Settings of background job(s) created if any.
-    hooks -- Export python hooks override. If passed, regular export python hooks implemented in exportHooks.py will be bypassed for this export and methods in the passed object with matching name will be called.
-        Instance of object passed should implement the following signature:
-    
-            class PythonHookOverride(object):
-                def preExport(self, info, userData, *args, **kwargs)
-                    pass
-    
-                def postExport(self, info, userData, *args, **kwargs):
-                    pass
-    
-                def preExportSequence(self, info, userData, *args, **kwargs):
-                    pass
-    
-                def postExportSequence(self, info, userData, *args, **kwargs):
-                    pass
-    
-                def preExportAsset(self, info, userData, *args, **kwargs):
-                    pass
-    
-                def postExportAsset(self, info, userData, *args, **kwargs):
-                    pass
-    
-                def exportOverwriteFile(self, path, *args, **kwargs):
-                    return "ask" # or "overwrite"
-    
-    hooks_user_data -- User data object passed to the export python hooks. This object can be modified by the PythonHookOverride methods but cannot be re-assigned
-
-
-### Callable attributes
-- `BackgroundJobSettings(...)` — Object holding background export job settings. These settings refer to the Backburner job, server and manager. 
+### `BackgroundJobSettings`
+```python
+BackgroundJobSettings
+```
 Object holding background export job settings. These settings refer to the Backburner job, server and manager.
 
-- `PresetType(...)` — int([x]) -> integer 
-int([x]) -> integer
-int(x, base=10) -> integer
+---
 
-Convert a number or string to an integer, or return 0 if no arguments
-are given.  If x is a number, return x.__int__().  For floating-point
-numbers, this truncates towards zero.
+### `PresetType`
+```python
+PresetType
+```
+---
 
-If x is not a number or if base is given, then x must be a string,
-bytes, or bytearray instance representing an integer literal in the
-given base.  The literal can be preceded by '+' or '-' and be surrounded
-by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
-Base 0 means to interpret the base from the string as an integer literal.
->>> int('0b100', base=0)
-4
+### `PresetVisibility`
+```python
+PresetVisibility
+```
+---
 
-- `PresetVisibility(...)` — int([x]) -> integer 
-int([x]) -> integer
-int(x, base=10) -> integer
-
-Convert a number or string to an integer, or return 0 if no arguments
-are given.  If x is a number, return x.__int__().  For floating-point
-numbers, this truncates towards zero.
-
-If x is not a number or if base is given, then x must be a string,
-bytes, or bytearray instance representing an integer literal in the
-given base.  The literal can be preceded by '+' or '-' and be surrounded
-by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
-Base 0 means to interpret the base from the string as an integer literal.
->>> int('0b100', base=0)
-4
+### `export`
+```python
+export
+```
 
 
-### Attributes
-- `Image_Sequence(...)` — 
-- `Audio(...)` — 
-- `Movie(...)` — 
-- `Sequence_Publish(...)` — 
-- `Distribution_Package(...)` — 
-- `User(...)` — 
-- `Project(...)` — 
-- `Shared(...)` — 
-- `Autodesk(...)` — 
-- `Flow_Production_Tracking(...)` — 
-- `Shotgun(...)` — 
+export( (PyExporter)arg1, (object)sources, (str)preset_path, (str)output_directory [, (PyExporter.BackgroundJobSettings)background_job_settings=None [, (object)hooks=None [, (object)hooks_user_data=None]]]) -> None :
 
+    Perform export.
+
+    Keyword arguments:
+
+    sources -- Flame clip object, a Flame container object or a list of either first. If a container is passed, a multi-export will be done and structure will be respected as much as possible.
+
+    preset_path -- Absolute path to the export preset to use.
+
+    output_directory -- Absolute path to the output directory root.
+
+    background_job_settings -- Settings of background job(s) created if any.
+
+    hooks -- Export python hooks override. If passed, regular export python hooks implemented in exportHooks.py will be bypassed for this export and methods in the passed object with matching name will be called.
+
+        Instance of object passed should implement the following signature:
+
+    
+
+            class PythonHookOverride(object):
+
+                def preExport(self, info, userData, *args, **kwargs)
+
+                    pass
+
+    
+
+                def postExport(self, info, userData, *args, **kwargs):
+
+                    pass
+
+    
+
+                def preExportSequence(self, info, userData, *args, **kwargs):
+
+                    pass
+
+    
+
+                def postExportSequence(self, info, userData, *args, **kwargs):
+
+                    pass
+
+    
+
+                def preExportAsset(self, info, userData, *args, **kwargs):
+
+                    pass
+
+    
+
+                def postExportAsset(self, info, userData, *args, **kwargs):
+
+                    pass
+
+    
+
+                def exportOverwriteFile(self, path, *args, **kwargs):
+
+                    return "ask" # or "overwrite"
+
+    
+
+    hooks_user_data -- User data object passed to the export python hooks. This object can be modified by the PythonHookOverride methods but cannot be re-assigned
+
+---
+
+### `get_presets_base_dir`
+```python
+get_presets_base_dir
+```
+
+
+get_presets_base_dir( (PyExporter.PresetVisibility)preset_visibility) -> str :
+
+    Get a presets base directory.
+
+---
+
+### `get_presets_dir`
+```python
+get_presets_dir
+```
+
+
+get_presets_dir( (PyExporter.PresetVisibility)preset_visibility, (PyExporter.PresetType)preset_type) -> str :
+
+    Get a presets directory.
+
+---

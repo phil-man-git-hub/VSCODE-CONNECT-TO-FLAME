@@ -1,124 +1,232 @@
-
 # Class: PyHDRTimelineFX
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base class:** `PyTimelineFX` (inherits from `PyFlameObject`)
-* **Functional Role:** Timeline effect for HDR processing, used for HDR analysis and Dolby Vision workflows on the timeline.
+**Inherits from**: [PyTimelineFX](PyTimelineFX.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Represents an HDR Timeline FX, providing tools for HDR analysis, trims, and Dolby Vision XML import/export as timeline effects.
+Object representing a HDR Timeline FX.
 
 
-## API Insight: Definition, Attributes, Methods, and Usage
-The **PyHDRTimelineFX** class represents the HDR Analysis and Trims effect, essential for automating Dolby Vision and HDR workflows.
-
-### Definition and Hierarchy
-| Property      | Value         | Description |
-|-------------- |-------------- |-------------|
-| Class Name    | PyHDRTimelineFX | HDR analysis and trim effect. |
-| Parent Class  | PyTimelineFX  | Inherits general Timeline FX functionality. |
-| Primary Role  | HDR Metadata Management | Programmatic control over analysis and trim curves. |
-
-### HDR-Specific Properties
-| Attribute             | Type           | Access     | Description |
-|-----------------------|---------------|------------|-------------|
-| analysis_status       | str            | Read-only  | Current state of HDR analysis. |
-| mastering_display_ids | list of int    | Read-only  | Available Mastering Display IDs. |
-| mastering_display_info| dict           | Read-only  | Info about Mastering Displays. |
-| target_display_ids    | list of int    | Read-only  | Available Target Display IDs. |
-| target_display_info   | dict           | Read-only  | Info about Target Displays. |
-
-### HDR-Specific Methods
-| Method                | Arguments                        | Returns   | Description |
-|-----------------------|----------------------------------|-----------|-------------|
-| analyze()             | analyze_mode                     | None      | Perform HDR analysis. |
-| export_DolbyVision_xml() | file_name, shot_only, comment  | None      | Export HDR data to Dolby Vision XML. |
-| import_DolbyVision_xml() | file_name, mode, shot_idx      | None      | Import HDR data from Dolby Vision XML. |
-| reset_analysis()      | None                             | None      | Reset HDR analysis data. |
-| reset_trims()         | None                             | None      | Reset HDR trims to neutral values. |
-| keep_analysis()       | None                             | None      | Remove 'dirty' flag from analysis. |
-| has_trim()            | target_display_id                | bool      | Whether trim metadata is applied. |
-| interpolate_trims()   | mode                             | None      | Interpolate HDR trim keyframes. |
-| l2_from_l8()          | None                             | dict      | Calculate L2 values from L8 values. |
-
-### Inherited Methods
-| Method                | Arguments                        | Returns   | Description |
-|-----------------------|----------------------------------|-----------|-------------|
-| load_setup()          | file_name                        | bool      | Manage FX state. |
-| save_setup()          | file_name                        | bool      | Save FX state. |
-| slide_keyframes()     | offset, sync                     | None      | Offset keyframed trims. |
-| sync_connected_segments() | None                         | None      | Push HDR setup to linked segments. |
-
-### Usage Context
-PyHDRTimelineFX is essential for automating HDR analysis, trim control, and Dolby Vision XML exchange in professional workflows.
-
-**Example:**
-
-```python
-# Perform analysis and export a Dolby Vision XML for a segment
-for segment in sequence.segments:
-    for fx in segment.timeline_fx:
-        if isinstance(fx, flame.PyHDRTimelineFX):
-            fx.analyze()
-            fx.export_DolbyVision_xml('/tmp/shot123_dv.xml', shot_only=True, comment='Auto-analyzed')
-```
+## Properties
+| Name | Description |
+| --- | --- |
+| `analysis_status` | Return the current state of the HDR analysis. |
+| `attributes` | The attributes of a python object. |
+| `has_maps_cache_media` | Return whether the Timeline FX has Maps or ML cached media. |
+| `mastering_display_ids` | List of available Mastering Display Ids. |
+| `mastering_display_info` | Dictionary containing Mastering Display information. Returned object is a copy. |
+| `parent` | The parent object of this object. |
+| `target_display_ids` | List of available Target Display Ids. |
+| `target_display_info` | Dictionary containing Target Display information. Returned object is a copy. |
+| `type` | Return the type of the Timeline FX. |
 
 
 ## Methods
-### Properties
-- `analysis_status(...)` — None( (flame.PyHDRTimelineFX)arg1) -> object 
-None( (flame.PyHDRTimelineFX)arg1) -> object
-
-- `mastering_display_ids(...)` — None( (flame.PyHDRTimelineFX)arg1) -> list 
-None( (flame.PyHDRTimelineFX)arg1) -> list
-
-- `target_display_ids(...)` — None( (flame.PyHDRTimelineFX)arg1) -> list 
-None( (flame.PyHDRTimelineFX)arg1) -> list
-
-- `mastering_display_info(...)` — None( (flame.PyHDRTimelineFX)arg1) -> object 
-None( (flame.PyHDRTimelineFX)arg1) -> object
-
-- `target_display_info(...)` — None( (flame.PyHDRTimelineFX)arg1) -> object 
-None( (flame.PyHDRTimelineFX)arg1) -> object
+### `analyze`
+```python
+analyze
+```
 
 
-### Built-in methods
-- `analyze(...)` — analyze( (PyHDRTimelineFX)arg1 [, (str)analyze_mode='Current Shot']) -> None : 
 analyze( (PyHDRTimelineFX)arg1 [, (str)analyze_mode='Current Shot']) -> None :
+
     Perform HDR analysis.
 
-- `keep_analysis(...)` — keep_analysis( (PyHDRTimelineFX)arg1) -> None : 
-keep_analysis( (PyHDRTimelineFX)arg1) -> None :
-    Remove the dirty flag from the HDR analysis.
+---
 
-- `reset_analysis(...)` — reset_analysis( (PyHDRTimelineFX)arg1) -> None : 
-reset_analysis( (PyHDRTimelineFX)arg1) -> None :
-    Reset the current HDR analysis.
+### `clear_maps_cache_media`
+```python
+clear_maps_cache_media
+```
 
-- `interpolate_trims(...)` — interpolate_trims( (PyHDRTimelineFX)arg1, (str)arg2) -> None : 
-interpolate_trims( (PyHDRTimelineFX)arg1, (str)arg2) -> None :
-    Interpolate the current HDR trims.
 
-- `reset_trims(...)` — reset_trims( (PyHDRTimelineFX)arg1) -> None : 
-reset_trims( (PyHDRTimelineFX)arg1) -> None :
-    Reset the current HDR trims.
+clear_maps_cache_media( (PyTimelineFX)arg1) -> bool :
 
-- `export_DolbyVision_xml(...)` — export_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (bool)shot_only=False [, (str)comment='']]) -> None : 
+    Clear the Timeline FX Maps and ML cached media.
+
+---
+
+### `export_DolbyVision_xml`
+```python
+export_DolbyVision_xml
+```
+
+
 export_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (bool)shot_only=False [, (str)comment='']]) -> None :
+
     Export the current HDR to a Dolby Vision XML file.
 
-- `import_DolbyVision_xml(...)` — import_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None : 
-import_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None :
-    Import the current HDR from a Dolby Vision XML file.
+---
 
-- `has_trim(...)` — has_trim( (PyHDRTimelineFX)arg1, (int)target_display_id) -> bool : 
+### `flush_maps_cache_media`
+```python
+flush_maps_cache_media
+```
+
+
+flush_maps_cache_media( (PyTimelineFX)arg1) -> bool :
+
+    Clear the Timeline FX Maps and ML cached media.(Deprecated: Use clear_maps_cache_media instead.)
+
+    
+
+---
+
+### `has_trim`
+```python
+has_trim
+```
+
+
 has_trim( (PyHDRTimelineFX)arg1, (int)target_display_id) -> bool :
+
     Returns True if the given Target Display ID has trims.
 
-- `l2_from_l8(...)` — l2_from_l8( (PyHDRTimelineFX)arg1) -> object : 
+---
+
+### `import_DolbyVision_xml`
+```python
+import_DolbyVision_xml
+```
+
+
+import_DolbyVision_xml( (PyHDRTimelineFX)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None :
+
+    Import the current HDR from a Dolby Vision XML file.
+
+---
+
+### `interpolate_trims`
+```python
+interpolate_trims
+```
+
+
+interpolate_trims( (PyHDRTimelineFX)arg1, (str)arg2) -> None :
+
+    Interpolate the current HDR trims.
+
+---
+
+### `keep_analysis`
+```python
+keep_analysis
+```
+
+
+keep_analysis( (PyHDRTimelineFX)arg1) -> None :
+
+    Remove the dirty flag from the HDR analysis.
+
+---
+
+### `l2_from_l8`
+```python
+l2_from_l8
+```
+
+
 l2_from_l8( (PyHDRTimelineFX)arg1) -> object :
+
     Dictionary containing the L2 values based on L8 values. Not valid in Dolby Vision 2.9.
 
+---
 
+### `load_setup`
+```python
+load_setup
+```
+
+
+load_setup( (PyTimelineFX)arg1, (str)file_name) -> bool :
+
+    Load a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `output_channel_as_metadata_key`
+```python
+output_channel_as_metadata_key
+```
+
+
+output_channel_as_metadata_key( (PyTimelineFX)arg1, (str)channel_name [, (bool)enable=True]) -> None :
+
+    Enable/Disable the output as metadata of a channel.
+
+    Keyword arguments:
+
+    channel_name -- The name of the channel to output in the metadata; the Timeline FX name can be omitted.
+
+    enable -- True to output metadata, False to stop outputting.
+
+---
+
+### `reset_analysis`
+```python
+reset_analysis
+```
+
+
+reset_analysis( (PyHDRTimelineFX)arg1) -> None :
+
+    Reset the current HDR analysis.
+
+---
+
+### `reset_trims`
+```python
+reset_trims
+```
+
+
+reset_trims( (PyHDRTimelineFX)arg1) -> None :
+
+    Reset the current HDR trims.
+
+---
+
+### `save_setup`
+```python
+save_setup
+```
+
+
+save_setup( (PyTimelineFX)arg1, (str)file_name) -> bool :
+
+    Save a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `slide_keyframes`
+```python
+slide_keyframes
+```
+
+
+slide_keyframes( (PyTimelineFX)arg1, (float)offset) -> None :
+
+    Slide the keyframes the PySegment.
+
+    Keywords argument:
+
+    offset -- Relative offset to slide the keyframes.
+
+    sync -- Enable to perform the same operation on the segments that belong to the same sync group as the current PySegment.
+
+    
+
+---
+
+### `sync_connected_segments`
+```python
+sync_connected_segments
+```
+
+
+sync_connected_segments( (PyTimelineFX)arg1) -> None :
+
+    Push the Timeline FX to connected segments.
+
+---

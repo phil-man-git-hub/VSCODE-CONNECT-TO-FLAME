@@ -1,43 +1,101 @@
-
 # Class: PyCoCompass
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base class:** `PyCoNode` (inherits from `PyNode` → `PyFlameObject`)
-* **Functional Role:** A specific type of Compass node in the schematic, used for grouping and organizing nodes.
-
+**Inherits from**: [PyCoNode](PyCoNode.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Represents a Compass node, providing a container for grouping nodes in the schematic.
+Class derived from PyCoNode. This class represents the compass node in the Action schematic.
 
----
 
-## Attributes
-| Attribute            | Type   | Description |
-|----------------------|--------|-------------|
-| name                 | str    | The name of the Action node in the Action schematic. |
-| position             | tuple  | The XYZ position of the Action node in the Action 3D space. Range: (-3.4028234663852886e+38, -3.4028234663852886e+38, -3.4028234663852886e+38) to (3.4028234663852886e+38, 3.4028234663852886e+38, 3.4028234663852886e+38) |
-| selected             | bool   | The Action node is selected. Values: True/False |
-| collapsed_in_manager | bool   | The Action node is collapsed in the Action Manager. Values: True/False |
-| colour               | tuple  | The colour of the Action node. |
-
----
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `nodes` | Return a list of PyCoNode objects enclosed by the Compass node. |
+| `parent` | The parent object of this object. |
+| `type` | Return the type of the Action node. |
 
 
 ## Methods
-### Properties
-- `nodes(...)` — None( (flame.PyCoCompass)arg1) -> list 
-None( (flame.PyCoCompass)arg1) -> list
-## API Insight
-
-- Compass nodes are containers for organizing schematic nodes; use the `nodes` property to access contained nodes.
-- Typical usage iterates over `compass.nodes` to inspect or modify child nodes.
-
-**Example:**
-
+### `add_reference`
 ```python
-# Print names of nodes inside a Compass
-for child in compass.nodes:
-    print(child.name)
+add_reference
 ```
+
+
+add_reference( (PyCoNode)arg1, (object)frame) -> bool :
+
+    Add a Motion Warp map's reference frame at specified index.
+
+    Keyword argument
+
+    frame -- The reference frame's index. An integer.
+
+---
+
+### `assign_media`
+```python
+assign_media
+```
+
+
+assign_media( (PyCoNode)arg1, (object)media_name) -> bool :
+
+    Assign a media layer to the node.
+
+    Keyword argument
+
+    media_name -- The index of the media layer from Actions' *media_layers*; or the name of the media layer.
+
+---
+
+### `cache_range`
+```python
+cache_range
+```
+
+
+cache_range( (PyCoNode)arg1, (object)arg2, (object)start) -> bool :
+
+    Cache the selected Map Analysis over the specified range.
+
+    Keyword arguments
+
+    start -- The first frame of the range. An integer.
+
+    end -- The last frame of the range. An integer.
+
+---
+
+### `children`
+```python
+children
+```
+
+
+children( (PyCoNode)arg1 [, (str)link_type='Default']) -> list :
+
+    Return a list of PyCoNode objects that are the children of the action node.
+
+    Keyword argument:
+
+    link_type -- The type of link used to connect the nodes (default, look at, gmask, gmask exclusive, light, light exclusive, mimic)
+
+---
+
+### `parents`
+```python
+parents
+```
+
+
+parents( (PyCoNode)arg1 [, (str)link_type='Default']) -> list :
+
+    Return a list of PyCoNode objects that are the parents of the action node.
+
+    Keyword argument:
+
+    link_type -- The type of link used to connect the nodes (default, look at, gmask, gmask exclusive, light, light exclusive, mimic)
+
+---

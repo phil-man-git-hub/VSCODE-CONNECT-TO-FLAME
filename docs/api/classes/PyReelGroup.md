@@ -1,68 +1,103 @@
-
 # Class: PyReelGroup
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base Class:** PyFlameObject
-* **Contains:** PyReel
-
-## Functional Role & Context
-* **Functional Role:** Represents a Reel Group, providing access to reels and group management operations.
-* **Context:** Used for organizing, creating, and managing reels in the Flame environment.
+**Inherits from**: [PyArchiveEntry](PyArchiveEntry.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-The PyReelGroup class provides programmatic access to reel groups, supporting automation of reel management and organization in libraries and folders.
-
-
 Object representing a Reel Group.
 
-## API Insight
-### Autodesk Flame API Insight (2026)
 
-A `PyReelGroup` is the version container for a single asset — it holds multiple `PyReel` objects (versions). Use it to create new versions, list existing ones, and perform group-level operations.
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `children` | Return a list of the immediate children of the current object. |
+| `parent` | The parent object of this object. |
+| `reels` | Return a list of Reel objects that are immediate children of the current object. |
 
-**Key methods:** `create_reel(name)`, `save()`, `get_children()` (lists reels), and inherited archive methods like `delete()` and `move()`.
-
-**Example:**
-
-```python
-# Create a reel group and add versions
-shot_group = my_folder.create_reel_group('SH_010_050')
-v001 = shot_group.create_reel('V001')
-v002 = shot_group.create_reel('V002')
-print([r.name for r in shot_group.reels])
-```
-
-## Attributes
-| Attribute   | Type   | Description |
-|-------------|--------|-------------|
-| name        | str    | The name of an object in the Media Panel, resolving tokens if any are present. |
-| uid         | str    | The unique identifier of an object in the Media Panel. |
-| token_name  | str    | The tokenized name of an object in the Media Panel. |
-| expanded    | bool   | The expanded state of an object in the Media Panel. True or False. |
-| colour      | tuple  | The colour of an object in the Media Panel. |
 
 ## Methods
-### Properties
-- `children(...)` — None( (flame.PyReelGroup)arg1) -> list 
-None( (flame.PyReelGroup)arg1) -> list
-
-- `reels(...)` — None( (flame.PyReelGroup)arg1) -> list 
-None( (flame.PyReelGroup)arg1) -> list
+### `clear`
+```python
+clear
+```
 
 
-### Built-in methods
-- `clear(...)` — clear( (PyReelGroup)arg1 [, (bool)confirm=True]) -> bool : 
 clear( (PyReelGroup)arg1 [, (bool)confirm=True]) -> bool :
+
     Clear the Reel Group content.
 
-- `create_reel(...)` — create_reel( (PyReelGroup)arg1, (str)name [, (bool)sequence=False]) -> object : 
+---
+
+### `clear_colour`
+```python
+clear_colour
+```
+
+
+clear_colour( (PyArchiveEntry)arg1) -> None :
+
+    Clear the colour of an object in the Media Panel.
+
+---
+
+### `commit`
+```python
+commit
+```
+
+
+commit( (PyArchiveEntry)arg1) -> None :
+
+    Commit to disk the Media Panel object or its closest container possible.
+
+---
+
+### `create_reel`
+```python
+create_reel
+```
+
+
 create_reel( (PyReelGroup)arg1, (str)name [, (bool)sequence=False]) -> object :
+
     Create a new Reel inside a Reel Group.
 
-- `save(...)` — save( (PyReelGroup)arg1) -> bool : 
+---
+
+### `get_wiretap_node_id`
+```python
+get_wiretap_node_id
+```
+
+
+get_wiretap_node_id( (PyArchiveEntry)arg1) -> str :
+
+    Return the Wiretap Node ID of the Flame object, but only if the object is in the Media Panel.
+
+---
+
+### `get_wiretap_storage_id`
+```python
+get_wiretap_storage_id
+```
+
+
+get_wiretap_storage_id( (PyArchiveEntry)arg1) -> str :
+
+    Return the Wiretap server's storage ID for the Flame object, but only if the object is in the Media Panel.
+
+---
+
+### `save`
+```python
+save
+```
+
+
 save( (PyReelGroup)arg1) -> bool :
+
     Save the Reel Group to the defined save destination.
 
-
+---

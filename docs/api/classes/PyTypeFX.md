@@ -1,58 +1,148 @@
-
 # Class: PyTypeFX
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base Class:** PyTimelineFX
-* **Context:** Used for type/text effects in the timeline.
-
-## Functional Role & Context
-* **Functional Role:** Represents a Type Timeline FX, providing access to text layers and type setup operations.
-* **Context:** Used for automating text effects, layer management, and type setup in the timeline.
+**Inherits from**: [PyTimelineFX](PyTimelineFX.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-The PyTypeFX class provides programmatic access to type timeline effects, supporting automation of text layer management and type setup in the Flame environment.
+Object representing a Type Timeline FX.
+
+
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `has_maps_cache_media` | Return whether the Timeline FX has Maps or ML cached media. |
+| `layers` | Return the layers list. |
+| `parent` | The parent object of this object. |
+| `type` | Return the type of the Timeline FX. |
+
+
+## Methods
+### `add_layer`
+```python
+add_layer
+```
+
+
+add_layer( (PyTypeFX)arg1 [, (str)layer_type='Centre']) -> object :
+
+    Create a new layer.
+
+    Keyword argument:
+
+    layer_type -- Must be one of Left, Centre(default), Right, Roll, or Crawl.
 
 ---
 
-Object representing a Type Timeline FX.
-
-## API Insight
-### Autodesk Flame API Insight (2026)
-
-`PyTypeTimelineFX` (exposed as `PyTypeFX` in docs) controls advanced text/titling on the timeline. It inherits from `PyTimelineFX` and adds text-layer management, font handling, and motion blur controls.
-
-**Key properties:** `selected_layers` (list), `font` (varies: family/style/path/index), `motion_blur` (bool), `samples` (int), `phase` (float), `shutter` (float), and `attributes`.
-
-**Layer & styling controls:** character-level styling (superscript, subscript, strikeout), masking, and layer axis parameters for position/scale.
-
-**Example:**
-
+### `append_type_setup`
 ```python
-# Add a new centre text layer and enable motion blur
-type_fx = segment.effects[0]  # assume this is a PyTypeFX
-layer = type_fx.add_layer('Centre')
-layer.attributes.text = 'Hello Flame'
-type_fx.motion_blur = True
-type_fx.samples = 8
+append_type_setup
 ```
 
-## Methods
-### Properties
-- `layers(...)` — None( (flame.PyTypeFX)arg1) -> list 
-None( (flame.PyTypeFX)arg1) -> list
 
-
-### Built-in methods
-- `add_layer(...)` — add_layer( (PyTypeFX)arg1 [, (str)layer_type='Centre']) -> object : 
-add_layer( (PyTypeFX)arg1 [, (str)layer_type='Centre']) -> object :
-    Create a new layer.
-    Keyword argument:
-    layer_type -- Must be one of Left, Centre(default), Right, Roll, or Crawl.
-
-- `append_type_setup(...)` — append_type_setup( (PyTypeFX)arg1, (str)file_name) -> bool : 
 append_type_setup( (PyTypeFX)arg1, (str)file_name) -> bool :
+
     Append a setup to the current Type setup.
 
+---
 
+### `clear_maps_cache_media`
+```python
+clear_maps_cache_media
+```
+
+
+clear_maps_cache_media( (PyTimelineFX)arg1) -> bool :
+
+    Clear the Timeline FX Maps and ML cached media.
+
+---
+
+### `flush_maps_cache_media`
+```python
+flush_maps_cache_media
+```
+
+
+flush_maps_cache_media( (PyTimelineFX)arg1) -> bool :
+
+    Clear the Timeline FX Maps and ML cached media.(Deprecated: Use clear_maps_cache_media instead.)
+
+    
+
+---
+
+### `load_setup`
+```python
+load_setup
+```
+
+
+load_setup( (PyTimelineFX)arg1, (str)file_name) -> bool :
+
+    Load a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `output_channel_as_metadata_key`
+```python
+output_channel_as_metadata_key
+```
+
+
+output_channel_as_metadata_key( (PyTimelineFX)arg1, (str)channel_name [, (bool)enable=True]) -> None :
+
+    Enable/Disable the output as metadata of a channel.
+
+    Keyword arguments:
+
+    channel_name -- The name of the channel to output in the metadata; the Timeline FX name can be omitted.
+
+    enable -- True to output metadata, False to stop outputting.
+
+---
+
+### `save_setup`
+```python
+save_setup
+```
+
+
+save_setup( (PyTimelineFX)arg1, (str)file_name) -> bool :
+
+    Save a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `slide_keyframes`
+```python
+slide_keyframes
+```
+
+
+slide_keyframes( (PyTimelineFX)arg1, (float)offset) -> None :
+
+    Slide the keyframes the PySegment.
+
+    Keywords argument:
+
+    offset -- Relative offset to slide the keyframes.
+
+    sync -- Enable to perform the same operation on the segments that belong to the same sync group as the current PySegment.
+
+    
+
+---
+
+### `sync_connected_segments`
+```python
+sync_connected_segments
+```
+
+
+sync_connected_segments( (PyTimelineFX)arg1) -> None :
+
+    Push the Timeline FX to connected segments.
+
+---

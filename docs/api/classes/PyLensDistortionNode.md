@@ -1,38 +1,172 @@
-
 # Class: PyLensDistortionNode
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base class:** `PyNode` (inherits from `PyFlameObject`)
-* **Functional Role:** Lens Distortion node in the schematic, used for lens distortion analysis and correction.
+**Inherits from**: [PyNode](PyNode.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Represents a Lens Distortion node, providing tools for importing, analyzing, and correcting lens distortion in the node graph.
+Object representing a Lens Distortion node.
 
----
+
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `input_sockets` | Return a list of the node input sockets names. |
+| `output_sockets` | Return a list of the node output sockets names. |
+| `parent` | The parent object of this object. |
+| `sockets` | Return a dictionary of the input/output sockets names and their connections. |
 
 
 ## Methods
-### Built-in methods
-- `import_lens_distortion(...)` — import_lens_distortion( (PyLensDistortionNode)arg1, (str)filename) -> None : 
-import_lens_distortion( (PyLensDistortionNode)arg1, (str)filename) -> None :
-    Import the Lens Distortion file.
-
-- `calculate(...)` — calculate( (PyLensDistortionNode)arg1) -> None : 
-calculate( (PyLensDistortionNode)arg1) -> None :
-    Calculate the amount of distorsion based on the position of vertices.
-
-## API Insight
-
-- Use `import_lens_distortion(filename)` to load lens distortion metadata, then call `calculate()` to analyse it on the node.
-- Typical workflows import an external lens file and then run `calculate()` to apply corrections or generate analysis results.
-
-**Example:**
-
+### `cache_range`
 ```python
-# Import a lens distortion file and run the analysis
-node.import_lens_distortion('/path/to/lens_distortion.ld')
-node.calculate()
+cache_range
 ```
 
+
+cache_range( (PyNode)arg1 [, (object)start=None [, (object)end=None]]) -> int :
+
+    Cache the Node result.
+
+    Keyword arguments:
+
+    start -- The first frame of the cache range. The current Batch start frame is used when not specified.
+
+    end -- The last frame of the cache range. The current Batch end frame is used when not specified.
+
+---
+
+### `calculate`
+```python
+calculate
+```
+
+
+calculate( (PyLensDistortionNode)arg1) -> None :
+
+    Calculate the amount of distorsion based on the position of vertices.
+
+---
+
+### `clear_schematic_colour`
+```python
+clear_schematic_colour
+```
+
+
+clear_schematic_colour( (PyNode)arg1) -> None :
+
+    Clear the schematic colour of the Node.
+
+---
+
+### `delete`
+```python
+delete
+```
+
+
+delete( (PyFlameObject)arg1 [, (bool)confirm=True]) -> bool :
+
+    Delete the node.
+
+---
+
+### `duplicate`
+```python
+duplicate
+```
+
+
+duplicate( (PyNode)arg1 [, (bool)keep_node_connections=False]) -> object :
+
+    Duplicate the node.
+
+---
+
+### `get_metadata`
+```python
+get_metadata
+```
+
+
+get_metadata( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)frame=None]]]) -> object :
+
+    Return the metadata of the Node.
+
+    Keyword arguments:
+
+    socket_name -- The socket from which to pull the metadata. The default output is used when not specified.
+
+    key -- key of the requested metadata. All metadata is returned when not specified.
+
+    frame -- frame of the requested metadata. The current frame is used when not specified.
+
+---
+
+### `import_lens_distortion`
+```python
+import_lens_distortion
+```
+
+
+import_lens_distortion( (PyLensDistortionNode)arg1, (str)filename) -> None :
+
+    Import the Lens Distortion file.
+
+---
+
+### `load_node_setup`
+```python
+load_node_setup
+```
+
+
+load_node_setup( (PyNode)arg1, (str)file_name) -> bool :
+
+    Load a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `output_channel_as_metadata_key`
+```python
+output_channel_as_metadata_key
+```
+
+
+output_channel_as_metadata_key( (PyNode)arg1, (str)channel_name [, (bool)enable=True]) -> None :
+
+    Enable/Disable the output as metadata of a channel.
+
+    Keyword arguments:
+
+    channel_name -- The name of the channel to output in the metadata; the Node name can be omitted.
+
+    enable -- True to output metadata, False to stop outputting.
+
+---
+
+### `save_node_setup`
+```python
+save_node_setup
+```
+
+
+save_node_setup( (PyNode)arg1, (str)file_name) -> bool :
+
+    Save a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `set_context`
+```python
+set_context
+```
+
+
+set_context( (PyNode)arg1, (int)index [, (str)socket_name='Default']) -> bool :
+
+    Set a Context view on a Node socket. An index and a socket name must be defined as arguments.
+
+---

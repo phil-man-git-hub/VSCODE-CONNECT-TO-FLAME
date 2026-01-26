@@ -1,38 +1,124 @@
-
 # Class: PyCoCameraAnalysis
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base class:** `PyCoNode` (inherits from `PyNode` → `PyFlameObject`)
-* **Functional Role:** Camera analysis node in the schematic, used for analyzing camera movement and parameters.
+**Inherits from**: [PyCoNode](PyCoNode.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Represents a camera analysis node, providing tools for analyzing and extracting camera data in the node graph.
+Class derived from PyCoNode. This class represents the camera analysis node in the Action schematic.
 
----
+
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `parent` | The parent object of this object. |
+| `type` | Return the type of the Action node. |
 
 
 ## Methods
-### Built-in methods
-- `resetAnalysis(...)` — resetAnalysis( (PyCoCameraAnalysis)arg1) -> bool : 
-resetAnalysis( (PyCoCameraAnalysis)arg1) -> bool :
-    Reset the current analysis.
-
-### Example
+### `add_reference`
 ```python
-# Example: Run camera analysis for a frame range
-# Assume 'cam_node' is a PyCoCameraAnalysis node object
-start_frame = 100
-end_frame = 200
-success = cam_node.analyseRange(start_frame, end_frame)
-if success:
-    print('Camera analysis completed')
-else:
-    print('Analysis failed or returned no results')
+add_reference
 ```
-- `analyseRange(...)` — analyseRange( (PyCoCameraAnalysis)arg1, (object)arg2, (object)start) -> bool : 
+
+
+add_reference( (PyCoNode)arg1, (object)frame) -> bool :
+
+    Add a Motion Warp map's reference frame at specified index.
+
+    Keyword argument
+
+    frame -- The reference frame's index. An integer.
+
+---
+
+### `analyseRange`
+```python
+analyseRange
+```
+
+
 analyseRange( (PyCoCameraAnalysis)arg1, (object)arg2, (object)start) -> bool :
+
     Run the analysis for the given frame range using the first frame as a reference if none has been already set.
 
+---
 
+### `assign_media`
+```python
+assign_media
+```
+
+
+assign_media( (PyCoNode)arg1, (object)media_name) -> bool :
+
+    Assign a media layer to the node.
+
+    Keyword argument
+
+    media_name -- The index of the media layer from Actions' *media_layers*; or the name of the media layer.
+
+---
+
+### `cache_range`
+```python
+cache_range
+```
+
+
+cache_range( (PyCoNode)arg1, (object)arg2, (object)start) -> bool :
+
+    Cache the selected Map Analysis over the specified range.
+
+    Keyword arguments
+
+    start -- The first frame of the range. An integer.
+
+    end -- The last frame of the range. An integer.
+
+---
+
+### `children`
+```python
+children
+```
+
+
+children( (PyCoNode)arg1 [, (str)link_type='Default']) -> list :
+
+    Return a list of PyCoNode objects that are the children of the action node.
+
+    Keyword argument:
+
+    link_type -- The type of link used to connect the nodes (default, look at, gmask, gmask exclusive, light, light exclusive, mimic)
+
+---
+
+### `parents`
+```python
+parents
+```
+
+
+parents( (PyCoNode)arg1 [, (str)link_type='Default']) -> list :
+
+    Return a list of PyCoNode objects that are the parents of the action node.
+
+    Keyword argument:
+
+    link_type -- The type of link used to connect the nodes (default, look at, gmask, gmask exclusive, light, light exclusive, mimic)
+
+---
+
+### `resetAnalysis`
+```python
+resetAnalysis
+```
+
+
+resetAnalysis( (PyCoCameraAnalysis)arg1) -> bool :
+
+    Reset the current analysis.
+
+---

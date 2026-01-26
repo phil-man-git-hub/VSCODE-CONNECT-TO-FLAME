@@ -1,84 +1,261 @@
-
 # Class: PyHDRNode
 
 **Module**: `flame`
 
-## Inheritance & Hierarchy
-* **Base class:** `PyNode` (inherits from `PyFlameObject`)
-* **Functional Role:** High Dynamic Range (HDR) processing node in the schematic, used for HDR analysis and Dolby Vision workflows.
+**Inherits from**: [PyNode](PyNode.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Represents an HDR node, providing tools for HDR analysis, trims, and Dolby Vision XML import/export in the node graph.
+Object representing a HDR node.
 
----
+
+## Properties
+| Name | Description |
+| --- | --- |
+| `analysis_status` | Return the current state of the HDR analysis. |
+| `attributes` | The attributes of a python object. |
+| `input_sockets` | Return a list of the node input sockets names. |
+| `mastering_display_ids` | List of available Mastering Display Ids. |
+| `mastering_display_info` | Dictionary containing Mastering Display information. Returned object is a copy. |
+| `output_sockets` | Return a list of the node output sockets names. |
+| `parent` | The parent object of this object. |
+| `sockets` | Return a dictionary of the input/output sockets names and their connections. |
+| `target_display_ids` | List of available Target Display Ids. |
+| `target_display_info` | Dictionary containing Target Display information. Returned object is a copy. |
 
 
 ## Methods
-### Properties
-- `analysis_status(...)` — None( (flame.PyHDRNode)arg1) -> object 
-None( (flame.PyHDRNode)arg1) -> object
-
-- `mastering_display_ids(...)` — None( (flame.PyHDRNode)arg1) -> list 
-None( (flame.PyHDRNode)arg1) -> list
-
-- `target_display_ids(...)` — None( (flame.PyHDRNode)arg1) -> list 
-None( (flame.PyHDRNode)arg1) -> list
-
-- `mastering_display_info(...)` — None( (flame.PyHDRNode)arg1) -> object 
-None( (flame.PyHDRNode)arg1) -> object
-
-- `target_display_info(...)` — None( (flame.PyHDRNode)arg1) -> object 
-None( (flame.PyHDRNode)arg1) -> object
-
-
-### Built-in methods
-- `analyze(...)` — analyze( (PyHDRNode)arg1 [, (str)analyze_mode='Current Shot']) -> None : 
-analyze( (PyHDRNode)arg1 [, (str)analyze_mode='Current Shot']) -> None :
-    Perform HDR analysis.
-
-- `keep_analysis(...)` — keep_analysis( (PyHDRNode)arg1) -> None : 
-keep_analysis( (PyHDRNode)arg1) -> None :
-    Remove the dirty flag from the HDR analysis.
-
-- `reset_analysis(...)` — reset_analysis( (PyHDRNode)arg1) -> None : 
-reset_analysis( (PyHDRNode)arg1) -> None :
-    Reset the current HDR analysis.
-
-- `interpolate_trims(...)` — interpolate_trims( (PyHDRNode)arg1) -> None : 
-interpolate_trims( (PyHDRNode)arg1) -> None :
-    Interpolate the current HDR trims.
-
-- `reset_trims(...)` — reset_trims( (PyHDRNode)arg1) -> None : 
-reset_trims( (PyHDRNode)arg1) -> None :
-    Reset the current HDR trims.
-
-- `export_DolbyVision_xml(...)` — export_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)comment='']) -> None : 
-export_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)comment='']) -> None :
-    Export the current HDR to a Dolby Vision XML file.
-
-- `import_DolbyVision_xml(...)` — import_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None : 
-import_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None :
-    Import the current HDR from a Dolby Vision XML file.
-
-- `has_trim(...)` — has_trim( (PyHDRNode)arg1, (int)target_display_id) -> bool : 
-has_trim( (PyHDRNode)arg1, (int)target_display_id) -> bool :
-    Returns True if the given Target Display ID has trims.
-
-- `l2_from_l8(...)` — l2_from_l8( (PyHDRNode)arg1) -> object : 
-l2_from_l8( (PyHDRNode)arg1) -> object :
-    Dictionary containing the L2 values based on L8 values. Not valid in Dolby Vision 2.9.
-
-## API Insight
-
-- HDR nodes provide analysis tools (`analyze`, `reset_analysis`, `keep_analysis`) and Dolby Vision XML import/export helpers.
-- Call `analyze()` to run an HDR analysis; use `export_DolbyVision_xml()` / `import_DolbyVision_xml()` to exchange metadata files.
-
-**Example:**
-
+### `analyze`
 ```python
-# Run HDR analysis and export Dolby Vision XML if available
-node.analyze()
-if node.analysis_status:
-    node.export_DolbyVision_xml('/tmp/hdr_export.xml')
+analyze
 ```
 
+
+analyze( (PyHDRNode)arg1 [, (str)analyze_mode='Current Shot']) -> None :
+
+    Perform HDR analysis.
+
+---
+
+### `cache_range`
+```python
+cache_range
+```
+
+
+cache_range( (PyNode)arg1 [, (object)start=None [, (object)end=None]]) -> int :
+
+    Cache the Node result.
+
+    Keyword arguments:
+
+    start -- The first frame of the cache range. The current Batch start frame is used when not specified.
+
+    end -- The last frame of the cache range. The current Batch end frame is used when not specified.
+
+---
+
+### `clear_schematic_colour`
+```python
+clear_schematic_colour
+```
+
+
+clear_schematic_colour( (PyNode)arg1) -> None :
+
+    Clear the schematic colour of the Node.
+
+---
+
+### `delete`
+```python
+delete
+```
+
+
+delete( (PyFlameObject)arg1 [, (bool)confirm=True]) -> bool :
+
+    Delete the node.
+
+---
+
+### `duplicate`
+```python
+duplicate
+```
+
+
+duplicate( (PyNode)arg1 [, (bool)keep_node_connections=False]) -> object :
+
+    Duplicate the node.
+
+---
+
+### `export_DolbyVision_xml`
+```python
+export_DolbyVision_xml
+```
+
+
+export_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)comment='']) -> None :
+
+    Export the current HDR to a Dolby Vision XML file.
+
+---
+
+### `get_metadata`
+```python
+get_metadata
+```
+
+
+get_metadata( (PyNode)arg1 [, (str)socket_name='Default' [, (str)key='' [, (object)frame=None]]]) -> object :
+
+    Return the metadata of the Node.
+
+    Keyword arguments:
+
+    socket_name -- The socket from which to pull the metadata. The default output is used when not specified.
+
+    key -- key of the requested metadata. All metadata is returned when not specified.
+
+    frame -- frame of the requested metadata. The current frame is used when not specified.
+
+---
+
+### `has_trim`
+```python
+has_trim
+```
+
+
+has_trim( (PyHDRNode)arg1, (int)target_display_id) -> bool :
+
+    Returns True if the given Target Display ID has trims.
+
+---
+
+### `import_DolbyVision_xml`
+```python
+import_DolbyVision_xml
+```
+
+
+import_DolbyVision_xml( (PyHDRNode)arg1, (str)file_name [, (str)mode='Include Frame Based Transitions Trims' [, (int)shot_idx=0]]) -> None :
+
+    Import the current HDR from a Dolby Vision XML file.
+
+---
+
+### `interpolate_trims`
+```python
+interpolate_trims
+```
+
+
+interpolate_trims( (PyHDRNode)arg1) -> None :
+
+    Interpolate the current HDR trims.
+
+---
+
+### `keep_analysis`
+```python
+keep_analysis
+```
+
+
+keep_analysis( (PyHDRNode)arg1) -> None :
+
+    Remove the dirty flag from the HDR analysis.
+
+---
+
+### `l2_from_l8`
+```python
+l2_from_l8
+```
+
+
+l2_from_l8( (PyHDRNode)arg1) -> object :
+
+    Dictionary containing the L2 values based on L8 values. Not valid in Dolby Vision 2.9.
+
+---
+
+### `load_node_setup`
+```python
+load_node_setup
+```
+
+
+load_node_setup( (PyNode)arg1, (str)file_name) -> bool :
+
+    Load a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `output_channel_as_metadata_key`
+```python
+output_channel_as_metadata_key
+```
+
+
+output_channel_as_metadata_key( (PyNode)arg1, (str)channel_name [, (bool)enable=True]) -> None :
+
+    Enable/Disable the output as metadata of a channel.
+
+    Keyword arguments:
+
+    channel_name -- The name of the channel to output in the metadata; the Node name can be omitted.
+
+    enable -- True to output metadata, False to stop outputting.
+
+---
+
+### `reset_analysis`
+```python
+reset_analysis
+```
+
+
+reset_analysis( (PyHDRNode)arg1) -> None :
+
+    Reset the current HDR analysis.
+
+---
+
+### `reset_trims`
+```python
+reset_trims
+```
+
+
+reset_trims( (PyHDRNode)arg1) -> None :
+
+    Reset the current HDR trims.
+
+---
+
+### `save_node_setup`
+```python
+save_node_setup
+```
+
+
+save_node_setup( (PyNode)arg1, (str)file_name) -> bool :
+
+    Save a Node setup. A path and a file name must be defined as arguments.
+
+---
+
+### `set_context`
+```python
+set_context
+```
+
+
+set_context( (PyNode)arg1, (int)index [, (str)socket_name='Default']) -> bool :
+
+    Set a Context view on a Node socket. An index and a socket name must be defined as arguments.
+
+---

@@ -1,57 +1,66 @@
-
 # Class: PyMediaHubFilesEntry
 
 **Module**: `flame`
 
-## Functional Role & Context
-* **Functional Role:** Represents a clip entry in the MediaHub Files tab.
+**Inherits from**: [PyArchiveEntry](PyArchiveEntry.md), [PyFlameObject](PyFlameObject.md), instance, object
 
 ## Description
-Provides access to clip entries in the MediaHub Files tab, including file path and metadata.
+Object representing a clip in the MediaHub Files tabs
 
 
-## API Insight: Definition, Attributes, Methods, and Usage
-The **PyMediaHubFilesEntry** class represents a single media element (file or sequence) as seen in the MediaHub's Files tab.
-
-### Definition and Hierarchy
-| Property      | Value         | Description |
-|-------------- |-------------- |-------------|
-| Class Name    | PyMediaHubFilesEntry | Clip or file sequence entry. |
-| Parent Class  | PyArchiveEntry| Inherits archive management methods. |
-| Ancestor Class| PyFlameObject | Inherits base properties. |
-| Primary Role  | Source Identification | Absolute file path to source media. |
-
-### Unique Attributes
-| Attribute         | Type           | Access     | Description |
-|-------------------|---------------|------------|-------------|
-| path              | str            | Read-only  | Absolute file system path of the media entry. |
-
-### Inherited Methods
-| Method                | Arguments                        | Description |
-|-----------------------|----------------------------------|-------------|
-| clear_colour()        | None                             | Clear custom color tag. |
-| commit()              | None                             | Commit object to disk. |
-| get_wiretap_node_id() | None                             | Get Wiretap Node ID. |
-| get_wiretap_storage_id() | None                          | Get Wiretap server's storage ID. |
-
-### Usage Context
-Used to select files for import, typically by iterating entries and passing their paths to import_media.
-
-**Example:**
-
-```python
-# List and filter entries in current MediaHub Files tab path
-entries = flame.media_hub.list_entries(flame.media_hub.files_tab.get_path())
-exr_files = [e.path for e in entries if isinstance(e, flame.PyMediaHubFilesEntry) and e.path.endswith('.exr')]
-print(f"Found {len(exr_files)} EXR files")
-# Then import
-# flame.media_hub.import_media(exr_files, destination_reel)
-```
+## Properties
+| Name | Description |
+| --- | --- |
+| `attributes` | The attributes of a python object. |
+| `parent` | The parent object of this object. |
+| `path` | Returns the absolute path of the clip |
 
 
 ## Methods
-### Properties
-- `path(...)` — None( (flame.PyMediaHubFilesEntry)arg1) -> str 
-None( (flame.PyMediaHubFilesEntry)arg1) -> str
+### `clear_colour`
+```python
+clear_colour
+```
 
 
+clear_colour( (PyArchiveEntry)arg1) -> None :
+
+    Clear the colour of an object in the Media Panel.
+
+---
+
+### `commit`
+```python
+commit
+```
+
+
+commit( (PyArchiveEntry)arg1) -> None :
+
+    Commit to disk the Media Panel object or its closest container possible.
+
+---
+
+### `get_wiretap_node_id`
+```python
+get_wiretap_node_id
+```
+
+
+get_wiretap_node_id( (PyArchiveEntry)arg1) -> str :
+
+    Return the Wiretap Node ID of the Flame object, but only if the object is in the Media Panel.
+
+---
+
+### `get_wiretap_storage_id`
+```python
+get_wiretap_storage_id
+```
+
+
+get_wiretap_storage_id( (PyArchiveEntry)arg1) -> str :
+
+    Return the Wiretap server's storage ID for the Flame object, but only if the object is in the Media Panel.
+
+---
