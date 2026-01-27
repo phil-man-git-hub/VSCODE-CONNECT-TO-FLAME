@@ -1,4 +1,4 @@
-# Flame VS Code Integration (Flame‑Code)
+# VS Code Connect to Flame (vscode-connect-to-flame)
 
 Expose Autodesk Flame's Python API inside Visual Studio Code by building a small remote execution bridge (Flame listener) and a VS Code extension that talks to it.
 

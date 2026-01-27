@@ -1,6 +1,6 @@
 # Vision
 
-The **Flame-Code** project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.
+The **VSCode-Connect-to-Flame** project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.
 
 ## Core Goals
 

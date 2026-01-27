@@ -39,6 +39,6 @@ Notes
 How to create the PR
 
 - The branch has been pushed to `origin/harden-listener`.
-- Create a PR at: https://github.com/phil-man-git-hub/FLAME-CODE/pull/new/harden-listener
+- Create a PR at: https://github.com/phil-man-git-hub/VSCODE-CONNECT-TO-FLAME/pull/new/harden-listener
 
 If you want, I can try to create the PR via GitHub CLI if you authorize `gh` (run `gh auth login`) or provide a token in `GH_TOKEN` env var.

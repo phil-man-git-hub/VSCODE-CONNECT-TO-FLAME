@@ -1,6 +1,6 @@
-# Gemini Repo Analysis: FLAME-CODE
+# Gemini Repo Analysis: VSCODE-CONNECT-TO-FLAME
 
-This document provides a technical overview and analysis of the `FLAME-CODE` repository, conducted by Gemini.
+This document provides a technical overview and analysis of the `VSCODE-CONNECT-TO-FLAME` repository, conducted by Gemini.
 
 ## Repository Purpose
 The primary goal of this repository is to bridge the gap between **Autodesk Flame's internal Python API** and modern development workflows, specifically targeting **VS Code**. It provides a real-time execution bridge, comprehensive API documentation, and high-quality type stubs for local development.
