@@ -82,17 +82,49 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="vision">Vision</h1>
-<p>To expose <strong>Autodesk Flame’s Python API</strong> inside <strong>VS Code</strong> in the same spirit as Blender/Maya/Nuke remote‑execution bridges, you need three components working together. Flame doesn’t ship with a command port or socket server, so you’d be building the missing piece yourself — but it’s absolutely doable.</p>
-<p>This repository provides a pragmatic path to a developer‑friendly workflow: a Flame‑side listener, a VS Code extension, and type stubs that provide IntelliSense.</p>
-<h2 id="key-components">Key components</h2>
+<p>The <strong>Flame-Code</strong> project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.</p>
+<h2 id="core-goals">Core Goals</h2>
 <ul>
-<li>A Flame startup hook that runs a small TCP/Unix socket listener inside Flame’s Python environment.</li>
-<li>A VS Code extension that sends Python code to Flame for execution and surfaces stdout/stderr/exceptions.</li>
-<li>Generated <code>.pyi</code> stub files to enable autocomplete and type checking in VS Code.</li>
+<li><strong>Remote Execution:</strong> Execute code directly from VS Code inside a running Flame instance.</li>
+<li><strong>Deep IntelliSense:</strong> Provide accurate autocompletion and documentation for the Flame API via high-quality type stubs.</li>
+<li><strong>Integrated Debugging:</strong> Enable line-by-line debugging of Flame scripts using <code>debugpy</code>.</li>
+<li><strong>Automated Documentation:</strong> Maintain a comprehensive API reference that updates automatically with new Flame releases.</li>
 </ul>
-<p>See <code>docs/protocol.md</code> for message formats and <code>docs/architecture.md</code> for component responsibilities.</p>
-<h2 id="per-project-configuration">Per-project configuration</h2>
-<p>When you work with a specific Flame project, create a <code>flame.project.json</code> file at the repository root (see <code>flame.project.example.json</code>) to store per-project metadata and paths (for example, <code>flameProjectPath</code> and <code>scriptsDir</code>). For sensitive values such as tokens, use environment variables (for example <code>FLAME_TOKEN</code>) or a workspace-local <code>.flame.secrets.json</code> file that is ignored by git. The extension will read these values from the workspace root or from <code>flame.project</code> workspace settings and use them to populate default host/port and sync targets.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>The system consists of three primary components:</p>
+<ol>
+<li><strong>Flame Listener (inside Flame):</strong> A Python service that listens for incoming code, executes it safely on the <strong>main UI thread</strong>, and returns results.</li>
+<li><strong>VS Code Extension:</strong> A user-facing bridge that sends code selections or files to the listener and displays output in a dedicated panel.</li>
+<li><strong>API Intelligence Pipeline:</strong> A suite of scripts that crawl the Flame API to generate detailed JSON reports, which are then used to produce Markdown documentation and <code>.pyi</code> type stubs.</li>
+</ol>
+<pre><code class="language-mermaid">graph TD
+    subgraph VS_Code [VS Code]
+        Ext[Extension]
+        Stubs[Type Stubs .pyi]
+    end
+    subgraph Flame [Autodesk Flame]
+        List[Flame Listener]
+        API[Flame Python API]
+    end
+    Ext -- TCP/JSON --&gt; List
+    List -- Main Thread --&gt; API
+    API -- Results --&gt; List
+    List -- JSON --&gt; Ext
+</code></pre>
+<h2 id="mvp-acceptance-criteria">MVP Acceptance Criteria</h2>
+<ul>
+<li>[x] <strong>Run in Flame:</strong> Execute code in Flame or a mock server.</li>
+<li>[x] <strong>Output Capture:</strong> View <code>stdout</code>, <code>stderr</code>, and exceptions in VS Code.</li>
+<li>[x] <strong>Main Thread Safety:</strong> Automatic dispatch of API calls to the UI thread.</li>
+<li>[x] <strong>Rich IntelliSense:</strong> Over 2,400 lines of documented stubs.</li>
+<li>[ ] <strong>Remote Debugging:</strong> Full integration with <code>debugpy</code> (In Progress).</li>
+</ul>
+<h2 id="development-philosophy">Development Philosophy</h2>
+<ul>
+<li><strong>Decoupled Intelligence:</strong> All API knowledge is gathered via automated introspection, ensuring accuracy across different Flame versions.</li>
+<li><strong>Safety First:</strong> Strict enforcement of main-thread execution to prevent host application crashes.</li>
+<li><strong>Pragmatic Tooling:</strong> Focus on providing the most impactful features (Execution &amp; IntelliSense) first.</li>
+</ul>
               
             </div>
           </div><footer>
