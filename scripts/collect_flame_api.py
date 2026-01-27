@@ -33,7 +33,6 @@ members = [m for m in dir(flame) if not m.startswith('__')]
 print(json.dumps(members))
 """
 
-# Payload template to inspect a specific class/object
 INSPECTION_PAYLOAD_TEMPLATE = """
 import flame
 import inspect
@@ -43,47 +42,60 @@ target_name = "{target_name}"
 try:
     obj = getattr(flame, target_name)
     
-    data = {{
-        "name": target_name,
-        "type": type(obj).__name__,
-        "doc": getattr(obj, "__doc__", ""),
-        "module": getattr(obj, "__module__", "flame"),
-        "properties": [],
-        "methods": [],
-        "inheritance": [c.__name__ for c in inspect.getmro(obj)] if inspect.isclass(obj) else []
-    }}
+    # Special handling for Boost.Python properties exposed at module level
+    if type(obj).__name__ == 'property':
+        data = {{
+            "name": target_name,
+            "type": "property",
+            "doc": getattr(obj, "__doc__", "") or "",
+            "module": "flame",
+            "value": "<property object>"
+        }}
+    else:
+        obj_type = type(obj).__name__
+        
+        data = {{
+            "name": target_name,
+            "type": obj_type,
+            "doc": getattr(obj, "__doc__", ""),
+            "module": getattr(obj, "__module__", "flame"),
+            "properties": [],
+            "methods": [],
+            "inheritance": [c.__name__ for c in inspect.getmro(obj)] if inspect.isclass(obj) else []
+        }}
 
-    if inspect.isclass(obj):
-        for name in dir(obj):
-            if name.startswith("__"):
-                continue
-            
+        # If it's a simple constant (not a class/function/module)
+        if not inspect.isclass(obj) and not inspect.isroutine(obj) and not inspect.ismodule(obj):
             try:
-                # Use getattr_static if available (Py3) to avoid property execution, 
-                # but fallback to getattr for Boost.Python compatibility if needed.
-                # For Flame API (Boost), direct getattr is usually required to see the proxy type.
-                attr = getattr(obj, name)
+                data["value"] = repr(obj)
+            except:
+                data["value"] = "<unrepresentable>"
+
+        if inspect.isclass(obj):
+            for name in dir(obj):
+                if name.startswith("__"):
+                    continue
                 
-                member_info = {{
-                    "name": name,
-                    "doc": getattr(attr, "__doc__", "") or ""
-                }}
+                try:
+                    attr = getattr(obj, name)
+                    
+                    member_info = {{
+                        "name": name,
+                        "doc": getattr(attr, "__doc__", "") or ""
+                    }}
 
-                if isinstance(attr, property) or not callable(attr):
-                    # It's likely a property or attribute
-                    data["properties"].append(member_info)
-                else:
-                    # It's a method
-                    member_info["signature"] = "" # Boost often hides this, but we'll try
-                    try:
-                        member_info["signature"] = str(inspect.signature(attr))
-                    except (ValueError, TypeError):
-                        pass
-                    data["methods"].append(member_info)
+                    if inspect.isroutine(attr):
+                        member_info["signature"] = "" 
+                        try:
+                            member_info["signature"] = str(inspect.signature(attr))
+                        except:
+                            pass
+                        data["methods"].append(member_info)
+                    else:
+                        data["properties"].append(member_info)
 
-            except Exception as e:
-                # If accessing the attribute fails, log it briefly
-                data["properties"].append({{"name": name, "error": str(e)}})
+                except Exception as e:
+                    data["properties"].append({{"name": name, "error": str(e)}})
 
     print(json.dumps(data))
 
