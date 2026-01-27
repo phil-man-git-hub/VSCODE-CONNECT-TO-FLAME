@@ -2,9 +2,20 @@
 
 ## Unreleased
 
+### Added
+- **Enhanced API Stubs Pipeline**: Created `scripts/generate_stubs_from_reports.py` which extracts detailed method signatures, default values, and inheritance from JSON reports.
+- **Deep IntelliSense**: Regenerated `stubs/flame.pyi` with over 2,400 lines of documented API definitions.
+- **Comprehensive Repo Analysis**: Added `GEMINI.md` with a technical breakdown of the project architecture and roadmap.
+- **Stub Generation Guide**: Updated `docs/HOWTO_GENERATE_API_REPORTS.md` with the new stub generation workflow.
+
+### Improved
+- **API Collector**: Updated `scripts/collect_flame_api.py` to handle non-serializable Boost.Python property objects and capture runtime constant values.
+- **CI/CD Reliability**: Updated GitHub Actions to use latest versions (`upload-artifact@v4`, `setup-python@v5`) and added necessary permissions for Docs deployment.
+
 ### Fixes
 - **Critical Threading Fix**: Refactored `flame_listener.py` to execute commands on the Flame main thread using `flame.schedule_idle_event`. This prevents crashes caused by accessing the non-thread-safe Flame API from background threads.
 - Added `scripts/test_thread_safety.py` to verify safe execution context.
+- Fixed `pytest` failures in CI by adding skip logic when the Flame Listener is unavailable.
 
 - Repository scaffolded with docs, listener prototype, extension skeleton, and mock server.
 
