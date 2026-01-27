@@ -108,7 +108,12 @@
 <p>Inside you will find:
 *   <code>index.json</code>: A summary of all crawled items.
 *   <code>&lt;SymbolName&gt;.json</code>: Detailed introspection for each object (e.g., <code>PyBatch.json</code>, <code>execute_command.json</code>).</p>
-<h3 id="3-compare-versions-optional">3. Compare Versions (Optional)</h3>
+<h3 id="3-generate-type-stubs-optional-but-recommended">3. Generate Type Stubs (Optional but Recommended)</h3>
+<p>To update the IDE autocompletion and type checking files, run:</p>
+<pre><code class="language-bash">python scripts/generate_stubs_from_reports.py --latest
+</code></pre>
+<p>This will update <code>stubs/flame.pyi</code> with the signatures and docstrings extracted from the latest crawl.</p>
+<h3 id="4-compare-versions-optional">4. Compare Versions (Optional)</h3>
 <p>To see what changed between Flame versions (e.g., <code>pr235</code> vs <code>pr236</code>):
 1.  Run the collector on the old version.
 2.  Run the collector on the new version.
