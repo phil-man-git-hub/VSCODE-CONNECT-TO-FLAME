@@ -1,17 +1,48 @@
 # Vision
 
-To expose **Autodesk Flame’s Python API** inside **VS Code** in the same spirit as Blender/Maya/Nuke remote‑execution bridges, you need three components working together. Flame doesn’t ship with a command port or socket server, so you’d be building the missing piece yourself — but it’s absolutely doable.
+The **Flame-Code** project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.
 
-This repository provides a pragmatic path to a developer‑friendly workflow: a Flame‑side listener, a VS Code extension, and type stubs that provide IntelliSense.
+## Core Goals
 
-## Key components
+- **Remote Execution:** Execute code directly from VS Code inside a running Flame instance.
+- **Deep IntelliSense:** Provide accurate autocompletion and documentation for the Flame API via high-quality type stubs.
+- **Integrated Debugging:** Enable line-by-line debugging of Flame scripts using `debugpy`.
+- **Automated Documentation:** Maintain a comprehensive API reference that updates automatically with new Flame releases.
 
-- A Flame startup hook that runs a small TCP/Unix socket listener inside Flame’s Python environment.
-- A VS Code extension that sends Python code to Flame for execution and surfaces stdout/stderr/exceptions.
-- Generated `.pyi` stub files to enable autocomplete and type checking in VS Code.
+## Architecture Overview
 
-See `docs/protocol.md` for message formats and `docs/architecture.md` for component responsibilities.
+The system consists of three primary components:
 
-## Per-project configuration
+1.  **Flame Listener (inside Flame):** A Python service that listens for incoming code, executes it safely on the **main UI thread**, and returns results.
+2.  **VS Code Extension:** A user-facing bridge that sends code selections or files to the listener and displays output in a dedicated panel.
+3.  **API Intelligence Pipeline:** A suite of scripts that crawl the Flame API to generate detailed JSON reports, which are then used to produce Markdown documentation and `.pyi` type stubs.
 
-When you work with a specific Flame project, create a `flame.project.json` file at the repository root (see `flame.project.example.json`) to store per-project metadata and paths (for example, `flameProjectPath` and `scriptsDir`). For sensitive values such as tokens, use environment variables (for example `FLAME_TOKEN`) or a workspace-local `.flame.secrets.json` file that is ignored by git. The extension will read these values from the workspace root or from `flame.project` workspace settings and use them to populate default host/port and sync targets.
+```mermaid
+graph TD
+    subgraph VS_Code [VS Code]
+        Ext[Extension]
+        Stubs[Type Stubs .pyi]
+    end
+    subgraph Flame [Autodesk Flame]
+        List[Flame Listener]
+        API[Flame Python API]
+    end
+    Ext -- TCP/JSON --> List
+    List -- Main Thread --> API
+    API -- Results --> List
+    List -- JSON --> Ext
+```
+
+## MVP Acceptance Criteria
+
+- [x] **Run in Flame:** Execute code in Flame or a mock server.
+- [x] **Output Capture:** View `stdout`, `stderr`, and exceptions in VS Code.
+- [x] **Main Thread Safety:** Automatic dispatch of API calls to the UI thread.
+- [x] **Rich IntelliSense:** Over 2,400 lines of documented stubs.
+- [ ] **Remote Debugging:** Full integration with `debugpy` (In Progress).
+
+## Development Philosophy
+
+- **Decoupled Intelligence:** All API knowledge is gathered via automated introspection, ensuring accuracy across different Flame versions.
+- **Safety First:** Strict enforcement of main-thread execution to prevent host application crashes.
+- **Pragmatic Tooling:** Focus on providing the most impactful features (Execution & IntelliSense) first.
