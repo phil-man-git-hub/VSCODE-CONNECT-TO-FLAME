@@ -1,7 +1,7 @@
 {
-  "projectId": "vscode_connect_to_flame",
-  "flameProjectPath": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/vscode_connect_to_flame_2027_romeo",
-  "scriptsDir": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/vscode_connect_to_flame_2027_romeo/setups/python/",
+  "projectId": "888_flame_code",
+  "flameProjectPath": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo",
+  "scriptsDir": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo/setups/python/",
   "autoSync": false,
   "syncMethod": "rsync",
   "listener": {
