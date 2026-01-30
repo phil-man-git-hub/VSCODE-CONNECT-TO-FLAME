@@ -1,42 +1,17 @@
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyArchiveEntry.md ↔ docs/api/classes/PyArchiveEntry.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyAttribute.md ↔ docs/api/classes/PyAttribute.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyBatch.md ↔ docs/api/classes/PyBatch.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyBrowser.md ↔ docs/api/classes/PyBrowser.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyClip.md ↔ docs/api/classes/PyClip.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyClrMgmtTimelineFX.md ↔ docs/api/classes/PyColourMgtTimelineFX.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyDesktop.md ↔ docs/api/classes/PyDesktop.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyExporter.md ↔ docs/api/classes/PyExporter.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyFlameObject.md ↔ docs/api/classes/PyFlameObject.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyFolder.md ↔ docs/api/classes/PyFolder.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyHDRTimelineFX.md ↔ docs/api/classes/PyHDRTimelineFX.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyLibrary.md ↔ docs/api/classes/PyLibrary.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMarkers.md ↔ docs/api/classes/PyMarker.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHub.md ↔ docs/api/classes/PyMediaHub.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubFilesEntry.md ↔ docs/api/classes/PyMediaHubFilesEntry.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubFilesFolder.md ↔ docs/api/classes/PyMediaHubFilesFolder.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubFilesTab.md ↔ docs/api/classes/PyMediaHubFilesTab.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubFilesTabOptions.md ↔ docs/api/classes/PyMediaHubFilesTabOptions.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubProjectsEntry.md ↔ docs/api/classes/PyMediaHubProjectsEntry.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubProjectsFolder.md ↔ docs/api/classes/PyMediaHubProjectsFolder.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaHubTab.md ↔ docs/api/classes/PyMediaHubTab.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMediaPanel.md ↔ docs/api/classes/PyMediaPanel.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyMessages.md ↔ docs/api/classes/PyMessages.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyProject.md ↔ docs/api/classes/PyProject.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyProjectSelector.md ↔ docs/api/classes/PyProjectSelector.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyReel.md ↔ docs/api/classes/PyReel.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyReelGroup.md ↔ docs/api/classes/PyReelGroup.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyResolution.md ↔ docs/api/classes/PyResolution.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PySegment.md ↔ docs/api/classes/PySegment.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PySequence.md ↔ docs/api/classes/PySequence.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PySubtitleTrack.md ↔ docs/api/classes/PySubtitleTrack.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTime.md ↔ docs/api/classes/PyTime.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTimeline.md ↔ docs/api/classes/PyTimeline.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTimelineFX.md ↔ docs/api/classes/PyTimelineFX.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTimewarpTimelineFX.md ↔ docs/api/classes/PyTimewarpTimelineFX.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTrack.md ↔ docs/api/classes/PyTrack.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTransition.md ↔ docs/api/classes/PyTransition.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyTypeTimelineFX.md ↔ docs/api/classes/PyTypeFX.md (possible, but not exact)
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyUser.md ↔ docs/api/classes/PyUser.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyUsers.md ↔ docs/api/classes/PyUsers.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyVersion.md ↔ docs/api/classes/PyVersion.md
-DO_NOT_UPLOAD/insight/insight-pyobjects/insight-PyWorkspace.md ↔ docs/api/classes/PyWorkspace.md
+
+
+flame-utilities/api
+flame-utilities/bin
+flame-utilities/config
+flame-utilities/docs
+flame-utilities/examples
+flame-utilities/hooks
+flame-utilities/lib
+flame-utilities/licenses
+flame-utilities/logs
+flame-utilities/scripts
+flame-utilities/src
+flame-utilities/src/core
+flame-utilities/src/utils
+flame-utilities/tests
+flame-utilities/tools

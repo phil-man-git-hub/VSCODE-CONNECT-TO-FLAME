@@ -5,6 +5,13 @@ This document provides a technical overview and analysis of the `VSCODE-CONNECT-
 ## Repository Purpose
 The primary goal of this repository is to bridge the gap between **Autodesk Flame's internal Python API** and modern development workflows, specifically targeting **VS Code**. It provides a real-time execution bridge, comprehensive API documentation, and high-quality type stubs for local development.
 
+## Gemini Expert Profile: Autodesk Flame Python Specialist
+As of January 2026, Gemini is configured as a specialized expert in the Autodesk Flame development ecosystem:
+- **API Deep Knowledge:** Full mastery of the Flame Python API (up to version 2027.0.0 preview release pr236), including class hierarchies, methods, and properties.
+- **Execution Environment Mastery:** Deep understanding of Flame's threading model and the necessity of main-thread execution (via `schedule_idle_event`) for API safety.
+- **Domain-Specific Constraints:** Acute awareness of Flame's unique script loading behaviors, such as filename uniqueness requirements and the strict prohibition of `__init__.py` files.
+- **Workflow Architecture:** Expert-level proficiency in managing the "Decoupled Bridge Architecture," spanning TypeScript (VS Code extension), Python (Flame Listener), and introspection-based stub generation.
+
 ## Core Components
 
 ### 1. Flame Listener (`flame-listener/`)
@@ -33,6 +40,71 @@ An MkDocs-powered site that serves as the "Source of Truth" for the Flame Python
 - **Automated API Mapping:** Built a two-phase 'Discovery & Introspection' pipeline that can map the entire API of any Flame version in minutes.
 - **Deep Stub Generation:** Expanded basic stubs into a rich, documented type-hinting system that captures method signatures, default values, and inheritance chains.
 - **CI/CD Stabilization:** Fixed deprecated GitHub Actions and permission issues, ensuring automated documentation deployment works seamlessly.
+
+## Python Script Loading Constraints
+Autodesk Flame has specific requirements for loading Python scripts and hooks:
+- **Unique Filenames:** Flame can only load scripts or hooks that have unique filenames.
+- **No `__init__.py`:** Conventional Python packages with `__init__.py` files are strictly not permitted within Flame's search paths, as they can interfere with script discovery or cause loading conflicts.
+- **Alternative Strategies:** Developers must employ other strategies for code organization, such as unique naming conventions or manual path management, to avoid these limitations.
+
+## Flame Hook & API Patterns
+Analysis of Autodesk-supplied example scripts reveals the following key patterns and hook categories available in Flame 2027:
+
+### 1. Application & Project Lifecycle (`hook.py`, `project_hook.py`, `conversion_description.py`, `project_protection.py`)
+- **App Events:** `app_initialized`, `app_exited`, `user_changed`.
+- **Project Events:** Comprehensive lifecycle hooks for creation, edition, deletion, conversion, and restoration of projects (e.g., `project_pre_creation`, `project_post_restore`, `project_saved`).
+- **Global Defaults:** Hooks to define default naming conventions for shots (`timeline_default_shot_name`), markers (`timeline_default_marker_name`), and references.
+- **Monitoring:** `render_ended`, `playback_ended`, `preview_window_config_changed`.
+- **Modifications:** Hooks like `project_init_conversion` allow modifying project metadata (e.g., description) during conversion.
+- **Protection:** Project hooks (e.g., `project_pre_edition`, `project_pre_delete`) can use the `abort` flag to prevent changes to protected projects.
+
+### 2. Batch Operations (`batch_hook.py`)
+- **Setup:** Hooks for loading (`batch_setup_loaded`), saving (`batch_setup_saved`), and iteration (`batch_setup_iterated_pre/post`).
+- **Processing:** Granular hooks for Render (`begin/end`), Burn (`begin/end`), and Export (`begin/end`) within the Batch environment.
+- **Context:** Most hooks provide an `info` dictionary (often modifiable) and a `userData` object to pass state between `begin` and `end` events.
+
+### 3. Export & Archive (`export_hook.py`, `archive_hook.py`, `post_export_dependency.py`, `post_export_asset_after_snapshot.py`)
+- **Export Pipeline:** deeply nested execution order: `preCustomExport` -> `preExport` -> `preExportSequence` -> `preExportAsset` -> [Backburner/Local] -> `postExportAsset` -> ... -> `postExport`.
+- **Customization:** Hooks to bypass overwrite prompts (`export_overwrite_file`), define custom export profiles (`get_custom_export_profiles`), and control background execution.
+- **Archive:** Monitoring for archive restoration, completion, segment processing, and selection updates.
+- **Advanced Workflows:**
+    - **Chaining Jobs:** Post-export hooks can trigger Backburner jobs (e.g., for transcoding or zipping) dependent on the main export job (`backgroundJobId`).
+    - **Snapshot Handling:** The `isSnapshot` key in `post_export_asset` identifies exports triggered by the "Export Snapshot" feature, allowing workflows like auto-reimporting snapshots to the Desktop.
+    - **Re-import:** Using `WireTapClient` in an idle loop to monitor Backburner job status and re-import clips once processing is complete.
+
+### 4. Custom UI Integration (`custom_actions_hook.py`, `custom_menu_structure.py`, `custom_action_object.py`)
+- **Context Menus:** Python functions can be injected into various UI contexts (`Media Panel`, `Main Menu`, `Timeline`, `Batch`, `MediaHub`).
+- **Menu Structure:** Support for nested submenus (`hierarchy`), custom ordering (`order`), and separators (`separator`).
+- **Action Objects:** Actions can be any callable Python object (e.g., a class instance with `__call__`), allowing for stateful or parameterized actions.
+- **Wait Cursor:** Control over the wait cursor (`"waitCursor": True/False`) allows for interactive actions (like dialogs) without UI freezing.
+
+### 5. OTIO Integration Patterns (`otio_reader.py`, `otio_reader_hook.py`)
+- **Mapping:** Demonstrates mapping OpenTimelineIO objects to Flame objects:
+    - `otio.schema.Timeline` -> `flame.PySequence`
+    - `otio.schema.Track` -> `flame.PyTrack` (Video/Audio)
+    - `otio.schema.Clip` -> `flame.PySegment` (linked or unlinked)
+    - `otio.schema.Transition` -> `flame.PyTransition`
+- **Advanced Features:** Handles Markers, Metadata, Effects, and complex media reference resolution (translating URLs to file paths).
+- **Architecture:** Uses a `FlameOTIOReader` class with a hook-dispatch system (`pre_hook_<schema>`, `post_hook_<schema>`) to allow extensibility.
+
+### 6. Python Utilities & Examples
+- **Context Variables:** `set_context_variable` API to drive OCIO transforms (e.g., 'SHOT') on Clips, Segments, and Sequences.
+- **Dialogs:** Integration with `PySide6.QtWidgets` for custom file dialogs or using `flame.browser.show` for native Flame file browsing.
+- **Messages:** `flame.messages.show_in_console` and `flame.messages.show_in_dialog` for user feedback.
+- **Scoping:** Helper patterns to restrict actions to specific object types (`PyClipNode`, `PySegment`) or UI contexts (e.g., Batch Schematic background).
+- **Version Scoping:** Fine-grained control over hook availability using `minimumVersion` and `maximumVersion` attributes on both hooks and action dictionaries.
+- **Idle Processing:** Using `flame.schedule_idle_event` to implement background tasks like "Watch Folders" that process files without blocking the UI.
+- **Batch Node Automation:**
+    - **Creation & Connection:** Programmatically creating nodes (e.g., `Action`, `Motion Vectors Map`), setting attributes (`pos_x`, `pos_y`), and connecting them (`connect_nodes`).
+    - **Caching:** Triggering `cache_range()` on specific nodes.
+    - **Cleanup:** Recursively finding and deleting `batch_iterations` to manage project size.
+- **Advanced Export & Transcoding:**
+    - **Metadata Injection:** Injecting custom metadata (Project, User, Version) into OpenEXR headers via `batch_export_begin` and `set_metadata_value`.
+    - **Single Frame Export:** Duplicating clips and manipulating In/Out marks (`export_between_marks=True`) to export specific frames (thumbnails).
+    - **FFmpeg Integration:** Piping `read_frame` and `read_audio` output directly into `ffmpeg` via named pipes for custom foreground/background encoding.
+    - **Wiretap Access:** Extracting `storage_id` and `node_id` to drive external command-line tools.
+- **Archive Management:** Filtering and color-coding clips based on `archive_date` and `archive_error` status.
+- **OS Integration:** Using `flame.execute_command` to open OS file browsers (`Finder`, `Nautilus`) pointing to specific media paths.
 
 ## Architecture Analysis
 The project follows a **Decoupled Bridge Architecture**:
