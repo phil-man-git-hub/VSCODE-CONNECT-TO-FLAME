@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Understanding AI: A Guide to Modern Acronyms - Flame API Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Understanding AI: A Guide to Modern Acronyms";
+        var mkdocs_page_input_path = "research/understanding-AI_acronyms.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Understanding AI: A Guide to Modern Acronyms</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="understanding-ai-a-guide-to-modern-acronyms">Understanding AI: A Guide to Modern Acronyms</h1>
+<p>This guide is designed for developers who are new to the AI space. It breaks down the "alphabet soup" of AI into logical categories, using simple analogies and code examples.</p>
+<hr />
+<h2 id="1-core-architectures-the-frameworks">1. Core Architectures (The Frameworks)</h2>
+<h3 id="mcp-model-context-protocol"><strong>MCP (Model Context Protocol)</strong></h3>
+<ul>
+<li><strong>Analogy:</strong> <strong>"USB for AI."</strong></li>
+<li><strong>What it is:</strong> A standard way for AI models to connect to your local tools and data without writing custom code for every single app.</li>
+<li><strong>Novice Perspective:</strong> Imagine if every mouse needed a different plug for every computer. That was AI before MCP. MCP makes the "plugs" universal.</li>
+<li>
+<p><strong>Code Pattern:</strong>
+    ```python
+    # Using FastMCP to define a tool the AI can "plug into"
+    mcp = FastMCP("MyToolServer")</p>
+<p>@mcp.tool()
+def get_weather(city: str) -&gt; str:
+    return f"The weather in {city} is sunny."
+```</p>
+</li>
+</ul>
+<h3 id="rag-retrieval-augmented-generation"><strong>RAG (Retrieval-Augmented Generation)</strong></h3>
+<ul>
+<li><strong>Analogy:</strong> <strong>"The Open-Book Exam."</strong></li>
+<li><strong>What it is:</strong> Giving an AI a specific set of documents to look at before it answers a question.</li>
+<li><strong>Novice Perspective:</strong> Standard AI (like ChatGPT) answers from memory. RAG lets the AI look at <em>your</em> specific files (like this codebase) to give accurate, non-hallucinated answers.</li>
+<li><strong>Code Pattern:</strong>
+    <code>python
+    # A simplified RAG retrieval call
+    response = rag.retrieval_query(
+        text="How do I use the Flame API?",
+        rag_resources=["projects/my-project/corpora/flame-docs"]
+    )</code></li>
+</ul>
+<h3 id="agent"><strong>Agent</strong></h3>
+<ul>
+<li><strong>Analogy:</strong> <strong>"An Employee, not just a Consultant."</strong></li>
+<li><strong>What it is:</strong> An AI that doesn't just talk, but <em>does</em> things. It can use tools, run scripts, and correct its own mistakes.</li>
+<li><strong>Novice Perspective:</strong> A chatbot tells you how to fix a bug; an Agent actually writes the fix, runs the test, and tries again if the test fails.</li>
+</ul>
+<hr />
+<h2 id="2-model-types-the-brains">2. Model Types (The Brains)</h2>
+<ul>
+<li><strong>LLM (Large Language Model):</strong> The big engine (e.g., GPT-4, Gemini) trained on the whole internet.</li>
+<li><strong>SLM (Small Language Model):</strong> A "mini" version designed to run on your phone or local laptop. Faster and cheaper, but less "worldly."</li>
+<li><strong>MoE (Mixture of Experts):</strong> A model made of several "specialists." When you ask a math question, it only wakes up the "math specialist" part of the brain to save energy and time.</li>
+<li><strong>VLM (Vision Language Model):</strong> An AI that can "see." You can show it a screenshot of a bug, and it can explain what's wrong.</li>
+</ul>
+<hr />
+<h2 id="3-reasoning-patterns-the-thinking">3. Reasoning Patterns (The Thinking)</h2>
+<ul>
+<li><strong>CoT (Chain of Thought):</strong> <strong>"Show your work."</strong> Asking the AI to explain its logic step-by-step. This drastically improves accuracy for complex math or coding.</li>
+<li><strong>ReAct (Reason + Act):</strong> The loop Agents use. <ol>
+<li><strong>Reason:</strong> "I need to find the file." </li>
+<li><strong>Act:</strong> Run <code>ls</code> command. </li>
+<li><strong>Observe:</strong> "I see the file." </li>
+<li><strong>Repeat.</strong></li>
+</ol>
+</li>
+</ul>
+<hr />
+<h2 id="4-modalities-the-senses">4. Modalities (The Senses)</h2>
+<ul>
+<li><strong>TTS (Text-to-Speech):</strong> AI turning text into a human-sounding voice.</li>
+<li><strong>STT (Speech-to-Text):</strong> AI "listening" to you and typing it out (Transcription).</li>
+<li><strong>OCR (Optical Character Recognition):</strong> Reading text from an image or a PDF.</li>
+</ul>
+<hr />
+<h2 id="5-training-adaptation-the-learning">5. Training &amp; Adaptation (The Learning)</h2>
+<ul>
+<li><strong>RLHF (Reinforcement Learning from Human Feedback):</strong> Humans ranking AI answers to teach it "manners" and helpfulness.</li>
+<li><strong>LoRA (Low-Rank Adaptation):</strong> <strong>"The Quick-Study Method."</strong> A way to teach a model a very specific skill (like "Write Autodesk Flame scripts") without needing to retrain the whole giant model.</li>
+</ul>
+<hr />
+<h2 id="6-deployment-concepts-the-safety">6. Deployment Concepts (The Safety)</h2>
+<ul>
+<li><strong>HITL (Human-in-the-Loop):</strong> A system where the AI does the work, but a human must click "Approve" before anything actually happens (common in this CLI!).</li>
+<li><strong>Evals (Evaluations):</strong> Automated tests to see how "smart" the AI is at a specific task. If you change your code, you run Evals to make sure the AI didn't get dumber.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

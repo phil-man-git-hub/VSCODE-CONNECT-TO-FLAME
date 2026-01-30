@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Goal: The Flame-MCP Bridge - Flame API Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Goal: The Flame-MCP Bridge";
+        var mkdocs_page_input_path = "goals/flame-mcp-creation.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Goal: The Flame-MCP Bridge</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="goal-the-flame-mcp-bridge">Goal: The Flame-MCP Bridge</h1>
+<h2 id="vision">Vision</h2>
+<p>To evolve <code>VSCODE-CONNECT-TO-FLAME</code> from a developer-centric toolset into an <strong>AI-native ecosystem</strong>. By implementing a Model Context Protocol (MCP) server, we allow Large Language Models (LLMs) to interact with Autodesk Flame as if they were a local user, enabling autonomous scripting, live inspection, and real-time debugging.</p>
+<hr />
+<h2 id="1-architecture-the-bridge-pattern">1. Architecture: The Bridge Pattern</h2>
+<p>The implementation will follow a "Relay" architecture, utilizing the existing infrastructure.</p>
+<ol>
+<li><strong>AI Client:</strong> (Claude Desktop, Cursor, Gemini) sends a request.</li>
+<li><strong>MCP Server (New):</strong> A Python process using <code>fastmcp</code> that interprets the AI's intent and translates it into Flame-specific commands.</li>
+<li><strong>Flame Listener (Existing):</strong> Receives the Python code from the MCP server and executes it safely on Flame's main thread.</li>
+<li><strong>Autodesk Flame:</strong> The host environment performing the actual work.</li>
+</ol>
+<pre><code class="language-mermaid">graph LR
+    A[AI Client] --&gt; B[MCP Server]
+    B --&gt; C[Flame Listener]
+    C --&gt; D[Flame API]
+</code></pre>
+<hr />
+<h2 id="2-implementation-strategy">2. Implementation Strategy</h2>
+<h3 id="a-technology-stack">A. Technology Stack</h3>
+<ul>
+<li><strong>Language:</strong> Python 3.9+ (matching Flame's environment).</li>
+<li><strong>Framework:</strong> <code>fastmcp</code> for rapid tool definition.</li>
+<li><strong>Communication:</strong> <code>requests</code> or <code>httpx</code> to talk to the existing <code>flame-listener</code> REST/Socket endpoint.</li>
+</ul>
+<h3 id="b-core-toolset-phase-1">B. Core Toolset (Phase 1)</h3>
+<p>The AI should have access to these primary "skills":</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tool Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example AI Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>flame_exec</code></td>
+<td style="text-align: left;">Executes raw Python code in Flame.</td>
+<td style="text-align: left;">"Fix the indentation in the current script."</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_context</code></td>
+<td style="text-align: left;">Returns current Project/User/Workspace.</td>
+<td style="text-align: left;">"Which project am I currently working in?"</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_media</code></td>
+<td style="text-align: left;">Lists clips in the current Desktop/Batch.</td>
+<td style="text-align: left;">"Find all clips labeled 'RETAKE'."</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>inspect_api</code></td>
+<td style="text-align: left;">Queries Flame's internal <code>dir()</code> for symbols.</td>
+<td style="text-align: left;">"What properties does a <code>PySegment</code> have?"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-high-level-implementation-plan">3. High-Level Implementation Plan</h2>
+<h3 id="step-1-scaffold-the-mcp-server">Step 1: Scaffold the MCP Server</h3>
+<p>Create a dedicated directory <code>flame-mcp/</code> containing a <code>server.py</code>. This server will run independently of Flame but on the same network.</p>
+<h3 id="step-2-define-the-relay-logic">Step 2: Define the "Relay" Logic</h3>
+<p>Implement a standard execution wrapper that sends code to the listener:</p>
+<pre><code class="language-python">def relay_to_flame(code: str):
+    # Sends code to localhost:5555
+    # Returns stdout/stderr
+</code></pre>
+<h3 id="step-3-tool-exposure">Step 3: Tool Exposure</h3>
+<p>Decorate functions with <code>@mcp.tool()</code> to make them visible to the LLM.</p>
+<hr />
+<h2 id="4-key-benefits">4. Key Benefits</h2>
+<h3 id="autonomous-refactoring">Autonomous Refactoring</h3>
+<p>Instead of the developer copying code from an AI chat into a file and then running it, the AI can:
+1.  Read the current script from Flame.
+2.  Rewrite it for optimization.
+3.  Push it back into Flame and run it to verify success.</p>
+<h3 id="intelligent-api-discovery">Intelligent API Discovery</h3>
+<p>Since the Flame API is proprietary and sometimes poorly documented, the AI can "explore" the API live. If it's unsure how to delete a marker, it can run a tool to inspect the <code>flame.PyMarker</code> class dynamically.</p>
+<h3 id="visual-reasoning-future">Visual Reasoning (Future)</h3>
+<p>By adding a <code>take_screenshot</code> tool, the AI can "see" the Flame UI, allowing it to assist with UI-heavy tasks like layout alignment or finding specific buttons in the Batch schematic.</p>
+<hr />
+<h2 id="5-security-safety-hitl">5. Security &amp; Safety (HITL)</h2>
+<p>To ensure the AI doesn't accidentally delete a whole project, we will maintain a <strong>Human-In-The-Loop (HITL)</strong> approach:
+*   The MCP server will log every command it sends to Flame.
+*   Destructive commands (e.g., <code>flame.delete</code>) will require a confirmation flag or be restricted to specific "Sandbox" volumes.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

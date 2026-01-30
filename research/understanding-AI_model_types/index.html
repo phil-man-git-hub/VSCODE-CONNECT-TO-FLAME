@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Understanding AI Model Types - Flame API Docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Understanding AI Model Types";
+        var mkdocs_page_input_path = "research/understanding-AI_model_types.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Understanding AI Model Types</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="understanding-ai-model-types">Understanding AI Model Types</h1>
+<p>Not all AI models are created equal. Depending on the task—whether it's writing code, summarizing a book, or identifying a cat in a photo—you might use a different "flavor" of model.</p>
+<hr />
+<h2 id="1-llm-large-language-model">1. LLM (Large Language Model)</h2>
+<p><strong>The Heavyweight Champion</strong></p>
+<ul>
+<li><strong>What it is:</strong> The giant models (like GPT-4, Claude 3.5, Gemini Pro) trained on nearly the entire public internet.</li>
+<li><strong>Best for:</strong> Deep reasoning, complex coding, and creative writing.</li>
+<li><strong>Analogy:</strong> <strong>The University Professor.</strong> They know a lot about almost everything, but they are "heavy" (expensive and slower to run).</li>
+</ul>
+<h2 id="2-slm-small-language-model">2. SLM (Small Language Model)</h2>
+<p><strong>The Local Specialist</strong></p>
+<ul>
+<li><strong>What it is:</strong> Models designed to be small enough to run on your laptop, phone, or even inside a single app (like Llama-3-8B or Phi-3).</li>
+<li><strong>Best for:</strong> Simple tasks, privacy-focused apps, and running without an internet connection.</li>
+<li><strong>Analogy:</strong> <strong>The Pocket Dictionary.</strong> It doesn't know everything, but it's fast, portable, and gets the basic job done.</li>
+</ul>
+<h2 id="3-moe-mixture-of-experts">3. MoE (Mixture of Experts)</h2>
+<p><strong>The Team of Specialists</strong></p>
+<ul>
+<li><strong>What it is:</strong> A model that is actually made of many smaller "experts." When you ask a question, the model only "wakes up" the 2 or 3 experts that are relevant to your topic.</li>
+<li><strong>Why it matters:</strong> It gives you the intelligence of a giant model with the speed and efficiency of a smaller one.</li>
+<li><strong>Analogy:</strong> <strong>A Hospital.</strong> You don't need the whole hospital to treat a broken arm; you just need the X-ray tech and the Orthopedist. MoE routing ensures only the right "doctors" are called.</li>
+</ul>
+<h2 id="4-vlm-vision-language-model">4. VLM (Vision Language Model)</h2>
+<p><strong>The AI with Eyes</strong></p>
+<ul>
+<li><strong>What it is:</strong> A model that can process both text and images (or video) at the same time.</li>
+<li><strong>Best for:</strong> Describing screenshots, explaining UI layouts, or "watching" a video to find a specific moment.</li>
+<li><strong>Simple Code (Conceptual):</strong>
+    <code>python
+    # Sending an image to a VLM
+    response = model.generate(
+        prompt="Look at this Flame UI screenshot. Is the Batch button active?",
+        image="screenshot_01.png"
+    )</code></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
