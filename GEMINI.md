@@ -127,13 +127,22 @@ Analysis of Autodesk-supplied example scripts reveals the following key patterns
 - **Namespacing:** Mandatory `adskUID_` prefix for all global symbols to prevent crashes when multiple shaders are loaded.
 - **Built-in Helpers:** Access to high-level functions like `adsk_getLightPosition()`, `adsk_rgb2hsv()`, and `adsk_getBlendedValue()`.
 
+### 4. Wiretap SDK API (Universal Database Access)
+- **Uniform Abstraction:** Exposes proprietary databases (IFFFS), file systems (Gateway), and job queues (Backburner) as a uniform navigable hierarchy of `Nodes`.
+- **Librarian vs. Worker:** Follows a strict model where the **Server** only exposes data, while the **Client** performs all heavy processing (transcoding, conversion) to ensure workstation responsiveness.
+- **Self-Discovery:** Utilizes multicast networking for peer-to-peer discovery (`hostname:database`), with support for hardcoded topology via `services.cfg` in complex networks.
+- **Low-Level Media I/O:** Deep control over raw RGB image buffers (bottom-to-top orientation, 32-bit line padding) and block-based audio sample streaming.
+- **Distributed Rendering:** Programmatic job submission to Backburner, with advanced metadata filtering for building real-time studio dashboards.
+
 ## Expert Coding Patterns & Best Practices
 
 - **The "Sandwich" Pattern:** Leverage `pre_` and `post_` hooks to wrap Flame operations. Use `userData` dictionaries to pass state (like timestamps or IDs) between the start and end of a task.
 - **Non-Destructive Temporary Objects:** Use `flame.duplicate(clip)` inside a `try...finally` block to perform temporary operations (like single-frame exports) without altering the artist's original work.
 - **Safe External Execution:** Prefer `flame.execute_command` over standard Python `subprocess` to avoid memory "forking" overhead in large Flame projects.
 - **The Idle Loop Relay:** For long background tasks (like Watch Folders), use `flame.schedule_idle_event` to process items one-by-one, rescheduling itself with a delay to keep the UI responsive.
-- **Strict Namespacing:** Always use unique prefixes for global variables and functions in hooks and shaders to avoid silent failures or clashing with other loaded tools.
+- **The Success Switch:** In Wiretap SDK, functions return `bool`. Always check for `False` and immediately capture `handle.lastError()` before the next API call overwrites it.
+- **Initialization Hygiene:** Always pair `WireTapClientInit()` with `WireTapClientUninit()` to ensure background network threads are safely parked before the script exits.
+- **Strict Namespacing:** Always use unique prefixes (like `adskUID_` or `WireTap_`) for global variables and functions to avoid silent failures or clashing with other loaded tools.
 
 ## Architecture Analysis
 The project follows a **Decoupled Bridge Architecture**:
