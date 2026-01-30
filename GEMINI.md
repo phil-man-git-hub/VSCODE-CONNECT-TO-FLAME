@@ -106,6 +106,35 @@ Analysis of Autodesk-supplied example scripts reveals the following key patterns
 - **Archive Management:** Filtering and color-coding clips based on `archive_date` and `archive_error` status.
 - **OS Integration:** Using `flame.execute_command` to open OS file browsers (`Finder`, `Nautilus`) pointing to specific media paths.
 
+## Advanced Specialized APIs
+
+### 1. OpenClip API (Virtual Media Assembly)
+- **Hierarchy:** `Clip` -> `Track` -> `Feed` -> `Span`.
+- **Logic:** Enables "Virtual Assembly" of media. Multiple `<span>` elements can join fragmented camera files into a single seamless stream without rendering.
+- **Dynamic Discovery:** Supports `ScanPattern` tokens (`{name}`, `{version}`, `{frame}`) for "Self-Updating" clips that automatically see new renders on disk.
+- **Metadata:** Extensive `<dict>` support for pipeline tracking (Artist, Job ID, Render Time) embedded directly in the `.clip` XML.
+
+### 2. Inference Builder API (AI/ML Integration)
+- **Packaging:** Packages trained **ONNX** models into encrypted **.inf** files.
+- **Sidecar Logic:** Uses a `.json` sidecar to map Flame inputs (Front, Matte) to model inputs and handle technical requirements like `ScalingFactor` and `Padding`.
+- **Deployment:** Turns complex Machine Learning models into simple, user-friendly nodes in the Flame Batch environment.
+
+### 3. Shader Builder API (GLSL Tool Creation)
+- **Matchbox vs. Lightbox:**
+    - **Matchbox:** 2D image processing (Blurs, CC), uses `main()`.
+    - **Lightbox:** 3D lighting effects in Action, uses `adskUID_lightbox()`.
+- **UI Design:** Sidecar `.xml` files define professional interfaces including Color Wheels, Curve Editors, and Conditional Visibility (hiding sliders based on checkboxes).
+- **Namespacing:** Mandatory `adskUID_` prefix for all global symbols to prevent crashes when multiple shaders are loaded.
+- **Built-in Helpers:** Access to high-level functions like `adsk_getLightPosition()`, `adsk_rgb2hsv()`, and `adsk_getBlendedValue()`.
+
+## Expert Coding Patterns & Best Practices
+
+- **The "Sandwich" Pattern:** Leverage `pre_` and `post_` hooks to wrap Flame operations. Use `userData` dictionaries to pass state (like timestamps or IDs) between the start and end of a task.
+- **Non-Destructive Temporary Objects:** Use `flame.duplicate(clip)` inside a `try...finally` block to perform temporary operations (like single-frame exports) without altering the artist's original work.
+- **Safe External Execution:** Prefer `flame.execute_command` over standard Python `subprocess` to avoid memory "forking" overhead in large Flame projects.
+- **The Idle Loop Relay:** For long background tasks (like Watch Folders), use `flame.schedule_idle_event` to process items one-by-one, rescheduling itself with a delay to keep the UI responsive.
+- **Strict Namespacing:** Always use unique prefixes for global variables and functions in hooks and shaders to avoid silent failures or clashing with other loaded tools.
+
 ## Architecture Analysis
 The project follows a **Decoupled Bridge Architecture**:
 - **Execution** is remote (inside Flame).
