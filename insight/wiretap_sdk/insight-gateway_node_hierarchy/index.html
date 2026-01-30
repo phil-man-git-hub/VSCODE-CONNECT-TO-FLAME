@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: The Gateway Node Hierarchy - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: The Gateway Node Hierarchy";
+        var mkdocs_page_input_path = "insight/wiretap_sdk/insight-gateway_node_hierarchy.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: The Gateway Node Hierarchy</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-the-gateway-node-hierarchy">Insight: The Gateway Node Hierarchy</h1>
+<p>This document explains how the <strong>Wiretap Gateway</strong> looks at your computer's hard drive and turns it into a neat, organized list of clips.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in file systems and media browsing.</p>
+<hr />
+<h2 id="1-what-is-the-gateway-hierarchy">1. What is the Gateway Hierarchy?</h2>
+<p>The Gateway is like a <strong>Translator</strong>. It looks at a messy folder full of DPX or ProRes files and translates them into standard Wiretap Nodes.</p>
+<ul>
+<li><strong><code>DIR</code></strong>: A standard folder on your hard drive.</li>
+<li><strong><code>CLIP</code></strong>: A "Smart" node that groups multiple frames (like <code>shot.001.dpx</code> to <code>shot.100.dpx</code>) into a single object.</li>
+<li><strong><code>HIRES</code></strong>: The actual video data inside the clip.</li>
+</ul>
+<hr />
+<h2 id="2-multi-process-design">2. Multi-Process Design</h2>
+<p>To keep everything fast, the Gateway uses two types of processes:
+1.  <strong>The Main Process:</strong> The "Boss" that handles the startup.
+2.  <strong>The Session Processes:</strong> A private "Assistant" created just for your script. This assistant keeps track of what you are doing so you don't interfere with other users on the network.</p>
+<hr />
+<h2 id="3-warning-node-ids-are-black-boxes">3. Warning: Node IDs are "Black Boxes"</h2>
+<p>A Node ID might look like a simple piece of text, but <strong>never try to guess what it means</strong>. 
+- <strong>The Rule:</strong> Always ask the "Parent" node for the list of its children. Don't try to build a Node ID manually, or your script will break when you update Flame!</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>The Gateway is your <strong>"Window"</strong> to the outside world. It turns raw files on a hard drive into professional Flame clips that your scripts can read and process. Always use the <code>wiretap_get_children</code> command to explore this hierarchy safely.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

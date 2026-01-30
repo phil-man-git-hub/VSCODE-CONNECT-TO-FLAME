@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Wiretap Error Handling &amp; Threading - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Wiretap Error Handling \u0026amp; Threading";
+        var mkdocs_page_input_path = "insight/wiretap_sdk/insight-wiretap_error_handling.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Wiretap Error Handling &amp; Threading</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-wiretap-error-handling-threading">Insight: Wiretap Error Handling &amp; Threading</h1>
+<p>This document explains how to handle failures and how to use multiple threads safely when writing Wiretap scripts.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in robust code and performance.</p>
+<hr />
+<h2 id="1-handling-errors-the-lasterror-pattern">1. Handling Errors (The <code>lastError</code> pattern)</h2>
+<p>In Wiretap, functions don't usually "Throw Errors" that crash your script. Instead, they return a simple <strong>True</strong> (Success) or <strong>False</strong> (Failure).</p>
+<p>If a function returns <code>False</code>, you must immediately ask for the "Librarian's Note" to see what went wrong:
+- <strong>Command:</strong> <code>handle.lastError()</code>
+- <strong>Rule:</strong> Read the error message <strong>immediately</strong>. The next time you call <em>any</em> function, the old error message is erased!</p>
+<hr />
+<h2 id="2-is-it-thread-safe">2. Is it Thread-Safe?</h2>
+<p>Thread-safety means "Can two parts of my script talk to the same object at the same time?" 
+- <strong>The Answer:</strong> Mostly <strong>No</strong>.
+- <strong>The Rule:</strong> Each thread in your script should have its own "Remote Control" (Handle). You should never share a single <code>WireTapNodeHandle</code> between two threads, or they will get confused and crash.</p>
+<hr />
+<h2 id="3-improving-performance">3. Improving Performance</h2>
+<p>If you want to move media faster, you might think "I'll use 10 threads!" 
+- <strong>The Reality:</strong> This usually doesn't help. Because all threads are trying to squeeze through the same network "Pipe," they just end up waiting for each other.
+- <strong>The Best Way:</strong> Process frames one after another (Sequentially). The Wiretap server is smart—it "Reads Ahead" and prepares the next frame for you before you even ask for it.</p>
+<hr />
+<h2 id="4-why-did-my-script-crash-on-exit">4. Why did my script crash on exit?</h2>
+<p>Wiretap uses background threads to keep the connection alive. 
+- <strong>The Fix:</strong> You must always call <code>WireTapClientUninit()</code> before your script finishes. This tells Wiretap to "Park the car and turn off the engine" safely.</p>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Wiretap is a "Polite" API. It won't crash your script if something goes wrong; it will just say "False." It's your job as the programmer to check that value and read the <code>lastError()</code> message to explain the problem to the user.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

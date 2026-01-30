@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Reading and Writing Video Media - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Reading and Writing Video Media";
+        var mkdocs_page_input_path = "insight/wiretap_sdk/insight-wiretap_video_io.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Reading and Writing Video Media</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-reading-and-writing-video-media">Insight: Reading and Writing Video Media</h1>
+<p>This document explains the two ways you can pull images (frames) out of Flame using the Wiretap API.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in image processing and performance.</p>
+<hr />
+<h2 id="1-two-ways-to-get-frames">1. Two Ways to Get Frames</h2>
+<p>When you want to look at a frame of video from a server, you have two choices:</p>
+<h3 id="option-a-read-through-the-server-the-easy-way">Option A: Read through the Server (The "Easy" Way)</h3>
+<p>You ask the Wiretap Server to give you the frame.
+- <strong>How it works:</strong> The server reads the file from the hard drive, converts it into raw <strong>RGB</strong> pixels, and sends it to your script.
+- <strong>Pros:</strong> Very simple. Your script doesn't need to know if the file is a DPX, JPEG, or ProRes. The server does all the "Translation" for you.
+- <strong>Cons:</strong> It puts a heavy load on the server's CPU.</p>
+<h3 id="option-b-read-from-storage-the-fast-way">Option B: Read from Storage (The "Fast" Way)</h3>
+<p>You ask the server for the "Address" of the file, then your script reads the file directly from the hard drive.
+- <strong>How it works:</strong> Wiretap gives you a path like <code>/Volumes/Media/shot.001.dpx</code>. Your script opens that file.
+- <strong>Pros:</strong> Much faster! It doesn't use the server's CPU, and there's no extra "Network Hop."
+- <strong>Cons:</strong> More complex. Your script must know how to "Speak the Language" of the file (e.g., you need a library to read DPX or EXR files).</p>
+<hr />
+<h2 id="2-choosing-the-right-handle">2. Choosing the Right Handle</h2>
+<ul>
+<li><strong><code>WireTapNodeHandle</code></strong>: Use this if you have a Clip ID and an index (e.g., "Give me Frame 10 of Clip A"). This is the standard way.</li>
+<li><strong><code>WireTapServerHandle</code></strong>: Use this only if you have a "Frame ID" but don't know which clip it belongs to. This is rare and mostly for advanced timeline tools.</li>
+</ul>
+<hr />
+<h2 id="3-key-takeaway-for-beginners">3. Key Takeaway for Beginners</h2>
+<p>Start with <strong>Option A</strong> (Reading through the server). It's the most "Programmer-Friendly" because you get raw pixels that are ready to use. Only switch to <strong>Option B</strong> if you are moving millions of frames and need to save time and server power.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

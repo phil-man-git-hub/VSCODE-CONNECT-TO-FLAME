@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Workflow, Samples and Tools - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Workflow, Samples and Tools";
+        var mkdocs_page_input_path = "insight/wiretap_sdk/insight-workflow_samples.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Workflow, Samples and Tools</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-workflow-samples-and-tools">Insight: Workflow, Samples and Tools</h1>
+<p>This document acts as a "Master Map" to help you find the right example code for common studio tasks.</p>
+<p><strong>Target Audience:</strong> Novice developers looking for a "Quick Start" guide.</p>
+<hr />
+<h2 id="1-finding-the-right-sample">1. Finding the Right Sample</h2>
+<p>If you have a task in mind, look at this list to see which file in the <code>samples/</code> folder you should study first:</p>
+<ul>
+<li><strong>"List every machine in the building"</strong>: Study <code>listAllServers.py</code>.</li>
+<li><strong>"Explore a project tree"</strong>: Study <code>listChildren.py</code>.</li>
+<li><strong>"Rename or Copy a clip"</strong>: Study <code>duplicateNode.py</code>.</li>
+<li><strong>"Send a job to the render farm"</strong>: Study <code>submitJob.C</code> (or the Python equivalent).</li>
+</ul>
+<hr />
+<h2 id="2-comparing-with-command-line-tools">2. Comparing with Command Line Tools</h2>
+<p>If you aren't sure if your script is working correctly, you can compare its results with the professional tools Autodesk included in the SDK:</p>
+<table>
+<thead>
+<tr>
+<th>Your Task</th>
+<th>The Python Sample</th>
+<th>The "Official" Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scanning Network</td>
+<td><code>listAllServers.py</code></td>
+<td><code>wiretap_server_dump</code></td>
+</tr>
+<tr>
+<td>Browsing Nodes</td>
+<td><code>listChildren.py</code></td>
+<td><code>wiretap_get_children</code></td>
+</tr>
+<tr>
+<td>Reading Metadata</td>
+<td><code>dir(wiretap)</code></td>
+<td><code>wiretap_get_metadata</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-why-is-this-useful">3. Why is this useful?</h2>
+<p>This map saves you from "Re-inventing the wheel." 
+- <strong>Step 1:</strong> Run the "Official" tool to see what the data should look like.
+- <strong>Step 2:</strong> Open the matching Python sample to see how the code was written.
+- <strong>Step 3:</strong> Copy that code and change it to fit your studio's needs.</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>The samples and tools are <strong>"Interactive Documentation."</strong> Instead of just reading about how to do something, you can run the sample and see it happen in real-time. This is the fastest way to master the Wiretap SDK!</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

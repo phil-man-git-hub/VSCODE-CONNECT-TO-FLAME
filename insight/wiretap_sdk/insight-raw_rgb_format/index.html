@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Raw RGB Video Format - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Raw RGB Video Format";
+        var mkdocs_page_input_path = "insight/wiretap_sdk/insight-raw_rgb_format.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Raw RGB Video Format</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-raw-rgb-video-format">Insight: Raw RGB Video Format</h1>
+<p>This document explains the technical "Architecture" of an image frame when it moves through Wiretap.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in low-level image data and memory management.</p>
+<hr />
+<h2 id="1-pure-pixel-data">1. Pure Pixel Data</h2>
+<p>When you ask Wiretap for a frame, it doesn't give you a file (like a .jpg). It gives you a <strong>Buffer</strong>—a giant chunk of memory filled with raw color numbers.</p>
+<ul>
+<li><strong>Orientation:</strong> Flame reads images from <strong>Bottom to Top</strong>. </li>
+<li><strong>Components:</strong> Every pixel has 3 parts: <strong>Red, Green, and Blue</strong>.</li>
+</ul>
+<hr />
+<h2 id="2-bit-size-depth">2. Bit Size (Depth)</h2>
+<p>The "Bit Size" tells you how much detail is in every color. Wiretap supports several levels:
+- <strong>8-bit:</strong> Standard quality (256 levels of color).
+- <strong>10-bit:</strong> Professional quality (1,024 levels).
+- <strong>32-bit float:</strong> High-end visual effects (Used for complex lighting and HDR).</p>
+<hr />
+<h2 id="3-the-padding-trick">3. The "Padding" Trick</h2>
+<p>Computers like to read data in neat blocks of 32 bits. If your image width isn't a "Perfect" number, Wiretap adds invisible <strong>Filler Bits</strong> (Padding) to the end of every line.
+- <strong>Why?</strong> It makes the computer's CPU work much faster because it doesn't have to "Guess" where the next line starts.</p>
+<hr />
+<h2 id="4-calculating-memory">4. Calculating Memory</h2>
+<p>If you want to know how much RAM you need to hold a frame, use this formula:
+<strong><code>Width</code> x <code>Height</code> x <code>Bytes per Pixel</code> = <code>Total Memory</code></strong></p>
+<ul>
+<li><em>Example:</em> A 1080p 8-bit frame is about <strong>6 MB</strong>. </li>
+<li><em>Example:</em> A 4K 32-bit float frame can be over <strong>100 MB</strong>!</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Raw RGB is like a <strong>"Map of Numbers."</strong> There are no shortcuts or compression. To use it in your script, you need to know exactly how many bits each color uses and how many "Filler" bits are at the end of each line so you don't accidentally shift the image sideways!</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
