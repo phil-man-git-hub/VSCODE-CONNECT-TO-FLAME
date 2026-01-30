@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Managing the Wait Cursor - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Managing the Wait Cursor";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/examples/insight-wait_cursor.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Managing the Wait Cursor</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-managing-the-wait-cursor">Insight: Managing the Wait Cursor</h1>
+<p>This document explains the <code>wait_cursor.py</code> example script. It shows how to control that spinning "loading" icon so your users don't get frustrated when using your tools.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in User Experience (UX).</p>
+<hr />
+<h2 id="1-what-is-the-wait-cursor">1. What is the Wait Cursor?</h2>
+<p>In Flame, when a script is running, the mouse cursor usually turns into a "Wait" icon (a spinning circle or watch). This tells the user: <em>"The computer is busy, please don't click anything."</em></p>
+<h2 id="2-when-to-hide-it">2. When to Hide It</h2>
+<p>Sometimes, you <em>want</em> the user to click something while your script is running!
+- <strong>Example:</strong> You pop up a window asking the user to "Select a Folder."
+- <strong>The Problem:</strong> If the cursor is stuck in "Wait" mode, the user can't interact with your pop-up window properly.</p>
+<h2 id="3-how-to-control-it">3. How to Control It</h2>
+<p>In your menu definition, you can use the <code>waitCursor</code> key:</p>
+<h3 id="a-for-long-tasks-waitcursor-true">A. For Long Tasks (<code>waitCursor: True</code>)</h3>
+<p>If your script is doing a lot of math or moving files, keep the wait cursor on.</p>
+<pre><code class="language-python">{
+    &quot;name&quot;: &quot;Process 1000 Clips&quot;,
+    &quot;execute&quot;: my_long_function,
+    &quot;waitCursor&quot;: True # This is the default
+}
+</code></pre>
+<h3 id="b-for-interactive-tasks-waitcursor-false">B. For Interactive Tasks (<code>waitCursor: False</code>)</h3>
+<p>If your script shows a window or asks a question, turn the wait cursor off so the mouse works normally.</p>
+<pre><code class="language-python">{
+    &quot;name&quot;: &quot;Show My Custom Window&quot;,
+    &quot;execute&quot;: show_window_function,
+    &quot;waitCursor&quot;: False # Gives control back to the user
+}
+</code></pre>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Reduced Frustration:</strong> There is nothing worse than a pop-up window you can't click because your mouse is "stuck" in a loading state.</li>
+<li><strong>Clarity:</strong> It tells the user exactly when it's safe to interact with Flame and when they should wait.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>If your script opens a window (using <code>PySide6</code> or <code>flame.messages.show_in_dialog</code>), you should almost always set <code>"waitCursor": False</code>. If your script runs in the background with no windows, keep it <code>True</code>.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

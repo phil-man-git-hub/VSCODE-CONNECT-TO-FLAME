@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Version Metadata () - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Version Metadata ()";
+        var mkdocs_page_input_path = "insight/openclip_api/insight-open_clip_xml_version.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Version Metadata ()</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-version-metadata">Insight: Version Metadata (<version>)</h1>
+<p>This document explains the <code>&lt;version&gt;</code> tag. It is used to store information about a specific iteration of your work—like "V1" or "Final_Master."</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in creative workflow metadata.</p>
+<hr />
+<h2 id="1-what-is-a-version">1. What is a Version?</h2>
+<p>In filmmaking, we never get it right the first time. We render "Version 1", then "Version 2," and so on. The <code>&lt;version&gt;</code> tag allows you to add specific <strong>Notes</strong> to those iterations.</p>
+<hr />
+<h2 id="2-key-information-inside-a-version">2. Key Information inside a Version</h2>
+<ul>
+<li><strong><code>uid</code></strong>: The unique link (like "v1") that connects this metadata to the actual media in the tracks.</li>
+<li><strong><code>&lt;name&gt;</code></strong>: A friendly name for the version (e.g., "Roto Version").</li>
+<li><strong><code>&lt;comment&gt;</code></strong>: A place for instructions (e.g., "Added more blur to the edges").</li>
+<li><strong><code>&lt;creationDate&gt;</code></strong>: When this version was rendered.</li>
+</ul>
+<hr />
+<h2 id="3-why-is-this-useful">3. Why is this useful?</h2>
+<ul>
+<li><strong>Communication:</strong> An artist can see exactly why a new version was created by looking at the comments inside the Open Clip.</li>
+<li><strong>Audit Trail:</strong> You can keep track of who worked on a shot and when it was finished.</li>
+<li><strong>Pipeline Logic:</strong> You can use the <code>creationDate</code> to automatically show the most recent render to the artist.</li>
+</ul>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>The <code>&lt;version&gt;</code> tag is the <strong>"Artist's Notebook"</strong> for a clip. While other tags focus on technical things like file paths and frame rates, the <code>&lt;version&gt;</code> tag is where you store the human history of the shot.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

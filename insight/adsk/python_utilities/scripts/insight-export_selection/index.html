@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Bulk Export &amp; FFmpeg Integration - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Bulk Export \u0026amp; FFmpeg Integration";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/scripts/insight-export_selection.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Bulk Export &amp; FFmpeg Integration</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-bulk-export-ffmpeg-integration">Insight: Bulk Export &amp; FFmpeg Integration</h1>
+<p>This document explains the <code>export_selection.py</code> script. This is a "Power User" script that handles everything from exporting thumbnails to talking to external software like <strong>FFmpeg</strong>.</p>
+<p><strong>Target Audience:</strong> Intermediate Python programmers interested in external integrations.</p>
+<hr />
+<h2 id="1-what-does-it-do">1. What does it do?</h2>
+<p>This script provides several professional export options for your selection:
+1. <strong>Thumbnail + Movie:</strong> Saves a Jpeg of the first frame AND a QuickTime file.
+2. <strong>Recursive Export:</strong> If you select a folder, it digs through and exports everything inside it, keeping your folder structure organized.
+3. <strong>FFmpeg Export:</strong> This is the most advanced part. It bypasses Flame's built-in exporter and uses a third-party tool (FFmpeg) to create movies.</p>
+<hr />
+<h2 id="2-key-concepts-the-ffmpeg-bridge">2. Key Concepts: The FFmpeg Bridge</h2>
+<p>How does Flame talk to FFmpeg? It's a three-step dance:</p>
+<h3 id="step-1-named-pipes-osmkfifo">Step 1: Named Pipes (<code>os.mkfifo</code>)</h3>
+<p>The script creates a "Pipe"—a virtual file that exists only in the computer's memory. It uses this to stream audio data from Flame directly into FFmpeg.</p>
+<h3 id="step-2-read_frame-and-read_audio">Step 2: <code>read_frame</code> and <code>read_audio</code></h3>
+<p>Autodesk provides "Command Line" versions of Flame's engine called <code>read_frame</code> and <code>read_audio</code>. The script runs these in the background to pull raw data out of Flame's database.</p>
+<h3 id="step-3-subprocess-piping">Step 3: Subprocess Piping</h3>
+<p>The script "pipes" the video from <code>read_frame</code> into FFmpeg's input.</p>
+<pre><code class="language-python">ffmpeg_process = subprocess.Popen(..., stdin=read_frame_process.stdout)
+</code></pre>
+<p>This is like connecting a fire hose from one machine (Flame) to another (FFmpeg).</p>
+<hr />
+<h2 id="3-foreground-vs-background">3. Foreground vs. Background</h2>
+<ul>
+<li><strong>Foreground:</strong> Your mouse turns into a wait cursor, and you wait for FFmpeg to finish.</li>
+<li><strong>Background:</strong> The script creates a <strong>Backburner</strong> job. It actually writes a tiny Python script <em>on the fly</em> and tells Backburner to run it on a render node!</li>
+</ul>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Custom Formats:</strong> Flame's built-in exporter is great, but FFmpeg can do <em>anything</em> (like making tiny H.264 files for WhatsApp or adding custom text overlays).</li>
+<li><strong>Efficiency:</strong> You can offload heavy transcoding to other computers on your network.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Flame is an "Open" system. You aren't limited to the buttons inside the software. By using <code>subprocess</code> and external tools, you can bridge Flame to any other software on your computer.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Automating Motion Vector Caching - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Automating Motion Vector Caching";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/scripts/insight-cache_motion_vectors.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Automating Motion Vector Caching</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-automating-motion-vector-caching">Insight: Automating Motion Vector Caching</h1>
+<p>This document explains the <code>cache_motion_vectors.py</code> script. It shows how to programmatically build a "Node Tree" in Batch to calculate and save motion vectors.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers learning how to manipulate the Batch Schematic.</p>
+<hr />
+<h2 id="1-what-are-motion-vectors">1. What are Motion Vectors?</h2>
+<p>Motion vectors are data that describe how pixels move from one frame to the next. In Flame, calculating this can be slow, so we often "Cache" (save) the results. </p>
+<p><strong>The Goal:</strong> Instead of manually adding an "Action" node, adding a "Motion Vectors Map," and clicking "Cache," this script does it all in one click.</p>
+<hr />
+<h2 id="2-key-concepts">2. Key Concepts</h2>
+<h3 id="a-node-creation-positioning">A. Node Creation &amp; Positioning</h3>
+<p>The script uses <code>flame.batch.create_node("Action")</code>. 
+- <strong>Coordinates:</strong> It uses <code>pos_x</code> and <code>pos_y</code> to place the nodes neatly in the schematic. It adds <code>400</code> to the X-position so the new node doesn't overlap the old one.</p>
+<h3 id="b-connecting-nodes">B. Connecting Nodes</h3>
+<p>To make the nodes work, they must be "wired" together.</p>
+<pre><code class="language-python">flame.batch.connect_nodes(clip, &quot;Default&quot;, media, &quot;Default&quot;)
+</code></pre>
+<p>This is like dragging a line between two dots in the Batch interface.</p>
+<h3 id="c-caching-a-range">C. Caching a Range</h3>
+<p>The script finds the start and end frame of the clip and tells the node to render exactly that range:</p>
+<pre><code class="language-python">motion_map.cache_range(start, end)
+</code></pre>
+<hr />
+<h2 id="3-two-ways-to-use-the-script">3. Two Ways to Use the Script</h2>
+<ol>
+<li><strong>In Batch:</strong> Right-click a clip node and select "Cache Motion Vectors Map."</li>
+<li><strong>From the Desktop:</strong> Right-click your Desktop and select "Create Batch and Cache...".<ul>
+<li>This version is even more powerful! It opens a file browser, lets you pick a clip, creates a <strong>brand new Batch Group</strong>, imports the clip, and then sets up the motion vectors.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Standardization:</strong> It ensures that every Motion Vector Map is set up exactly the same way every time.</li>
+<li><strong>Speed:</strong> It handles all the tedious clicking and dragging of nodes automatically.</li>
+<li><strong>Batch Processing:</strong> You can use the "Desktop" version to process a file without even having a Batch group open yet.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>When you use the Python API, you are basically a <strong>"Ghost Operator."</strong> Anything a human can do with a mouse (creating nodes, connecting them, clicking 'Cache'), you can do with code by calling the right functions.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

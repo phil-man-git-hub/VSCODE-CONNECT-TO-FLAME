@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Organizing Channels () - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Organizing Channels ()";
+        var mkdocs_page_input_path = "insight/openclip_api/insight-open_clip_xml_track.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Organizing Channels ()</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-organizing-channels">Insight: Organizing Channels (<track>)</h1>
+<p>This document explains the <code>&lt;track&gt;</code> tag. It is used to separate different streams of data—like Video and Audio—inside a single Open Clip.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in multi-channel media.</p>
+<hr />
+<h2 id="1-what-is-a-track">1. What is a Track?</h2>
+<p>In Flame, a clip isn't just a movie; it's a collection of channels. 
+The <code>&lt;track&gt;</code> tag allows you to define these channels individually. Common examples include:
+- A <strong>Video</strong> track.
+- An <strong>Audio</strong> track (you can have many of these).
+- A <strong>Matte</strong> (Alpha) track.
+- A <strong>Layer</strong> from a Photoshop or OpenEXR file.</p>
+<hr />
+<h2 id="2-key-attributes-of-a-track">2. Key Attributes of a Track</h2>
+<ul>
+<li><strong><code>uid</code> (Unique ID)</strong>: Every track must have a name that makes it unique (e.g., "t0", "audio_left", "Beauty_Pass").</li>
+<li><strong><code>&lt;trackType&gt;</code></strong>: Usually <code>video</code> or <code>audio</code>.</li>
+<li><strong><code>&lt;feeds&gt;</code></strong>: This is where the actual media links live for this specific track.</li>
+</ul>
+<hr />
+<h2 id="3-advanced-overrides">3. Advanced Overrides</h2>
+<p>Normally, a track is as long as the movie file it points to. But you can use the <code>&lt;track&gt;</code> tag to <strong>force</strong> a specific timing:</p>
+<ul>
+<li><strong><code>&lt;startTimecode&gt;</code></strong>: You can tell Track 1 to start at 01:00:00:00 even if the file itself starts at zero.</li>
+<li><strong><code>&lt;duration&gt;</code></strong>: You can make a track appear longer or shorter than the physical media. If you make it longer, Flame will automatically show a "No Media" slate for the extra time.</li>
+</ul>
+<hr />
+<h2 id="4-why-use-multiple-tracks">4. Why use multiple tracks?</h2>
+<p>Imagine a 3D artist renders a scene. They give you one OpenEXR file that contains the "Beauty" pass, a "Shadow" pass, and a "Reflection" pass. 
+By using three <code>&lt;track&gt;</code> tags in your Open Clip, Flame will see these as three separate, perfectly synced layers that you can edit independently!</p>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>The <code>&lt;track&gt;</code> tag is like a <strong>"Channel Strip"</strong> on a mixer. It doesn't hold the media itself (that's the job of the <code>feed</code>), but it organizes the media into a logical stream that Flame can play back and edit.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

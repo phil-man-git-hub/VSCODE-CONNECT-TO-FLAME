@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Insight: Automating the Project Lifecycle - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Automating the Project Lifecycle";
+        var mkdocs_page_input_path = "insight/adsk/python/insight-project_hook.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Automating the Project Lifecycle</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-automating-the-project-lifecycle">Insight: Automating the Project Lifecycle</h1>
+<p>This document explains the <code>project_hook.py</code> file. It gives you total control over how Flame projects are created, saved, and managed.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in project management and data safety.</p>
+<hr />
+<h2 id="1-what-is-a-project-hook">1. What is a Project Hook?</h2>
+<p>In Flame, a "Project" is the container for all your work. Because projects are so important, Flame gives you hooks for every possible change that can happen to one.</p>
+<hr />
+<h2 id="2-key-lifecycle-events">2. Key Lifecycle Events</h2>
+<h3 id="a-creation-setup-project_init_creation-pre_creation">A. Creation &amp; Setup (<code>project_init_creation</code> / <code>pre_creation</code>)</h3>
+<ul>
+<li><strong><code>project_init_creation</code></strong>: Runs as soon as you open the "New Project" window.</li>
+<li><em>Use case:</em> Automatically fill in the Project Description or Nickname based on today's date.</li>
+<li><strong><code>project_pre_creation</code></strong>: Runs right before the project is actually built.</li>
+<li><em>Use case:</em> <strong>Abort</strong> the creation if the name doesn't follow studio rules (e.g., must start with a job number).</li>
+</ul>
+<h3 id="b-project-changes-project_changed-project_saved">B. Project Changes (<code>project_changed</code> / <code>project_saved</code>)</h3>
+<ul>
+<li><strong><code>project_changed</code></strong>: Runs when you switch from Project A to Project B.</li>
+<li><strong><code>project_saved</code></strong>: Runs every time you save.</li>
+<li><em>Tip:</em> It even tells you if it was an "Auto-Save" or a manual save by the artist!</li>
+</ul>
+<h3 id="c-conversion-migration-project_pre_conversion">C. Conversion &amp; Migration (<code>project_pre_conversion</code>)</h3>
+<p>When you upgrade Flame, you often have to convert old projects.
+- <em>Use case:</em> Log which projects have been migrated to the new version for auditing.</p>
+<h3 id="d-deletion-protection-project_pre_delete">D. Deletion &amp; Protection (<code>project_pre_delete</code>)</h3>
+<p>This is the "Security Guard" hook.
+- <em>Use case:</em> Prevent anyone from deleting a project if it's currently marked as "Active" in your studio database.</p>
+<hr />
+<h2 id="3-the-abort-power">3. The "Abort" Power</h2>
+<p>Just like Export hooks, Project hooks allow you to set <code>info["abort"] = True</code>. This is the ultimate safety feature. It stops Flame from doing anything until the project data meets your studio's standards.</p>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Organization:</strong> Ensure every project has a consistent folder structure and naming convention.</li>
+<li><strong>Safety:</strong> Prevent accidental deletion of "Master" projects.</li>
+<li><strong>Automation:</strong> Automatically link Flame projects to external systems like ShotGrid as soon as they are created.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Project hooks are about <strong>"Governance."</strong> They allow you to turn Flame from a standalone tool into a part of a larger, managed studio ecosystem where rules are enforced automatically by code.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

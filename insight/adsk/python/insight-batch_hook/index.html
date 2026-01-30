@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Insight: Mastering the Batch Lifecycle - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Mastering the Batch Lifecycle";
+        var mkdocs_page_input_path = "insight/adsk/python/insight-batch_hook.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Mastering the Batch Lifecycle</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-mastering-the-batch-lifecycle">Insight: Mastering the Batch Lifecycle</h1>
+<p>This document explains the <code>batch_hook.py</code> file. It covers every stage of the Batch process—from saving your work to rendering the final images.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers learning about render pipelines and automation.</p>
+<hr />
+<h2 id="1-what-is-a-batch-hook">1. What is a Batch Hook?</h2>
+<p><strong>Batch</strong> is Flame's node-based compositing environment. Because Batch is where most of the "Heavy Lifting" (rendering) happens, it has many hooks to help you track progress and prevent mistakes.</p>
+<hr />
+<h2 id="2-key-lifecycle-stages">2. Key Lifecycle Stages</h2>
+<p>The script breaks the Batch workflow into three main parts:</p>
+<h3 id="a-setup-management-batch_setup_loaded-saved">A. Setup Management (<code>batch_setup_loaded</code> / <code>saved</code>)</h3>
+<p>These run when you open or save your Batch schematic.
+- <strong>Use case:</strong> Keep a log of who is opening which Batch setup and when.</p>
+<h3 id="b-iterations-batch_setup_iterated_pre-post">B. Iterations (<code>batch_setup_iterated_pre</code> / <code>post</code>)</h3>
+<p>In Flame, an "Iteration" is a versioned save.
+- <strong>The "Pre" Hook:</strong> Runs <em>before</em> the save happens. You can use this to <strong>Abort</strong> the save if the file name doesn't match studio standards.
+- <strong>The "Post" Hook:</strong> Runs after the save. It tells you if it was successful.</p>
+<h3 id="c-rendering-exporting-begin-end-hooks">C. Rendering &amp; Exporting (<code>begin</code> / <code>end</code> hooks)</h3>
+<p>This is where the images are actually created.
+- <strong><code>batch_render_begin</code></strong>: Runs before a local render.
+- <strong><code>batch_burn_begin</code></strong>: Runs before sending a job to a "Burn" render node.
+- <strong><code>batch_export_begin</code></strong>: Runs before a "Write File" node starts exporting to disk.</p>
+<hr />
+<h2 id="3-the-info-and-userdata-pattern">3. The <code>info</code> and <code>userData</code> Pattern</h2>
+<p>Almost all these functions use two special parameters:</p>
+<ol>
+<li><strong><code>info</code> [Dictionary]:</strong> This is a read-only (and sometimes modifiable) "ID Card" for the task. It contains paths, frame rates, resolution, and job names.</li>
+<li><strong><code>userData</code> [Dictionary]:</strong> This is like a <strong>"Sticky Note."</strong> You can write something on it in the <code>_begin</code> hook (like a timestamp), and Flame will hand that same sticky note back to you in the <code>_end</code> hook. It's the best way to track how long a job took!</li>
+</ol>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Quality Control:</strong> Use the <code>begin</code> hooks to check if the render settings (like resolution) are correct before wasting hours on a render.</li>
+<li><strong>Custom Notifications:</strong> Use the <code>end</code> hooks to trigger a Slack message or email when a long render is finished.</li>
+<li><strong>Path Redirection:</strong> Use the <code>batch_export_begin</code> hook to dynamically change where files are saved based on the project name.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Batch hooks allow you to <strong>"Sandwich"</strong> Flame's built-in actions with your own code. By putting logic at the "Start" and "End" of a render, you can build a highly controlled and intelligent production pipeline.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

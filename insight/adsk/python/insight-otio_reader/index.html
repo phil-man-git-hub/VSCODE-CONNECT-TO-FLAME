@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Insight: The OTIO Translation Engine - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: The OTIO Translation Engine";
+        var mkdocs_page_input_path = "insight/adsk/python/insight-otio_reader.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: The OTIO Translation Engine</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-the-otio-translation-engine">Insight: The OTIO Translation Engine</h1>
+<p>This document explains the <code>otio_reader.py</code> script. While the "Hook" script starts the process, this is the "Brain" that does the actual work of turning an OTIO file into a Flame sequence.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in object-oriented programming (OOP) and "Data Mapping."</p>
+<hr />
+<h2 id="1-what-is-a-reader-class">1. What is a "Reader" Class?</h2>
+<p>This script uses a <strong>Class</strong> called <code>FlameOTIOReader</code>. 
+- <strong>The Concept:</strong> Think of this class as a professional translator. It reads a book in one language (OTIO) and writes a new one in another language (Flame API).</p>
+<hr />
+<h2 id="2-key-translation-steps">2. Key Translation Steps</h2>
+<p>The script doesn't just "copy" the file. It has to map every OTIO concept to a Flame concept:</p>
+<h3 id="a-the-timeline-map">A. The Timeline Map</h3>
+<ul>
+<li><strong>OTIO Timeline</strong> becomes a <strong>Flame Sequence</strong>.</li>
+<li><strong>OTIO Track</strong> becomes a <strong>Flame Track</strong> (Video or Audio).</li>
+<li><strong>OTIO Clip</strong> becomes a <strong>Flame Segment</strong>.</li>
+</ul>
+<h3 id="b-frame-rate-conversion">B. Frame Rate Conversion</h3>
+<p>OTIO might say "23.98 fps," but Flame expects exactly <code>"23.976 fps"</code>. The function <code>_otio_rate_to_frame</code> handles this tricky math so the timing stays perfect.</p>
+<h3 id="c-finding-media">C. Finding Media</h3>
+<p>OTIO files often use "Relative Paths" (e.g., <code>../media/shot.mov</code>). The script is smart enough to find the real file on your hard drive by looking at where the OTIO file itself is saved.</p>
+<hr />
+<h2 id="3-advanced-feature-pre-and-post-hooks">3. Advanced Feature: "Pre" and "Post" Hooks</h2>
+<p>The reader is designed to be extensible. It uses its own internal hooks:
+- <strong><code>pre_hook_Clip</code></strong>: Runs just before a clip is created.
+- <strong><code>post_hook_Clip</code></strong>: Runs after the clip is in Flame.
+This allows other programmers to add custom logic (like adding a specific Color FX) without changing the main reader code.</p>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Robustness:</strong> By putting all the logic in one Class, the code is easier to test and fix.</li>
+<li><strong>Complexity:</strong> It handles nested structures (like stacks and gaps) that a simple script couldn't manage.</li>
+<li><strong>Accuracy:</strong> It ensures that metadata, markers, and transitions are preserved during the move between software.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Mapping data from one format to another is a common job for Python. The secret is to break the big problem into small pieces: first translate the Timeline, then the Tracks, then the Clips, then the Markers. </p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

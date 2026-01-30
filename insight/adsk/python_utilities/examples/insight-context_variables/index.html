@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Automating OCIO Context Variables in Flame - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Automating OCIO Context Variables in Flame";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/examples/insight-context_variables.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Automating OCIO Context Variables in Flame</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-automating-ocio-context-variables-in-flame">Insight: Automating OCIO Context Variables in Flame</h1>
+<p>This document explains the <code>context_variables.py</code> example script. It is designed to help you understand how to automate <strong>OpenColorIO (OCIO) Context Variables</strong> using the Autodesk Flame Python API.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers getting started with Flame automation.</p>
+<hr />
+<h2 id="1-what-is-the-goal">1. What is the Goal?</h2>
+<p>In modern color pipelines, we often use <strong>OCIO</strong> (OpenColorIO) to manage color spaces. A powerful feature of OCIO is <strong>Context Variables</strong>.</p>
+<p>Imagine you have a specific Color Correction file (<code>.cc</code> or <code>.lut</code>) for <em>every single shot</em> in your movie. Instead of manually loading <code>shot_010.cc</code> for Shot 010 and <code>shot_020.cc</code> for Shot 020, you can tell Flame:</p>
+<blockquote>
+<p>"Look for a file named <code>${SHOT}.cc</code>."</p>
+</blockquote>
+<p>Then, you just need to tell Flame what <code>${SHOT}</code> equals for each clip.</p>
+<p><strong>This script automates that second part.</strong> It takes the <strong>Shot Name</strong> of your clip (e.g., "sh010") and automatically plugs it into the <code>SHOT</code> Context Variable in the Color Management settings.</p>
+<hr />
+<h2 id="2-key-functions-breakdown">2. Key Functions Breakdown</h2>
+<p>The script provides two main ways to do this: one for the <strong>Timeline</strong> and one for <strong>Batch</strong>.</p>
+<h3 id="a-timeline-workflow-add_cmfx_with_shot_based_cc">A. Timeline Workflow: <code>add_cmfx_with_shot_based_cc</code></h3>
+<p>This function adds a <strong>Source Colour Management</strong> Timeline FX to your segments.</p>
+<ol>
+<li>
+<p><strong>Selection Handling:</strong>
+    First, it looks at what you selected.</p>
+<ul>
+<li>If you selected <strong>Segments</strong>, it uses them directly.</li>
+<li>If you selected <strong>Sequences</strong>, it finds all the segments inside them.</li>
+</ul>
+</li>
+<li>
+<p><strong>Safety Check:</strong>
+    It checks if you already have a Color Management effect.</p>
+<ul>
+<li>If yes, it pops up a dialog box asking: <em>"Do you want to overwrite the existing effect?"</em></li>
+<li>This is great practice! It prevents your script from accidentally destroying previous work.</li>
+</ul>
+</li>
+<li>
+<p><strong>The "Magic" Loop:</strong>
+    It goes through each segment one by one:
+    ```python
+    # 1. Get the Shot Name
+    shot_name = segment.shot_name.get_value()</p>
+<h1 id="2-create-the-effect">2. Create the Effect</h1>
+<p>clmgt = segment.create_effect("Source Colour Mgmt")</p>
+<h1 id="3-configure-the-effect">3. Configure the Effect</h1>
+<p>clmgt.mode = "View Transform"
+clmgt.view = "Shot Based CC" # This view expects a variable!</p>
+<h1 id="4-set-the-variable">4. Set the Variable</h1>
+<p>clmgt.set_context_variable("SHOT", shot_name)
+<code>``
+**Result:** The effect is created, and the</code>${SHOT}` variable is now equal to "sh010" (or whatever your shot is named).</p>
+</li>
+</ol>
+<h3 id="b-batch-workflow-add_cmnode_with_shot_based_cc">B. Batch Workflow: <code>add_cmnode_with_shot_based_cc</code></h3>
+<p>This function works in the <strong>Batch</strong> schematic (Flame's node-based compositor).</p>
+<ol>
+<li>
+<p><strong>Selection Handling:</strong>
+    It looks for <strong>Clip Nodes</strong> in your selection or inside selected Batch Groups.</p>
+</li>
+<li>
+<p><strong>Node Creation:</strong>
+    For every clip:</p>
+<ul>
+<li>It creates a new <strong>Colour Mgmt</strong> node.</li>
+<li>It connects it to the Clip node automatically.</li>
+<li><em>Tip:</em> <code>batch.connect_nodes(clip_node, "Default", clmgt, "Default")</code> is how you wire things together with code.</li>
+</ul>
+</li>
+<li>
+<p><strong>Setting the Variable:</strong>
+    Just like the timeline version, it takes the <code>shot_name</code> from the clip and feeds it into <code>clmgt.set_context_variable("SHOT", shot_name)</code>.</p>
+</li>
+</ol>
+<hr />
+<h2 id="3-how-does-it-appear-in-flame">3. How does it appear in Flame?</h2>
+<p>The functions at the bottom (<code>get_timeline_custom_ui_actions</code>, etc.) tell Flame where to put this script in the menu.</p>
+<ul>
+<li><strong>Context:</strong> You will see a new menu item <strong>"Examples / Context Variables"</strong> when you right-click on the Timeline, in Batch, or in the Media Panel.</li>
+<li><strong>Visibility:</strong> The <code>isVisible</code> filters ensure you only see the "Batch" command when you are actually in Batch, and the "Timeline" command when you are on the Timeline. This keeps the menus clean.</li>
+</ul>
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<p>Without this script, you would have to:
+1.  Add a Color Mgmt node.
+2.  Open it.
+3.  Type the shot name into the Context Variable tab.
+4.  Repeat 100 times for 100 shots.</p>
+<p><strong>With this script, you click one button, and it's done for all 100 shots instantly.</strong></p>
+<h2 id="5-next-steps-for-you">5. Next Steps for You</h2>
+<p>Try modifying the script!
+-   <strong>Challenge:</strong> Can you change it to use a different variable name, like <code>SEQUENCE</code> instead of <code>SHOT</code>?
+-   <strong>Hint:</strong> Look for the line <code>clmgt.set_context_variable("SHOT", shot_name)</code> and change <code>"SHOT"</code> to <code>"SEQUENCE"</code>.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

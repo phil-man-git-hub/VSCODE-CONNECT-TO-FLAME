@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: The Inference Builder API (AI Model Packaging) - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: The Inference Builder API (AI Model Packaging)";
+        var mkdocs_page_input_path = "insight/inference_builder_api/insight-inference_builder.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: The Inference Builder API (AI Model Packaging)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-the-inference-builder-api-ai-model-packaging">Insight: The Inference Builder API (AI Model Packaging)</h1>
+<p>This document explains the <strong>Inference Builder</strong>, a specialized tool in Autodesk Flame that allows you to bring your own <strong>Artificial Intelligence (AI)</strong> models into your creative workflow.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers and technical artists interested in Machine Learning (ML).</p>
+<hr />
+<h2 id="1-what-is-the-inference-builder">1. What is the Inference Builder?</h2>
+<p>Autodesk Flame can run custom AI models (like tools that remove backgrounds, upscale low-res video, or clean up digital noise). These models are usually saved in a standard format called <strong>ONNX</strong>.</p>
+<p>However, Flame needs a bit more information to use these models correctly—like knowing which socket is "Video" and which is "Alpha." The <strong>Inference Builder</strong> is the tool that packages an AI model into a single, encrypted file called an <strong>.inf</strong> file (similar to how Matchbox uses <code>.mx</code> files).</p>
+<hr />
+<h2 id="2-the-three-part-package">2. The Three-Part Package</h2>
+<p>To create a professional AI tool for Flame, you need three files with the same name:
+1.  <strong><code>MyModel.onnx</code></strong>: The actual "Brain" (the trained AI model).
+2.  <strong><code>MyModel.json</code></strong>: The "Instruction Manual" (the sidecar file that explains how to use the brain).
+3.  <strong><code>MyModel.png</code></strong>: The "Cover Art" (a 128x94 thumbnail for the Flame file browser).</p>
+<hr />
+<h2 id="3-the-instruction-manual-json-file">3. The "Instruction Manual" (JSON File)</h2>
+<p>The <code>.json</code> file is where you do most of your work. It tells Flame how to connect its inputs to the AI model's inputs.</p>
+<h3 id="key-settings-to-know">Key Settings to Know:</h3>
+<ul>
+<li><strong><code>ScalingFactor</code></strong>: If your AI model makes a 1080p image into a 4K image, you set this to <code>2.0</code>. This tells Flame to prepare a larger canvas for the result.</li>
+<li><strong><code>Channels</code></strong>: AI models are very picky. One model might want "Red, Green, Blue," while another wants "Blue, Green, Red." You use the <code>Channels</code> setting (like <code>"RGB"</code> or <code>"BGR"</code>) to translate between them.</li>
+<li><strong><code>Padding</code></strong>: Some AI models can only work on images that are multiples of 8 or 16 pixels. If you set <code>Padding: 8</code>, Flame will automatically add invisible pixels to the edges to make the AI happy, then trim them off when it's done.</li>
+</ul>
+<hr />
+<h2 id="4-the-workflow">4. The Workflow</h2>
+<ol>
+<li><strong>Generate:</strong> Run the <code>inference_builder -j</code> command to create a "starting" JSON file based on your model.</li>
+<li><strong>Edit:</strong> Open the JSON in a text editor and fill in the descriptions and channel types.</li>
+<li><strong>Test:</strong> Load your <code>.onnx</code> and <code>.json</code> files into an <strong>Inference Node</strong> in Batch.</li>
+<li><strong>Package:</strong> Once it's working perfectly, run <code>inference_builder -p</code> to turn everything into a single, encrypted <code>.inf</code> file.</li>
+</ol>
+<hr />
+<h2 id="5-why-is-this-useful">5. Why is this useful?</h2>
+<ul>
+<li><strong>Custom Tools:</strong> You can download open-source AI models from the internet (like those on HuggingFace) and turn them into native Flame tools.</li>
+<li><strong>IP Protection:</strong> Packaging into an <code>.inf</code> file encrypts your model, so you can share your tool with other studios without them seeing your secret AI "Brain" code.</li>
+<li><strong>User Friendly:</strong> It turns a complex technical process into a simple "Node" that any Flame artist can use without knowing anything about AI.</li>
+</ul>
+<hr />
+<h2 id="6-key-takeaway-for-beginners">6. Key Takeaway for Beginners</h2>
+<p>Think of the Inference Builder as a <strong>"Gift Wrapper."</strong> You take a raw AI model (the gift), write a card explaining how to use it (the JSON), add a nice picture (the thumbnail), and wrap it all into a professional package (the <code>.inf</code> file) that works perfectly inside Flame.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

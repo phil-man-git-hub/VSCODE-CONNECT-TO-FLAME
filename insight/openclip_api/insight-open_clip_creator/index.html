@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: The Open Clip Creator - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: The Open Clip Creator";
+        var mkdocs_page_input_path = "insight/openclip_api/insight-open_clip_creator.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: The Open Clip Creator</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-the-open-clip-creator">Insight: The Open Clip Creator</h1>
+<p>This document explains the <strong>Open Clip Creator</strong>, a tool used to build special XML files that Flame uses to manage complex media.</p>
+<p><strong>Target Audience:</strong> Novice technical artists and pipeline developers.</p>
+<hr />
+<h2 id="1-what-is-an-open-clip">1. What is an Open Clip?</h2>
+<p>Think of an <strong>Open Clip</strong> (<code>.clip</code> file) as a "Smart Folder." </p>
+<p>Instead of Flame just looking at one movie file, an Open Clip tells Flame:</p>
+<blockquote>
+<p>"This clip actually has 3 different versions (V1, V2, V3), a separate Left/Right eye for 3D, and it's made up of 5,000 individual DPX images stored on a server."</p>
+</blockquote>
+<p>It "wraps" all that complexity into one single file that Flame can load as a regular clip.</p>
+<hr />
+<h2 id="2-the-hierarchy-from-small-to-large">2. The Hierarchy (From Small to Large)</h2>
+<p>The Open Clip is built like a pyramid:
+1.  <strong>Span:</strong> The lowest level. It's just a path to a piece of media on your hard drive.
+2.  <strong>Feed:</strong> A collection of spans that make up one version of a track.
+3.  <strong>Track:</strong> All the versions and information about a single channel (like "Video" or "Audio").
+4.  <strong>Clip:</strong> The top level. It brings all the tracks together into one object.</p>
+<hr />
+<h2 id="3-powerful-features-patterns">3. Powerful Features: Patterns</h2>
+<p>The most useful part of Open Clips for programmers is <strong>Patterns</strong>. 
+Instead of typing every single filename, you can use <strong>Tokens</strong> like:
+- <code>{name}</code>: The name of the clip.
+- <code>{version}</code>: The version number (e.g., v01, v02).
+- <code>{frame}</code>: The frame number in a sequence.</p>
+<p><strong>Why?</strong> If you drop a new file named <code>Shot01_v02.mov</code> into a folder, an Open Clip using patterns will <strong>automatically see it</strong> as a new version inside Flame without you doing anything!</p>
+<hr />
+<h2 id="4-how-to-create-them">4. How to Create Them</h2>
+<p>You have three options:
+1.  <strong>In Flame:</strong> Select clips in the MediaHub, right-click, and choose "Create Open Clip."
+2.  <strong>The App:</strong> Use the standalone "Open Clip Creator" application.
+3.  <strong>Command Line:</strong> Use the <code>openclip_creator</code> tool in your terminal to automate the process for thousands of shots at once.</p>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Open Clips are the <strong>"Glue"</strong> of a professional pipeline. They allow you to organize messy folders of renders and movie files into neat, versioned clips that Flame understands perfectly. If you find yourself manually importing "v02" every time a render finishes, you should probably be using an Open Clip!</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Using Callable Objects for Custom Actions - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Using Callable Objects for Custom Actions";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/examples/insight-custom_action_object.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Using Callable Objects for Custom Actions</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-using-callable-objects-for-custom-actions">Insight: Using Callable Objects for Custom Actions</h1>
+<p>This document explains the <code>custom_action_object.py</code> example script. It shows an advanced but very efficient way to create many similar menu items without writing a separate function for each one.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers learning about Classes and "Callables."</p>
+<hr />
+<h2 id="1-the-problem-repeating-yourself">1. The Problem: Repeating Yourself</h2>
+<p>Imagine you want 4 menu items: "Action 1", "Action 2", "Action 3", and "Action 4". All of them should do basically the same thing, but they need to know <em>which</em> button was clicked.</p>
+<p>The "old" way would be to write 4 separate functions. That's a lot of copying and pasting!</p>
+<h2 id="2-the-solution-the-callable-object">2. The Solution: The "Callable" Object</h2>
+<p>In Python, you can create a <strong>Class</strong> that acts like a function. This is called making an object "callable."</p>
+<h3 id="how-it-works">How it works:</h3>
+<p>Look at the <code>Action</code> class inside the script:</p>
+<pre><code class="language-python">class Action(object):
+    def __init__(self, action_id):
+        self._action_id = action_id # Remember which ID I am
+
+    def __call__(self, selection):
+        # This makes the object act like a function!
+        return action_on_selection(self._action_id, selection)
+</code></pre>
+<ol>
+<li><strong><code>__init__</code></strong>: When we create <code>Action("Action1")</code>, it saves "Action1" inside itself.</li>
+<li><strong><code>__call__</code></strong>: This is a special Python magic method. It tells Python: "If someone tries to run this object like a function (using parentheses), run this code."</li>
+</ol>
+<h2 id="3-why-is-this-powerful">3. Why is this powerful?</h2>
+<p>Look at how the menu is built in the loop:</p>
+<pre><code class="language-python">action_ids = [&quot;Action1&quot;, &quot;Action2&quot;, &quot;Action3&quot;, &quot;Action4&quot;]
+for action_id in action_ids:
+    # We create a NEW object for each ID
+    actions[&quot;actions&quot;].append({
+        &quot;name&quot;: action_id, 
+        &quot;execute&quot;: Action(action_id) # Pass the object as the command
+    })
+</code></pre>
+<p>By using this trick, you can generate hundreds of menu items dynamically (for example, one for every preset file in a folder) while only writing the logic <strong>once</strong>.</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>If you find yourself writing <code>function1()</code>, <code>function2()</code>, <code>function3()</code> that all look identical, consider using a <strong>Callable Class</strong>. It keeps your code clean, short, and much easier to fix if you need to change the logic later!</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

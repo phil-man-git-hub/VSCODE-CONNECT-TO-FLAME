@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Insight: Creating Custom Naming Tokens - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Creating Custom Naming Tokens";
+        var mkdocs_page_input_path = "insight/adsk/python/insight-tokens_hook.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Creating Custom Naming Tokens</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-creating-custom-naming-tokens">Insight: Creating Custom Naming Tokens</h1>
+<p>This document explains the <code>tokens_hook.py</code> file. It shows how to add your own "Magic Words" (Tokens) to Flame's naming and export windows.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in dynamic naming and string manipulation.</p>
+<hr />
+<h2 id="1-what-are-tokens">1. What are Tokens?</h2>
+<p>You've probably seen tokens in Flame like <code>&lt;shot_name&gt;</code> or <code>{width}</code>. When you use them, Flame automatically replaces the token with the real name or resolution of the clip.</p>
+<p><strong>The Goal:</strong> Add your own custom tokens, like <code>&lt;artist_name&gt;</code> or <code>&lt;job_number&gt;</code>, so you don't have to type them manually in every export window.</p>
+<hr />
+<h2 id="2-two-steps-to-custom-tokens">2. Two Steps to Custom Tokens</h2>
+<p>Adding a token is a two-part process:</p>
+<h3 id="step-1-listing-the-token-get_hook_token_list">Step 1: Listing the Token (<code>get_hook_token_list</code>)</h3>
+<p>You first have to tell Flame that your token exists so it shows up in the "Add Token" dropdown menu.
+- <strong>Contexts:</strong> You can add tokens for <strong>Browsing</strong> (MediaHub), <strong>Clips</strong> (Export), or <strong>Segments</strong> (Timeline).</p>
+<h3 id="step-2-resolving-the-token-resolve_hook_token">Step 2: Resolving the Token (<code>resolve_hook_token</code>)</h3>
+<p>This is the "Search and Replace" part. When Flame sees your token, it runs this function to find out what the real value should be.</p>
+<pre><code class="language-python">def resolve_hook_token(context, context_info, token_name, hint):
+    if token_name == &quot;&lt;my_custom_token&gt;&quot;:
+        return &quot;Real_Value_123&quot;
+</code></pre>
+<hr />
+<h2 id="3-advanced-trick-the-cache">3. Advanced Trick: The "Cache"</h2>
+<p>If you have a token that is hard to calculate (like asking a website for a job number), you don't want Flame to do that 1,000 times for 1,000 clips.</p>
+<p>The script shows an example of a <strong>TTL Cache</strong> (Time-To-Live). It calculates the value once and then "remembers" it for 5 seconds. This keeps Flame feeling fast and responsive.</p>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<ul>
+<li><strong>Dynamic Exporting:</strong> You can create an export path that automatically includes the current artist's name and the date without ever typing it.</li>
+<li><strong>Project Context:</strong> Pull information from external files or databases and inject it directly into Flame's file naming.</li>
+<li><strong>Consistency:</strong> Ensures that everyone in the studio uses the exact same naming format for their renders.</li>
+</ul>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Tokens are like <strong>Variables</strong> for your filenames. By defining them in <code>tokens_hook.py</code>, you are creating a shortcut that turns complex, dynamic data into simple words that any Flame artist can use.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

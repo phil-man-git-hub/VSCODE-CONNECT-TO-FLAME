@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Lightbox Shader Examples - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Lightbox Shader Examples";
+        var mkdocs_page_input_path = "insight/shader_builder_api/insight-lightbox_examples.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Lightbox Shader Examples</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-lightbox-shader-examples">Insight: Lightbox Shader Examples</h1>
+<p>This document provides a summary of the official Lightbox examples provided by Autodesk. These are the best place to start if you want to learn by "deconstructing" existing code.</p>
+<p><strong>Location in Flame:</strong> <code>/opt/Autodesk/presets/&lt;version&gt;/action/lightbox/EXAMPLES</code></p>
+<hr />
+<h2 id="1-the-learning-path">1. The Learning Path</h2>
+<h3 id="level-1-the-basics">Level 1: The Basics</h3>
+<ul>
+<li><strong><code>LightboxBasics.glsl</code></strong>: The simplest possible Lightbox. It just multiplies the color by a "Gain" value. Use this to see the minimum code required to make a Lightbox work.</li>
+</ul>
+<h3 id="level-2-replicating-flame">Level 2: Replicating Flame</h3>
+<ul>
+<li><strong><code>SimpleLight.glsl</code></strong>: Shows you how to manually recreate the math of a standard "Point Light." It's a great lesson in 3D math and how Flame calculates brightness based on distance.</li>
+</ul>
+<h3 id="level-3-interaction-with-3d-space">Level 3: Interaction with 3D Space</h3>
+<ul>
+<li><strong><code>LightboxAPISimple.glsl</code></strong>: Shows how to ask Flame for information about the 3D scene, like the position of the light and the position of the pixels (vertices). This allows for "Decay" effects where the light gets weaker as it gets further away.</li>
+</ul>
+<h3 id="level-4-advanced-material-science">Level 4: Advanced Material Science</h3>
+<ul>
+<li><strong><code>PhysicallyBasedIBL</code></strong> and <strong><code>GGXMaterial</code></strong>: These are complex shaders. They use "Physically Based Rendering" (PBR) to make surfaces look like real metal, plastic, or glass. They show how a Lightbox can completely change the "look" of an object's material.</li>
+</ul>
+<hr />
+<h2 id="2-key-code-snippets-to-look-for">2. Key Code Snippets to Look For</h2>
+<p>When you open these files, look for these specific API calls:</p>
+<ul>
+<li><strong><code>adsk_getLightPosition()</code></strong>: Where is the light?</li>
+<li><strong><code>adsk_getVertexPosition()</code></strong>: Where is the object?</li>
+<li><strong><code>adsk_rgb2yuv()</code></strong>: A built-in helper to change color spaces quickly.</li>
+</ul>
+<hr />
+<h2 id="3-how-to-use-these-examples">3. How to use these Examples</h2>
+<p>Don't try to write a complex shader from scratch. 
+1. <strong>Copy</strong> an example that is close to what you want.
+2. <strong>Modify</strong> one or two lines of code.
+3. <strong>Run</strong> <code>shader_builder</code> to see if it still works.
+4. <strong>Load</strong> it into Action to see the result.</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>The EXAMPLES folder is your <strong>"Cheat Sheet."</strong> Most professional shaders are just variations of these basic patterns. If you want to build a tool that relights a scene, start with <code>SimpleLight</code> and build from there!</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Custom File Browsers in Flame - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Custom File Browsers in Flame";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/examples/insight-import_file_using_custom_dialog.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Custom File Browsers in Flame</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-custom-file-browsers-in-flame">Insight: Custom File Browsers in Flame</h1>
+<p>This document explains the <code>import_file_using_custom_dialog.py</code> example script. It shows two different ways to let a user pick files from their computer using Python.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in User Interface (UI) design.</p>
+<hr />
+<h2 id="1-why-not-just-hardcode-paths">1. Why Not Just Hardcode Paths?</h2>
+<p>If you write a script that always imports <code>C:\Media\shot.mov</code>, it only works once. To make a tool useful, you need to let the user <strong>browse</strong> and <strong>select</strong> the files they want.</p>
+<h2 id="2-two-different-approaches">2. Two Different Approaches</h2>
+<p>This script shows two ways to do this:</p>
+<h3 id="a-the-standard-computer-way-qt-pyside6">A. The "Standard Computer" Way (Qt / PySide6)</h3>
+<p>This uses <strong>PySide6</strong>, which is the industry-standard way to make windows and buttons in Python.
+- <strong>Pros:</strong> It looks like a normal Windows or Mac folder window. It's familiar to everyone.
+- <strong>How it works:</strong>
+  <code>python
+  from PySide6 import QtWidgets
+  dlg = QtWidgets.QFileDialog() # Create a window
+  if dlg.exec(): # Show the window and wait for the user to click OK
+      files = dlg.selectedFiles() # Get the list of chosen files</code></p>
+<h3 id="b-the-flame-native-way-flamebrowser">B. The "Flame Native" Way (<code>flame.browser</code>)</h3>
+<p>Flame has its own built-in file browser.
+- <strong>Pros:</strong> It looks exactly like Flame. It understands Flame-specific things like "Clips" and "Frame Sequences."
+- <strong>How it works:</strong>
+  <code>python
+  import flame
+  flame.browser.show(title="Select Clips", multi_selection=True)
+  # The user's choice is saved in flame.browser.selection
+  flame.batch.import_clips(flame.browser.selection, ...)</code></p>
+<hr />
+<h2 id="3-scoping-making-the-menu-context-aware">3. Scoping: Making the Menu Context-Aware</h2>
+<p>The script uses a clever trick to make sure the "Import" buttons only appear when you right-click on the <strong>background</strong> of the Batch schematic:</p>
+<pre><code class="language-python">def scope_background(selection):
+    return len(selection) == 0 # Only True if NOTHING is selected
+</code></pre>
+<p>If you right-click on a clip node, this menu won't show up. This prevents clutter and ensures you don't try to "import into a clip."</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<ul>
+<li>Use <code>PySide6</code> if you want a standard OS feeling or need special filters (like "only show .jpg").</li>
+<li>Use <code>flame.browser</code> if you want your tool to feel like a native part of the Flame experience.</li>
+<li>Both ways ultimately give you a <strong>Path</strong> (a string of text like <code>/Users/pman/Desktop/video.mov</code>) which you then pass to Flame's <code>import_clip()</code> command.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

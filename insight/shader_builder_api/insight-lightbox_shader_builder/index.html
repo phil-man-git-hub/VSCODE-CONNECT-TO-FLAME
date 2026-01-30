@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Creating Lightbox Shaders - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Creating Lightbox Shaders";
+        var mkdocs_page_input_path = "insight/shader_builder_api/insight-lightbox_shader_builder.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Creating Lightbox Shaders</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-creating-lightbox-shaders">Insight: Creating Lightbox Shaders</h1>
+<p>This document explains the <strong>Lightbox</strong> framework in Autodesk Flame. It shows how you can write your own 3D lighting effects using GLSL (OpenGL Shading Language).</p>
+<p><strong>Target Audience:</strong> Novice programmers and technical artists interested in 3D compositing and GLSL.</p>
+<hr />
+<h2 id="1-what-is-a-lightbox">1. What is a Lightbox?</h2>
+<p>A <strong>Lightbox</strong> is a custom shader that lives inside <strong>Action</strong> (Flame's 3D engine). Think of it as a "Smart Filter" for a light. </p>
+<p>Usually, a light just makes things brighter. A Lightbox can make a light do <em>anything</em>—like inverting colors, adding texture, or changing the way a surface reacts to distance.</p>
+<hr />
+<h2 id="2-the-basic-structure">2. The Basic Structure</h2>
+<p>A Lightbox shader is a small piece of code written in GLSL. It always has a specific function:</p>
+<pre><code class="language-glsl">vec4 adskUID_lightbox(vec4 source)
+{
+    // 'source' is the pixel color before this light hits it.
+    // Your code goes here...
+    return source;
+}
+</code></pre>
+<ul>
+<li><strong><code>adskUID_</code></strong>: This prefix is mandatory. It stands for "Unique ID" and prevents your shader from clashing with others when multiple Lightboxes are loaded.</li>
+<li><strong><code>source</code></strong>: This represents the color and transparency (RGBA) of the object being lit.</li>
+</ul>
+<hr />
+<h2 id="3-writing-and-testing">3. Writing and Testing</h2>
+<ol>
+<li><strong>Code:</strong> Write your shader in a text editor and save it as <code>.glsl</code>.</li>
+<li><strong>Validate:</strong> Use the <code>shader_builder</code> utility in your terminal:
+    <code>shader_builder -l -x my_shader.glsl</code><ul>
+<li><code>-l</code> tells it this is a <strong>Lightbox</strong>.</li>
+<li><code>-x</code> tells it to generate an <strong>XML</strong> file (this creates the buttons and sliders in Flame).</li>
+</ul>
+</li>
+<li><strong>Fix:</strong> If there are errors (like a missing <code>;</code>), <code>shader_builder</code> will tell you exactly which line is broken.</li>
+</ol>
+<hr />
+<h2 id="4-key-concepts-to-remember">4. Key Concepts to Remember</h2>
+<ul>
+<li><strong>Pre vs. Post:</strong> In Flame, a Lightbox can run <em>before</em> the light hits the object (to modify the surface) or <em>after</em> the light (to modify the final lit result).</li>
+<li><strong>The Alpha Rule:</strong> Always return a valid Alpha (<code>source.a</code>). If you set Alpha to 0, the object will disappear!</li>
+<li><strong>Namespacing:</strong> You must use the <code>adskUID_</code> prefix for every variable you create (like <code>adskUID_gain</code>). If you don't, you can only load one copy of your shader at a time.</li>
+</ul>
+<hr />
+<h2 id="5-why-use-lightbox-instead-of-matchbox">5. Why use Lightbox instead of Matchbox?</h2>
+<ul>
+<li><strong>Matchbox</strong> is for 2D image processing (like blurs or color corrections).</li>
+<li><strong>Lightbox</strong> is for 3D interactions. It has access to things like the position of the light, the direction of the surface (normals), and the 3D depth of the scene.</li>
+</ul>
+<hr />
+<h2 id="6-key-takeaway-for-beginners">6. Key Takeaway for Beginners</h2>
+<p>Lightbox allows you to "hijack" Flame's 3D lighting pipeline. Whether you want to make a light that only affects blue objects or a light that adds a custom glow pattern, the <code>adskUID_lightbox</code> function is where you build that logic.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

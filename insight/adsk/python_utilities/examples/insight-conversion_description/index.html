@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Customizing Project Conversion in Flame - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Customizing Project Conversion in Flame";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/examples/insight-conversion_description.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Customizing Project Conversion in Flame</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-customizing-project-conversion-in-flame">Insight: Customizing Project Conversion in Flame</h1>
+<p>This document explains the <code>conversion_description.py</code> example script. It is a simple but powerful example of using <strong>Hooks</strong> to automate tasks when upgrading projects in Autodesk Flame.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in project management automation.</p>
+<hr />
+<h2 id="1-what-is-the-goal">1. What is the Goal?</h2>
+<p>When you upgrade Autodesk Flame to a new major version (e.g., from 2025 to 2026), your existing projects often need to be "converted" to work with the new software.</p>
+<p>Normally, this just happens. But what if you want to leave a "paper trail" or tag these projects so you know they have been changed?</p>
+<p><strong>This script automates that tagging.</strong>
+- It automatically adds " (Converted)" to the end of the project's name.
+- It changes the project's description to say exactly <em>when</em> the conversion happened.</p>
+<hr />
+<h2 id="2-key-concepts">2. Key Concepts</h2>
+<h3 id="a-the-hook">A. The "Hook"</h3>
+<p>The core of this script is a special function name: <code>project_init_conversion</code>.
+Flame looks for this specific function name. If it finds it in a loaded script, it runs it right before the conversion process starts.</p>
+<h3 id="b-the-info-dictionary">B. The <code>info</code> Dictionary</h3>
+<p>When Flame runs this function, it passes a variable called <code>info</code> to it.
+Think of <code>info</code> as a container (a Python dictionary) that holds the project's ID card:
+- <code>info["project_name"]</code>: The name of the project.
+- <code>info["project_description"]</code>: The description text you see in the startup screen.</p>
+<p>By changing the data inside this container, you change what Flame writes to the database.</p>
+<hr />
+<h2 id="3-code-breakdown">3. Code Breakdown</h2>
+<p>Let's look at the code line by line:</p>
+<pre><code class="language-python">import datetime
+
+def project_init_conversion(info):
+    # 1. Modify the Name
+    info[&quot;project_name&quot;] = info[&quot;project_name&quot;] + &quot; (Converted)&quot;
+
+    # 2. Modify the Description
+    timestamp = datetime.datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
+    info[&quot;project_description&quot;] = &quot;Converted on {0}&quot;.format(timestamp)
+</code></pre>
+<ol>
+<li><strong><code>import datetime</code></strong>: This imports a standard Python tool for working with dates and times.</li>
+<li><strong><code>info["project_name"] = ...</code></strong>: It takes the current name (e.g., "MyCommercial") and adds text to it. The new name becomes "MyCommercial (Converted)".</li>
+<li><strong><code>info["project_description"] = ...</code></strong>:<ul>
+<li><code>datetime.datetime.now()</code> gets the current moment.</li>
+<li><code>.strftime(...)</code> formats it into a readable string like "2026-01-29 14:30:00".</li>
+<li>It overwrites the old description with this new timestamp.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="4-why-is-this-useful">4. Why is this useful?</h2>
+<p>This is a perfect example of <strong>Workflow Safety</strong>.
+- <strong>Organization:</strong> You can instantly tell which projects have been migrated just by looking at the list.
+- <strong>Audit Trail:</strong> You know exactly when the migration happened.
+- <strong>Automation:</strong> You don't have to remember to type this in manually for every single project.</p>
+<h2 id="5-next-steps-for-you">5. Next Steps for You</h2>
+<p>Try customizing it!
+- <strong>Challenge:</strong> Instead of overwriting the description, can you <em>append</em> the date to the existing description so you don't lose the original text?
+- <strong>Hint:</strong>
+  <code>python
+  # Try this instead:
+  info["project_description"] = info["project_description"] + " | Converted on: " + timestamp</code></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

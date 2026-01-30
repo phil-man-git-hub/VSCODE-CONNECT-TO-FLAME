@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../img/favicon.ico" />
+    <title>Insight: Monitoring Archive Operations - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Monitoring Archive Operations";
+        var mkdocs_page_input_path = "insight/adsk/python/insight-archive_hook.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Monitoring Archive Operations</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-monitoring-archive-operations">Insight: Monitoring Archive Operations</h1>
+<p>This document explains the <code>archive_hook.py</code> file. It shows how Flame can notify your Python scripts about the status of backups and restores.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers interested in data safety and system monitoring.</p>
+<hr />
+<h2 id="1-what-is-an-archive-hook">1. What is an Archive Hook?</h2>
+<p>In Flame, "Archiving" is the process of backing up your project to a server or a tape. Because archives can take a long time, you might not want to sit and watch the progress bar.</p>
+<p><strong>The Solution:</strong> Archive Hooks. These are "Event Listeners" that run automatically when an archive starts, finishes, or hits a milestone.</p>
+<hr />
+<h2 id="2-key-events-hooks">2. Key Events (Hooks)</h2>
+<p>The script defines several empty placeholders (functions) that Flame will fill with data:</p>
+<h3 id="a-archive_completed">A. <code>archive_completed</code></h3>
+<p>Flame runs this as soon as a backup is 100% finished.
+- <strong>Use case:</strong> Send an email to the producer saying: <em>"The backup for 'Project_X' is done!"</em></p>
+<h3 id="b-archive_restored">B. <code>archive_restored</code></h3>
+<p>Runs when you successfully bring a project back from an archive.
+- <strong>Use case:</strong> Log that a project was reopened for auditing purposes.</p>
+<h3 id="c-archive_segment_completed">C. <code>archive_segment_completed</code></h3>
+<p>Archives are often broken into smaller "segments" (files). This hook runs every time one of those small files is finished.
+- <strong>Why?</strong> It tells you the <code>status</code>. If it's not zero, something went wrong! You can catch errors early instead of waiting for the very end.</p>
+<h3 id="d-archive_selection_updated">D. <code>archive_selection_updated</code></h3>
+<p>Runs when you select clips to be archived. It gives you technical data like <code>num_frames</code> and <code>data_size</code> (in MB).
+- <strong>Use case:</strong> Warn the artist if they are trying to archive more data than is available on the backup drive.</p>
+<hr />
+<h2 id="3-why-is-this-useful">3. Why is this useful?</h2>
+<ul>
+<li><strong>Automation:</strong> You can trigger external scripts (like database updates) based on archive success.</li>
+<li><strong>Error Handling:</strong> You get immediate, detailed feedback if a backup fails.</li>
+<li><strong>Reporting:</strong> You can build a history of how much data your studio is archiving every day.</li>
+</ul>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>Hooks are like <strong>"Automatic Notifications"</strong> for your code. Instead of your script constantly asking Flame <em>"Are you done yet?"</em>, Flame simply "calls" your script's function when the event happens and hands over all the relevant information (like the archive name and path).</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../..";</script>
+    <script src="../../../../js/theme_extra.js"></script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

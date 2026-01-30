@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Open Clip XML Reference - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Open Clip XML Reference";
+        var mkdocs_page_input_path = "insight/openclip_api/insight-open_clip_reference.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Open Clip XML Reference</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-open-clip-xml-reference">Insight: Open Clip XML Reference</h1>
+<p>This document explains the technical structure of an <strong>Open Clip</strong> XML file. It is the "Dictionary" for how Flame reads the instructions inside a <code>.clip</code> file.</p>
+<p><strong>Target Audience:</strong> Novice programmers interested in XML and data structure.</p>
+<hr />
+<h2 id="1-what-is-inside-an-open-clip">1. What is inside an Open Clip?</h2>
+<p>An Open Clip file is basically an XML list of directions. It tells Flame:
+- <strong>Where</strong> the files are (File paths).
+- <strong>When</strong> they start and end (Timecodes).
+- <strong>How</strong> they are organized (Tracks and Versions).</p>
+<p><strong>Important Note:</strong> An Open Clip is <strong>NOT</strong> a timeline like an EDL or AAF. It doesn't contain "edits" or "effects." It only describes the media itself.</p>
+<hr />
+<h2 id="2-key-components-the-xml-tags">2. Key Components (The XML Tags)</h2>
+<p>When you open a <code>.clip</code> file in a text editor, you will see several standard tags:</p>
+<ul>
+<li><strong><code>&lt;clip&gt;</code></strong>: The main container.</li>
+<li><strong><code>&lt;tracks&gt;</code></strong>: Groups together all the different channels (Video, Audio).</li>
+<li><strong><code>&lt;versions&gt;</code></strong>: Lists the different revisions of the media.</li>
+<li><strong><code>&lt;feeds&gt;</code></strong>: The specific media streams for a version.</li>
+<li><strong><code>&lt;spans&gt;</code></strong>: The actual links to files on your hard drive.</li>
+</ul>
+<hr />
+<h2 id="3-version-history">3. Version History</h2>
+<p>Open Clip has evolved over the years. The most current version is <strong>Version 7</strong>. 
+- Newer versions support things like <strong>Nested Dictionaries</strong> (for complex metadata) and <strong>Resolved Color Spaces</strong> (so Flame knows exactly what color management to apply).</p>
+<hr />
+<h2 id="4-learning-by-example">4. Learning by Example</h2>
+<p>The best way to understand the XML is to look at existing files. Flame installs several examples on your system:
+<code>/opt/Autodesk/openclip_examples</code></p>
+<p>Try opening these in a text editor like VS Code to see how the tags fit together.</p>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>Think of the Open Clip Reference as the <strong>"Syntax Guide"</strong> for Flame's media language. If you want to write a script that automatically generates these files, you need to follow these rules exactly so Flame can read your instructions correctly.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

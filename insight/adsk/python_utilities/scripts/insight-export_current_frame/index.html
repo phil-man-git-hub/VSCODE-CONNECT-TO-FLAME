@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../../../img/favicon.ico" />
+    <title>Insight: Exporting the "Current Frame" - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Exporting the \"Current Frame\"";
+        var mkdocs_page_input_path = "insight/adsk/python_utilities/scripts/insight-export_current_frame.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Exporting the "Current Frame"</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-exporting-the-current-frame">Insight: Exporting the "Current Frame"</h1>
+<p>This document explains the <code>export_current_frame.py</code> script. It shows how to grab exactly what you are looking at in the player and save it as a high-quality Jpeg.</p>
+<p><strong>Target Audience:</strong> Novice Python programmers learning about non-destructive editing.</p>
+<hr />
+<h2 id="1-the-challenge-single-frame-export">1. The Challenge: Single Frame Export</h2>
+<p>Flame's exporter usually wants to export a whole clip. If you only want the frame your playhead is on, you have to be clever.</p>
+<p><strong>The Strategy:</strong>
+1. Find the current time.
+2. <strong>Duplicate</strong> the clip (so we don't ruin the original).
+3. Set the In/Out points of the duplicate to that single frame.
+4. Export and then <strong>Delete</strong> the duplicate.</p>
+<hr />
+<h2 id="2-key-concepts">2. Key Concepts</h2>
+<h3 id="a-clip-duplication">A. Clip Duplication</h3>
+<pre><code class="language-python">duplicate_clip = flame.duplicate(clip)
+</code></pre>
+<p><strong>Why do this?</strong> If you change the In/Out marks on the original clip, the artist will lose their edit! Duplicating creates a "disposable" copy that we can change safely.</p>
+<h3 id="b-mark-manipulation">B. Mark Manipulation</h3>
+<pre><code class="language-python">duplicate_clip.in_mark = clip.current_time.get_value()
+duplicate_clip.out_mark = clip.current_time.get_value() + 1
+</code></pre>
+<p>This tells the duplicate clip: <em>"Your start is the current frame, and your end is one frame later."</em></p>
+<h3 id="c-the-tryfinally-block">C. The <code>try...finally</code> Block</h3>
+<p>This is a "Safety Net."</p>
+<pre><code class="language-python">try:
+    # Do the export...
+finally:
+    flame.delete(duplicate_clip)
+</code></pre>
+<p>The <code>finally</code> part runs <em>no matter what</em>—even if the export crashes. This ensures that Flame's memory doesn't get cluttered with thousands of hidden duplicate clips.</p>
+<hr />
+<h2 id="3-finding-the-save-location">3. Finding the Save Location</h2>
+<p>The script uses a neat trick to find where to save the file. It tries to use the path you currently have open in the <strong>MediaHub</strong>. This is very intuitive for the user!</p>
+<hr />
+<h2 id="4-key-takeaway-for-beginners">4. Key Takeaway for Beginners</h2>
+<p>Always be <strong>Non-Destructive</strong>. If your script needs to change a clip's settings just for a moment, consider creating a duplicate, doing the work, and then cleaning up after yourself.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../../../..";</script>
+    <script src="../../../../../js/theme_extra.js"></script>
+    <script src="../../../../../js/theme.js"></script>
+      <script src="../../../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

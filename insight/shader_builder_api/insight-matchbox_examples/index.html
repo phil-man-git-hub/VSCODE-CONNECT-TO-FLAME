@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Insight: Matchbox Shader Examples - Flame API Docs</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Insight: Matchbox Shader Examples";
+        var mkdocs_page_input_path = "insight/shader_builder_api/insight-matchbox_examples.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Flame API Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../../index.md">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../../docs/api/flame.md">Flame</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Symbols</a>
+    <ul>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/classes/README.md">Classes</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/functions/README.md">Functions</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../../../docs/api/constants/README.md">Constants</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Flame API Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Insight: Matchbox Shader Examples</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="insight-matchbox-shader-examples">Insight: Matchbox Shader Examples</h1>
+<p>This document provides a summary of the official Matchbox examples provided by Autodesk. These files demonstrate the wide variety of technical tricks you can use in your own shaders.</p>
+<p><strong>Location in Flame:</strong> <code>/opt/Autodesk/presets/&lt;version&gt;/matchbox/shaders/EXAMPLES/</code></p>
+<hr />
+<h2 id="1-ui-and-interaction-examples">1. UI and Interaction Examples</h2>
+<ul>
+<li><strong><code>Curves.glsl</code></strong>: Shows how to add a graph editor to your node. This is perfect for custom color grading or complex easing.</li>
+<li><strong><code>ColourWheel.glsl</code></strong>: Shows how to use the standard "Lift/Gamma/Gain" style wheels in your UI.</li>
+<li><strong><code>ConditionalUI.glsl</code></strong>: Shows how to make a button appear or disappear based on another setting (e.g., hiding a "Size" slider when "Auto-Scale" is checked).</li>
+</ul>
+<h2 id="2-technical-feature-examples">2. Technical Feature Examples</h2>
+<ul>
+<li><strong><code>Accumulate.glsl</code></strong>: Shows how to "remember" the previous frame. This is essential for trails, echoes, or temporal noise reduction.</li>
+<li><strong><code>TemporalSampling.glsl</code></strong>: Shows how to look at the frames immediately before and after the current one.</li>
+<li><strong><code>Mipmaps.glsl</code></strong>: Shows how to use Flame's built-in "low-res" versions of an image to create very fast, high-quality blurs.</li>
+</ul>
+<h2 id="3-real-world-tool-examples">3. Real-World Tool Examples</h2>
+<ul>
+<li><strong><code>TransitionShader.glsl</code></strong>: A template for building your own timeline transitions (like wipes, dissolves, or glitched cuts).</li>
+<li><strong><code>DecodeZDepthHQ.glsl</code></strong>: An advanced example that shows how to take technical data from Action (depth information) and use it to build a 3D-aware 2D effect (like Depth of Field).</li>
+<li><strong><code>ImagePosition/Rotation/Scaling</code></strong>: These show the core math for basic image transforms. If you've ever wondered how a computer "moves" an image, look at these files.</li>
+</ul>
+<hr />
+<h2 id="4-how-to-use-these-examples">4. How to use these Examples</h2>
+<p>The EXAMPLES folder is a <strong>"Library of Parts."</strong> 
+- Need a blur? Check <code>PyramidBlur</code>.
+- Need a dropdown list? Check <code>BuildList</code>.
+- Need to blend two images? Check <code>Blending</code>.</p>
+<p><strong>Pro Tip:</strong> Don't try to memorize the code. Just remember that these examples exist, and copy-paste the sections you need into your own project!</p>
+<hr />
+<h2 id="5-key-takeaway-for-beginners">5. Key Takeaway for Beginners</h2>
+<p>The strength of Matchbox is its <strong>versatility</strong>. These examples prove that you can build everything from a simple color filter to a complex 3D-aware compositing tool. If you can't figure out how to do something in GLSL, there is probably an example in this folder that shows you the way.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
