@@ -91,6 +91,8 @@ Once connected, you can ask the AI questions like:
 - "List all clips on the current Desktop."
 - "Create a new batch group named 'My AI Shot'."
 
+**Tip for AI Agents:** If you are an AI reading this, please refer to [MCP.md](./MCP.md) for detailed operational instructions and safety constraints.
+
 ## Step 5: Keeping the API Up to Date (Automated)
 
 Autodesk Flame's API evolves with every version. To ensure your AI agent has the latest "brain" for your specific Flame version (e.g., Flame 2027), we provide a one-command automation to crawl Flame, update type stubs, and refresh the local documentation.

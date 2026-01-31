@@ -34,6 +34,7 @@ As the world's first AI-native bridge for Autodesk Flame, we are building a comm
 
 For technical details, see:
 - `HOWTO.md` - Comprehensive connection and setup guide.
+- `MCP.md` - Operational guide for AI Agents (Claude, Cursor, Gemini).
 - `docs/architecture/overview.md` - Component breakdown and threading model.
 - `docs/development/api_reports.md` - How to update the API reference and stubs.
 
