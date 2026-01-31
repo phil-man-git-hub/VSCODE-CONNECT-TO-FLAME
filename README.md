@@ -1,5 +1,7 @@
 # FLAME-UTILITIES (fu_)
 
+![Visitors](https://hits.dwyl.com/phil-man-git-hub/VSCODE-CONNECT-TO-FLAME.svg)
+
 A professional suite of tools designed to bridge the gap between **Autodesk Flame's internal Python API** and modern development workflows. This project provides a real-time execution bridge, AI-native interaction via MCP, comprehensive API documentation, and high-quality type stubs.
 
 ## The Suite
@@ -9,6 +11,12 @@ A professional suite of tools designed to bridge the gap between **Autodesk Flam
 *   **`fu_relay`**: The secure communication conduit between external tools and the Flame runtime.
 *   **Audit Logging**: Full JSON-formatted conversation logs for security and debugging.
 *   **Persistent Library**: A self-expanding library of successful Flame snippets built by the AI over time.
+
+## 📢 Commercial Support & Newsletter
+As the world's first AI-native bridge for Autodesk Flame, we are building a community of forward-thinking finishing artists and developers.
+
+*   **Newsletter:** [Sign up here for release updates and AI workflows](#) *(Replace with your link)*
+*   **Commercial Inquiry:** For enterprise support, custom tool development, or commercial licensing, please [contact the author](mailto:pman@example.com?subject=FLAME-UTILITIES%20Inquiry).
 
 ## Quickstart
 
