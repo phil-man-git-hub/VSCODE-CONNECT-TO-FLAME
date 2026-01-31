@@ -34,15 +34,15 @@ As the world's first AI-native bridge for Autodesk Flame, we are building a comm
 
 For technical details, see:
 - `HOWTO.md` - Comprehensive connection and setup guide.
-- `docs/architecture.md` - Component breakdown and threading model.
-- `docs/HOWTO_GENERATE_API_REPORTS.md` - How to update the API reference and stubs.
+- `docs/architecture/overview.md` - Component breakdown and threading model.
+- `docs/development/api_reports.md` - How to update the API reference and stubs.
 
 ## Status ✅
 
 - **MCP Bridge:** Working. AI agents can retrieve project info, list desktop clips, and execute autonomous logic.
 - **Audit System:** Working. Full interaction logs are stored in `flame-utilities/whisper/logs/`.
 - **Code Library:** Working. AI builds its own persistent toolset in `flame-utilities/whisper/library/`.
-- **Next:** Enable remote debugging by integrating `debugpy` (see `TODO.md`).
+- **Next:** Enable remote debugging by integrating `debugpy` (see `docs/tasks/TODO.md`).
 
 ---
 *Note: The legacy VS Code Extension has been moved to `unused/` as the MCP bridge provides a more powerful, AI-integrated interface.*

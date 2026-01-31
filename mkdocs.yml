@@ -1,10 +1,32 @@
-site_name: Flame API Docs
+site_name: FLAME-UTILITIES
 nav:
   - Home: index.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Protocol: architecture/protocol.md
+  - Setup:
+      - Deployment: setup/deploy.md
+  - Development:
+      - API Reports: development/api_reports.md
+      - Type Stubs: development/stubs.md
+      - Extension Dev: development/extension_dev.md
+  - Goals:
+      - Vision: goals/vision.md
+      - Consolidation: goals/grand-consolidation.md
+      - Rebrand: goals/flame-utilities-rebrand.md
+      - MCP: goals/flame-mcp-creation.md
+  - Tasks:
+      - TODO: tasks/TODO.md
+      - Consolidation Tasks: tasks/grand-consolidation-tasks.md
+      - Bridge Tasks: tasks/flame-mcp-bridge-tasks.md
   - API: 
-      - Flame: docs/api/flame.md
+      - Index: api/index.md
       - Symbols:
           - Classes: docs/api/classes/README.md
           - Functions: docs/api/functions/README.md
           - Constants: docs/api/constants/README.md
-theme: readthedocs
+theme:
+  name: material
+  palette:
+    primary: deep orange
+    accent: deep orange

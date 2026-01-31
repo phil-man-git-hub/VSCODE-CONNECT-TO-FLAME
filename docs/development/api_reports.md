@@ -9,7 +9,7 @@ This guide explains how to systematically crawl the running Autodesk Flame Pytho
 1.  **Autodesk Flame** must be running.
 2.  The **fu_eavesdrop** listener must be deployed and active.
     *   *Check:* You should see `fu_eavesdrop listening on 127.0.0.1:5555` in the Flame console.
-    *   *Deploy:* If not running, follow the instructions in `docs/deploy.md`.
+*   **Deploy:** If not running, follow the instructions in `docs/setup/deploy.md`.
 
 ## Step-by-Step Guide
 
