@@ -1,12 +1,19 @@
+# Testing & Debugging
 pytest
-
 debugpy
 
-# Flame runtime-related packages
-PySide6
-OpenColorIO
-OpenImageIO
-OpenTimelineIO
+# Bridge & AI Integration
+mcp
+fastmcp
+python-dotenv
+requests
+pydantic
 
-# Documentation tooling
+# Documentation
 mkdocs
+
+# Flame related (Standard VFX Libraries)
+PySide6
+opencolorio
+openimageio
+opentimelineio
