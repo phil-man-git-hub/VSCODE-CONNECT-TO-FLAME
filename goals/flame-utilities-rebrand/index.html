@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Tasks: FU_Whisper (Flame MCP Bridge) Implementation - Flame API Docs</title>
+    <title>Goal: FLAME-UTILITIES Rebrand (Phase 1) - Flame API Docs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Tasks: FU_Whisper (Flame MCP Bridge) Implementation";
-        var mkdocs_page_input_path = "tasks/flame-mcp-bridge-tasks.md";
+        var mkdocs_page_name = "Goal: FLAME-UTILITIES Rebrand (Phase 1)";
+        var mkdocs_page_input_path = "goals/flame-utilities-rebrand.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Tasks: FU_Whisper (Flame MCP Bridge) Implementation</li>
+      <li class="breadcrumb-item active">Goal: FLAME-UTILITIES Rebrand (Phase 1)</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,53 +81,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="tasks-fu_whisper-flame-mcp-bridge-implementation">Tasks: FU_Whisper (Flame MCP Bridge) Implementation</h1>
-<p>This document tracks the technical steps required to implement the Model Context Protocol (MCP) bridge for Autodesk Flame.</p>
-<h2 id="phase-1-environment-scaffolding">Phase 1: Environment &amp; Scaffolding</h2>
+                <h1 id="goal-flame-utilities-rebrand-phase-1">Goal: FLAME-UTILITIES Rebrand (Phase 1)</h1>
+<h2 id="vision">Vision</h2>
+<p>To establish a cohesive, professional identity for our suite of Autodesk Flame tools under the <code>FLAME-UTILITIES</code> (<code>fu_</code>) namespace. This rebrand moves away from generic technical names toward a metaphorical and memorable naming convention that reflects the role of each component.</p>
 <ul>
-<li>[x] Create <code>flame-mcp/</code> directory structure.</li>
-<li>[x] Initialize <code>requirements.txt</code> for the MCP server (e.g., <code>fastmcp</code>, <code>requests</code>, <code>pydantic</code>).</li>
-<li>[x] Set up a basic <code>fu_whisper.py</code> (formerly <code>server.py</code>) using <code>fastmcp</code>.</li>
-<li>[x] Create a README in <code>flame-mcp/</code> explaining how to start the server.</li>
+<li><strong><code>fu_eavesdrop</code></strong> (formerly <code>flame_listener</code>): The component that sits inside Flame, "listening" for incoming instructions and "overhearing" the internal API state.</li>
+<li><strong><code>fu_whisper</code></strong> (formerly <code>flame-mcp</code> bridge): The external component that "whispers" Python commands into Flame's ear via the listener.</li>
+<li><strong><code>fu_relay</code></strong> (formerly <code>relay</code>): The secure communication conduit between the two.</li>
 </ul>
-<h2 id="phase-2-core-communication-layer">Phase 2: Core Communication Layer</h2>
+<hr />
+<h2 id="1-architectural-impact">1. Architectural Impact</h2>
+<p>The core logic remains unchanged, but the <strong>Namespace</strong> and <strong>Public Identity</strong> of the tools are unified. This prevents naming collisions with other hooks and makes the toolkit instantly recognizable to pipeline engineers.</p>
+<hr />
+<h2 id="2-rebrand-tasks">2. Rebrand Tasks</h2>
+<h3 id="phase-a-listener-rebrand-flame-listener">Phase A: Listener Rebrand (<code>flame-listener/</code>)</h3>
 <ul>
-<li>[x] Implement the <code>fu_relay</code> client: a module to handle network communication with the existing <code>fu_eavesdrop.py</code> (port 5555).</li>
-<li>[x] Standardize the error handling for relay failures (e.g., Flame is not running, Listener is down).</li>
-<li>[x] Implement a "Ping" tool to verify the end-to-end connection: <code>AI -&gt; fu_whisper -&gt; fu_relay -&gt; fu_eavesdrop -&gt; Flame</code>.</li>
+<li>[x] Rename <code>flame_listener.py</code> to <code>fu_eavesdrop.py</code>.</li>
+<li>[x] Rename <code>startup_flame_listener.py</code> to <code>fu_eavesdrop_init.py</code>.</li>
+<li>[x] Rename <code>start_server</code> function to <code>initialize_eavesdrop</code>.</li>
+<li>[x] Update <code>fu_eavesdrop_init.py</code> to import <code>initialize_eavesdrop</code> from <code>fu_eavesdrop</code>.</li>
+<li>[x] Update internal logs in <code>fu_eavesdrop.py</code> to use the <code>[fu_eavesdrop]</code> prefix.</li>
 </ul>
-<h2 id="phase-3-core-ai-tools">Phase 3: Core AI Tools</h2>
+<h3 id="phase-b-bridge-rebrand-flame-mcp">Phase B: Bridge Rebrand (<code>flame-mcp/</code>)</h3>
 <ul>
-<li>[x] <strong>Tool: <code>execute_python</code></strong><ul>
-<li>[x] Basic execution of strings.</li>
-<li>[x] Return stdout and stderr to the AI.</li>
+<li>[ ] Rename <code>relay.py</code> to <code>fu_relay.py</code>.</li>
+<li>[ ] Rename <code>server.py</code> to <code>fu_whisper.py</code>.</li>
+<li>[ ] Update <code>fu_whisper.py</code> to:<ul>
+<li>Import <code>FlameRelay</code> from <code>fu_relay</code>.</li>
+<li>Change the MCP server name to <code>FU_Whisper</code>.</li>
 </ul>
 </li>
-<li>[x] <strong>Tool: <code>get_flame_context</code></strong><ul>
-<li>[x] Return JSON containing: Current Project, User, Workspace, and Version.</li>
+<li>[ ] Update <code>requirements.txt</code> if necessary.</li>
 </ul>
-</li>
-<li>[x] <strong>Tool: <code>list_desktop_clips</code></strong><ul>
-<li>[x] Query Flame for all clips on the current Desktop.</li>
-</ul>
-</li>
-<li>[x] <strong>Tool: <code>inspect_symbol</code></strong><ul>
-<li>[x] Use Python's <code>dir()</code> and <code>help()</code> inside Flame to give the AI real-time documentation for any Flame object.</li>
-</ul>
-</li>
-</ul>
-<h2 id="phase-4-integration-security">Phase 4: Integration &amp; Security</h2>
+<h3 id="phase-c-documentation-configuration">Phase C: Documentation &amp; Configuration</h3>
 <ul>
-<li>[ ] Test the bridge with an MCP-compliant client (e.g., Claude Desktop or Cursor).</li>
-<li>[x] Implement basic logging of all AI-generated commands for auditability.</li>
-<li>[x] (Optional) Add a "Read-Only" mode toggle to prevent accidental modifications during inspection.</li>
+<li>[ ] Update <code>flame-mcp/GETTING_STARTED.md</code> with new file paths and names.</li>
+<li>[ ] Update <code>flame-mcp/README.md</code>.</li>
+<li>[ ] Update the root <code>docs/tasks/flame-mcp-bridge-tasks.md</code> to reflect the new nomenclature.</li>
+<li>[ ] Update <code>GEMINI.md</code> to reflect the current architectural names.</li>
 </ul>
-<h2 id="phase-5-documentation-examples">Phase 5: Documentation &amp; Examples</h2>
+<h3 id="phase-d-deployment-verification">Phase D: Deployment &amp; Verification</h3>
 <ul>
-<li>[x] Write a "Getting Started" guide for users to connect their LLM to the FU_Whisper bridge.</li>
-<li>[x] Create a folder <code>flame-mcp/prompts/</code> with system prompt templates that help the AI understand how to use the Flame tools effectively.</li>
-<li>[ ] Record a demo of an AI autonomously interacting with the Flame Desktop.</li>
+<li>[ ] Update the manual deployment instructions for Flame hooks.</li>
+<li>[ ] Verify the end-to-end connection: <code>AI -&gt; fu_whisper -&gt; fu_relay -&gt; fu_eavesdrop -&gt; Flame</code>.</li>
+<li>[ ] Confirm audit logs in <code>fu_whisper</code> are correctly capturing the new names.</li>
 </ul>
+<hr />
+<h2 id="3-future-roadmap">3. Future Roadmap</h2>
+<p>Once the core branding is established, all future tools in the <code>flame-utilities/</code> directory will follow the <code>fu_&lt;action&gt;.py</code> convention, ensuring a clean and predictable API for both humans and AI agents.</p>
               
             </div>
           </div><footer>
