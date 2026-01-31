@@ -16,18 +16,18 @@ except Exception:
 
 # Announce our presence & version so deployed startup hooks are easy to identify
 try:
-    print(f"startup_flame_listener.py version {__version__}")
+    print(f"fu_eavesdrop_init.py version {__version__}")
 except Exception:
     pass
 
-# Import the local flame_listener module (assumes it's copied alongside this file)
+# Import the local fu_eavesdrop module (assumes it's copied alongside this file)
 try:
-    from flame_listener import start_server
+    from fu_eavesdrop import initialize_eavesdrop
 except Exception:
     # If we can't import the full listener, abort gracefully
-    print('Failed to import flame_listener; remote execution bridge not started')
+    print('Failed to import fu_eavesdrop; remote execution bridge not started')
 else:
     # Run the TCP listener in a daemon thread so it won't block Flame shutdown
-    t = threading.Thread(target=start_server, kwargs={}, daemon=True)
+    t = threading.Thread(target=initialize_eavesdrop, kwargs={}, daemon=True)
     t.start()
-    print(f'Flame listener startup hook started in background thread (version {__version__})')
+    print(f'FU_Eavesdrop startup hook started in background thread (version {__version__})')

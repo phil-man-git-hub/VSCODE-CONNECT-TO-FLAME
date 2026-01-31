@@ -5,6 +5,7 @@ import os
 from typing import Dict, Any, Optional
 
 class FlameRelay:
+    """The secure communication conduit (fu_relay) between FU_Whisper and fu_eavesdrop."""
     def __init__(self, host: str = "127.0.0.1", port: int = 5555):
         self.host = host
         self.port = port
@@ -35,7 +36,7 @@ class FlameRelay:
         return None
 
     def send_command(self, command: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Sends a JSON command over TCP to the Flame Listener."""
+        """Sends a JSON command over TCP to the fu_eavesdrop listener."""
         request = {
             "id": str(uuid.uuid4()),
             "command": command,
@@ -61,9 +62,9 @@ class FlameRelay:
                     except json.JSONDecodeError:
                         continue
         except ConnectionRefusedError:
-            return {"exception": "ConnectionRefusedError", "stderr": "Flame Listener not found. Is it running?"}
+            return {"exception": "ConnectionRefusedError", "stderr": "fu_eavesdrop not found. Is it running inside Flame?"}
         except socket.timeout:
-            return {"exception": "TimeoutError", "stderr": "Flame Listener timed out."}
+            return {"exception": "TimeoutError", "stderr": "fu_eavesdrop timed out."}
         except Exception as e:
             return {"exception": type(e).__name__, "stderr": str(e)}
 

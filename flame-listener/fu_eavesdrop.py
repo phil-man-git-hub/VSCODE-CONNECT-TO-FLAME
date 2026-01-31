@@ -61,7 +61,7 @@ def wait_for_threads_at_exit():
     if len(threads) > 0:
         for thread in threads:
             try:
-                print(f"[flame_listener] Waiting for thread {thread.name}")
+                print(f"[fu_eavesdrop] Waiting for thread {thread.name}")
                 thread.join(timeout=5.0)
             except Exception:
                 traceback.print_exc()
@@ -92,7 +92,7 @@ except Exception:
 
 def _sys_excepthook(exc_type, exc_value, exc_tb):
     try:
-        print("[flame_listener][unhandled-exc]")
+        print("[fu_eavesdrop][unhandled-exc]")
         traceback.print_exception(exc_type, exc_value, exc_tb)
     except Exception:
         traceback.print_exc()
@@ -100,11 +100,11 @@ def _sys_excepthook(exc_type, exc_value, exc_tb):
 sys.excepthook = _sys_excepthook
 
 
-LOG_FILE = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+LOG_FILE = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
 
 def _log(msg):
     """Simple structured log with timestamp. Also append to a local log file to aid repro collection."""
-    line = f"[flame_listener][{datetime.utcnow().isoformat()}] {msg}"
+    line = f"[fu_eavesdrop][{datetime.utcnow().isoformat()}] {msg}"
     try:
         print(line)
     except Exception:
@@ -118,7 +118,7 @@ def _log(msg):
 
 # Announce module and version on import to make deployed versions visible in Flame logs
 try:
-    _log(f"Loaded flame_listener.py version {__version__} at {__file__}")
+    _log(f"Loaded fu_eavesdrop.py version {__version__} at {__file__}")
 except Exception:
     # Best-effort: do not raise if logging fails
     pass
@@ -313,16 +313,16 @@ class ClientHandler(threading.Thread):
             traceback.print_exc()
 
 
-def start_server(host=HOST, port=PORT):
+def initialize_eavesdrop(host=HOST, port=PORT):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port))
         s.listen(5)
-        print(f"Flame listener listening on {host}:{port}")
+        print(f"fu_eavesdrop listening on {host}:{port}")
         while True:
             conn, addr = s.accept()
             ClientHandler(conn, addr).start()
 
 
 if __name__ == '__main__':
-    start_server()
+    initialize_eavesdrop()

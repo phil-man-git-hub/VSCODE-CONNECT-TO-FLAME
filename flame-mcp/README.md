@@ -1,10 +1,10 @@
-# Flame MCP Bridge
+# FU_Whisper (Flame MCP Bridge)
 
-This is a Model Context Protocol (MCP) server that allows AI agents to interact directly with Autodesk Flame via the `flame-listener`.
+This is a Model Context Protocol (MCP) server that allows AI agents to interact directly with Autodesk Flame via the **fu_eavesdrop** listener.
 
 ## Prerequisites
 - Python 3.9+
-- A running instance of Autodesk Flame with the `flame-listener.py` active.
+- A running instance of Autodesk Flame with the `fu_eavesdrop.py` active.
 
 ## Installation
 
@@ -23,7 +23,7 @@ This is a Model Context Protocol (MCP) server that allows AI agents to interact 
 ### Running Locally
 You can run the server directly to test it:
 ```bash
-python server.py
+python fu_whisper.py
 ```
 
 ### Connecting to an AI Client
@@ -32,9 +32,9 @@ To use this with a client like **Claude Desktop**, add the following to your `cl
 ```json
 {
   "mcpServers": {
-    "flame": {
+    "fu_whisper": {
       "command": "python",
-      "args": ["/path/to/flame-mcp/server.py"]
+      "args": ["/path/to/flame-mcp/fu_whisper.py"]
     }
   }
 }
@@ -42,7 +42,11 @@ To use this with a client like **Claude Desktop**, add the following to your `cl
 
 ## Available Tools
 - `ping_flame`: Verifies the connection to Flame.
-- `get_mcp_status`: Returns current bridge health.
+- `get_mcp_status`: Returns current bridge health and mode.
+- `execute_python`: Runs Python code in Flame.
+- `get_flame_context`: Gets project/user info.
+- `list_desktop_clips`: Lists media on desktop.
+- `inspect_symbol`: API discovery tool.
 
 ---
-*Part of the VSCODE-CONNECT-TO-FLAME project.*
+*Part of the FLAME-UTILITIES (fu_) suite.*

@@ -1,5 +1,5 @@
 from fastmcp import FastMCP
-from relay import FlameRelay
+from fu_relay import FlameRelay
 import os
 import json
 import logging
@@ -19,10 +19,10 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-logger = logging.getLogger("FlameMCP")
+logger = logging.getLogger("FU_Whisper")
 
 # Initialize the MCP Server
-mcp = FastMCP("FlameConnector")
+mcp = FastMCP("FU_Whisper")
 
 # Configuration
 READ_ONLY = os.getenv("FLAME_READ_ONLY", "false").lower() == "true"

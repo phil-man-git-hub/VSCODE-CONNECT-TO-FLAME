@@ -15,3 +15,401 @@ flame-utilities/src/core
 flame-utilities/src/utils
 flame-utilities/tests
 flame-utilities/tools
+
+
+
+✦ Yes, this repository would benefit immensely from an MCP (Model Context Protocol) implementation.
+
+  Currently, your project bridges VS Code to Flame for humans. Adding an MCP server would bridge AI Models to Flame, allowing an LLM to not just write code for you,
+  but to actually see and manipulate Flame in real-time.
+
+  How it would benefit the project
+   1. Live Inspection: Instead of the AI guessing based on static .pyi stubs, it could ask: "What are the names of the clips currently on the Desktop?" or "Is there
+      enough space in the current volume for a cache?"
+   2. Autonomous Scripting: You could tell the AI: "Refactor the current Batch setup to use 'Action' nodes instead of 'GMask' nodes," and the AI could execute that
+      change directly.
+   3. Real-time Debugging: If a script fails, the AI could "feel" the error inside Flame, inspect the flame.messages log, and fix the code immediately without you
+      copy-pasting errors.
+
+  ---
+
+  Implementation Plan: The "Flame-MCP Bridge"
+
+  The most efficient way to implement this is to build a Python-based MCP Server that acts as a middleman between the LLM and your existing flame-listener.
+
+  1. Architecture
+   * Flame: Runs the flame-listener.py (your existing service).
+   * MCP Server (New): A separate Python process using the fastmcp library. It translates LLM "Tool Calls" into network requests for the Flame Listener.
+   * AI Client: (Cursor, Claude Desktop, or Gemini) connects to the MCP Server.
+
+  2. Potential Tool Set
+  You would expose "Tools" through the MCP server that the AI can call:
+   * run_script: Executes Python code inside Flame.
+   * get_project_info: Returns current project, user, and workspace details.
+   * list_media: Returns a list of clips/sequences in the current selection.
+   * take_screenshot: (Advanced) Grabs a frame of the Flame UI for the AI to "see."
+
+  3. Sample Implementation (Conceptual)
+  You could create a new directory flame-mcp/ and use the following pattern:
+
+    1 # flame-mcp/server.py
+    2 from mcp.server.fastmcp import FastMCP
+    3 import requests
+    4
+    5 mcp = FastMCP("FlameConnector")
+    6
+    7 @mcp.tool()
+    8 def execute_in_flame(python_code: str) -> str:
+    9     """Executes arbitrary Python code inside the running Autodesk Flame instance."""
+   10     # This sends the code to your existing flame-listener port (5555)
+   11     response = requests.post("http://localhost:5555/execute", json={"code": python_code})
+   12     return response.json().get("stdout", "Success")
+   13
+   14 @mcp.tool()
+   15 def get_active_sequence_name() -> str:
+   16     """Retrieves the name of the sequence currently open in the Flame Timeline."""
+   17     code = "import flame; print(flame.timeline.current_sequence.name)"
+   18     return execute_in_flame(code)
+   19
+   20 if __name__ == "__main__":
+   21     mcp.run()
+
+  Why this is a "Game Changer"
+  By adding an MCP layer, your repository evolves from a Developer Tool into an AI-Augmented Pipeline. You could essentially "talk" your way through a conform or a
+  composite:
+
+  > User: "Hey AI, look at the clips in the 'Renders' folder in Flame. If any of them are missing their alpha channel, add a 'Matte Container' and re-export them."
+
+  With MCP, the AI can perform that entire multi-step logical chain autonomously.
+
+> create docs/goals/flame-mcp-creation.md to provide a thorough overview of the creation of the flame-mcp bridge.
+
+✦ I will create a comprehensive goal document for the Flame-MCP Bridge in docs/goals/flame-mcp-creation.md, outlining the architecture, implementation strategy, and
+  the transformative impact it will have on the Flame development workflow.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  WriteFile Writing to docs/goals/flame-mcp-creation.md                                                                                                           │
+│                                                                                                                                                                    │
+│  1 # Goal: The Flame-MCP Bridge                                                                                                                                    │
+│  2                                                                                                                                                                 │
+│  3 ## Vision                                                                                                                                                       │
+│  4 To evolve `VSCODE-CONNECT-TO-FLAME` from a developer-centric toolset into an **AI-native ecosystem**. By implementing a Model Context Protocol (MCP) server, we │
+│    allow Large Language Models (LLMs) to interact with Autodesk Flame as if they were a local user, enabling autonomous scripting, live inspection, and real-time  │
+│    debugging.                                                                                                                                                      │
+│  5                                                                                                                                                                 │
+│  6 ---                                                                                                                                                             │
+│  7                                                                                                                                                                 │
+│  8 ## 1. Architecture: The Bridge Pattern                                                                                                                          │
+│  9 The implementation will follow a "Relay" architecture, utilizing the existing infrastructure.                                                                   │
+│ 10                                                                                                                                                                 │
+│ 11 1.  **AI Client:** (Claude Desktop, Cursor, Gemini) sends a request.                                                                                            │
+│ 12 2.  **MCP Server (New):** A Python process using `fastmcp` that interprets the AI's intent and translates it into Flame-specific commands.                      │
+│ 13 3.  **Flame Listener (Existing):** Receives the Python code from the MCP server and executes it safely on Flame's main thread.                                  │
+│ 14 4.  **Autodesk Flame:** The host environment performing the actual work.                                                                                        │
+│ 15                                                                                                                                                                 │
+│ 16 ```mermaid                                                                                                                                                      │
+│ 17 graph LR                                                                                                                                                        │
+│ 18     A[AI Client] --> B[MCP Server]                                                                                                                              │
+│ 19     B --> C[Flame Listener]                                                                                                                                     │
+│ 20     C --> D[Flame API]                                                                                                                                          │
+│ 21 ```                                                                                                                                                             │
+│ 22                                                                                                                                                                 │
+│ 23 ---                                                                                                                                                             │
+│ 24                                                                                                                                                                 │
+│ 25 ## 2. Implementation Strategy                                                                                                                                   │
+│ 26                                                                                                                                                                 │
+│ 27 ### A. Technology Stack                                                                                                                                         │
+│ 28 *   **Language:** Python 3.9+ (matching Flame's environment).                                                                                                   │
+│ 29 *   **Framework:** `fastmcp` for rapid tool definition.                                                                                                         │
+│ 30 *   **Communication:** `requests` or `httpx` to talk to the existing `flame-listener` REST/Socket endpoint.                                                     │
+│ 31                                                                                                                                                                 │
+│ 32 ### B. Core Toolset (Phase 1)                                                                                                                                   │
+│ 33 The AI should have access to these primary "skills":                                                                                                            │
+│ 34                                                                                                                                                                 │
+│ 35 | Tool Name | Description | Example AI Use Case |                                                                                                               │
+│ 36 | :--- | :--- | :--- |                                                                                                                                          │
+│ 37 | `flame_exec` | Executes raw Python code in Flame. | "Fix the indentation in the current script." |                                                            │
+│ 38 | `get_context` | Returns current Project/User/Workspace. | "Which project am I currently working in?" |                                                        │
+│ 39 | `list_media` | Lists clips in the current Desktop/Batch. | "Find all clips labeled 'RETAKE'." |                                                               │
+│ 40 | `inspect_api` | Queries Flame's internal `dir()` for symbols. | "What properties does a `PySegment` have?" |                                                  │
+│ 41                                                                                                                                                                 │
+│ 42 ---                                                                                                                                                             │
+│ 43                                                                                                                                                                 │
+│ 44 ## 3. High-Level Implementation Plan                                                                                                                            │
+│ 45                                                                                                                                                                 │
+│ 46 ### Step 1: Scaffold the MCP Server                                                                                                                             │
+│ 47 Create a dedicated directory `flame-mcp/` containing a `server.py`. This server will run independently of Flame but on the same network.                        │
+│ 48                                                                                                                                                                 │
+│ 49 ### Step 2: Define the "Relay" Logic                                                                                                                            │
+│ 50 Implement a standard execution wrapper that sends code to the listener:                                                                                         │
+│ 51 ```python                                                                                                                                                       │
+│ 52 def relay_to_flame(code: str):                                                                                                                                  │
+│ 53     # Sends code to localhost:5555                                                                                                                              │
+│ 54     # Returns stdout/stderr                                                                                                                                     │
+│ 55 ```                                                                                                                                                             │
+│ 56                                                                                                                                                                 │
+│ 57 ### Step 3: Tool Exposure                                                                                                                                       │
+│ 58 Decorate functions with `@mcp.tool()` to make them visible to the LLM.                                                                                          │
+│ 59                                                                                                                                                                 │
+│ 60 ---                                                                                                                                                             │
+│ 61                                                                                                                                                                 │
+│ 62 ## 4. Key Benefits                                                                                                                                              │
+│ 63                                                                                                                                                                 │
+│ 64 ### Autonomous Refactoring                                                                                                                                      │
+│ 65 Instead of the developer copying code from an AI chat into a file and then running it, the AI can:                                                              │
+│ 66 1.  Read the current script from Flame.                                                                                                                         │
+│ 67 2.  Rewrite it for optimization.                                                                                                                                │
+│ 68 3.  Push it back into Flame and run it to verify success.                                                                                                       │
+│ 69                                                                                                                                                                 │
+│ 70 ### Intelligent API Discovery                                                                                                                                   │
+│ 71 Since the Flame API is proprietary and sometimes poorly documented, the AI can "explore" the API live. If it's unsure how to delete a marker, it can run a tool │
+│    to inspect the `flame.PyMarker` class dynamically.                                                                                                              │
+│ 72                                                                                                                                                                 │
+│ 73 ### Visual Reasoning (Future)                                                                                                                                   │
+│ 74 By adding a `take_screenshot` tool, the AI can "see" the Flame UI, allowing it to assist with UI-heavy tasks like layout alignment or finding specific buttons  │
+│    in the Batch schematic.                                                                                                                                         │
+│ 75                                                                                                                                                                 │
+│ 76 ---                                                                                                                                                             │
+│ 77                                                                                                                                                                 │
+│ 78 ## 5. Security & Safety (HITL)                                                                                                                                  │
+│ 79 To ensure the AI doesn't accidentally delete a whole project, we will maintain a **Human-In-The-Loop (HITL)** approach:                                         │
+│ 80 *   The MCP server will log every command it sends to Flame.                                                                                                    │
+│ 81 *   Destructive commands (e.g., `flame.delete`) will require a confirmation flag or be restricted to specific "Sandbox" volumes.                                │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The docs/goals/flame-mcp-creation.md document has been created, providing a strategic roadmap for integrating MCP into the project. This addition positions the
+  repository to leverage AI agents for autonomous interaction with Autodesk Flame.
+
+> This is so exciting. Create docs/tasks/flame-mcp-bridge-tasks.md with the high-level tasks necessary to create the flame-mcp bridge (unless there is a more standard
+  way to create a tasks list?).
+
+✦ I'll create a dedicated task list for the Flame-MCP bridge in docs/tasks/flame-mcp-bridge-tasks.md, which is a great way to manage feature-specific roadmaps without
+  cluttering the main project TODO.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  WriteFile Writing to docs/.../flame-mcp-bridge-tasks.md                                                                                                         │
+│                                                                                                                                                                    │
+│  1 # Tasks: Flame-MCP Bridge Implementation                                                                                                                        │
+│  2                                                                                                                                                                 │
+│  3 This document tracks the technical steps required to implement the Model Context Protocol (MCP) bridge for Autodesk Flame.                                      │
+│  4                                                                                                                                                                 │
+│  5 ## Phase 1: Environment & Scaffolding                                                                                                                           │
+│  6 - [ ] Create `flame-mcp/` directory structure.                                                                                                                  │
+│  7 - [ ] Initialize `requirements.txt` for the MCP server (e.g., `fastmcp`, `requests`, `pydantic`).                                                               │
+│  8 - [ ] Set up a basic `server.py` using `fastmcp`.                                                                                                               │
+│  9 - [ ] Create a README in `flame-mcp/` explaining how to start the server.                                                                                       │
+│ 10                                                                                                                                                                 │
+│ 11 ## Phase 2: Core Communication Layer                                                                                                                            │
+│ 12 - [ ] Implement the `Relay` client: a module to handle network communication with the existing `flame-listener.py` (port 5555).                                 │
+│ 13 - [ ] Standardize the error handling for relay failures (e.g., Flame is not running, Listener is down).                                                         │
+│ 14 - [ ] Implement a "Ping" tool to verify the end-to-end connection: `AI -> MCP -> Listener -> Flame`.                                                            │
+│ 15                                                                                                                                                                 │
+│ 16 ## Phase 3: Core AI Tools                                                                                                                                       │
+│ 17 - [ ] **Tool: `execute_python`**                                                                                                                                │
+│ 18     - [ ] Basic execution of strings.                                                                                                                           │
+│ 19     - [ ] Return stdout and stderr to the AI.                                                                                                                   │
+│ 20 - [ ] **Tool: `get_flame_context`**                                                                                                                             │
+│ 21     - [ ] Return JSON containing: Current Project, User, Workspace, and Version.                                                                                │
+│ 22 - [ ] **Tool: `list_desktop_clips`**                                                                                                                            │
+│ 23     - [ ] Query Flame for all clips on the current Desktop.                                                                                                     │
+│ 24 - [ ] **Tool: `inspect_symbol`**                                                                                                                                │
+│ 25     - [ ] Use Python's `dir()` and `help()` inside Flame to give the AI real-time documentation for any Flame object.                                           │
+│ 26                                                                                                                                                                 │
+│ 27 ## Phase 4: Integration & Security                                                                                                                              │
+│ 28 - [ ] Test the bridge with an MCP-compliant client (e.g., Claude Desktop or Cursor).                                                                            │
+│ 29 - [ ] Implement basic logging of all AI-generated commands for auditability.                                                                                    │
+│ 30 - [ ] (Optional) Add a "Read-Only" mode toggle to prevent accidental modifications during inspection.                                                           │
+│ 31                                                                                                                                                                 │
+│ 32 ## Phase 5: Documentation & Examples                                                                                                                            │
+│ 33 - [ ] Write a "Getting Started" guide for users to connect their LLM to the Flame MCP.                                                                          │
+│ 34 - [ ] Create a folder `flame-mcp/prompts/` with system prompt templates that help the AI understand how to use the Flame tools effectively.                     │
+│ 35 - [ ] Record a demo of an AI autonomously interacting with the Flame Desktop.                                                                                   │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ I've created the task list at docs/tasks/flame-mcp-bridge-tasks.md. This structured approach allows you to track progress across the different phases of
+  development, from initial scaffolding to security and documentation.
+
+> stage, commit and push all of these exciting changes to main
+
+✦ I will start by checking the current git status to identify all the new documentation files.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell git status [current working directory /Users/pman/workspace/GitHub/phil-man-git-hub/VSCODE-CONNECT-TO-FLAME] (Checking the status of the repository to s… │
+│                                                                                                                                                                    │
+│ On branch main                                                                                                                                                     │
+│ Your branch is up to date with 'origin/main'.                                                                                                                      │
+│                                                                                                                                                                    │
+│ Untracked files:                                                                                                                                                   │
+│   (use "git add <file>..." to include in what will be committed)                                                                                                   │
+│         docs/goals/                                                                                                                                                │
+│         docs/research/                                                                                                                                             │
+│         docs/tasks/                                                                                                                                                │
+│                                                                                                                                                                    │
+│ nothing added to commit but untracked files present (use "git add" to track)                                                                                       │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ I will stage the new documentation files, commit them with a descriptive message, and push the changes to the main branch.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell git add docs/goals/ docs/research/ docs/tasks/ && git commit -m "docs: add comprehensive AI educational resources and Flame-MCP bridge roadmap" && git p… │
+│                                                                                                                                                                    │
+│ [main 6ce80bb] docs: add comprehensive AI educational resources and Flame-MCP bridge roadmap                                                                       │
+│  9 files changed, 439 insertions(+)                                                                                                                                │
+│  create mode 100644 docs/goals/flame-mcp-creation.md                                                                                                               │
+│  create mode 100644 docs/research/understanding-AI_acronyms.md                                                                                                     │
+│  create mode 100644 docs/research/understanding-AI_core_architectures.md                                                                                           │
+│  create mode 100644 docs/research/understanding-AI_deployment_concepts.md                                                                                          │
+│  create mode 100644 docs/research/understanding-AI_modalities.md                                                                                                   │
+│  create mode 100644 docs/research/understanding-AI_model_types.md                                                                                                  │
+│  create mode 100644 docs/research/understanding-AI_reasoning_patterns.md                                                                                           │
+│  create mode 100644 docs/research/understanding-AI_training_and_adaptation.md                                                                                      │
+│  create mode 100644 docs/tasks/flame-mcp-bridge-tasks.md                                                                                                           │
+│ Enumerating objects: 17, done.                                                                                                                                     │
+│ Counting objects: 100% (17/17), done.                                                                                                                              │
+│ Delta compression using up to 6 threads                                                                                                                            │
+│ Compressing objects: 100% (14/14), done.                                                                                                                           │
+│ Writing objects: 100% (15/15), 12.12 KiB | 6.06 MiB/s, done.                                                                                                       │
+│ Total 15 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)                                                                                                     │
+│ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.                                                                                              │
+│ To https://github.com/phil-man-git-hub/VSCODE-CONNECT-TO-FLAME.git                                                                                                 │
+│    747d76d..6ce80bb  main -> main                                                                                                                                  │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The documentation and roadmaps for the Flame-MCP bridge have been successfully staged, committed, and pushed to the main branch.
+
+
+
+
+
+
+
+
+
+The verification is successful! fu_eavesdrop listener is active and responding perfectly.
+
+  Here are the details for your current project:
+   * Project Name: 123_flame_alpha_2027_romeo
+   * Wiretap Node ID: /projects/26079693-35d9-452e-8ffc-a18d20b18272
+   * Wiretap Storage ID: A643974F-47A1-4CF3-ACC9-1D0DE329FCFA-IFFFS
+
+  The FLAME-UTILITIES rebranding is officially live and functional! What’s next on your list?
+
+> tell me the path to the project directory, the path to the media directory, the current workspace, the current desktop and the number and names of pyclips or
+  pysequences on the desktop
+
+✦ I am querying your Autodesk Flame session now to retrieve the detailed project and desktop information.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ {"error": "'NoneType' object is not iterable"}                                                                                                                     │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It seems my script encountered a NoneType error, likely because the clips or sequences collections are empty or not directly iterable in this Flame version. I'll
+  refine the script to handle these collections more safely and attempt to retrieve the information again.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ {"project_path": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/123_flame_alpha_2027_romeo", "media_path":                                                       │
+│ "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/123_flame_alpha_2027_romeo/media", "workspace": "'romeo'", "desktop": "'2025-11-30-pman'", "clips_count": 0,      │
+│ "clips_names": [], "sequences_count": 0, "sequences_names": []}                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Here are the requested details for your current Flame environment:
+
+   * Project Directory: /Volumes/Samsung-T3-1TB/Autodesk/flame/projects/123_flame_alpha_2027_romeo
+   * Media Directory: /Volumes/Samsung-T3-1TB/Autodesk/flame/projects/123_flame_alpha_2027_romeo/media
+   * Current Workspace: 'romeo'
+   * Current Desktop: '2025-11-30-pman'
+   * Media on Desktop:
+       * PyClips: 0
+       * PySequences: 0
+
+  It appears the '2025-11-30-pman' desktop is currently empty! Is there anything else you'd like to check or automate?
+
+> tell me the names of the reel groups of the current desktop, tell me the names of the reels of the reel groups
+
+✦ I am querying your Autodesk Flame session now to retrieve the hierarchy of Reel Groups and Reels on your current desktop.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ [{"name": "'2025-11-20-conform'", "reels": ["'ref'", "'Sources'", "'Sequences'", "'Published-Sequences'", "'Published-Versions'"]}]                                │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Your current desktop contains one Reel Group, which holds several reels:
+
+   * Reel Group: '2025-11-20-conform'
+       * Reels:
+           1. 'ref'
+           2. 'Sources'
+           3. 'Sequences'
+           4. 'Published-Sequences'
+           5. 'Published-Versions'
+
+  It looks like this desktop is set up for a conform workflow! Would you like me to look inside any of these reels to see if they contain clips?
+
+> yes
+
+✦ I am now scanning all reels within the '2025-11-20-conform' Reel Group to identify any clips they contain.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ [{"group_name": "'2025-11-20-conform'", "reels": [{"reel_name": "'ref'", "clips": []}, {"reel_name": "'Sources'", "clips": ["'DW0001C014_251020_123457_c1I7H'",    │
+│ "'DW0001C020_251020_132002_c1I7H'", "'DW0001C006_251020_113547_c1I7H'", "'DW0001C001_251020_111956_c1I7H'", "'DW0001C035_251021_131623_c1I7H'"]}, {"reel_name":    │
+│ "'Sequences'", "clips": []}, {"reel_name": "'Published-Sequences'", "clips": []}, {"reel_name": "'Published-Versions'", "clips": []}]}]                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ I found clips in the 'Sources' reel! Here is the inventory of your '2025-11-20-conform' reel group:
+
+   * Reel: `'Sources'` (5 Clips)
+       1. 'DW0001C014_251020_123457_c1I7H'
+       2. 'DW0001C020_251020_132002_c1I7H'
+       3. 'DW0001C006_251020_113547_c1I7H'
+       4. 'DW0001C001_251020_111956_c1I7H'
+       5. 'DW0001C035_251021_131623_c1I7H' 
+
+  The other reels ('ref', 'Sequences', etc.) are currently empty.
+
+  Since these look like raw camera sources, would you like me to get more metadata for them (like their resolution or duration), or perhaps help you organize them?
+
+> the reel called Sequences is in fact not empty. can you broaden your search to include PySequences?
+
+✦ I am refining my search to specifically look for PySequences within the reels, as the Flame API sometimes distinguishes between clips and sequences depending on the
+  context.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ [{"group_name": "'2025-11-20-conform'", "reels": [{"reel_name": "'ref'", "items": []}, {"reel_name": "'Sources'", "items": [{"name":                               │
+│ "'DW0001C014_251020_123457_c1I7H'", "type": "<class 'flame.PyClip'>"}, {"name": "'DW0001C020_251020_132002_c1I7H'", "type": "<class 'flame.PyClip'>"}, {"name":    │
+│ "'DW0001C006_251020_113547_c1I7H'", "type": "<class 'flame.PyClip'>"}, {"name": "'DW0001C001_251020_111956_c1I7H'", "type": "<class 'flame.PyClip'>"}, {"name":    │
+│ "'DW0001C035_251021_131623_c1I7H'", "type": "<class 'flame.PyClip'>"}]}, {"reel_name": "'Sequences'", "items": []}, {"reel_name": "'Published-Sequences'",         │
+│ "items": []}, {"reel_name": "'Published-Versions'", "items": []}]}]                                                                                                │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ You're right to correct me—the r.clips collection is returning an empty list for the 'Sequences' reel, which often happens in Flame when the objects are technically
+  PySequences rather than standard clips.
+
+  I'll try one more time, specifically checking for a sequences property on the reel (which exists in some Flame versions) or iterating through all child objects of
+  the reel to find what's hidden there.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ {"error": "name 'Sequences' is not defined"}                                                                                                                       │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ My apologies—I made a syntax error in the Python comparison. I'll correct the script to properly identify the 'Sequences' reel and search for those PySequences.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell export PYTHONPATH=$PYTHONPATH:$(pwd)/flame-mcp && python3 -c "from fu_relay import FlameRelay; import json; relay = FlameRelay(); code = \"\"\"import fl… │
+│                                                                                                                                                                    │
+│ {"reel": "'Sequences'", "sequences": ["'edit-001'", "'edit-002'", "'edit-003'", "'Sources Sequence'", "'Shots Sequence'"], "clips": []}                            │
+│ {"reel": "'Published-Sequences'", "sequences": [], "clips": []}                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ You were absolutely correct! The 'Sequences' reel does indeed contain PySequences, which weren't showing up in the standard clips search.
+
+  Here are the sequences I found:
+
+   * Reel: `'Sequences'`
+       1. 'edit-001'
+       2. 'edit-002'
+       3. 'edit-003'
+       4. 'Sources Sequence'
+       5. 'Shots Sequence'
+
+  It looks like you've already started the edit process. Would you like me to inspect one of these sequences—for example, to tell you how many tracks it has or
+  identify any missing media on the timeline?

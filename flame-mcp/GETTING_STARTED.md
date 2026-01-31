@@ -1,11 +1,11 @@
-# Getting Started with Flame MCP Bridge
+# Getting Started with FU_Whisper (Flame MCP Bridge)
 
-The Flame MCP Bridge allows you to connect AI models (like Claude or Gemini) directly to your Autodesk Flame session. This guide will walk you through the setup.
+The **FU_Whisper** bridge allows you to connect AI models (like Claude or Gemini) directly to your Autodesk Flame session via the **fu_eavesdrop** listener.
 
 ## 1. Prerequisites
 - **Autodesk Flame**: Installed and running.
 - **Python 3.9+**: Installed on your system.
-- **Flame Listener**: The `flame-listener.py` script must be running inside Flame (usually via a startup hook).
+- **fu_eavesdrop**: The `fu_eavesdrop.py` script must be running inside Flame (usually via a startup hook).
 
 ## 2. Local Setup
 
@@ -16,11 +16,11 @@ The Flame MCP Bridge allows you to connect AI models (like Claude or Gemini) dir
    ```
 
 2. **Verify Connection**:
-   Start the Flame Listener in Flame, then run the MCP server locally to test:
+   Start the **fu_eavesdrop** listener in Flame, then run the bridge locally to test:
    ```bash
-   python server.py
+   python fu_whisper.py
    ```
-   You should see a message saying `Starting Flame MCP Server`.
+   You should see a message saying `Starting FU_Whisper Server`.
 
 ## 3. Connecting to AI Clients
 
@@ -28,13 +28,13 @@ The Flame MCP Bridge allows you to connect AI models (like Claude or Gemini) dir
 1. Open your Claude Desktop configuration file:
    - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-2. Add the Flame MCP server to the `mcpServers` object:
+2. Add the FU_Whisper server to the `mcpServers` object:
    ```json
    {
      "mcpServers": {
-       "flame": {
+       "fu_whisper": {
          "command": "python",
-         "args": ["/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-mcp/server.py"]
+         "args": ["/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-mcp/fu_whisper.py"]
        }
      }
    }
@@ -44,9 +44,9 @@ The Flame MCP Bridge allows you to connect AI models (like Claude or Gemini) dir
 ### Cursor
 1. Go to **Settings** -> **Features** -> **MCP**.
 2. Click **+ Add New MCP Server**.
-3. Name: `Flame`
+3. Name: `FU_Whisper`
 4. Type: `command`
-5. Command: `python /ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-mcp/server.py`
+5. Command: `python /ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-mcp/fu_whisper.py`
 
 ## 4. First Steps with the AI
 Once connected, try asking the AI:
