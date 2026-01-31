@@ -17,7 +17,7 @@ TRACKED = [
     REPO_ROOT / 'flame-utilities' / 'fu_eavesdrop.py', 
     REPO_ROOT / 'flame-utilities' / 'fu_eavesdrop_init.py'
 ]
-RE_PAT = re.compile(r"__version__\s*=\s*['"](\d+\.\d+\.\d+)['"]")
+RE_PAT = re.compile(r"__version__\s*=\s*['\"](\d+\.\d+\.\d+)['\"]")
 
 
 def next_version(v: str) -> str:

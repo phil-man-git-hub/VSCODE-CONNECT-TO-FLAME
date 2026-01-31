@@ -11,11 +11,11 @@ import pytest
 
 def start_listener_module(port):
     repo_root = os.path.dirname(os.path.dirname(__file__))
-    listener_path = os.path.join(repo_root, 'flame-listener', 'flame_listener.py')
-    spec = importlib.util.spec_from_file_location('flame_listener', listener_path)
+    listener_path = os.path.join(repo_root, 'flame-utilities', 'fu_eavesdrop.py')
+    spec = importlib.util.spec_from_file_location('fu_eavesdrop', listener_path)
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
-    t = threading.Thread(target=m.start_server, kwargs={'host': '127.0.0.1', 'port': port}, daemon=True)
+    t = threading.Thread(target=m.initialize_eavesdrop, kwargs={'host': '127.0.0.1', 'port': port}, daemon=True)
     t.start()
     time.sleep(0.1)
     return m, t
@@ -108,7 +108,7 @@ class FakeDebugpy:
 def test_debug_attach_logs_when_client_simulates(monkeypatch, tmp_path):
     port = find_free_port()
     m, t = start_listener_module(port)
-    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
     try:
         os.remove(log)
     except Exception:
