@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Communication Protocol - Flame API Docs</title>
+    <title>Communication Protocol: fu_relay - Flame API Docs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Communication Protocol";
+        var mkdocs_page_name = "Communication Protocol: fu_relay";
         var mkdocs_page_input_path = "protocol.md";
         var mkdocs_page_url = null;
       </script>
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Communication Protocol</li>
+      <li class="breadcrumb-item active">Communication Protocol: fu_relay</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,39 +81,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="communication-protocol">Communication Protocol</h1>
-<p>Transport</p>
+                <h1 id="communication-protocol-fu_relay">Communication Protocol: fu_relay</h1>
+<p>The <strong>fu_relay</strong> layer manages the JSON-over-TCP communication between external tools and the internal Flame listener.</p>
+<h2 id="transport">Transport</h2>
 <ul>
-<li>TCP socket (localhost) — easiest for cross-platform dev.</li>
-<li>Optional: Unix domain socket for local-only secure communication.</li>
+<li><strong>TCP Socket (127.0.0.1)</strong>: Default transport for cross-platform stability.</li>
+<li><strong>Default Port</strong>: 5555.</li>
 </ul>
-<p>Message format</p>
-<p>Client → Listener (JSON):</p>
+<h2 id="message-format">Message format</h2>
+<h3 id="client-fu_eavesdrop-json">Client → fu_eavesdrop (JSON)</h3>
 <pre><code class="language-json">{
   &quot;command&quot;: &quot;execute&quot;,
-  &quot;id&quot;: &quot;uuid-or-counter&quot;,
-  &quot;token&quot;: &quot;optional-auth-token&quot;,
-  &quot;code&quot;: &quot;print('hello from VS Code')&quot;
+  &quot;id&quot;: &quot;uuid-v4-string&quot;,
+  &quot;token&quot;: &quot;your-security-token&quot;,
+  &quot;code&quot;: &quot;import flame; print(flame.project.current_project.name)&quot;,
+  &quot;timeout&quot;: 5.0
 }
 </code></pre>
-<p>Listener → Client (JSON response):</p>
+<h3 id="fu_eavesdrop-client-json-response">fu_eavesdrop → Client (JSON response)</h3>
 <pre><code class="language-json">{
-  &quot;id&quot;: &quot;same-id&quot;,
-  &quot;stdout&quot;: &quot;Hello\n&quot;,
+  &quot;id&quot;: &quot;matching-uuid-v4&quot;,
+  &quot;stdout&quot;: &quot;Project_Name\n&quot;,
   &quot;stderr&quot;: &quot;&quot;,
   &quot;exception&quot;: null
 }
 </code></pre>
-<p>Commands</p>
+<h2 id="available-commands">Available Commands</h2>
 <ul>
-<li><code>execute</code> — run the provided code; return stdout/stderr and any exception details.</li>
-<li><code>ping</code> — health check.</li>
-<li><code>open_file</code> (optional) — request Flame to open or load a file.</li>
+<li><strong><code>execute</code></strong>: Executes the provided Python code on the Flame main thread. Returns stdout, stderr, and any exception name.</li>
+<li><strong><code>ping</code></strong>: Returns <code>pong</code> if the listener is alive. Used by <strong>fu_whisper</strong> to verify connection.</li>
+<li><strong><code>start_debug_server</code></strong>: Launches an in-process <code>debugpy</code> adapter for remote debugging.</li>
 </ul>
-<p>Notes</p>
+<h2 id="error-handling">Error Handling</h2>
 <ul>
-<li>All responses must include the request <code>id</code> to allow in-flight matching and timeouts.</li>
-<li>Keep messages compact; only serialize structured data in JSON. Use base64 for binary payloads if needed.</li>
+<li><strong>ConnectionRefusedError</strong>: <code>fu_eavesdrop</code> is not running or port is blocked.</li>
+<li><strong>TimeoutError</strong>: The Python code took longer than the requested <code>timeout</code> (default 5s).</li>
+<li><strong>AuthError</strong>: The provided <code>token</code> is missing or incorrect.</li>
 </ul>
               
             </div>

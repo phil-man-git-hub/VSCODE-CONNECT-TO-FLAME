@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Architecture - Flame API Docs</title>
+    <title>Architecture: FLAME-UTILITIES - Flame API Docs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Architecture";
+        var mkdocs_page_name = "Architecture: FLAME-UTILITIES";
         var mkdocs_page_input_path = "architecture.md";
         var mkdocs_page_url = null;
       </script>
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Architecture</li>
+      <li class="breadcrumb-item active">Architecture: FLAME-UTILITIES</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,23 +81,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="architecture">Architecture</h1>
-<p>This project uses a small three‑component architecture:</p>
+                <h1 id="architecture-flame-utilities">Architecture: FLAME-UTILITIES</h1>
+<p>The <strong>FLAME-UTILITIES</strong> suite uses a decoupled bridge architecture consisting of four core components:</p>
 <ul>
-<li>Flame listener (inside Flame) — executes Python code on the Flame main thread and returns stdout/stderr/exceptions.</li>
-<li>VS Code extension — sends code to the listener, shows output, manages connection and stubs.</li>
-<li>Stub generator — generates <code>.pyi</code> files so VS Code can provide autocomplete and type information.</li>
+<li><strong>fu_eavesdrop</strong> (inside Flame): A high-performance JSON-over-TCP service that executes Python code on the Flame main thread and returns results.</li>
+<li><strong>fu_whisper</strong> (MCP Bridge): An AI-native gateway using the Model Context Protocol (MCP) that allows Large Language Models to autonomously interact with the Flame API.</li>
+<li><strong>fu_relay</strong>: The secure communication conduit that manages TCP handshakes, token authentication, and data routing between the external tools and the internal listener.</li>
+<li><strong>VS Code Extension</strong>: A traditional IDE bridge for human developers to execute selections and manage Flame projects from within VS Code.</li>
 </ul>
-<p>Threading and execution model</p>
-<p>All calls to the Flame API must be run on Flame's main/UI thread. The listener should receive code and schedule its execution using <code>flame.execute_on_main_thread()</code> (or equivalent) to avoid UI races.</p>
-<p>Security and lifecycle</p>
+<h2 id="threading-and-execution-model">Threading and Execution Model</h2>
+<p>All calls to the Flame Python API must be executed on Flame's <strong>main UI thread</strong>. </p>
+<p><code>fu_eavesdrop</code> receives code fragments and automatically schedules their execution using <code>flame.schedule_idle_event()</code> (or equivalent). This prevents the application from crashing due to non-thread-safe API access from the background TCP listener thread.</p>
+<h2 id="security-and-lifecycle">Security and Lifecycle</h2>
 <ul>
-<li>Bind to localhost or use Unix domain sockets. Default to local-only access.</li>
-<li>Use a token-based handshake or restrict to OS-level local sockets for access control.</li>
-<li>Start the listener via Flame's Python startup mechanism so it is available whenever Flame runs.</li>
+<li><strong>Local Access:</strong> Services bind to <code>127.0.0.1</code> by default to ensure only local tools can access the Flame API.</li>
+<li><strong>Token Authentication:</strong> All incoming requests must provide a valid <code>token</code> matching the one stored in <code>.flame.secrets.json</code>.</li>
+<li><strong>Automated Startup:</strong> <code>fu_eavesdrop</code> is initialized by <code>fu_eavesdrop_init.py</code>, which is loaded by Flame's global or project-specific startup hook mechanism.</li>
 </ul>
-<p>Testing</p>
-<p>Provide a <code>mock_flame_server.py</code> for local development and CI testing to allow extension development without an actual Flame instance.</p>
+<h2 id="component-map">Component Map</h2>
+<pre><code class="language-mermaid">graph TD
+    subgraph External_Tools [External Tools]
+        Ext[VS Code Extension]
+        AI[AI Agent / Claude / Gemini]
+        Whisper[FU_Whisper MCP Bridge]
+    end
+
+    subgraph Communication [Communication Layer]
+        Relay[fu_relay]
+    end
+
+    subgraph Flame_Runtime [Autodesk Flame]
+        List[fu_eavesdrop Listener]
+        API[Flame Python API]
+    end
+
+    Ext -- JSON/TCP --&gt; Relay
+    AI -- Tool Call --&gt; Whisper
+    Whisper -- JSON/TCP --&gt; Relay
+    Relay -- JSON/TCP --&gt; List
+    List -- Main Thread Dispatch --&gt; API
+    API -- Results --&gt; List
+    List -- JSON --&gt; Relay
+    Relay -- Results --&gt; Whisper
+    Relay -- Results --&gt; Ext
+</code></pre>
               
             </div>
           </div><footer>

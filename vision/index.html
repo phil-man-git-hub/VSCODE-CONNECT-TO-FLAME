@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Vision - Flame API Docs</title>
+    <title>Vision: FLAME-UTILITIES - Flame API Docs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Vision";
+        var mkdocs_page_name = "Vision: FLAME-UTILITIES";
         var mkdocs_page_input_path = "vision.md";
         var mkdocs_page_url = null;
       </script>
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Vision</li>
+      <li class="breadcrumb-item active">Vision: FLAME-UTILITIES</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,50 +81,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="vision">Vision</h1>
-<p>The <strong>VSCode-Connect-to-Flame</strong> project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.</p>
+                <h1 id="vision-flame-utilities">Vision: FLAME-UTILITIES</h1>
+<p>The <strong>FLAME-UTILITIES</strong> suite aims to revolutionize Autodesk Flame pipeline development by bridging the gap between Flame's closed environment and modern, AI-augmented workflows. </p>
 <h2 id="core-goals">Core Goals</h2>
 <ul>
-<li><strong>Remote Execution:</strong> Execute code directly from VS Code inside a running Flame instance.</li>
-<li><strong>Deep IntelliSense:</strong> Provide accurate autocompletion and documentation for the Flame API via high-quality type stubs.</li>
-<li><strong>Integrated Debugging:</strong> Enable line-by-line debugging of Flame scripts using <code>debugpy</code>.</li>
-<li><strong>Automated Documentation:</strong> Maintain a comprehensive API reference that updates automatically with new Flame releases.</li>
+<li><strong>AI-Native Interaction</strong>: Leverage the <strong>fu_whisper</strong> bridge to allow AI agents to autonomously inspect, automate, and debug Flame projects in real-time.</li>
+<li><strong>Rapid Iteration</strong>: Instant execution of Flame scripts from VS Code without application restarts or manual reloading.</li>
+<li><strong>Deep IntelliSense</strong>: Provide frame-accurate autocompletion and documentation via a fully automated API intelligence pipeline.</li>
+<li><strong>Enterprise Safety</strong>: Ensure reliability through thread-safe execution and secure, token-based authentication.</li>
 </ul>
-<h2 id="architecture-overview">Architecture Overview</h2>
-<p>The system consists of three primary components:</p>
-<ol>
-<li><strong>Flame Listener (inside Flame):</strong> A Python service that listens for incoming code, executes it safely on the <strong>main UI thread</strong>, and returns results.</li>
-<li><strong>VS Code Extension:</strong> A user-facing bridge that sends code selections or files to the listener and displays output in a dedicated panel.</li>
-<li><strong>API Intelligence Pipeline:</strong> A suite of scripts that crawl the Flame API to generate detailed JSON reports, which are then used to produce Markdown documentation and <code>.pyi</code> type stubs.</li>
-</ol>
+<h2 id="the-ai-augmented-workflow">The AI-Augmented Workflow</h2>
+<p>By implementing the Model Context Protocol (MCP), FLAME-UTILITIES transforms the AI from a simple code generator into an active pipeline participant.</p>
+<ul>
+<li><strong>Yesterday</strong>: You ask an AI to write a Renaming script, then copy-paste it into a file and run it.</li>
+<li><strong>Today</strong>: You tell the AI, "Rename all segments in the current sequence to match the shot name from their metadata," and the AI executes the task directly inside Flame via <strong>FU_Whisper</strong>.</li>
+</ul>
+<h2 id="component-overview">Component Overview</h2>
 <pre><code class="language-mermaid">graph TD
-    subgraph VS_Code [VS Code]
-        Ext[Extension]
-        Stubs[Type Stubs .pyi]
+    subgraph Development_Environment [External / VS Code]
+        AI[AI Agent / LLM]
+        Ext[VS Code Extension]
+        Whisper[FU_Whisper MCP Bridge]
     end
-    subgraph Flame [Autodesk Flame]
-        List[Flame Listener]
-        API[Flame Python API]
+
+    subgraph Flame_Instance [Autodesk Flame]
+        Eavesdrop[fu_eavesdrop Listener]
+        API[Autodesk Flame Python API]
     end
-    Ext -- TCP/JSON --&gt; List
-    List -- Main Thread --&gt; API
-    API -- Results --&gt; List
-    List -- JSON --&gt; Ext
+
+    AI -- Tools --&gt; Whisper
+    Whisper -- fu_relay --&gt; Eavesdrop
+    Ext -- fu_relay --&gt; Eavesdrop
+    Eavesdrop -- Main Thread --&gt; API
 </code></pre>
-<h2 id="mvp-acceptance-criteria">MVP Acceptance Criteria</h2>
-<ul>
-<li>[x] <strong>Run in Flame:</strong> Execute code in Flame or a mock server.</li>
-<li>[x] <strong>Output Capture:</strong> View <code>stdout</code>, <code>stderr</code>, and exceptions in VS Code.</li>
-<li>[x] <strong>Main Thread Safety:</strong> Automatic dispatch of API calls to the UI thread.</li>
-<li>[x] <strong>Rich IntelliSense:</strong> Over 2,400 lines of documented stubs.</li>
-<li>[ ] <strong>Remote Debugging:</strong> Full integration with <code>debugpy</code> (In Progress).</li>
-</ul>
-<h2 id="development-philosophy">Development Philosophy</h2>
-<ul>
-<li><strong>Decoupled Intelligence:</strong> All API knowledge is gathered via automated introspection, ensuring accuracy across different Flame versions.</li>
-<li><strong>Safety First:</strong> Strict enforcement of main-thread execution to prevent host application crashes.</li>
-<li><strong>Pragmatic Tooling:</strong> Focus on providing the most impactful features (Execution &amp; IntelliSense) first.</li>
-</ul>
+<h2 id="future-roadmap">Future Roadmap</h2>
+<ol>
+<li><strong>Visual Reasoning</strong>: Integrating screenshot capabilities so AI agents can "see" the Batch schematic and Media Hub.</li>
+<li><strong>Autonomous Conform Suite</strong>: Specialized tools for matching offline edits to high-res sources autonomously.</li>
+<li><strong>Real-Time Debugging</strong>: Full integration of <code>debugpy</code> for line-by-line inspection of running hooks.</li>
+</ol>
               
             </div>
           </div><footer>

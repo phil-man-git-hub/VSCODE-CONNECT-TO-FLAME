@@ -87,9 +87,9 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <ol>
 <li><strong>Autodesk Flame</strong> must be running.</li>
-<li>The <strong>Flame Listener</strong> must be deployed and active in the current project.<ul>
-<li><em>Check:</em> You should see <code>Flame listener listening on 127.0.0.1:5555</code> in the Flame shell/logs.</li>
-<li><em>Deploy:</em> If not running, use <code>python scripts/deploy_to_flame_project.py --copy --scripts-dir &lt;PATH_TO_PROJECT_PYTHON_SETUPS&gt;</code> and restart Flame.</li>
+<li>The <strong>fu_eavesdrop</strong> listener must be deployed and active.<ul>
+<li><em>Check:</em> You should see <code>fu_eavesdrop listening on 127.0.0.1:5555</code> in the Flame console.</li>
+<li><em>Deploy:</em> If not running, follow the instructions in <code>docs/deploy.md</code>.</li>
 </ul>
 </li>
 </ol>
@@ -113,16 +113,11 @@
 <pre><code class="language-bash">python scripts/generate_stubs_from_reports.py --latest
 </code></pre>
 <p>This will update <code>stubs/flame.pyi</code> with the signatures and docstrings extracted from the latest crawl.</p>
-<h3 id="4-compare-versions-optional">4. Compare Versions (Optional)</h3>
-<p>To see what changed between Flame versions (e.g., <code>pr235</code> vs <code>pr236</code>):
-1.  Run the collector on the old version.
-2.  Run the collector on the new version.
-3.  Compare the two timestamped directories using <code>diff</code> or a visual diff tool.</p>
 <h2 id="instructions-for-ai-agents-gemini">Instructions for AI Agents (Gemini)</h2>
 <p>If you are an AI assistant tasked with updating the API definitions or checking for version compatibility, follow this protocol:</p>
 <ol>
 <li><strong>Verify Connection:</strong>
-    Run <code>python scripts/verify_listener.py</code> to confirm the bridge is active.</li>
+    Run a ping check via the <strong>fu_whisper</strong> bridge or use <code>nc -zv 127.0.0.1 5555</code>.</li>
 <li><strong>Execute Crawl:</strong>
     Run <code>python scripts/collect_flame_api.py --include-all</code>.</li>
 <li><strong>Ingest Results:</strong>
@@ -131,7 +126,7 @@
 </ol>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <ul>
-<li><strong>Connection Refused:</strong> The listener is not running in Flame. Check <code>flame.project.json</code> or your deployment paths.</li>
+<li><strong>Connection Refused:</strong> <code>fu_eavesdrop</code> is not running in Flame. Check <code>flame.project.json</code> or your manual deployment.</li>
 <li><strong>Timeout:</strong> The API might be busy. The script waits 10s per request. Ensure Flame is not blocked by a modal dialog.</li>
 </ul>
               

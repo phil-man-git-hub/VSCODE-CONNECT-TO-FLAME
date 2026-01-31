@@ -89,65 +89,35 @@
 <li>Open the <code>extension/</code> folder in the Explorer.</li>
 <li>Press <code>F5</code> (Run → Start Debugging) to launch the Extension Development Host.</li>
 <li>In the host window, open the Command Palette and run:</li>
-<li><code>Flame: Connect</code> to connect to a listener (or use the mock server in <code>tests/</code>),</li>
+<li><code>Flame: Connect</code> to connect to the <strong>fu_eavesdrop</strong> listener,</li>
 <li><code>Flame: Start debug server</code> to request Flame start a debug server,</li>
 <li><code>Flame: Run in Flame</code> to send the current file/selection to Flame.</li>
 </ol>
 <h2 id="development-virtual-environment">Development virtual environment</h2>
-<p>We recommend using a system Python virtual environment for running tests and development tools so your environment is stable across Flame preview upgrades.</p>
+<p>We recommend using a system Python virtual environment for running tests and development tools.</p>
 <p>Quick setup:</p>
-<pre><code class="language-bash"># Create a system venv in repo root using system python3
-python3 -m venv .venv
-# Activate
+<pre><code class="language-bash">python3 -m venv .venv
 source .venv/bin/activate
-# Install dev deps
-python -m pip install --upgrade pip setuptools wheel
 python -m pip install -r requirements.txt
 </code></pre>
-<p>Or run the helper script:</p>
-<pre><code class="language-bash">scripts/setup_dev_env.sh [python3]
-</code></pre>
-<p>VS Code: select the interpreter from the Command Palette or rely on the workspace setting <code>python.defaultInterpreterPath</code> which points to <code>${workspaceFolder}/.venv/bin/python</code>.</p>
-<p>If you want me to create the <code>.venv</code> now I can (I'll use system <code>python3</code> unless you prefer otherwise).</p>
-<h2 id="flame-package-dependencies-notes">Flame package dependencies &amp; notes</h2>
+<h2 id="environment-variables">Environment Variables</h2>
 <ul>
-<li>The repository includes a set of runtime packages commonly used with Flame which we install into the dev venv for testing: <strong>PySide6</strong>, <strong>OpenImageIO</strong>, <strong>OpenTimelineIO</strong>, <strong>OpenColorIO</strong>.</li>
-<li>Import names can differ from the pip package names (for example, <code>opentimelineio</code> is the import for OpenTimelineIO). In our smoke test <code>OpenColorIO</code> was <strong>not</strong> importable under <code>OpenColorIO</code> or <code>opencolorio</code> but is available as the <code>PyOpenColorIO</code> package (import as <code>PyOpenColorIO</code>). The PyPI package name is <code>opencolorio</code> and docs are at https://opencolorio.readthedocs.io/en/latest/quick_start/installation.html. Prefer Flame-provided libraries when available.</li>
-<li>These packages include native/binary wheels that are tied to the Python ABI and macOS platform. If you upgrade Python (or change OS/architecture) you may need to reinstall or rebuild wheels.</li>
-<li>Verify imports in your dev venv with the included helper:</li>
+<li><code>FLAME_TOKEN</code>: Your security token for connecting to the listener.</li>
+<li><code>FLAME_READ_ONLY</code>: If <code>true</code>, the <strong>fu_whisper</strong> bridge will block destructive commands.</li>
+<li><code>FLAME_LISTENER_LOG</code>: Path to the listener log (defaults to <code>/tmp/fu_eavesdrop.log</code>).</li>
 </ul>
-<pre><code class="language-bash">source .venv/bin/activate
-python scripts/smoke_imports.py
-</code></pre>
-<p><strong>Environment variables</strong>
-- <code>FLAME_LISTENER_LOG</code> — path to append structured listener logs (defaults to <code>/tmp/flame_listener.log</code>).
-- <code>FLAME_LISTENER_RECV_TIMEOUT</code> — socket recv timeout in seconds for each client connection (defaults to <code>5.0</code>).</p>
-<p><strong>Collecting debug info</strong>
-- Use <code>scripts/collect_flame_debug_logs.py</code> to collect a small bundle (ps, lsof, listener ping, a short breakpoint test, and head/tail of listener log) into <code>/tmp</code> for easier triage.</p>
-<ul>
-<li>To verify behavior inside a running Flame instance, use <code>Flame: Run in Flame</code> to execute a short script that prints import/version info, or run a small end-to-end test against the real Flame runtime.</li>
-</ul>
-<p><strong>Example script:</strong> <code>examples/inspect_flame_env.py</code> prints the detected import names and versions for the common Flame runtime packages. Run it locally in your dev venv (<code>python examples/inspect_flame_env.py</code>) or send it to Flame with <code>Flame: Run in Flame</code>.</p>
-<p><strong>Automated smoke test:</strong> <code>tests/test_imports.py</code> will attempt the same imports and will <em>skip</em> if packages are not available in the environment (so CI can opt-in by installing the binary deps).
-- When Flame's Python ABI or installation changes, recreate your venv (<code>rm -rf .venv &amp;&amp; python3 -m venv .venv &amp;&amp; scripts/setup_dev_env.sh</code>) before running dependent tests.</p>
 <h2 id="build-package">Build &amp; package</h2>
 <ul>
-<li>Install deps: <code>npm ci</code> (run in <code>extension/</code> or use the provided task <code>Install extension deps</code>).</li>
-<li>Build: <code>npm run compile</code> (task: <code>Build extension</code>).</li>
-<li>Package: <code>npx vsce package</code> (task: <code>Package extension</code>) to produce a <code>.vsix</code>.</li>
+<li><strong>Install deps</strong>: <code>npm ci</code> (in <code>extension/</code>).</li>
+<li><strong>Build</strong>: <code>npm run compile</code>.</li>
+<li><strong>Package</strong>: <code>npx vsce package</code> to produce a <code>.vsix</code>.</li>
 </ul>
-<h2 id="test-the-debug-flow-locally-with-the-mock-server">Test the debug flow locally with the mock server</h2>
-<ol>
-<li>Run the mock server once: <code>python tests/mock_flame_server.py</code> (it accepts one request and exits).</li>
-<li>Use <code>tests/test_start_debug.py</code> to verify the <code>start_debug_server</code> command is handled by the mock server.</li>
-</ol>
-<h2 id="useful-files">Useful files</h2>
+<h2 id="component-testing">Component Testing</h2>
 <ul>
-<li><code>.vscode/launch.json</code> — run the extension or attach to Flame (port 5678)</li>
-<li><code>examples/debug_test.py</code> — example script that starts <code>debugpy</code> and waits for an attach</li>
-<li><code>tests/mock_flame_server.py</code> — small single-request mock of Flame listener</li>
+<li><strong>fu_eavesdrop</strong>: Run <code>tests/test_listener_robustness.py</code>.</li>
+<li><strong>fu_whisper</strong>: Run <code>python flame-mcp/fu_whisper.py</code> and test with Claude Desktop.</li>
+<li><strong>Mock Server</strong>: Use <code>tests/mock_flame_server.py</code> for CI testing without Flame.</li>
 </ul>
-<p>If you want, I can run the build and package steps now and run the test for <code>start_debug_server</code>.</p>
               
             </div>
           </div><footer>

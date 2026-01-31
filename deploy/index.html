@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Deploying the listener into a Flame project - Flame API Docs</title>
+    <title>Deploying FLAME-UTILITIES - Flame API Docs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Deploying the listener into a Flame project";
+        var mkdocs_page_name = "Deploying FLAME-UTILITIES";
         var mkdocs_page_input_path = "deploy.md";
         var mkdocs_page_url = null;
       </script>
@@ -72,7 +72,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Deploying the listener into a Flame project</li>
+      <li class="breadcrumb-item active">Deploying FLAME-UTILITIES</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,49 +81,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="deploying-the-listener-into-a-flame-project">Deploying the listener into a Flame project</h1>
-<p>This document describes how to deploy the repository's listener and helpers into a Flame project so they run when Flame starts.</p>
-<ol>
-<li>Configure <code>flame.project.json</code> at the repo root with an appropriate <code>scriptsDir</code> pointing to your project's <code>setups/python/</code> directory. Example:</li>
-</ol>
+                <h1 id="deploying-flame-utilities">Deploying FLAME-UTILITIES</h1>
+<p>This document describes how to deploy the <strong>FLAME-UTILITIES</strong> toolkit into Autodesk Flame using the consolidated directory strategy.</p>
+<h2 id="1-configure-the-project">1. Configure the Project</h2>
+<p>Ensure your <code>flame.project.json</code> is configured at the repo root. This file tells our scripts where to find your Flame project setups.</p>
 <pre><code class="language-json">{
   &quot;projectId&quot;: &quot;888_flame_code&quot;,
   &quot;flameProjectPath&quot;: &quot;/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo&quot;,
   &quot;scriptsDir&quot;: &quot;/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo/setups/python/&quot;
 }
 </code></pre>
-<ol>
-<li>(Optional) Create a <code>.flame.secrets.json</code> in the repo root containing your listener token:</li>
-</ol>
+<h2 id="2-set-up-authentication">2. Set Up Authentication</h2>
+<p>Create a <code>.flame.secrets.json</code> in the repo root containing your listener token:</p>
 <pre><code class="language-json">{ &quot;token&quot;: &quot;your-flame-token&quot; }
 </code></pre>
-<p>This file is <strong>ignored by git</strong> by default. For CI and automation, prefer environment variable <code>FLAME_TOKEN</code>.</p>
-<ol>
-<li>Run the deploy helper:</li>
-</ol>
-<pre><code>python scripts/deploy_to_flame_project.py --copy
+<h2 id="3-deploy-the-toolkit">3. Deploy the Toolkit</h2>
+<p>Run the deployment helper to copy the entire <code>flame-utilities/</code> folder into your Flame project directory:</p>
+<pre><code class="language-bash">python scripts/deploy_to_flame_project.py --copy
 </code></pre>
-<p>This copies <code>flame_listener.py</code>, <code>generate_stubs.py</code>, and <code>startup_flame_listener.py</code> into your project's <code>setups/python/</code> directory and (optionally) copies <code>.flame.secrets.json</code>.</p>
-<ol>
-<li>Launch Flame for the project:</li>
-</ol>
-<pre><code>/opt/Autodesk/flame_2027.pr235/bin/startApplication -J &quot;888_flame_code_2027_romeo&quot; -W &quot;romeo&quot;
+<p>This will create a <code>flame-utilities/</code> subfolder inside your project's <code>setups/python/</code> directory.</p>
+<h2 id="4-activate-the-toolkit">4. Activate the Toolkit</h2>
+<p>To "ignite" the tools from within the archived project folder, copy the <code>fu_loader.py</code> script to the root of your project's <code>setups/python/</code> directory. </p>
+<p><em>Note: This loader script adds the <code>flame-utilities/</code> subfolder to your Python path and executes the initialization hook.</em></p>
+<h2 id="5-launch-flame">5. Launch Flame</h2>
+<p>Launch Flame for your project. Watch the console or logs for the confirmation:</p>
+<pre><code class="language-text">fu_eavesdrop_init.py version 0.0.1
+FU_Eavesdrop startup hook started in background thread
 </code></pre>
-<p>Watch Flame's stdout for the listener startup message (the startup hook prints <code>Flame listener startup hook started in background thread</code>). The listener will check the token on incoming requests and reject requests with invalid tokens.</p>
-<ol>
-<li>Run the extension's <code>Flame: Connect</code> command in VS Code (it will set the token automatically if <code>FLAME_TOKEN</code> or <code>.flame.secrets.json</code> is present in your workspace). Then use <code>Flame: Run in Flame</code> to send code.</li>
-</ol>
-<p>Notes</p>
-<ul>
-<li>The listener must be started by Flame's Python startup process — the <code>startup_flame_listener.py</code> hook will start the listener in a background thread.</li>
-<li>If you prefer to manually install files, copy the three files above into your project's <code>setups/python/</code> directory and ensure the <code>.flame.secrets.json</code> token is present.</li>
-</ul>
-<h2 id="debugging-next-steps">Debugging / Next steps 🔧</h2>
-<ul>
-<li>The deployed listener currently attempts to start <code>debugpy</code> on demand, but <code>debugpy</code> is not installed inside Flame by default. To enable debugging, install <code>debugpy</code> into Flame's Python environment (or stage <code>debugpy</code> into the project's <code>setups/python/</code>) and then use <strong>Flame: Start debug server</strong> from the extension to start the attachable debug server.</li>
-<li><strong>Warning:</strong> Breakpoints and long-running pauses can freeze Flame's UI because Flame runs an embedded single-threaded Python interpreter. Test non-blocking/debug patterns first and document caveats.</li>
-<li>See <code>docs/TODO.md</code> for the installation and verification tasks.</li>
-</ul>
+<h2 id="why-this-strategy">Why this strategy?</h2>
+<p>By archiving the entire <code>flame-utilities/</code> directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system.</p>
               
             </div>
           </div><footer>
