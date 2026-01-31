@@ -1,10 +1,12 @@
 import socket
 import json
 import pytest
+import os
 
 HOST = '127.0.0.1'
 PORT = 5555
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def call_execute(code, timeout=10):
     msg = {'command': 'execute', 'id': 't', 'code': code}
@@ -24,36 +26,36 @@ def call_execute(code, timeout=10):
 
 
 def test_project_snippet():
-    code = "import examples.snippets.project_snippet as ps; print('OUT:'+str(ps.get_current_project_info()))"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.project_snippet as ps; print('OUT:'+str(ps.get_current_project_info()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
 def test_marker_make_payload():
-    code = "import examples.snippets.marker_snippet as ms; print('OUT:'+str(ms.make_marker_payload(100,'t','red')))"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.marker_snippet as ms; print('OUT:'+str(ms.make_marker_payload(100,'t','red')))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
 def test_timeline_snippet():
-    code = "import examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.list_timelines()))"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.list_timelines()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
 def test_timeline_frame_ranges():
-    code = "import examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.timeline_frame_ranges()))"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.timeline_snippet as ts; print('OUT:'+str(ts.timeline_frame_ranges()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
 def test_clip_snippet():
-    code = "import examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.list_clips_in_current_timeline()))"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.list_clips_in_current_timeline()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
 def test_find_clip_by_name():
-    code = "import examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.find_clip_by_name('nonexistent')) )"
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.snippets.clip_snippet as cs; print('OUT:'+str(cs.find_clip_by_name('nonexistent')) )"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')

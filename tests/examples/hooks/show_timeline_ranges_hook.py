@@ -3,7 +3,7 @@
 Uses `timeline_snippet.timeline_frame_ranges` to return range info.
 """
 
-from examples.snippets.timeline_snippet import timeline_frame_ranges
+from tests.examples.snippets.timeline_snippet import timeline_frame_ranges
 
 
 def run_show_ranges():

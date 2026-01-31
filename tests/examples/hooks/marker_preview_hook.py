@@ -4,7 +4,7 @@ Provides a preview payload for a marker via `make_marker_payload`. Does not
 mutate Flame unless explicit commit function is called by a user.
 """
 
-from examples.snippets.marker_snippet import make_marker_payload, commit_marker
+from tests.examples.snippets.marker_snippet import make_marker_payload, commit_marker
 
 
 def preview_marker(frame, label='note', color='yellow'):

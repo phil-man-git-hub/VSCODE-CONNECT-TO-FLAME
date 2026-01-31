@@ -1,10 +1,12 @@
 import socket
 import json
 import pytest
+import os
 
 HOST = '127.0.0.1'
 PORT = 5555
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def call_execute(code, timeout=5):
     msg = {'command': 'execute', 'id': 't', 'code': code}
@@ -23,25 +25,19 @@ def call_execute(code, timeout=5):
         pytest.skip(f'Listener not available: {e}')
 
 
-def test_register_menu():
-    code = "import examples.hooks.ui_menu_example as u; print('OUT:'+str(u.register_menu()))"
+def test_startup_example():
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.hooks.startup_example as se; print('OUT:'+str(se.sample_startup()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
-def test_menu_actions():
-    code = "import examples.hooks.ui_menu_example as u; print('OUT:'+str(u.menu_action('list_clips')))"
+def test_menu_example():
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.hooks.menu_example as me; print('OUT:'+str(me.get_menu_items()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')
 
 
-def test_toggle_feature():
-    code = "import examples.hooks.toggle_feature_hook as t; print('OUT:'+str(t.set_toggle(True))); print('OUT:'+str(t.get_toggle()))"
-    resp = call_execute(code)
-    assert 'OUT:' in resp.get('stdout','')
-
-
-def test_confirm_preview():
-    code = "import examples.hooks.confirm_action_hook as c; print('OUT:'+str(c.preview_delete_selection()))"
+def test_asset_sync_example():
+    code = f"import sys; sys.path.append('{REPO_ROOT}'); import tests.examples.hooks.asset_sync_example as ae; print('OUT:'+str(ae.sync_preview()))"
     resp = call_execute(code)
     assert 'OUT:' in resp.get('stdout','')

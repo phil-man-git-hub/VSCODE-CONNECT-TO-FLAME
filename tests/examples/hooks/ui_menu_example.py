@@ -54,10 +54,10 @@ def menu_action(action_name, *, confirm=False):
 
         # dispatch to safe snippets
         if action_name == 'list_clips':
-            from examples.snippets.clip_snippet import list_clips_in_current_timeline
+            from tests.examples.snippets.clip_snippet import list_clips_in_current_timeline
             return {'ok': True, 'result': list_clips_in_current_timeline()}
         if action_name == 'show_ranges':
-            from examples.snippets.timeline_snippet import timeline_frame_ranges
+            from tests.examples.snippets.timeline_snippet import timeline_frame_ranges
             return {'ok': True, 'result': timeline_frame_ranges()}
         return {'ok': False, 'error': 'unknown-action'}
     except Exception as e:
