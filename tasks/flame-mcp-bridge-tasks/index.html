@@ -85,47 +85,47 @@
 <p>This document tracks the technical steps required to implement the Model Context Protocol (MCP) bridge for Autodesk Flame.</p>
 <h2 id="phase-1-environment-scaffolding">Phase 1: Environment &amp; Scaffolding</h2>
 <ul>
-<li>[ ] Create <code>flame-mcp/</code> directory structure.</li>
-<li>[ ] Initialize <code>requirements.txt</code> for the MCP server (e.g., <code>fastmcp</code>, <code>requests</code>, <code>pydantic</code>).</li>
-<li>[ ] Set up a basic <code>server.py</code> using <code>fastmcp</code>.</li>
-<li>[ ] Create a README in <code>flame-mcp/</code> explaining how to start the server.</li>
+<li>[x] Create <code>flame-mcp/</code> directory structure.</li>
+<li>[x] Initialize <code>requirements.txt</code> for the MCP server (e.g., <code>fastmcp</code>, <code>requests</code>, <code>pydantic</code>).</li>
+<li>[x] Set up a basic <code>server.py</code> using <code>fastmcp</code>.</li>
+<li>[x] Create a README in <code>flame-mcp/</code> explaining how to start the server.</li>
 </ul>
 <h2 id="phase-2-core-communication-layer">Phase 2: Core Communication Layer</h2>
 <ul>
-<li>[ ] Implement the <code>Relay</code> client: a module to handle network communication with the existing <code>flame-listener.py</code> (port 5555).</li>
-<li>[ ] Standardize the error handling for relay failures (e.g., Flame is not running, Listener is down).</li>
-<li>[ ] Implement a "Ping" tool to verify the end-to-end connection: <code>AI -&gt; MCP -&gt; Listener -&gt; Flame</code>.</li>
+<li>[x] Implement the <code>Relay</code> client: a module to handle network communication with the existing <code>flame-listener.py</code> (port 5555).</li>
+<li>[x] Standardize the error handling for relay failures (e.g., Flame is not running, Listener is down).</li>
+<li>[x] Implement a "Ping" tool to verify the end-to-end connection: <code>AI -&gt; MCP -&gt; Listener -&gt; Flame</code>.</li>
 </ul>
 <h2 id="phase-3-core-ai-tools">Phase 3: Core AI Tools</h2>
 <ul>
-<li>[ ] <strong>Tool: <code>execute_python</code></strong><ul>
-<li>[ ] Basic execution of strings.</li>
-<li>[ ] Return stdout and stderr to the AI.</li>
+<li>[x] <strong>Tool: <code>execute_python</code></strong><ul>
+<li>[x] Basic execution of strings.</li>
+<li>[x] Return stdout and stderr to the AI.</li>
 </ul>
 </li>
-<li>[ ] <strong>Tool: <code>get_flame_context</code></strong><ul>
-<li>[ ] Return JSON containing: Current Project, User, Workspace, and Version.</li>
+<li>[x] <strong>Tool: <code>get_flame_context</code></strong><ul>
+<li>[x] Return JSON containing: Current Project, User, Workspace, and Version.</li>
 </ul>
 </li>
-<li>[ ] <strong>Tool: <code>list_desktop_clips</code></strong><ul>
-<li>[ ] Query Flame for all clips on the current Desktop.</li>
+<li>[x] <strong>Tool: <code>list_desktop_clips</code></strong><ul>
+<li>[x] Query Flame for all clips on the current Desktop.</li>
 </ul>
 </li>
-<li>[ ] <strong>Tool: <code>inspect_symbol</code></strong><ul>
-<li>[ ] Use Python's <code>dir()</code> and <code>help()</code> inside Flame to give the AI real-time documentation for any Flame object.</li>
+<li>[x] <strong>Tool: <code>inspect_symbol</code></strong><ul>
+<li>[x] Use Python's <code>dir()</code> and <code>help()</code> inside Flame to give the AI real-time documentation for any Flame object.</li>
 </ul>
 </li>
 </ul>
 <h2 id="phase-4-integration-security">Phase 4: Integration &amp; Security</h2>
 <ul>
 <li>[ ] Test the bridge with an MCP-compliant client (e.g., Claude Desktop or Cursor).</li>
-<li>[ ] Implement basic logging of all AI-generated commands for auditability.</li>
-<li>[ ] (Optional) Add a "Read-Only" mode toggle to prevent accidental modifications during inspection.</li>
+<li>[x] Implement basic logging of all AI-generated commands for auditability.</li>
+<li>[x] (Optional) Add a "Read-Only" mode toggle to prevent accidental modifications during inspection.</li>
 </ul>
 <h2 id="phase-5-documentation-examples">Phase 5: Documentation &amp; Examples</h2>
 <ul>
-<li>[ ] Write a "Getting Started" guide for users to connect their LLM to the Flame MCP.</li>
-<li>[ ] Create a folder <code>flame-mcp/prompts/</code> with system prompt templates that help the AI understand how to use the Flame tools effectively.</li>
+<li>[x] Write a "Getting Started" guide for users to connect their LLM to the Flame MCP.</li>
+<li>[x] Create a folder <code>flame-mcp/prompts/</code> with system prompt templates that help the AI understand how to use the Flame tools effectively.</li>
 <li>[ ] Record a demo of an AI autonomously interacting with the Flame Desktop.</li>
 </ul>
               
