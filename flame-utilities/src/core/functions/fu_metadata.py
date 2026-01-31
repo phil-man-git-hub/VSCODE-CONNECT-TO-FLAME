@@ -5,15 +5,30 @@ Gathers technical metadata and XML data for Flame objects.
 
 import flame
 import subprocess
+from fu_decorators import fu_action
 
-def get_clip_metadata(clip):
-    """Gathers technical metadata for a given PyClip object."""
-    # Placeholder for metadata gathering logic
-    # In the future, this will involve wiretap_get_metadata for XML details
-    return {
-        "name": clip.name,
-        "width": clip.width,
-        "height": clip.height,
-        "ratio": clip.aspect_ratio,
-        "bit_depth": clip.bit_depth
-    }
+@fu_action(menu="media_panel", path="FU / get")
+def metadata(selection):
+    """Gathers technical metadata for the selected objects."""
+    import json
+    results = []
+    for item in selection:
+        # Basic metadata for now
+        data = {
+            "name": getattr(item, 'name', 'Unknown'),
+            "type": str(type(item))
+        }
+        
+        # If it's a clip-like object
+        if hasattr(item, 'width'):
+            data.update({
+                "width": item.width,
+                "height": item.height,
+                "aspect_ratio": getattr(item, 'aspect_ratio', 'N/A')
+            })
+            
+        results.append(data)
+        
+    print("--- METADATA ---")
+    print(json.dumps(results, indent=4))
+    return results
