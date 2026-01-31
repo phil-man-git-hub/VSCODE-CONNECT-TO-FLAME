@@ -14,12 +14,12 @@ import pytest
 def start_listener_module(port):
     # Resolve path relative to this tests file so it works from any cwd
     repo_root = os.path.dirname(os.path.dirname(__file__))
-    listener_path = os.path.join(repo_root, 'flame-listener', 'flame_listener.py')
-    spec = importlib.util.spec_from_file_location('flame_listener', listener_path)
+    listener_path = os.path.join(repo_root, 'flame-utilities', 'fu_eavesdrop.py')
+    spec = importlib.util.spec_from_file_location('fu_eavesdrop', listener_path)
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     import threading
-    t = threading.Thread(target=m.start_server, kwargs={'host': '127.0.0.1', 'port': port}, daemon=True)
+    t = threading.Thread(target=m.initialize_eavesdrop, kwargs={'host': '127.0.0.1', 'port': port}, daemon=True)
     t.start()
     # Give server time to bind
     time.sleep(0.1)
@@ -69,7 +69,7 @@ def test_execute_timeout():
     port = find_free_port()
     m, t = start_listener_module(port)
     # ensure log file is fresh
-    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
     try:
         os.remove(log)
     except Exception:
@@ -85,7 +85,7 @@ def test_execute_timeout():
 def test_thread_exception_reports():
     port = find_free_port()
     m, t = start_listener_module(port)
-    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
     try:
         os.remove(log)
     except Exception:
@@ -101,7 +101,7 @@ def test_thread_exception_reports():
 def test_start_debug_server_ack_and_background(monkeypatch):
     port = find_free_port()
     m, t = start_listener_module(port)
-    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
     try:
         os.remove(log)
     except Exception:
@@ -129,7 +129,7 @@ def test_start_debug_server_ack_and_background(monkeypatch):
 def test_recv_timeout_on_partial_payload():
     port = find_free_port()
     m, t = start_listener_module(port)
-    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/flame_listener.log')
+    log = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
     try:
         os.remove(log)
     except Exception:

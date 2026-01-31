@@ -1,18 +1,13 @@
-"""Deploy flame listener files into a Flame project `scriptsDir`.
+"""Deploy the consolidated FLAME-UTILITIES toolkit into a Flame project `scriptsDir`.
 
 Usage:
   python scripts/deploy_to_flame_project.py --dry-run
   python scripts/deploy_to_flame_project.py --copy
 
 It looks for `flame.project.json` in the repository root and copies the
-following files into the configured `scriptsDir`:
- - flame_listener.py
- - generate_stubs.py
- - startup_flame_listener.py
- - (optional) .flame.secrets.json (if present in repo root)
+entire `flame-utilities/` directory into the configured `scriptsDir`.
 
-The script will create the target directory if needed and set permissive
-permissions so Flame can read the files.
+The script will also copy (optional) .flame.secrets.json into the target directory.
 """
 
 import argparse
@@ -23,7 +18,7 @@ import stat
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EXTRA_FILES = ['flame-listener/flame_listener.py', 'flame-listener/generate_stubs.py', 'flame-listener/startup_flame_listener.py']
+UTILITIES_SRC = REPO_ROOT / 'flame-utilities'
 
 
 def load_project_config():
@@ -38,55 +33,58 @@ def ensure_dir(p: Path):
     p.mkdir(parents=True, exist_ok=True)
 
 
-def copy_file(src: Path, dst: Path):
-    shutil.copy2(src, dst)
-    # ensure readable
-    dst.chmod(dst.stat().st_mode | stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
+def copy_recursive(src: Path, dst: Path):
+    if dst.exists():
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst)
+    # Ensure all files are readable
+    for root, dirs, files in os.walk(dst):
+        for d in dirs:
+            os.chmod(os.path.join(root, d), 0o755)
+        for f in files:
+            os.chmod(os.path.join(root, f), 0o644)
 
 
 def main(dry_run: bool, scripts_dir_arg: str = None):
-    """Deploy files to `scripts_dir_arg` if provided, else fall back to `flame.project.json`.
-
-    This makes it easy to deploy to any Flame project's `setups/python/` without
-    requiring a committed per-project configuration file.
-    """
     if scripts_dir_arg:
-        target = Path(scripts_dir_arg)
+        target_parent = Path(scripts_dir_arg)
     else:
-        # Try to load from flame.project.json (optional convenience)
         try:
             cfg = load_project_config()
             scripts_dir = cfg.get('scriptsDir')
             if not scripts_dir:
                 raise ValueError('scriptsDir is not configured in flame.project.json')
-            target = Path(scripts_dir)
+            target_parent = Path(scripts_dir)
         except FileNotFoundError:
             raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or flame.project.json')
 
-    print(f'Target scripts dir: {target}')
+    target_utilities = target_parent / 'flame-utilities'
+    
+    print(f'Deployment Target: {target_utilities}')
+    
     if dry_run:
-        print('Dry run: the following files would be copied:')
-        for f in EXTRA_FILES:
-            print(f' - {REPO_ROOT / f} -> {target / Path(f).name}')
+        print('Dry run: The entire flame-utilities/ directory would be copied.')
+        print(f' - {UTILITIES_SRC} -> {target_utilities}')
         secrets = REPO_ROOT / '.flame.secrets.json'
         if secrets.exists():
-            print(f' - {secrets} -> {target / secrets.name} (secrets)')
+            print(f' - {secrets} -> {target_utilities / secrets.name} (secrets)')
         return
-    ensure_dir(target)
-    for f in EXTRA_FILES:
-        src = REPO_ROOT / f
-        if not src.exists():
-            raise FileNotFoundError(f'{src} not found')
-        dst = target / Path(f).name
-        print(f'Copying {src} -> {dst}')
-        copy_file(src, dst)
-    # Optional: copy secrets if present
+
+    ensure_dir(target_parent)
+    print(f'Copying {UTILITIES_SRC} -> {target_utilities}')
+    copy_recursive(UTILITIES_SRC, target_utilities)
+    
+    # Optional: copy secrets if present into the utilities folder
     secrets = REPO_ROOT / '.flame.secrets.json'
     if secrets.exists():
-        dst = target / secrets.name
-        print(f'Copying secrets {secrets} -> {dst}')
-        copy_file(secrets, dst)
-    print('Deployment complete. When launching Flame, ensure the project uses this scripts dir.')
+        dst_secrets = target_utilities / secrets.name
+        print(f'Copying secrets {secrets} -> {dst_secrets}')
+        shutil.copy2(secrets, dst_secrets)
+        dst_secrets.chmod(dst_secrets.stat().st_mode | stat.S_IRUSR)
+
+    print('\nDeployment complete.')
+    print('IMPORTANT: To activate the toolkit in Flame, ensure you have a loader script')
+    print('in the parent directory that adds flame-utilities to sys.path.')
 
 
 if __name__ == '__main__':

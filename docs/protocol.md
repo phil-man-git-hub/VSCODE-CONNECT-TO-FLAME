@@ -1,41 +1,41 @@
-# Communication Protocol
+# Communication Protocol: fu_relay
 
-Transport
+The **fu_relay** layer manages the JSON-over-TCP communication between external tools and the internal Flame listener.
 
-- TCP socket (localhost) — easiest for cross-platform dev.
-- Optional: Unix domain socket for local-only secure communication.
+## Transport
+- **TCP Socket (127.0.0.1)**: Default transport for cross-platform stability.
+- **Default Port**: 5555.
 
-Message format
+## Message format
 
-Client → Listener (JSON):
-
+### Client → fu_eavesdrop (JSON)
 ```json
 {
   "command": "execute",
-  "id": "uuid-or-counter",
-  "token": "optional-auth-token",
-  "code": "print('hello from VS Code')"
+  "id": "uuid-v4-string",
+  "token": "your-security-token",
+  "code": "import flame; print(flame.project.current_project.name)",
+  "timeout": 5.0
 }
 ```
 
-Listener → Client (JSON response):
-
+### fu_eavesdrop → Client (JSON response)
 ```json
 {
-  "id": "same-id",
-  "stdout": "Hello\n",
+  "id": "matching-uuid-v4",
+  "stdout": "Project_Name\n",
   "stderr": "",
   "exception": null
 }
 ```
 
-Commands
+## Available Commands
 
-- `execute` — run the provided code; return stdout/stderr and any exception details.
-- `ping` — health check.
-- `open_file` (optional) — request Flame to open or load a file.
+*   **`execute`**: Executes the provided Python code on the Flame main thread. Returns stdout, stderr, and any exception name.
+*   **`ping`**: Returns `pong` if the listener is alive. Used by **fu_whisper** to verify connection.
+*   **`start_debug_server`**: Launches an in-process `debugpy` adapter for remote debugging.
 
-Notes
-
-- All responses must include the request `id` to allow in-flight matching and timeouts.
-- Keep messages compact; only serialize structured data in JSON. Use base64 for binary payloads if needed.
+## Error Handling
+- **ConnectionRefusedError**: `fu_eavesdrop` is not running or port is blocked.
+- **TimeoutError**: The Python code took longer than the requested `timeout` (default 5s).
+- **AuthError**: The provided `token` is missing or incorrect.

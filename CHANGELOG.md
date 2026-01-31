@@ -3,6 +3,25 @@
 ## Unreleased
 
 ### Added
+- **FU_Whisper (Flame MCP Bridge)**: Implemented a Model Context Protocol (MCP) server that allows AI agents (Claude, Cursor, Gemini) to interact autonomously with Autodesk Flame.
+- **FLAME-UTILITIES (fu_) Branding**: Established a cohesive naming convention for the project's core components:
+    - `fu_eavesdrop`: The internal Flame listener.
+    - `fu_whisper`: The external AI bridge.
+    - `fu_relay`: The communication conduit.
+    - `fu_eavesdrop_init`: The startup hook.
+- **AI Documentation Suite**: Added comprehensive "Understanding AI" research documents covering MCP, RAG, Agents, Model Types, and more.
+- **Enhanced AI Tools**: Added specialized tools for AI agents, including `get_flame_context`, `list_desktop_clips`, and `inspect_symbol` for live API discovery.
+
+### Improved
+- **Audit Logging**: Implemented `mcp_audit.log` in `fu_whisper` to track all AI-generated tool calls and their results.
+- **Safety Modes**: Added a `FLAME_READ_ONLY` mode to the MCP bridge to prevent accidental modifications during inspection.
+- **TCP Relay Robustness**: Standardized the `fu_relay` logic for handling TCP communication and authentication tokens.
+
+### Fixed
+- **Naming Collisions**: Renamed startup hooks to avoid conflicts with Flame's internal "Igniter" tool.
+- **API Iteration**: Improved logic for iterating over Flame collections (Clips, Sequences, Reels) to prevent `NoneType` errors in scripts.
+
+### Added (Jan 2026)
 - **Enhanced API Stubs Pipeline**: Created `scripts/generate_stubs_from_reports.py` which extracts detailed method signatures, default values, and inheritance from JSON reports.
 - **Deep IntelliSense**: Regenerated `stubs/flame.pyi` with over 2,400 lines of documented API definitions.
 - **Comprehensive Repo Analysis**: Added `GEMINI.md` with a technical breakdown of the project architecture and roadmap.

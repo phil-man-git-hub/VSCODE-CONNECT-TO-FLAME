@@ -9,6 +9,14 @@ thread so it doesn't block Flame's UI thread.
 __version__ = '0.0.1'
 
 import threading
+import os
+import sys
+
+# Ensure the utilities directory is in path
+utilities_dir = os.path.dirname(__file__)
+if utilities_dir not in sys.path:
+    sys.path.append(utilities_dir)
+
 try:
     import flame  # type: ignore
 except Exception:
@@ -20,7 +28,7 @@ try:
 except Exception:
     pass
 
-# Import the local fu_eavesdrop module (assumes it's copied alongside this file)
+# Import the local fu_eavesdrop module (now in same directory)
 try:
     from fu_eavesdrop import initialize_eavesdrop
 except Exception:

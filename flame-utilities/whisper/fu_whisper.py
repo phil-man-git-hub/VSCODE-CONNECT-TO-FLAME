@@ -1,6 +1,11 @@
 from fastmcp import FastMCP
-from fu_relay import FlameRelay
 import os
+import sys
+
+# Ensure the whisper directory is in path for imports
+sys.path.append(os.path.dirname(__file__))
+from fu_relay import FlameRelay
+
 import json
 import logging
 from datetime import datetime

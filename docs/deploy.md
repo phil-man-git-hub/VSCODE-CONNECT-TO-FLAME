@@ -1,8 +1,9 @@
-# Deploying the listener into a Flame project
+# Deploying FLAME-UTILITIES
 
-This document describes how to deploy the repository's listener and helpers into a Flame project so they run when Flame starts.
+This document describes how to deploy the **FLAME-UTILITIES** toolkit into Autodesk Flame using the consolidated directory strategy.
 
-1. Configure `flame.project.json` at the repo root with an appropriate `scriptsDir` pointing to your project's `setups/python/` directory. Example:
+## 1. Configure the Project
+Ensure your `flame.project.json` is configured at the repo root. This file tells our scripts where to find your Flame project setups.
 
 ```json
 {
@@ -12,39 +13,34 @@ This document describes how to deploy the repository's listener and helpers into
 }
 ```
 
-2. (Optional) Create a `.flame.secrets.json` in the repo root containing your listener token:
+## 2. Set Up Authentication
+Create a `.flame.secrets.json` in the repo root containing your listener token:
 
 ```json
 { "token": "your-flame-token" }
 ```
 
-This file is **ignored by git** by default. For CI and automation, prefer environment variable `FLAME_TOKEN`.
+## 3. Deploy the Toolkit
+Run the deployment helper to copy the entire `flame-utilities/` folder into your Flame project directory:
 
-3. Run the deploy helper:
-
-```
+```bash
 python scripts/deploy_to_flame_project.py --copy
 ```
 
-This copies `flame_listener.py`, `generate_stubs.py`, and `startup_flame_listener.py` into your project's `setups/python/` directory and (optionally) copies `.flame.secrets.json`.
+This will create a `flame-utilities/` subfolder inside your project's `setups/python/` directory.
 
-4. Launch Flame for the project:
+## 4. Activate the Toolkit
+To "ignite" the tools from within the archived project folder, copy the `fu_loader.py` script to the root of your project's `setups/python/` directory. 
 
+*Note: This loader script adds the `flame-utilities/` subfolder to your Python path and executes the initialization hook.*
+
+## 5. Launch Flame
+Launch Flame for your project. Watch the console or logs for the confirmation:
+
+```text
+fu_eavesdrop_init.py version 0.0.1
+FU_Eavesdrop startup hook started in background thread
 ```
-/opt/Autodesk/flame_2027.pr235/bin/startApplication -J "888_flame_code_2027_romeo" -W "romeo"
-```
 
-Watch Flame's stdout for the listener startup message (the startup hook prints `Flame listener startup hook started in background thread`). The listener will check the token on incoming requests and reject requests with invalid tokens.
-
-5. Run the extension's `Flame: Connect` command in VS Code (it will set the token automatically if `FLAME_TOKEN` or `.flame.secrets.json` is present in your workspace). Then use `Flame: Run in Flame` to send code.
-
-Notes
-
-- The listener must be started by Flame's Python startup process — the `startup_flame_listener.py` hook will start the listener in a background thread.
-- If you prefer to manually install files, copy the three files above into your project's `setups/python/` directory and ensure the `.flame.secrets.json` token is present.
-
-## Debugging / Next steps 🔧
-
-- The deployed listener currently attempts to start `debugpy` on demand, but `debugpy` is not installed inside Flame by default. To enable debugging, install `debugpy` into Flame's Python environment (or stage `debugpy` into the project's `setups/python/`) and then use **Flame: Start debug server** from the extension to start the attachable debug server.
-- **Warning:** Breakpoints and long-running pauses can freeze Flame's UI because Flame runs an embedded single-threaded Python interpreter. Test non-blocking/debug patterns first and document caveats.
-- See `docs/TODO.md` for the installation and verification tasks.
+## Why this strategy?
+By archiving the entire `flame-utilities/` directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system.

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Bump __version__ in flame-listener files following project rules.
+"""Bump __version__ in FLAME-UTILITIES files following project rules.
 
 Usage: python scripts/bump_flame_versions.py [--apply] [--deploy]
 
 - With no flags, the script will show the current and next versions for tracked files.
-- With --apply it will update the files in-place (committing the change is left to the developer).
-- With --deploy it will also call the repo's deploy script to copy the updated files into the configured Flame project.
+- With --apply it will update the files in-place.
+- With --deploy it will also call the repo's deploy script.
 """
 import argparse
 import re
@@ -13,8 +13,11 @@ from pathlib import Path
 from scripts.deploy_to_flame_project import main as deploy_main
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-TRACKED = [REPO_ROOT / 'flame-listener' / 'flame_listener.py', REPO_ROOT / 'flame-listener' / 'startup_flame_listener.py']
-RE_PAT = re.compile(r"__version__\s*=\s*['\"](\d+\.\d+\.\d+)['\"]")
+TRACKED = [
+    REPO_ROOT / 'flame-utilities' / 'fu_eavesdrop.py', 
+    REPO_ROOT / 'flame-utilities' / 'fu_eavesdrop_init.py'
+]
+RE_PAT = re.compile(r"__version__\s*=\s*['"](\d+\.\d+\.\d+)['"]")
 
 
 def next_version(v: str) -> str:
@@ -50,9 +53,12 @@ if __name__ == '__main__':
     parser.add_argument('--scripts-dir', help='Optional target scripts dir to pass to deploy script')
     args = parser.parse_args()
     for p in TRACKED:
-        find_and_bump(p, apply=args.apply)
+        if p.exists():
+            find_and_bump(p, apply=args.apply)
+        else:
+            print(f"Warning: {p} not found.")
+            
     if args.deploy and args.apply:
-        # run the existing deploy script to copy files into Flame project
         deploy_main(dry_run=False, scripts_dir_arg=args.scripts_dir)
     elif args.deploy and not args.apply:
         print('Use --apply with --deploy to deploy the bumped files.')

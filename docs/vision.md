@@ -1,48 +1,44 @@
-# Vision
+# Vision: FLAME-UTILITIES
 
-The **VSCode-Connect-to-Flame** project aims to bring modern, developer-friendly workflows to Autodesk Flame Python development. By bridging the gap between Flame's closed environment and Visual Studio Code, we enable a rapid iteration loop, deep IntelliSense, and integrated debugging.
+The **FLAME-UTILITIES** suite aims to revolutionize Autodesk Flame pipeline development by bridging the gap between Flame's closed environment and modern, AI-augmented workflows. 
 
 ## Core Goals
 
-- **Remote Execution:** Execute code directly from VS Code inside a running Flame instance.
-- **Deep IntelliSense:** Provide accurate autocompletion and documentation for the Flame API via high-quality type stubs.
-- **Integrated Debugging:** Enable line-by-line debugging of Flame scripts using `debugpy`.
-- **Automated Documentation:** Maintain a comprehensive API reference that updates automatically with new Flame releases.
+- **AI-Native Interaction**: Leverage the **fu_whisper** bridge to allow AI agents to autonomously inspect, automate, and debug Flame projects in real-time.
+- **Rapid Iteration**: Instant execution of Flame scripts from VS Code without application restarts or manual reloading.
+- **Deep IntelliSense**: Provide frame-accurate autocompletion and documentation via a fully automated API intelligence pipeline.
+- **Enterprise Safety**: Ensure reliability through thread-safe execution and secure, token-based authentication.
 
-## Architecture Overview
+## The AI-Augmented Workflow
 
-The system consists of three primary components:
+By implementing the Model Context Protocol (MCP), FLAME-UTILITIES transforms the AI from a simple code generator into an active pipeline participant.
 
-1.  **Flame Listener (inside Flame):** A Python service that listens for incoming code, executes it safely on the **main UI thread**, and returns results.
-2.  **VS Code Extension:** A user-facing bridge that sends code selections or files to the listener and displays output in a dedicated panel.
-3.  **API Intelligence Pipeline:** A suite of scripts that crawl the Flame API to generate detailed JSON reports, which are then used to produce Markdown documentation and `.pyi` type stubs.
+*   **Yesterday**: You ask an AI to write a Renaming script, then copy-paste it into a file and run it.
+*   **Today**: You tell the AI, "Rename all segments in the current sequence to match the shot name from their metadata," and the AI executes the task directly inside Flame via **FU_Whisper**.
+
+## Component Overview
 
 ```mermaid
 graph TD
-    subgraph VS_Code [VS Code]
-        Ext[Extension]
-        Stubs[Type Stubs .pyi]
+    subgraph Development_Environment [External / VS Code]
+        AI[AI Agent / LLM]
+        Ext[VS Code Extension]
+        Whisper[FU_Whisper MCP Bridge]
     end
-    subgraph Flame [Autodesk Flame]
-        List[Flame Listener]
-        API[Flame Python API]
+    
+    subgraph Flame_Instance [Autodesk Flame]
+        Eavesdrop[fu_eavesdrop Listener]
+        API[Autodesk Flame Python API]
     end
-    Ext -- TCP/JSON --> List
-    List -- Main Thread --> API
-    API -- Results --> List
-    List -- JSON --> Ext
+
+    AI -- Tools --> Whisper
+    Whisper -- fu_relay --> Eavesdrop
+    Ext -- fu_relay --> Eavesdrop
+    Eavesdrop -- Main Thread --> API
 ```
 
-## MVP Acceptance Criteria
+## Future Roadmap
 
-- [x] **Run in Flame:** Execute code in Flame or a mock server.
-- [x] **Output Capture:** View `stdout`, `stderr`, and exceptions in VS Code.
-- [x] **Main Thread Safety:** Automatic dispatch of API calls to the UI thread.
-- [x] **Rich IntelliSense:** Over 2,400 lines of documented stubs.
-- [ ] **Remote Debugging:** Full integration with `debugpy` (In Progress).
-
-## Development Philosophy
-
-- **Decoupled Intelligence:** All API knowledge is gathered via automated introspection, ensuring accuracy across different Flame versions.
-- **Safety First:** Strict enforcement of main-thread execution to prevent host application crashes.
-- **Pragmatic Tooling:** Focus on providing the most impactful features (Execution & IntelliSense) first.
+1.  **Visual Reasoning**: Integrating screenshot capabilities so AI agents can "see" the Batch schematic and Media Hub.
+2.  **Autonomous Conform Suite**: Specialized tools for matching offline edits to high-res sources autonomously.
+3.  **Real-Time Debugging**: Full integration of `debugpy` for line-by-line inspection of running hooks.

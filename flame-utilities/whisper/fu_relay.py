@@ -17,11 +17,11 @@ class FlameRelay:
         if token:
             return token
         
-        # 2. Try .flame.secrets.json in root or flame-listener dir
+        # 2. Try .flame.secrets.json in root or flame-utilities dir
         possible_paths = [
             ".flame.secrets.json",
             "flame.project.json",
-            "flame-listener/.flame.secrets.json"
+            "flame-utilities/.flame.secrets.json"
         ]
         
         for path in possible_paths:
