@@ -15,16 +15,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Setup Audit Logging
-LOG_FILE = "mcp_audit.log"
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+LOG_FILE = os.path.join(LOG_DIR, "mcp_audit.log")
+
+# Create a custom formatter that handles full output for file, truncated for stream
+class AuditFormatter(logging.Formatter):
+    def format(self, record):
+        if hasattr(record, 'json_data'):
+            return json.dumps(record.json_data)
+        return super().format(record)
+
+file_handler = logging.FileHandler(LOG_FILE)
+file_handler.setFormatter(AuditFormatter())
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
 logger = logging.getLogger("FU_Whisper")
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
+# Code Library Setup
+LIBRARY_DIR = os.path.join(os.path.dirname(__file__), "library")
+os.makedirs(LIBRARY_DIR, exist_ok=True)
 
 # Initialize the MCP Server
 mcp = FastMCP("FU_Whisper")
@@ -40,14 +55,22 @@ relay = FlameRelay(
 
 def audit_log(tool_name: str, input_data: any, result: str):
     """Logs the details of every tool execution for security and debugging."""
-    entry = {
-        "timestamp": datetime.now().isoformat(),
+    timestamp = datetime.now().isoformat()
+    
+    # Full entry for file log
+    full_entry = {
+        "timestamp": timestamp,
         "tool": tool_name,
         "input": input_data,
         "read_only_mode": READ_ONLY,
-        "result_summary": result[:200] + "..." if len(result) > 200 else result
+        "result": result 
     }
-    logger.info(f"TOOL_CALL: {json.dumps(entry)}")
+    
+    # Summary for console
+    summary_msg = f"TOOL: {tool_name} | STATUS: {'Success' if 'Error' not in result[:50] else 'Possible Error'}"
+    
+    # Log with extra data for the file handler to pick up
+    logger.info(summary_msg, extra={'json_data': full_entry})
 
 @mcp.tool()
 def ping_flame() -> str:
@@ -182,6 +205,80 @@ def get_mcp_status() -> str:
     result = f"Flame MCP Bridge is {status} (Mode: {mode})."
     audit_log("get_mcp_status", {}, result)
     return result
+
+# --- Code Library Tools ---
+
+@mcp.tool()
+def save_snippet(name: str, code: str, description: str = "") -> str:
+    """Saves a working Python code snippet to the local library for future reuse.
+    
+    Args:
+        name: A short, descriptive name for the function/snippet (e.g., 'export_selected_clips').
+              Alphanumeric and underscores only.
+        code: The Python code to save.
+        description: A brief explanation of what the code does.
+    """
+    if READ_ONLY:
+        return "REJECTED: Cannot save snippets in Read-Only mode."
+        
+    # Sanitize name
+    safe_name = "".join(c for c in name if c.isalnum() or c == '_')
+    if not safe_name:
+        return "Error: Invalid name. Use alphanumeric characters and underscores."
+        
+    filename = os.path.join(LIBRARY_DIR, f"{safe_name}.py")
+    
+    # Add docstring to code if description is provided
+    final_code = code
+    if description:
+        final_code = f'"""\n{description}\n"""\n\n{code}'
+        
+    try:
+        with open(filename, 'w') as f:
+            f.write(final_code)
+        msg = f"Successfully saved snippet '{safe_name}' to library."
+        audit_log("save_snippet", {"name": safe_name, "description": description}, msg)
+        return msg
+    except Exception as e:
+        msg = f"Error saving snippet: {str(e)}"
+        audit_log("save_snippet", {"name": safe_name}, msg)
+        return msg
+
+@mcp.tool()
+def read_snippet(name: str) -> str:
+    """Retrieves the code for a saved snippet from the library."""
+    safe_name = "".join(c for c in name if c.isalnum() or c == '_')
+    filename = os.path.join(LIBRARY_DIR, f"{safe_name}.py")
+    
+    if not os.path.exists(filename):
+        msg = f"Error: Snippet '{safe_name}' not found."
+        audit_log("read_snippet", {"name": safe_name}, msg)
+        return msg
+        
+    try:
+        with open(filename, 'r') as f:
+            content = f.read()
+        audit_log("read_snippet", {"name": safe_name}, "Success (content retrieved)")
+        return content
+    except Exception as e:
+        msg = f"Error reading snippet: {str(e)}"
+        audit_log("read_snippet", {"name": safe_name}, msg)
+        return msg
+
+@mcp.tool()
+def list_library() -> str:
+    """Lists all available snippets in the local library."""
+    try:
+        files = [f[:-3] for f in os.listdir(LIBRARY_DIR) if f.endswith('.py')]
+        if not files:
+            result = "Library is empty."
+        else:
+            result = "Available Snippets:\n" + "\n".join(f"- {f}" for f in sorted(files))
+        
+        audit_log("list_library", {}, result)
+        return result
+    except Exception as e:
+        return f"Error listing library: {str(e)}"
 
 if __name__ == "__main__":
     logger.info(f"Starting Flame MCP Server (Read-Only: {READ_ONLY})")

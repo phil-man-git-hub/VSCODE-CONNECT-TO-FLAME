@@ -51,6 +51,15 @@ Autodesk Flame has specific requirements for loading Python scripts and hooks:
 - **No `__init__.py`:** Conventional Python packages with `__init__.py` files are strictly not permitted within Flame's search paths.
 - **Alternative Strategies:** Developers must use unique naming conventions (like our `fu_` prefix).
 
+## Deployment Standards
+To ensure consistent behavior across environments, the following paths and configurations are standard:
+- **Flame Hooks/Scripts:**
+  - Global: `/opt/Autodesk/shared/python/`
+  - Project: `/opt/Autodesk/project/<project_name>/setups/python/`
+- **MCP Configuration:**
+  - Standard Client Config: `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/`, Win: `%APPDATA%\Claude\`).
+  - Required Fields: `command` (python path) and `args` (absolute path to `fu_whisper.py`).
+
 ## Architecture Analysis
 The project follows a **Decoupled Bridge Architecture**:
 - **Execution** is remote (inside Flame via `fu_eavesdrop`).
