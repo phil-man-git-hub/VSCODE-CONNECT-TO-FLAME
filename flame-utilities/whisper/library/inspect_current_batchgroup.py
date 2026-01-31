@@ -10,17 +10,23 @@ def safe_val(val):
     return str(val).strip("'")
 
 # Target first selected Batch Group or active one
-selection = [o for o in flame.media_panel.selected_objects if str(type(o)).count('BatchGroup')]
-bg = selection[0] if selection else flame.batch.current_group if hasattr(flame, 'batch') else None
+sel = flame.media_panel.get_selected_objects() if hasattr(flame.media_panel, 'get_selected_objects') else []
+selection = [o for o in sel if str(type(o)).count('BatchGroup')]
+
+bg = None
+if selection:
+    bg = selection[0]
+elif hasattr(flame, 'batch') and flame.batch.current_group:
+    bg = flame.batch.current_group
 
 if not bg:
     print(json.dumps({"error": "No Batch Group found"}, indent=2))
 else:
     data = {
         'name': safe_val(bg.name),
-        'iteration': safe_val(bg.iteration) if hasattr(bg, 'iteration') else None,
-        'start_frame': bg.start_frame if hasattr(bg, 'start_frame') else None,
-        'duration': bg.duration.frame if hasattr(bg, 'duration') and hasattr(bg.duration, 'frame') else None,
+        'iteration': safe_val(getattr(bg, 'iteration', None)),
+        'start_frame': getattr(bg, 'start_frame', None),
+        'duration': bg.duration.frame if hasattr(bg, 'duration') and hasattr(bg.duration, 'frame') else str(getattr(bg, 'duration', 'Unknown')),
         'wiretap_node_id': safe_val(bg.get_wiretap_node_id()) if hasattr(bg, 'get_wiretap_node_id') else None
     }
     print(json.dumps(data, indent=2))

@@ -10,7 +10,8 @@ def safe_val(val):
     return str(val).strip("'")
 
 # Target first selected Shared Library
-selection = [o for o in flame.media_panel.selected_objects if str(type(o)).count('Library') and getattr(o, 'is_shared', False)]
+sel = flame.media_panel.get_selected_objects() if hasattr(flame.media_panel, 'get_selected_objects') else []
+selection = [o for o in sel if str(type(o)).count('Library') and getattr(o, 'is_shared', False)]
 lib = selection[0] if selection else None
 
 if not lib:
