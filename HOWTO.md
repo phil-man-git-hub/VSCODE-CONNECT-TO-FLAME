@@ -91,22 +91,24 @@ Once connected, you can ask the AI questions like:
 - "List all clips on the current Desktop."
 - "Create a new batch group named 'My AI Shot'."
 
-## Step 5: Keeping the API Up to Date (Optional)
+## Step 5: Keeping the API Up to Date (Automated)
 
-Autodesk Flame's API evolves with every version. To ensure your AI agent has the latest "brain" for your specific Flame version (e.g., Flame 2027), you can crawl the running instance to generate fresh documentation and type stubs.
+Autodesk Flame's API evolves with every version. To ensure your AI agent has the latest "brain" for your specific Flame version (e.g., Flame 2027), we provide a one-command automation to crawl Flame, update type stubs, and refresh the local documentation.
 
-### 1. Crawl the Live API
+### The One-Command Refresh
 Ensure Flame is running and `fu_eavesdrop` is active. Then run:
-```bash
-python scripts/collect_flame_api.py --include-all
-```
-This generates a detailed JSON report in `reports/api_dump/`.
 
-### 2. Update Type Stubs
-To update the autocomplete and type-checking data used by your IDE and the AI:
 ```bash
-python scripts/generate_stubs_from_reports.py --latest
+make flame:api:refresh
 ```
-This will refresh `stubs/flame.pyi` based on the report you just generated.
+
+**This single command will:**
+1.  **Crawl:** Systematically inspect every symbol in the running Flame instance (`scripts/collect_flame_api.py`).
+2.  **Stubs:** Update IDE autocompletion and type checking (`stubs/flame.pyi`).
+3.  **Docs:** Generate fresh Markdown documentation in `docs/api/` (`scripts/generate_api_docs.py`).
+
+### Verification
+- Check `stubs/flame.pyi` to see the new timestamp.
+- Run `make docs:serve` to view the updated API documentation in your browser.
 
 For more technical details on this process, see `docs/development/api_reports.md`.
