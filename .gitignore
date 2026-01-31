@@ -1,28 +1,48 @@
-# Node
+# Node (Legacy Extension)
 node_modules/
 out/
+.parcel-cache/
 
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+ENV/
 
-# VS Code
-.vscode/
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
 
-# Misc
+# Documentation
+site/
+
+# Secrets & Local Config
 .env
 .flame.secrets.json
 .flame.project.local.json
+.python-version
+
+# Logs
+*.log
+flame-utilities/whisper/logs/
+
+# OS / IDE
 .DS_Store
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# Project Specific
+reports/
 .DO_NOT_UPLOAD
 DO_NOT_UPLOAD
-
-# Generated docs/site output
-site/
-
-# Build artifacts
-*.egg-info/
-build/
-dist/
-
-reports/
