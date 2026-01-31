@@ -1,0 +1,32 @@
+"""
+fu_get_info_workspace.py - Part of the FLAME-UTILITIES suite.
+Workspace Inspector. Retrieves Workspace identity, Desktop list, and Library count.
+"""
+
+import flame
+import json
+from fu_decorators import fu_action
+
+@fu_action(menu="main_menu", path="FU / get / info")
+@fu_action(menu="media_panel", path="FU / get / info")
+def workspace(selection=None):
+    """Gathers and returns Workspace metadata."""
+    def safe_val(val):
+        if val is None: return None
+        return str(val).strip("'")
+
+    ws = flame.project.current_project.current_workspace
+
+    if not ws:
+        data = {"error": "No Workspace active"}
+    else:
+        data = {
+            'name': safe_val(ws.name),
+            'desktops': [safe_val(d.name) for d in ws.desktops] if ws.desktops else [],
+            'libraries': len(ws.libraries) if ws.libraries else 0,
+            'is_current': True
+        }
+    
+    print("--- WORKSPACE INFO ---")
+    print(json.dumps(data, indent=4))
+    return data

@@ -7,8 +7,11 @@ import flame
 import subprocess
 import xml.etree.ElementTree as ET
 import json
+from fu_decorators import fu_action
 
-def project():
+@fu_action(menu="main_menu", path="FU / get / info")
+@fu_action(menu="media_panel", path="FU / get / info")
+def project(selection=None):
     """Gathers and returns comprehensive project metadata."""
     # 1. Gather Basic Python Info
     p = flame.project.current_project

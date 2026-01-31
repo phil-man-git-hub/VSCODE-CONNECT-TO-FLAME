@@ -9,7 +9,7 @@ from fu_decorators import fu_action
 
 @fu_action(menu="main_menu", path="FU / get / info")
 @fu_action(menu="media_panel", path="FU / get / info")
-def summary(selection):
+def summary(selection=None):
     """Returns a basic summary of version and project names."""
     info_data = {
         "version": flame.get_version(),
@@ -20,13 +20,3 @@ def summary(selection):
     print("--- FLAME INFO SUMMARY ---")
     print(json.dumps(info_data, indent=4))
     return info_data
-
-@fu_action(menu="main_menu", path="FU / get / info")
-@fu_action(menu="media_panel", path="FU / get / info")
-def project(selection):
-    """Gathers comprehensive project metadata using Python and Wiretap."""
-    from fu_get_info_project import project as get_project_info
-    data = get_project_info()
-    print("--- COMPREHENSIVE PROJECT INFO ---")
-    print(json.dumps(data, indent=4))
-    return data

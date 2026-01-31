@@ -12,9 +12,10 @@ def load_fu_plugins():
     src_root = os.path.dirname(current_dir) # src
     
     functions_dir = os.path.join(src_root, 'core', 'functions')
+    get_dir = os.path.join(functions_dir, 'get')
     
     # Locations to scan
-    scan_paths = [current_dir, functions_dir]
+    scan_paths = [current_dir, functions_dir, get_dir]
     
     # Ensure they are in sys.path
     for p in scan_paths:
