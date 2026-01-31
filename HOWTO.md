@@ -101,7 +101,7 @@ Autodesk Flame's API evolves with every version. To ensure your AI agent has the
 Ensure Flame is running and `fu_eavesdrop` is active. Then run:
 
 ```bash
-make flame:api:refresh
+make flame-api-refresh
 ```
 
 **This single command will:**
@@ -111,6 +111,6 @@ make flame:api:refresh
 
 ### Verification
 - Check `stubs/flame.pyi` to see the new timestamp.
-- Run `make docs:serve` to view the updated API documentation in your browser.
+- Run `make docs-serve` to view the updated API documentation in your browser.
 
 For more technical details on this process, see `docs/development/api_reports.md`.
