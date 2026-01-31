@@ -17,10 +17,11 @@ class FlameRelay:
         if token:
             return token
         
-        # 2. Try .flame.secrets.json in root or flame-utilities dir
+        # 2. Try secrets/config in standard locations
         possible_paths = [
             ".flame.secrets.json",
-            "flame.project.json",
+            "flame-utilities/config/fu_eavesdrop.json",
+            "flame-utilities/config/fu_secrets.json",
             "flame-utilities/.flame.secrets.json"
         ]
         

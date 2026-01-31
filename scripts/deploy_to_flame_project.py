@@ -22,9 +22,13 @@ UTILITIES_SRC = REPO_ROOT / 'flame-utilities'
 
 
 def load_project_config():
-    cfg_path = REPO_ROOT / 'flame.project.json'
+    cfg_path = REPO_ROOT / 'flame-utilities' / 'config' / 'fu_eavesdrop.json'
     if not cfg_path.exists():
-        raise FileNotFoundError('flame.project.json not found in repo root')
+        # Fallback for local dev if not moved yet
+        cfg_path = REPO_ROOT / 'flame.project.json'
+        
+    if not cfg_path.exists():
+        raise FileNotFoundError('Configuration file (fu_eavesdrop.json) not found')
     with open(cfg_path, 'r') as f:
         return json.load(f)
 
@@ -53,10 +57,10 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
             cfg = load_project_config()
             scripts_dir = cfg.get('scriptsDir')
             if not scripts_dir:
-                raise ValueError('scriptsDir is not configured in flame.project.json')
+                raise ValueError('scriptsDir is not configured in fu_eavesdrop.json')
             target_parent = Path(scripts_dir)
         except FileNotFoundError:
-            raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or flame.project.json')
+            raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or fu_eavesdrop.json')
 
     target_utilities = target_parent / 'flame-utilities'
     
