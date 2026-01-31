@@ -90,3 +90,23 @@ Once connected, you can ask the AI questions like:
 - "Is Autodesk Flame running?"
 - "List all clips on the current Desktop."
 - "Create a new batch group named 'My AI Shot'."
+
+## Step 5: Keeping the API Up to Date (Optional)
+
+Autodesk Flame's API evolves with every version. To ensure your AI agent has the latest "brain" for your specific Flame version (e.g., Flame 2027), you can crawl the running instance to generate fresh documentation and type stubs.
+
+### 1. Crawl the Live API
+Ensure Flame is running and `fu_eavesdrop` is active. Then run:
+```bash
+python scripts/collect_flame_api.py --include-all
+```
+This generates a detailed JSON report in `reports/api_dump/`.
+
+### 2. Update Type Stubs
+To update the autocomplete and type-checking data used by your IDE and the AI:
+```bash
+python scripts/generate_stubs_from_reports.py --latest
+```
+This will refresh `stubs/flame.pyi` based on the report you just generated.
+
+For more technical details on this process, see `docs/development/api_reports.md`.
