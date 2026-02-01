@@ -1,0 +1,8 @@
+# Dependencies for Apple SHARP Integration
+torch==2.3.1
+torchvision
+numpy
+Pillow
+pathlib
+tqdm
+# diff-gaussian-rasterization  # Requires manual build usually
