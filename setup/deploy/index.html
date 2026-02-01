@@ -461,10 +461,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-authentication" class="md-nav__link">
+  <a href="#2-set-up-authentication-optional-but-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Authentication
+        2. Set Up Authentication (Optional but Recommended)
       
     </span>
   </a>
@@ -483,21 +483,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-activate-the-toolkit" class="md-nav__link">
+  <a href="#4-launch-flame" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Activate the Toolkit
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-launch-flame" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Launch Flame
+        4. Launch Flame
       
     </span>
   </a>
@@ -1232,10 +1221,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-authentication" class="md-nav__link">
+  <a href="#2-set-up-authentication-optional-but-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Authentication
+        2. Set Up Authentication (Optional but Recommended)
       
     </span>
   </a>
@@ -1254,21 +1243,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-activate-the-toolkit" class="md-nav__link">
+  <a href="#4-launch-flame" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Activate the Toolkit
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-launch-flame" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Launch Flame
+        4. Launch Flame
       
     </span>
   </a>
@@ -1306,32 +1284,35 @@
 <h1 id="deploying-flame-utilities">Deploying FLAME-UTILITIES</h1>
 <p>This document describes how to deploy the <strong>FLAME-UTILITIES</strong> toolkit into Autodesk Flame using the consolidated directory strategy.</p>
 <h2 id="1-configure-the-project">1. Configure the Project</h2>
-<p>Ensure your <code>flame.project.json</code> is configured at the repo root. This file tells our scripts where to find your Flame project setups.</p>
+<p>Ensure your <code>fu_eavesdrop.json</code> is configured in <code>flame-utilities/config/</code>. This file tells our scripts where to find your Flame project setups.</p>
 <pre><code class="language-json">{
-  &quot;projectId&quot;: &quot;888_flame_code&quot;,
-  &quot;flameProjectPath&quot;: &quot;/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo&quot;,
-  &quot;scriptsDir&quot;: &quot;/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo/setups/python/&quot;
+  &quot;scriptsDir&quot;: &quot;/path/to/flame/projects/&lt;project_name&gt;/setups/python/&quot;,
+  &quot;listener&quot;: {
+    &quot;host&quot;: &quot;127.0.0.1&quot;,
+    &quot;port&quot;: 5555
+  }
 }
 </code></pre>
-<h2 id="2-set-up-authentication">2. Set Up Authentication</h2>
-<p>Create a <code>.flame.secrets.json</code> in the repo root containing your listener token:</p>
-<pre><code class="language-json">{ &quot;token&quot;: &quot;your-flame-token&quot; }
+<h2 id="2-set-up-authentication-optional-but-recommended">2. Set Up Authentication (Optional but Recommended)</h2>
+<p>Create a <code>fu_secrets.json</code> in <code>flame-utilities/config/</code> (or a <code>.flame.secrets.json</code> in the repo root) containing your listener token:</p>
+<pre><code class="language-json">{ &quot;token&quot;: &quot;your-secure-token&quot; }
 </code></pre>
 <h2 id="3-deploy-the-toolkit">3. Deploy the Toolkit</h2>
-<p>Run the deployment helper to copy the entire <code>flame-utilities/</code> folder into your Flame project directory:</p>
-<pre><code class="language-bash">python scripts/deploy_to_flame_project.py --copy
+<p>The easiest way to deploy is using the provided <code>Makefile</code> target:</p>
+<pre><code class="language-bash">make flame-deploy
 </code></pre>
-<p>This will create a <code>flame-utilities/</code> subfolder inside your project's <code>setups/python/</code> directory.</p>
-<h2 id="4-activate-the-toolkit">4. Activate the Toolkit</h2>
-<p>To "ignite" the tools from within the archived project folder, copy the <code>fu_loader.py</code> script to the root of your project's <code>setups/python/</code> directory. </p>
-<p><em>Note: This loader script adds the <code>flame-utilities/</code> subfolder to your Python path and executes the initialization hook.</em></p>
-<h2 id="5-launch-flame">5. Launch Flame</h2>
+<p><strong>What this does:</strong>
+1.  Copies the entire <code>flame-utilities/</code> directory into your project's <code>setups/python/</code> folder.
+2.  Installs the <code>fu_activate.py</code> entry point into the <code>python/</code> root.
+3.  Optimizes the installation by removing redundant scripts from sub-directories.</p>
+<h2 id="4-launch-flame">4. Launch Flame</h2>
 <p>Launch Flame for your project. Watch the console or logs for the confirmation:</p>
-<pre><code class="language-text">fu_eavesdrop_init.py version 0.0.1
+<pre><code class="language-text">fu_eavesdrop_init.py version 0.0.1 (Ignited)
 FU_Eavesdrop startup hook started in background thread
+fu_eavesdrop listening on 127.0.0.1:5555
 </code></pre>
 <h2 id="why-this-strategy">Why this strategy?</h2>
-<p>By archiving the entire <code>flame-utilities/</code> directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system.</p>
+<p>By archiving the entire <code>flame-utilities/</code> directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system. The <code>fu_activate.py</code> script acts as a clean, single-point entry that prevents Flame's auto-hook mechanism from loading internal scripts prematurely.</p>
 
 
 
