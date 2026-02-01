@@ -62,10 +62,8 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         except FileNotFoundError:
             raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or fu_eavesdrop.json')
 
-    # The utilities source should live in /setups/flame-utilities/
-    # while the ignite script lives in /setups/python/
-    target_parent = Path(scripts_dir).parent
-    target_utilities = target_parent / 'flame-utilities'
+    # The utilities source lives in /setups/python/flame-utilities/
+    target_utilities = Path(scripts_dir) / 'flame-utilities'
     
     print(f'Deployment Target: {target_utilities}')
     

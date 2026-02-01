@@ -21,8 +21,7 @@ class FlameRelay:
         possible_paths = [
             ".flame.secrets.json",
             "flame-utilities/config/fu_eavesdrop.json",
-            "flame-utilities/config/fu_secrets.json",
-            "flame-utilities/.flame.secrets.json"
+            "flame-utilities/config/fu_secrets.json"
         ]
         
         for path in possible_paths:

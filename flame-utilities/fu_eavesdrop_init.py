@@ -12,31 +12,35 @@ import threading
 import os
 import sys
 
-# Ensure the utilities directory is in path
-utilities_dir = os.path.dirname(__file__)
-if utilities_dir not in sys.path:
-    sys.path.append(utilities_dir)
-
-try:
-    import flame  # type: ignore
-except Exception:
-    flame = None
-
-# Announce our presence & version so deployed startup hooks are easy to identify
-try:
-    print(f"fu_eavesdrop_init.py version {__version__}")
-except Exception:
+# Prevent double-execution using a persistent flag in the sys module
+if getattr(sys, '_fu_initialized', False):
+    # Already initialized in this session
     pass
-
-# Import the local fu_eavesdrop module (now in same directory)
-try:
-    from fu_eavesdrop import initialize_eavesdrop
-    import hooks.fu_menu_hook
-except Exception as e:
-    # If we can't import the full listener, abort gracefully
-    print(f'Failed to initialize toolkit: {e}')
 else:
-    # Run the TCP listener in a daemon thread so it won't block Flame shutdown
-    t = threading.Thread(target=initialize_eavesdrop, kwargs={}, daemon=True)
-    t.start()
-    print(f'FU_Eavesdrop startup hook started in background thread (version {__version__})')
+    # Set the flag immediately
+    sys._fu_initialized = True
+
+    # Ensure the utilities directory is in path
+    utilities_dir = os.path.dirname(__file__)
+    if utilities_dir not in sys.path:
+        sys.path.append(utilities_dir)
+
+    try:
+        import flame  # type: ignore
+    except Exception:
+        flame = None
+
+    # Announce our presence & version
+    print(f"fu_eavesdrop_init.py version {__version__} (Ignited)")
+
+    # Import and start the listener
+    try:
+        from fu_eavesdrop import initialize_eavesdrop
+        import hooks.fu_menu_hook
+        
+        # Run the TCP listener in a daemon thread
+        t = threading.Thread(target=initialize_eavesdrop, kwargs={}, daemon=True)
+        t.start()
+        print(f'FU_Eavesdrop startup hook started in background thread (version {__version__})')
+    except Exception as e:
+        print(f'Failed to initialize toolkit: {e}')

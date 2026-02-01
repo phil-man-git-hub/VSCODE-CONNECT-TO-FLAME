@@ -11,31 +11,15 @@ import logging
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from repo root
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
 
 # Setup Audit Logging
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "mcp_audit.log")
 
-# Create a custom formatter that handles full output for file, truncated for stream
-class AuditFormatter(logging.Formatter):
-    def format(self, record):
-        if hasattr(record, 'json_data'):
-            return json.dumps(record.json_data)
-        return super().format(record)
-
-file_handler = logging.FileHandler(LOG_FILE)
-file_handler.setFormatter(AuditFormatter())
-
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-
-logger = logging.getLogger("FU_Whisper")
-logger.setLevel(logging.INFO)
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+# ... rest of logging ...
 
 # Code Library Setup
 LIBRARY_DIR = os.path.join(os.path.dirname(__file__), "library")
@@ -281,5 +265,15 @@ def list_library() -> str:
         return f"Error listing library: {str(e)}"
 
 if __name__ == "__main__":
-    logger.info(f"Starting Flame MCP Server (Read-Only: {READ_ONLY})")
-    mcp.run()
+
+    try:
+
+        import flame # type: ignore
+
+        # We are inside Flame (auto-hook crawl). Do nothing.
+
+    except ImportError:
+
+        logger.info(f"Starting Flame MCP Server (Read-Only: {READ_ONLY})")
+
+        mcp.run()

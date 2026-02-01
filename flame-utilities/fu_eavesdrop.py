@@ -314,14 +314,24 @@ class ClientHandler(threading.Thread):
 
 
 def initialize_eavesdrop(host=HOST, port=PORT):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((host, port))
-        s.listen(5)
-        print(f"fu_eavesdrop listening on {host}:{port}")
-        while True:
-            conn, addr = s.accept()
-            ClientHandler(conn, addr).start()
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                s.bind((host, port))
+            except OSError as e:
+                if e.errno == 48: # Address already in use
+                    _log(f"Port {port} already in use. Listener may already be running.")
+                    return
+                raise
+            s.listen(5)
+            print(f"fu_eavesdrop listening on {host}:{port}")
+            while True:
+                conn, addr = s.accept()
+                ClientHandler(conn, addr).start()
+    except Exception as e:
+        _log(f"Failed to start listener: {e}")
+        traceback.print_exc()
 
 
 if __name__ == '__main__':
