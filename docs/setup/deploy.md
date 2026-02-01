@@ -3,44 +3,45 @@
 This document describes how to deploy the **FLAME-UTILITIES** toolkit into Autodesk Flame using the consolidated directory strategy.
 
 ## 1. Configure the Project
-Ensure your `flame.project.json` is configured at the repo root. This file tells our scripts where to find your Flame project setups.
+Ensure your `fu_eavesdrop.json` is configured in `flame-utilities/config/`. This file tells our scripts where to find your Flame project setups.
 
 ```json
 {
-  "projectId": "888_flame_code",
-  "flameProjectPath": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo",
-  "scriptsDir": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/888_flame_code_2027_romeo/setups/python/"
+  "scriptsDir": "/path/to/flame/projects/<project_name>/setups/python/",
+  "listener": {
+    "host": "127.0.0.1",
+    "port": 5555
+  }
 }
 ```
 
-## 2. Set Up Authentication
-Create a `.flame.secrets.json` in the repo root containing your listener token:
+## 2. Set Up Authentication (Optional but Recommended)
+Create a `fu_secrets.json` in `flame-utilities/config/` (or a `.flame.secrets.json` in the repo root) containing your listener token:
 
 ```json
-{ "token": "your-flame-token" }
+{ "token": "your-secure-token" }
 ```
 
 ## 3. Deploy the Toolkit
-Run the deployment helper to copy the entire `flame-utilities/` folder into your Flame project directory:
+The easiest way to deploy is using the provided `Makefile` target:
 
 ```bash
-python scripts/deploy_to_flame_project.py --copy
+make flame-deploy
 ```
 
-This will create a `flame-utilities/` subfolder inside your project's `setups/python/` directory.
+**What this does:**
+1.  Copies the entire `flame-utilities/` directory into your project's `setups/python/` folder.
+2.  Installs the `fu_activate.py` entry point into the `python/` root.
+3.  Optimizes the installation by removing redundant scripts from sub-directories.
 
-## 4. Activate the Toolkit
-To "ignite" the tools from within the archived project folder, copy the `fu_loader.py` script to the root of your project's `setups/python/` directory. 
-
-*Note: This loader script adds the `flame-utilities/` subfolder to your Python path and executes the initialization hook.*
-
-## 5. Launch Flame
+## 4. Launch Flame
 Launch Flame for your project. Watch the console or logs for the confirmation:
 
 ```text
-fu_eavesdrop_init.py version 0.0.1
+fu_eavesdrop_init.py version 0.0.1 (Ignited)
 FU_Eavesdrop startup hook started in background thread
+fu_eavesdrop listening on 127.0.0.1:5555
 ```
 
 ## Why this strategy?
-By archiving the entire `flame-utilities/` directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system.
+By archiving the entire `flame-utilities/` directory within your Flame project, you ensure that the automation tools remain functional even if the workstation is updated or the project is moved to a different system. The `fu_activate.py` script acts as a clean, single-point entry that prevents Flame's auto-hook mechanism from loading internal scripts prematurely.
