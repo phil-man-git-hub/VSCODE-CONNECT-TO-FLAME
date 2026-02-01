@@ -1,4 +1,4 @@
-"""FU_Ignite: Project-Level Toolkit Activator
+"""FU_Activate: Project-Level Toolkit Activator
 
 This script is the single entry point for the FLAME-UTILITIES suite.
 It should be placed in '<project>/setups/python/'. 
@@ -27,13 +27,13 @@ if os.path.exists(utilities_path):
         try:
             # Persistent flag in sys module to prevent double-execution
             if not getattr(sys, '_fu_initialized', False):
-                print(f"[fu_ignite] Activating toolkit at: {utilities_path}")
+                print(f"[fu_activate] Activating toolkit at: {utilities_path}")
                 spec = importlib.util.spec_from_file_location("fu_init", init_script)
                 fu_init = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(fu_init)
         except Exception as e:
-            print(f"[fu_ignite] Error igniting toolkit: {str(e)}")
+            print(f"[fu_activate] Error activating toolkit: {str(e)}")
     else:
-        print(f"[fu_ignite] Error: fu_eavesdrop_init.py not found in {utilities_path}")
+        print(f"[fu_activate] Error: fu_eavesdrop_init.py not found in {utilities_path}")
 else:
-    print(f"[fu_ignite] Error: flame-utilities folder not found at {utilities_path}")
+    print(f"[fu_activate] Error: flame-utilities folder not found at {utilities_path}")

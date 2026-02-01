@@ -32,8 +32,8 @@ flame-deploy:
 
 	$(eval SCRIPTS_DIR := $(shell ./.venv/bin/python -c "import json; print(json.load(open('flame-utilities/config/fu_eavesdrop.json'))['scriptsDir'])"))
 
-	cp flame-utilities/fu_ignite.py $(SCRIPTS_DIR)fu_ignite.py
+	cp flame-utilities/fu_activate.py $(SCRIPTS_DIR)fu_activate.py
 
-	rm $(SCRIPTS_DIR)flame-utilities/fu_ignite.py
+	rm $(SCRIPTS_DIR)flame-utilities/fu_activate.py
 
 	@echo "--- Deployment Cleaned & Optimized ---"
