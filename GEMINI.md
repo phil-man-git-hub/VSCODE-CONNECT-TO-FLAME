@@ -32,10 +32,15 @@ The communication layer managing the TCP connection.
 - **Role:** Handles the JSON-over-TCP protocol between the bridge and the listener.
 - **Security:** Manages authentication via the `.flame.secrets.json` token system.
 
-### 4. VS Code Extension (`extension/`)
+### 4. FU_Encyclopedia (`fu-encyclopedia/fu_encyclopedia.py`)
+The Knowledge Layer (RAG) for the suite.
+- **Role:** Indexes synthesized documentation and API stubs using Vertex AI RAG.
+- **Goal:** Provide semantic search to AI agents to reduce context window bloat and improve workflow accuracy.
+
+### 5. VS Code Extension (`extension/`)
 A TypeScript-based extension that provides the UI bridge for human developers.
 
-### 5. API Intelligence Pipeline (`scripts/`)
+### 6. API Intelligence Pipeline (`scripts/`)
 A robust data collection system that generates documentation and 2,400+ lines of `.pyi` stubs.
 
 ## Key Technical Achievements (as of Jan 2026)
