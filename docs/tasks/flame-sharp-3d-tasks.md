@@ -28,3 +28,9 @@ This list tracks the implementation of the `fu_ml_sharp.py` PyBox handler and it
 ## 5. Verification
 - [x] **Standalone Test:** Run inference on an EXR via the terminal (Verified via dry_run_sharp_bridge.py).
 - [ ] **Flame Integration:** Load the handler in Batch and verify the 3D-to-2D depth alignment.
+
+## 6. Secure Splat Viewer Integration
+- [ ] **`fu_splat_viewer.py`:** Implement a specialized visualization handler.
+- [ ] **Local Hosting:** Add logic to serve splat data via a temporary local HTTP server for SuperSplat.
+- [ ] **Browser Orchestration:** Use `webbrowser` to launch the sandboxed viewer.
+- [ ] **Blender Pathway:** Architect the tool to support launching Blender with the KIRI add-on via CLI.

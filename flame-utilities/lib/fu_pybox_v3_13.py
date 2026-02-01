@@ -288,18 +288,39 @@ def create_text_field(
         "page": int(page)
     }
 
-def create_text_field(
-    name: str, 
-    value: str = "", 
-    row: int = 0, 
-    col: int = 0, 
+def create_vector_numeric(
+    name: str,
+    size: int = 3,
+    values: Optional[List[float]] = None,
+    min_val: float = -1000000.0,
+    max_val: float = 1000000.0,
+    row: int = 0,
+    col: int = 0,
     page: int = 0
 ) -> Dict[str, Any]:
+    if values is None:
+        values = [0.0] * size
+    
+    # Generate component info (x, y, z)
+    suffixes = ["x", "y", "z"]
+    info = []
+    for i in range(size):
+        info.append({
+            "min": float(min_val),
+            "max": float(max_val),
+            "default": float(values[i]),
+            "inc": 1.0,
+            "channel_name": f"{name}_{suffixes[i]}",
+            "display_name": suffixes[i].upper()
+        })
+
     return {
-        "type": "TextField",
+        "type": "FloatVector",
         "name": name,
-        "value": str(value),
         "row": int(row),
         "col": int(col),
-        "page": int(page)
+        "page": int(page),
+        "values": [float(v) for v in values],
+        "info": info,
+        "channel_name": name.replace(" ", "_") + "_chn"
     }
