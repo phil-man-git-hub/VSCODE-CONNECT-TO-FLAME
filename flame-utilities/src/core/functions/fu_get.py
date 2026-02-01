@@ -1,5 +1,5 @@
 """
-fu_get_info.py - Orchestrator for all 'get info' functions.
+fu_get.py - Orchestrator for all 'get' functions.
 Registers the sub-menu hierarchy and delegates to individual logic scripts.
 """
 
@@ -12,6 +12,23 @@ def _display(title, data):
     print(f"--- {title} ---")
     print(json.dumps(data, indent=4))
     return data
+
+# --- Top Level Get Actions ---
+
+@fu_action(menu="media_panel", path="FU / get")
+def metadata(selection):
+    """Gathers technical metadata for the selected objects."""
+    from get.fu_get_metadata import metadata as logic
+    return _display("METADATA", logic(selection))
+
+@fu_action(menu="media_panel", path="FU / get")
+@fu_action(menu="timeline", path="FU / get")
+def tags(selection):
+    """Lists all markers on the selected objects."""
+    from get.fu_get_tags import tags as logic
+    return _display("TAGS/MARKERS", logic(selection))
+
+# --- Info Sub-Menu Actions ---
 
 @fu_action(menu="main_menu", path="FU / get / info")
 @fu_action(menu="media_panel", path="FU / get / info")
