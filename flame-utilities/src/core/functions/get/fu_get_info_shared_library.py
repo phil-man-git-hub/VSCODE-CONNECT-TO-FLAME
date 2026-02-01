@@ -4,10 +4,7 @@ Shared Library Inspector. Retrieves metadata and lock status for Shared Librarie
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
 def shared_library(selection=None):
     """Gathers and returns Shared Library metadata."""
     def safe_val(val):
@@ -29,6 +26,4 @@ def shared_library(selection=None):
             'wiretap_node_id': safe_val(lib.get_wiretap_node_id()) if hasattr(lib, 'get_wiretap_node_id') else None
         }
     
-    print("--- SHARED LIBRARY INFO ---")
-    print(json.dumps(data, indent=4))
     return data

@@ -4,11 +4,7 @@ Desktop Inspector. Retrieves Desktop identity, Reel Groups, Batch Groups, and Li
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="main_menu", path="FU / get / info")
-@fu_action(menu="media_panel", path="FU / get / info")
 def desktop(selection=None):
     """Gathers and returns Desktop metadata."""
     def safe_val(val):
@@ -29,6 +25,4 @@ def desktop(selection=None):
             'wiretap_node_id': safe_val(d.get_wiretap_node_id()) if hasattr(d, 'get_wiretap_node_id') else None
         }
     
-    print("--- DESKTOP INFO ---")
-    print(json.dumps(data, indent=4))
     return data

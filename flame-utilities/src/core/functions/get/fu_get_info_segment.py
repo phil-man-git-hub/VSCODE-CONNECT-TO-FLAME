@@ -4,10 +4,7 @@ Segment Inspector. Retrieves Timeline Segment data: range, source, and track.
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="timeline", path="FU / get / info")
 def segment(selection=None):
     """Gathers and returns Segment metadata."""
     def safe_val(val):
@@ -31,6 +28,4 @@ def segment(selection=None):
             'track': safe_val(seg.parent.name) if hasattr(seg, 'parent') and seg.parent else "Unknown"
         }
     
-    print("--- SEGMENT INFO ---")
-    print(json.dumps(data, indent=4))
     return data

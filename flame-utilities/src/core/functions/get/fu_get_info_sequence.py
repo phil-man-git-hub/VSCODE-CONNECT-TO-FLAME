@@ -4,11 +4,7 @@ Sequence Inspector. Retrieves Tracks, Versions, and duration.
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
-@fu_action(menu="timeline", path="FU / get / info")
 def sequence(selection=None):
     """Gathers and returns Sequence metadata."""
     def safe_val(val):
@@ -31,6 +27,4 @@ def sequence(selection=None):
             'wiretap_node_id': safe_val(s.get_wiretap_node_id()) if hasattr(s, 'get_wiretap_node_id') else None
         }
     
-    print("--- SEQUENCE INFO ---")
-    print(json.dumps(data, indent=4))
     return data

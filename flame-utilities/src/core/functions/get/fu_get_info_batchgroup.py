@@ -4,11 +4,7 @@ Batch Group Inspector. Retrieves Batch Group identity, iteration, and setup data
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
-@fu_action(menu="batch", path="FU / get / info")
 def batchgroup(selection=None):
     """Gathers and returns Batch Group metadata."""
     def safe_val(val):
@@ -36,6 +32,4 @@ def batchgroup(selection=None):
             'wiretap_node_id': safe_val(bg.get_wiretap_node_id()) if hasattr(bg, 'get_wiretap_node_id') else None
         }
     
-    print("--- BATCH GROUP INFO ---")
-    print(json.dumps(data, indent=4))
     return data

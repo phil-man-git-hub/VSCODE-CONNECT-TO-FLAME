@@ -4,10 +4,7 @@ Library Inspector. Retrieves Library identity and child counts.
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
 def library(selection=None):
     """Gathers and returns Library metadata."""
     def safe_val(val):
@@ -28,6 +25,4 @@ def library(selection=None):
             'wiretap_node_id': safe_val(lib.get_wiretap_node_id()) if hasattr(lib, 'get_wiretap_node_id') else None
         }
     
-    print("--- LIBRARY INFO ---")
-    print(json.dumps(data, indent=4))
     return data

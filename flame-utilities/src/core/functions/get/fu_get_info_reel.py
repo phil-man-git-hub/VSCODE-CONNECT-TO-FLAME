@@ -4,10 +4,7 @@ Reel Inspector. Targets the first selected Reel in the Media Panel.
 """
 
 import flame
-import json
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
 def reel(selection=None):
     """Gathers and returns Reel metadata."""
     def safe_val(val):
@@ -28,6 +25,4 @@ def reel(selection=None):
             'wiretap_node_id': safe_val(r.get_wiretap_node_id()) if hasattr(r, 'get_wiretap_node_id') else None
         }
     
-    print("--- REEL INFO ---")
-    print(json.dumps(data, indent=4))
     return data

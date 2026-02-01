@@ -4,14 +4,10 @@ Clip Inspector. Retrieves Identity, Format, Resolution, and Colour via Python an
 """
 
 import flame
-import json
 import subprocess
 import os
 import xml.etree.ElementTree as ET
-from fu_decorators import fu_action
 
-@fu_action(menu="media_panel", path="FU / get / info")
-@fu_action(menu="timeline", path="FU / get / info")
 def clip(selection=None):
     """Gathers and returns Clip metadata."""
     def safe_val(val):
@@ -48,6 +44,4 @@ def clip(selection=None):
                                 data['xml'][child.tag] = child.text
                 except: pass
     
-    print("--- CLIP INFO ---")
-    print(json.dumps(data, indent=4))
     return data

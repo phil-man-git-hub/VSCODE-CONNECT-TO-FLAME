@@ -31,9 +31,10 @@ except Exception:
 # Import the local fu_eavesdrop module (now in same directory)
 try:
     from fu_eavesdrop import initialize_eavesdrop
-except Exception:
+    import hooks.fu_menu_hook
+except Exception as e:
     # If we can't import the full listener, abort gracefully
-    print('Failed to import fu_eavesdrop; remote execution bridge not started')
+    print(f'Failed to initialize toolkit: {e}')
 else:
     # Run the TCP listener in a daemon thread so it won't block Flame shutdown
     t = threading.Thread(target=initialize_eavesdrop, kwargs={}, daemon=True)
