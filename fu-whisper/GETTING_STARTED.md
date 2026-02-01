@@ -11,7 +11,7 @@ The **FU_Whisper** bridge allows you to connect AI models (like Claude or Gemini
 
 1. **Install Dependencies**:
    ```bash
-   cd flame-utilities/whisper
+   cd fu-whisper
    pip install -r requirements.txt
    ```
 
@@ -32,9 +32,9 @@ The **FU_Whisper** bridge allows you to connect AI models (like Claude or Gemini
    ```json
    {
      "mcpServers": {
-       "fu_whisper": {
+       "fu_fu-whisper": {
          "command": "python",
-         "args": ["/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-utilities/whisper/fu_whisper.py"]
+         "args": ["/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/fu-whisper/fu_whisper.py"]
        }
      }
    }
@@ -46,7 +46,7 @@ The **FU_Whisper** bridge allows you to connect AI models (like Claude or Gemini
 2. Click **+ Add New MCP Server**.
 3. Name: `FU_Whisper`
 4. Type: `command`
-5. Command: `python /ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-utilities/whisper/fu_whisper.py`
+5. Command: `python /ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/fu-whisper/fu_whisper.py`
 
 ## 4. First Steps with the AI
 Try asking the AI:

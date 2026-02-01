@@ -21,7 +21,7 @@ As the world's first AI-native bridge for Autodesk Flame, we are building a comm
 ## Quickstart
 
 1.  **Install Listener:** Deploy the `flame-utilities/` directory into Flame's Python startup hooks.
-2.  **Start the Bridge:** Navigate to `flame-utilities/whisper/` and run `python fu_whisper.py`.
+2.  **Start the Bridge:** Navigate to `fu-whisper/` and run `python fu_whisper.py`.
 3.  **Connect AI:** Add the bridge to your AI client (see `HOWTO.md`).
 4.  **Run Code:** Talk directly to your AI agent to manipulate Flame. Successful patterns are automatically saved to your local library.
 
@@ -41,8 +41,8 @@ For technical details, see:
 ## Status ✅
 
 - **MCP Bridge:** Working. AI agents can retrieve project info, list desktop clips, and execute autonomous logic.
-- **Audit System:** Working. Full interaction logs are stored in `flame-utilities/whisper/logs/`.
-- **Code Library:** Working. AI builds its own persistent toolset in `flame-utilities/whisper/library/`.
+- **Audit System:** Working. Full interaction logs are stored in `fu-whisper/logs/`.
+- **Code Library:** Working. AI builds its own persistent toolset in `fu-whisper/library/`.
 - **Next:** Enable remote debugging by integrating `debugpy` (see `docs/tasks/TODO.md`).
 
 ---

@@ -33,7 +33,7 @@ site/
 
 # Logs
 *.log
-flame-utilities/whisper/logs/
+fu-whisper/logs/
 
 # OS / IDE
 .DS_Store

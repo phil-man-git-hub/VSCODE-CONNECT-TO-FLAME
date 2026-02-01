@@ -42,7 +42,7 @@ This runs on your local machine (outside of Flame) and acts as the translator fo
 1.  **Install Dependencies:**
     You need Python 3.9+. Install the required packages:
     ```bash
-    cd flame-utilities/whisper
+    cd fu-whisper
     pip install -r requirements.txt
     ```
 
@@ -67,7 +67,7 @@ Edit your config file (`~/Library/Application Support/Claude/claude_desktop_conf
     "flame": {
       "command": "python",
       "args": [
-        "/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/flame-utilities/whisper/fu_whisper.py"
+        "/ABSOLUTE/PATH/TO/VSCODE-CONNECT-TO-FLAME/fu-whisper/fu_whisper.py"
       ]
     }
   }
@@ -81,7 +81,7 @@ Edit your config file (`~/Library/Application Support/Claude/claude_desktop_conf
 2.  Add a new server:
     -   **Name:** `flame`
     -   **Type:** `command`
-    -   **Command:** `python /ABSOLUTE/PATH/TO/.../flame-utilities/whisper/fu_whisper.py`
+    -   **Command:** `python /ABSOLUTE/PATH/TO/.../fu-whisper/fu_whisper.py`
 
 ## Step 4: Usage
 

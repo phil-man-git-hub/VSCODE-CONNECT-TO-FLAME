@@ -52,7 +52,7 @@ The Python `flame.project` API is limited. It does **not** expose core project p
 2. Once verified/executed successfully, call `save_snippet()` to remember the logic for later.
 
 ## 🪵 Audit & Debugging
-- All your tool calls and the full Flame responses (stdout/stderr/exceptions) are logged to `flame-utilities/whisper/logs/mcp_audit.log`.
+- All your tool calls and the full Flame responses (stdout/stderr/exceptions) are logged to `fu-whisper/logs/mcp_audit.log`.
 - Use this log if you encounter persistent `ExecError` or `ModuleNotFoundError` to understand what the listener is seeing.
 
 ---

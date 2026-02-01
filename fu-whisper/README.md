@@ -32,7 +32,7 @@ To use this with a client like **Claude Desktop**, add the following to your `cl
 ```json
 {
   "mcpServers": {
-    "fu_whisper": {
+    "fu_fu-whisper": {
       "command": "python",
       "args": ["/path/to/flame-mcp/fu_whisper.py"]
     }
