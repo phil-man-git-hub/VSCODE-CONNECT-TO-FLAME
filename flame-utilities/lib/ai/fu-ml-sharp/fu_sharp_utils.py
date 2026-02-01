@@ -1,4 +1,9 @@
-import numpy as np
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
 from pathlib import Path
 from typing import Union
 
@@ -7,6 +12,10 @@ def convert_splat_to_standard_ply(input_ply: Union[str, Path], output_ply: Union
     Converts a 3D Gaussian Splat PLY (which often contains SH parameters and scales)
     into a standard XYZ RGB point cloud PLY that Flame's Action node can import.
     """
+    if not HAS_NUMPY:
+        print("Error: numpy is required for PLY conversion.")
+        return False
+
     input_path = Path(input_ply)
     output_path = Path(output_ply)
 

@@ -15,10 +15,13 @@ import shutil
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-# Add lib and fu-ml-sharp to path
+# Add lib and internal ai libs to path
 REPO_ROOT = Path(__file__).parent.parent
-sys.path.append(str(REPO_ROOT / "lib"))
-sys.path.append(str(REPO_ROOT.parent / "fu-ml-sharp"))
+LIB_PATH = REPO_ROOT / "lib"
+AI_LIB_PATH = LIB_PATH / "ai" / "fu-ml-sharp"
+
+sys.path.append(str(LIB_PATH))
+sys.path.append(str(AI_LIB_PATH))
 
 import fu_pybox_v3_13 as pybox
 try:

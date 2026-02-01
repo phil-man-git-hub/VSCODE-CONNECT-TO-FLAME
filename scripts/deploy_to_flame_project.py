@@ -19,11 +19,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# Source directories to be deployed
+# Source directory to be deployed (Portable Toolkit Model)
+UTILITIES_SRC = REPO_ROOT / 'flame-utilities'
+
 DEPLOY_DIRS = [
-    ('flame-utilities', REPO_ROOT / 'flame-utilities'),
-    ('fu-comfyui', REPO_ROOT / 'fu-comfyui'),
-    ('fu-ml-sharp', REPO_ROOT / 'fu-ml-sharp'),
+    ('flame-utilities', UTILITIES_SRC),
 ]
 
 

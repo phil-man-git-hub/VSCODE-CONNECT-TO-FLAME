@@ -11,10 +11,10 @@ import sys
 import importlib.util
 
 # 1. Identify the toolkit location
-# This script is in /setups/python/
-# The toolkit is in /setups/python/flame-utilities/
+# This script is NOW IN /setups/python/flame-utilities/fu_activate.py
+# The toolkit root is its own parent directory
 here = os.path.dirname(os.path.realpath(__file__))
-utilities_path = os.path.join(here, 'flame-utilities')
+utilities_path = here
 
 if os.path.exists(utilities_path):
     # 2. Add the toolkit folder to sys.path

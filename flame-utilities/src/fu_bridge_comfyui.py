@@ -17,16 +17,20 @@ import time
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-# Add lib and fu-comfyui to path
+# Add lib and internal ai libs to path
 REPO_ROOT = Path(__file__).parent.parent
-sys.path.append(str(REPO_ROOT / "lib"))
-sys.path.append(str(REPO_ROOT.parent / "fu-comfyui"))
+LIB_PATH = REPO_ROOT / "lib"
+AI_LIB_PATH = LIB_PATH / "ai" / "fu-comfyui"
+
+sys.path.append(str(LIB_PATH))
+sys.path.append(str(AI_LIB_PATH))
 
 import fu_pybox_v3_13 as pybox
 try:
     from fu_comfyui import ComfyUIClient, get_comfy_status
 except ImportError:
     ComfyUIClient = None
+
 
 class ComfyUIBridge(pybox.BaseClass):
     """PyBox handler for ComfyUI integration."""
