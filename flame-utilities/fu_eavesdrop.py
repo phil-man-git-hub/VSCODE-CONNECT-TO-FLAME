@@ -20,7 +20,7 @@ import io
 import atexit
 import time
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Semantic-ish version with a deterministic increment rule: starts at 0.0.0
 # Increment rule: patch increments until 9, then patch resets to 0 and minor +=1.
@@ -104,7 +104,7 @@ LOG_FILE = os.environ.get('FLAME_LISTENER_LOG', '/tmp/fu_eavesdrop.log')
 
 def _log(msg):
     """Simple structured log with timestamp. Also append to a local log file to aid repro collection."""
-    line = f"[fu_eavesdrop][{datetime.utcnow().isoformat()}] {msg}"
+    line = f"[fu_eavesdrop][{datetime.now(timezone.utc).isoformat()}] {msg}"
     try:
         print(line)
     except Exception:

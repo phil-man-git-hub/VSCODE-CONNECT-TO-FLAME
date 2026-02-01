@@ -68,6 +68,16 @@ The project follows a **Decoupled Bridge Architecture**:
 
 This is the most effective way to handle proprietary, closed-runtime environments like Autodesk Flame.
 
+## Pybox Architecture Analysis
+Introspection of the active Flame 2027.pr236 environment revealed the following technical details about the "Pybox" feature:
+
+-   **Nature:** Pybox is **not** a class in the `flame` module. It is a Batch/Timeline node type that allows external Python scripts ("handlers") to act as image processors.
+-   **SDK Location:** The `pybox_v1` module is importable in the main Flame Python environment and is located at `/opt/Autodesk/presets/<version>/shared/pybox/pybox_v1.py` (e.g., `2027.pr236`).
+-   **Handler Structure:** Handlers inherit from `pybox_v1.BaseClass` and utilize methods like `create_page`, `create_float_numeric`, and `create_file_browser` to build the node's UI dynamically.
+-   **Communication Protocol:** The bridge between Flame and the Pybox handler process is a stateless **JSON-over-stdio** protocol. Flame writes state to stdin, and the handler writes requests/responses to stdout/stderr.
+-   **Creation:** New nodes are instantiated via `flame.batch.create_node("Pybox", "handler_name.py")`.
+-   **Deployment:** Standard handlers are distributed in `/opt/Autodesk/presets/<version>/pybox/`.
+
 ## Future Roadmap Recommendations
 
 1.  **Debugging Enrichment:** Integrate `debugpy` more deeply to allow line-by-line debugging.
@@ -75,4 +85,4 @@ This is the most effective way to handle proprietary, closed-runtime environment
 3.  **Autonomous Conform Helper:** Build a suite of "fu_" tools specifically for automating the conform process (e.g., matching sources, checking color space).
 
 ---
-*Analysis performed by Gemini CLI on 2026-01-30.*
+*Analysis performed by Gemini CLI on 2026-02-01.*
