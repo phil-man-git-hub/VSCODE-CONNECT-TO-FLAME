@@ -45,3 +45,7 @@ def clip(selection=None):
                 except: pass
     
     return data
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(clip(), indent=4))

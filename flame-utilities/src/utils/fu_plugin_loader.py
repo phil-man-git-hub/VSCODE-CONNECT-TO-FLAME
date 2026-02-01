@@ -35,7 +35,7 @@ def load_fu_plugins():
         
         for plugin_path in plugin_files:
             filename = os.path.basename(plugin_path)
-            if filename == "__init__.py" or filename == "fu_loader.py":
+            if filename == "__init__.py" or filename == "fu_plugin_loader.py":
                 continue
                 
             module_name = os.path.splitext(filename)[0]

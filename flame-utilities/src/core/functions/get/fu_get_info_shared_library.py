@@ -27,3 +27,7 @@ def shared_library(selection=None):
         }
     
     return data
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(shared_library(), indent=4))

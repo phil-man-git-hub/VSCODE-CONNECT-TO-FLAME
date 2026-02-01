@@ -23,6 +23,11 @@ flame-api-refresh:
 	@echo "--- API Intelligence Refresh Complete ---"
 
 # Deploy the toolkit to the Flame project directory
+
 # Prerequisite: flame-utilities/config/fu_eavesdrop.json must be configured
+
 flame-deploy:
+
 	./.venv/bin/python scripts/deploy_to_flame_project.py --copy
+
+	cp flame-utilities/fu_loader.py $(shell ./.venv/bin/python -c "import json; print(json.load(open('flame-utilities/config/fu_eavesdrop.json'))['scriptsDir'])")fu_loader.py

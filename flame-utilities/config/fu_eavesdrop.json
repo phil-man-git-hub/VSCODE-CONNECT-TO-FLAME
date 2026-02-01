@@ -1,4 +1,5 @@
 {
+  "scriptsDir": "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects/123_flame_alpha_2027_romeo/setups/python/",
   "listener": {
     "host": "127.0.0.1",
     "port": 5555

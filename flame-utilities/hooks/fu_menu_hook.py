@@ -23,7 +23,7 @@ if SRC_UTILS not in sys.path:
 # ------------------------------------------------------------------------------
 try:
     from fu_menu_registry import FuMenuRegistry
-    import fu_loader
+    import fu_plugin_loader as fu_loader
 except ImportError as e:
     print(f"Flame Utilities Error: Could not import core modules. {e}")
     FuMenuRegistry = None
