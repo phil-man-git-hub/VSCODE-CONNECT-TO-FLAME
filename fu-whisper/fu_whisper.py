@@ -30,12 +30,26 @@ mcp = FastMCP("FU_Whisper")
 
 # Configuration
 READ_ONLY = os.getenv("FLAME_READ_ONLY", "false").lower() == "true"
+COMFY_ENABLED = os.getenv("COMFY_ENABLED", "false").lower() == "true"
 
 # Initialize the Relay
 relay = FlameRelay(
     host=os.getenv("FLAME_HOST", "127.0.0.1"),
     port=int(os.getenv("FLAME_PORT", 5555))
 )
+
+# Optional ComfyUI Integration
+comfy_client = None
+if COMFY_ENABLED:
+    try:
+        # Add fu-comfyui to path
+        sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "fu-comfyui"))
+        from fu_comfyui import ComfyUIClient, get_comfy_status
+        comfy_client = ComfyUIClient(os.getenv("COMFY_SERVER", "127.0.0.1:8188"))
+        logger.info("ComfyUI Integration enabled.")
+    except Exception as e:
+        logger.error(f"Failed to initialize ComfyUI Integration: {e}")
+        COMFY_ENABLED = False
 
 def audit_log(tool_name: str, input_data: any, result: str):
     """Logs the details of every tool execution for security and debugging."""

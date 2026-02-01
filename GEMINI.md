@@ -37,7 +37,12 @@ The Knowledge Layer (RAG) for the suite.
 - **Role:** Indexes synthesized documentation and API stubs using Vertex AI RAG.
 - **Goal:** Provide semantic search to AI agents to reduce context window bloat and improve workflow accuracy.
 
-### 5. VS Code Extension (`extension/`)
+### 5. FU_PyBox v3.13 SDK (`flame-utilities/lib/fu_pybox_v3_13.py`)
+A modern, clean-room implementation of the PyBox protocol.
+- **Role:** Provides a Python 3.13 native SDK for developing high-performance Flame handlers.
+- **Key Feature:** Native Pathlib integration and PEP 484 type hinting for AI-assisted development.
+
+### 6. VS Code Extension (`extension/`)
 A TypeScript-based extension that provides the UI bridge for human developers.
 
 ### 6. API Intelligence Pipeline (`scripts/`)
