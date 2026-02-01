@@ -1287,15 +1287,15 @@
 <li>[x] Move <code>flame-listener/fu_eavesdrop.py</code> -&gt; <code>flame-utilities/fu_eavesdrop.py</code>.</li>
 <li>[x] Move <code>flame-listener/fu_eavesdrop_init.py</code> -&gt; <code>flame-utilities/fu_eavesdrop_init.py</code>.</li>
 <li>[x] Move <code>flame-listener/generate_stubs.py</code> -&gt; <code>flame-utilities/scripts/fu_generate_stubs.py</code>.</li>
-<li>[x] Move <code>flame-mcp/</code> (entire folder) -&gt; <code>flame-utilities/whisper/</code>.</li>
+<li>[x] Move <code>flame-mcp/</code> (entire folder) -&gt; <code>fu-whisper/</code>.</li>
 <li>[x] Clean up: Remove <code>flame-listener/</code> and <code>flame-mcp/</code> root directories.</li>
 </ul>
 <h2 id="phase-2-script-logic-updates">Phase 2: Script &amp; Logic Updates</h2>
 <ul>
 <li>[x] <strong>Deployment Scripts</strong>: Update <code>scripts/deploy_to_flame_project.py</code> with new <code>flame-utilities/</code> source paths.</li>
 <li>[x] <strong>Version Management</strong>: Update <code>scripts/bump_flame_versions.py</code> to track files in the new location.</li>
-<li>[x] <strong>Relay Logic</strong>: Update <code>flame-utilities/whisper/fu_relay.py</code> to correctly locate secrets within the new hierarchy.</li>
-<li>[x] <strong>Bridge Imports</strong>: Update <code>flame-utilities/whisper/fu_whisper.py</code> to import from the new relative paths.</li>
+<li>[x] <strong>Relay Logic</strong>: Update <code>fu-whisper/fu_relay.py</code> to correctly locate secrets within the new hierarchy.</li>
+<li>[x] <strong>Bridge Imports</strong>: Update <code>fu-whisper/fu_whisper.py</code> to import from the new relative paths.</li>
 <li>[x] <strong>Startup Logic</strong>: Update <code>flame-utilities/fu_eavesdrop_init.py</code> to handle being inside the consolidated folder.</li>
 </ul>
 <h2 id="phase-3-test-suite-repair">Phase 3: Test Suite Repair</h2>
@@ -1309,14 +1309,14 @@
 <ul>
 <li>[x] Update <code>README.md</code> (root).</li>
 <li>[x] Update <code>GEMINI.md</code>.</li>
-<li>[x] Update <code>flame-utilities/whisper/GETTING_STARTED.md</code>.</li>
+<li>[x] Update <code>fu-whisper/GETTING_STARTED.md</code>.</li>
 <li>[x] Update <code>docs/deploy.md</code>, <code>docs/architecture.md</code>, <code>docs/HOWTO_GENERATE_API_REPORTS.md</code>.</li>
 <li>[x] Update <code>docs/goals/flame-utilities-rebrand.md</code> and <code>docs/goals/flame-mcp-creation.md</code> to use the new folder names.</li>
 </ul>
 <h2 id="phase-5-verification-loader">Phase 5: Verification &amp; Loader</h2>
 <ul>
 <li>[x] Create <code>flame-utilities/fu_loader.py</code>.</li>
-<li>[x] Verify end-to-end connection: <code>AI -&gt; whisper -&gt; relay -&gt; eavesdrop -&gt; Flame</code>.</li>
+<li>[x] Verify end-to-end connection: <code>AI -&gt; fu-whisper -&gt; relay -&gt; eavesdrop -&gt; Flame</code>.</li>
 <li>[x] Update <code>CHANGELOG.md</code> with the consolidation milestone.</li>
 </ul>
 
