@@ -27,6 +27,3 @@ def reel(selection=None):
     
     return data
 
-if __name__ == "__main__":
-    import json
-    print(json.dumps(reel(), indent=4))

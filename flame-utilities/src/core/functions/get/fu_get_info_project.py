@@ -114,6 +114,3 @@ def project(selection=None):
 
     return data
 
-if __name__ == "__main__":
-    import json
-    print(json.dumps(project(), indent=4))

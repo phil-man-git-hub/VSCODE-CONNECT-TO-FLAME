@@ -30,6 +30,3 @@ def segment(selection=None):
     
     return data
 
-if __name__ == "__main__":
-    import json
-    print(json.dumps(segment(), indent=4))

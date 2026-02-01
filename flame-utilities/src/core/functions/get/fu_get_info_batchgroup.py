@@ -34,6 +34,3 @@ def batchgroup(selection=None):
     
     return data
 
-if __name__ == "__main__":
-    import json
-    print(json.dumps(batchgroup(), indent=4))

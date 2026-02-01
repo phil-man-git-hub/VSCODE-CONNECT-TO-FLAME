@@ -30,4 +30,4 @@ flame-deploy:
 
 	./.venv/bin/python scripts/deploy_to_flame_project.py --copy
 
-	cp flame-utilities/fu_loader.py $(shell ./.venv/bin/python -c "import json; print(json.load(open('flame-utilities/config/fu_eavesdrop.json'))['scriptsDir'])")fu_loader.py
+	cp flame-utilities/fu_ignite.py $(shell ./.venv/bin/python -c "import json; print(json.load(open('flame-utilities/config/fu_eavesdrop.json'))['scriptsDir'])")fu_ignite.py
