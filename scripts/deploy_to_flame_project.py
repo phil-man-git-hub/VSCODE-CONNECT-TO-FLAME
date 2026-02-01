@@ -18,7 +18,13 @@ import stat
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-UTILITIES_SRC = REPO_ROOT / 'flame-utilities'
+
+# Source directories to be deployed
+DEPLOY_DIRS = [
+    ('flame-utilities', REPO_ROOT / 'flame-utilities'),
+    ('fu-comfyui', REPO_ROOT / 'fu-comfyui'),
+    ('fu-ml-sharp', REPO_ROOT / 'fu-ml-sharp'),
+]
 
 
 def load_project_config():
@@ -62,27 +68,35 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         except FileNotFoundError:
             raise FileNotFoundError('scriptsDir must be provided via --scripts-dir or fu_eavesdrop.json')
 
-    # The utilities source lives in /setups/python/flame-utilities/
-    target_utilities = Path(scripts_dir) / 'flame-utilities'
-    
-    print(f'Deployment Target: {target_utilities}')
+    print(f'Deployment Parent: {target_parent}')
     
     if dry_run:
-        print('Dry run: The entire flame-utilities/ directory would be copied.')
-        print(f' - {UTILITIES_SRC} -> {target_utilities}')
+        print('Dry run: The following directories would be copied:')
+        for name, src in DEPLOY_DIRS:
+            if src.exists():
+                print(f' - {src} -> {target_parent / name}')
+        
         secrets = REPO_ROOT / '.flame.secrets.json'
         if secrets.exists():
-            print(f' - {secrets} -> {target_utilities / secrets.name} (secrets)')
+            # Secrets go into the core utilities folder
+            print(f' - {secrets} -> {target_parent / "flame-utilities" / secrets.name} (secrets)')
         return
 
     ensure_dir(target_parent)
-    print(f'Copying {UTILITIES_SRC} -> {target_utilities}')
-    copy_recursive(UTILITIES_SRC, target_utilities)
+    
+    for name, src in DEPLOY_DIRS:
+        if not src.exists():
+            print(f'Skipping {name} (source not found at {src})')
+            continue
+            
+        target_path = target_parent / name
+        print(f'Copying {src} -> {target_path}')
+        copy_recursive(src, target_path)
     
     # Optional: copy secrets if present into the utilities folder
     secrets = REPO_ROOT / '.flame.secrets.json'
     if secrets.exists():
-        dst_secrets = target_utilities / secrets.name
+        dst_secrets = target_parent / 'flame-utilities' / secrets.name
         print(f'Copying secrets {secrets} -> {dst_secrets}')
         shutil.copy2(secrets, dst_secrets)
         dst_secrets.chmod(dst_secrets.stat().st_mode | stat.S_IRUSR)
