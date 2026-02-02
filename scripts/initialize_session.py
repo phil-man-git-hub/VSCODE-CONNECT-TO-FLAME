@@ -81,7 +81,7 @@ def main():
 
     # 3. Check RAG
     rag_exists = os.path.exists("chroma_db")
-    print(f"{('✅' if rag_exists else '⚠️')} RAG Knowledge Layer: {'Indexed' if rag_exists else 'Not Found (run build_rag.py)')}")
+    print(f"{('✅' if rag_exists else '⚠️')} RAG Knowledge Layer: {'Indexed' if rag_exists else 'Not Found (run build_rag.py)'}")
 
     # 4. Gather context
     ctx = get_flame_context()
