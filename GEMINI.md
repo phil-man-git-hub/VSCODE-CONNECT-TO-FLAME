@@ -34,7 +34,9 @@ The communication layer managing the TCP connection.
 
 ### 4. FU_Encyclopedia (`fu-encyclopedia/fu_encyclopedia.py`)
 The Knowledge Layer (RAG) for the suite.
-- **Role:** Indexes synthesized documentation and API stubs using Vertex AI RAG.
+- **Role:** Indexes synthesized documentation and API stubs using ChromaDB and LlamaIndex.
+- **Status:** **Active**. The `chroma_db` is populated with Flame API references and `insight` research documents.
+- **Access:** AI Agents can query this layer via the `query_flame_docs` tool in `FU_Whisper`.
 - **Goal:** Provide semantic search to AI agents to reduce context window bloat and improve workflow accuracy.
 
 ### 5. FU_PyBox v3.13 SDK (`flame-utilities/lib/fu_pybox_v3_13.py`)

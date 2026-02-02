@@ -12,6 +12,12 @@ pydantic
 # Documentation
 mkdocs
 
+# RAG & Knowledge Layer
+llama-index
+llama-index-vector-stores-chroma
+llama-index-embeddings-ollama
+chromadb
+
 # Flame related (Standard VFX Libraries)
 PySide6
 opencolorio
