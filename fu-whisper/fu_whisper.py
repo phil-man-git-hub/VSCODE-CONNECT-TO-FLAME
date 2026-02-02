@@ -11,8 +11,19 @@ import logging
 from datetime import datetime
 from dotenv import load_dotenv
 
+# RAG imports
+from llama_index.core import VectorStoreIndex, StorageContext
+from llama_index.vector_stores.chroma import ChromaVectorStore
+from llama_index.embeddings.ollama import OllamaEmbedding
+import chromadb
+
 # Load environment variables from repo root
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+
+# Setup logging
+import logging
+logging.basicConfig(level=logging.INFO, format='[fu_whisper][%(levelname)s] %(message)s')
+logger = logging.getLogger("fu_whisper")
 
 # Setup Audit Logging
 LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
@@ -37,6 +48,18 @@ relay = FlameRelay(
     host=os.getenv("FLAME_HOST", "127.0.0.1"),
     port=int(os.getenv("FLAME_PORT", 5555))
 )
+
+# Initialize RAG Index
+rag_index = None
+try:
+    chroma_client = chromadb.PersistentClient(path=os.path.join(os.path.dirname(os.path.dirname(__file__)), "chroma_db"))
+    chroma_collection = chroma_client.get_collection("flame_docs")
+    vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
+    rag_index = VectorStoreIndex.from_vector_store(vector_store, storage_context=storage_context, embed_model=OllamaEmbedding(model_name="nomic-embed-text"))
+    logger.info("RAG index loaded successfully.")
+except Exception as e:
+    logger.warning(f"Failed to load RAG index: {e}. query_flame_docs will be unavailable.")
 
 # Optional ComfyUI Integration
 comfy_client = None
@@ -204,6 +227,25 @@ def get_mcp_status() -> str:
     audit_log("get_mcp_status", {}, result)
     return result
 
+@mcp.tool()
+def query_flame_docs(query: str) -> str:
+    """Queries the Flame API documentation using RAG to find relevant information about Flame Python API."""
+    if rag_index is None:
+        msg = "RAG index not available. Please ensure the documentation has been indexed."
+        audit_log("query_flame_docs", {"query": query}, msg)
+        return msg
+    
+    try:
+        query_engine = rag_index.as_query_engine(similarity_top_k=5)
+        response = query_engine.query(query)
+        result = str(response)
+        audit_log("query_flame_docs", {"query": query}, "Success")
+        return result
+    except Exception as e:
+        msg = f"Error querying documentation: {str(e)}"
+        audit_log("query_flame_docs", {"query": query}, msg)
+        return msg
+
 # --- Code Library Tools ---
 
 @mcp.tool()
@@ -279,15 +321,17 @@ def list_library() -> str:
         return f"Error listing library: {str(e)}"
 
 if __name__ == "__main__":
+    # Ensure logger is defined before use
+    try:
+        logger
+    except NameError:
+        import logging
+        logging.basicConfig(level=logging.INFO, format='[fu_whisper][%(levelname)s] %(message)s')
+        logger = logging.getLogger("fu_whisper")
 
     try:
-
         import flame # type: ignore
-
         # We are inside Flame (auto-hook crawl). Do nothing.
-
     except ImportError:
-
         logger.info(f"Starting Flame MCP Server (Read-Only: {READ_ONLY})")
-
         mcp.run()

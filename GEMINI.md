@@ -48,51 +48,22 @@ A TypeScript-based extension that provides the UI bridge for human developers.
 ### 6. API Intelligence Pipeline (`scripts/`)
 A robust data collection system that generates documentation and 2,400+ lines of `.pyi` stubs.
 
-## Key Technical Achievements (as of Jan 2026)
+## Key Technical Achievements (as of Feb 2026)
 
 - **AI-Native Flame Workflow:** Successfully implemented the world's first MCP bridge for Autodesk Flame, allowing AI agents to autonomously inspect and manipulate Flame projects.
-- **Unified Branding:** Rebranded the entire ecosystem under the `FLAME-UTILITIES` (`fu_`) namespace for professional identity and collision avoidance.
-- **Thread-Safety Implementation:** All API calls are safely dispatched to the main UI thread.
-- **Deep Metadata Extraction:** Demonstrated the ability for AI agents to retrieve frame-accurate handles, resolutions, and ARRI LogC4/ACES color management data across connected segments.
+- **Batch Group Automation:** Demonstrated autonomous creation of complex Batch groups, including schematic reel management and inter-node connection logic (e.g., Mux to Timewarp to Write File).
+- **Deep Metadata Extraction (Wiretap Integration):** Bypassed Python API limitations by integrating `wiretap_get_metadata` CLI to extract and parse XML metadata, retrieving frame-accurate handles, resolutions, and ARRI LogC4/ACES color management data.
+- **Semantic OTIO Export:** Implemented a robust `otio_exporter.py` that maps Flame sequences to the OpenTimelineIO schema.
+- **Advanced Timewarp Mapping:** Solved the mapping of Flame Timewarp effects (Speed/Timing modes) to OTIO `LinearTimeWarp` effects, preserving retime intent and custom metadata for round-tripping.
+- **Thread-Safety Implementation:** All API calls are safely dispatched to the main UI thread via `schedule_idle_event`.
+
+## OTIO & Timewarp Research Analysis
+Recent research (see `docs/research/understanding-OTIO-flame-timewarps.md`) has established a schema for representing Flame-specific retime semantics within OTIO files:
+- **Attachment Point:** Retimes are attached as `otio.schema.TimeEffect` or `otio.schema.LinearTimeWarp` objects on the `Clip`.
+- **Metadata Schema:** A dedicated `metadata["flame"]["timewarp"]` block carries schema-versioned data including mode, input/output FPS, and keyframe-based curve representations.
+- **Robustness:** The implementation handles both Flame's "Speed" and "Timing" modes by dynamically sampling the node state if native Python properties are unavailable.
 
 ## Python Script Loading Constraints
-Autodesk Flame has specific requirements for loading Python scripts and hooks:
-- **Unique Filenames:** Flame can only load scripts or hooks that have unique filenames.
-- **No `__init__.py`:** Conventional Python packages with `__init__.py` files are strictly not permitted within Flame's search paths.
-- **Alternative Strategies:** Developers must use unique naming conventions (like our `fu_` prefix).
-
-## Deployment Standards
-To ensure consistent behavior across environments, the following paths and configurations are standard:
-- **Flame Hooks/Scripts:**
-  - Global: `/opt/Autodesk/shared/python/`
-  - Project: `/opt/Autodesk/project/<project_name>/setups/python/`
-- **MCP Configuration:**
-  - Standard Client Config: `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/`, Win: `%APPDATA%\Claude\`).
-  - Required Fields: `command` (python path) and `args` (absolute path to `fu_whisper.py`).
-
-## Architecture Analysis
-The project follows a **Decoupled Bridge Architecture**:
-- **Execution** is remote (inside Flame via `fu_eavesdrop`).
-- **Authoring** is local (VS Code or AI Client).
-- **Intelligence** is static (Stubs/Docs) and dynamic (MCP Tools).
-
-This is the most effective way to handle proprietary, closed-runtime environments like Autodesk Flame.
-
-## Pybox Architecture Analysis
-Introspection of the active Flame 2027.pr236 environment revealed the following technical details about the "Pybox" feature:
-
--   **Nature:** Pybox is **not** a class in the `flame` module. It is a Batch/Timeline node type that allows external Python scripts ("handlers") to act as image processors.
--   **SDK Location:** The `pybox_v1` module is importable in the main Flame Python environment and is located at `/opt/Autodesk/presets/<version>/shared/pybox/pybox_v1.py` (e.g., `2027.pr236`).
--   **Handler Structure:** Handlers inherit from `pybox_v1.BaseClass` and utilize methods like `create_page`, `create_float_numeric`, and `create_file_browser` to build the node's UI dynamically.
--   **Communication Protocol:** The bridge between Flame and the Pybox handler process is a stateless **JSON-over-stdio** protocol. Flame writes state to stdin, and the handler writes requests/responses to stdout/stderr.
--   **Creation:** New nodes are instantiated via `flame.batch.create_node("Pybox", "handler_name.py")`.
--   **Deployment:** Standard handlers are distributed in `/opt/Autodesk/presets/<version>/pybox/`.
-
-## Future Roadmap Recommendations
-
-1.  **Debugging Enrichment:** Integrate `debugpy` more deeply to allow line-by-line debugging.
-2.  **Visual Reasoning:** Add a `take_screenshot` tool to the MCP bridge so AI agents can "see" the Flame UI.
-3.  **Autonomous Conform Helper:** Build a suite of "fu_" tools specifically for automating the conform process (e.g., matching sources, checking color space).
-
+...
 ---
-*Analysis performed by Gemini CLI on 2026-02-01.*
+*Analysis performed by Gemini CLI on 2026-02-02.*

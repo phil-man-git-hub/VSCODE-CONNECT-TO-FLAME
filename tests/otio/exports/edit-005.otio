@@ -1,0 +1,295 @@
+{
+    "OTIO_SCHEMA": "Timeline.1",
+    "metadata": {},
+    "name": "edit-005",
+    "global_start_time": {
+        "OTIO_SCHEMA": "RationalTime.1",
+        "rate": 24.0,
+        "value": 1.0
+    },
+    "tracks": {
+        "OTIO_SCHEMA": "Stack.1",
+        "metadata": {},
+        "name": "tracks",
+        "source_range": null,
+        "effects": [],
+        "markers": [],
+        "enabled": true,
+        "color": null,
+        "children": [
+            {
+                "OTIO_SCHEMA": "Track.1",
+                "metadata": {},
+                "name": "None",
+                "source_range": null,
+                "effects": [],
+                "markers": [],
+                "enabled": true,
+                "color": null,
+                "children": [
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "DW0001C014_251020_123457_c1I7H",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 158.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 1087184.0
+                            }
+                        },
+                        "effects": [
+                            {
+                                "OTIO_SCHEMA": "LinearTimeWarp.1",
+                                "metadata": {
+                                    "flame": {
+                                        "timewarp": {
+                                            "input_fps": 24.0,
+                                            "mode": "timing",
+                                            "output_fps": 24.0,
+                                            "schema_version": 1,
+                                            "speed": 300.0
+                                        }
+                                    }
+                                },
+                                "name": "FlameTimewarp",
+                                "effect_name": "LinearTimeWarp",
+                                "enabled": true,
+                                "time_scalar": 3.0
+                            }
+                        ],
+                        "markers": [],
+                        "enabled": true,
+                        "color": null,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "ExternalReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null,
+                                "target_url": "/Volumes/Samsung-T3-1TB/stock-footage/ARRI_sample_footage/DW0001C014_251020_123457_c1I7H.mxf"
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "DW0001C020_251020_132002_c1I7H",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 130.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 1152109.0
+                            }
+                        },
+                        "effects": [
+                            {
+                                "OTIO_SCHEMA": "LinearTimeWarp.1",
+                                "metadata": {
+                                    "flame": {
+                                        "timewarp": {
+                                            "input_fps": 24.0,
+                                            "mode": "speed",
+                                            "output_fps": 24.0,
+                                            "schema_version": 1,
+                                            "speed": 200.0
+                                        }
+                                    }
+                                },
+                                "name": "FlameTimewarp",
+                                "effect_name": "LinearTimeWarp",
+                                "enabled": true,
+                                "time_scalar": 2.0
+                            }
+                        ],
+                        "markers": [],
+                        "enabled": true,
+                        "color": null,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "ExternalReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null,
+                                "target_url": "/Volumes/Samsung-T3-1TB/stock-footage/ARRI_sample_footage/DW0001C020_251020_132002_c1I7H.mxf"
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "DW0001C006_251020_113547_c1I7H",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 154.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 1002027.0
+                            }
+                        },
+                        "effects": [
+                            {
+                                "OTIO_SCHEMA": "LinearTimeWarp.1",
+                                "metadata": {
+                                    "flame": {
+                                        "timewarp": {
+                                            "input_fps": 24.0,
+                                            "mode": "timing",
+                                            "output_fps": 24.0,
+                                            "schema_version": 1,
+                                            "speed": 400.0
+                                        }
+                                    }
+                                },
+                                "name": "FlameTimewarp",
+                                "effect_name": "LinearTimeWarp",
+                                "enabled": true,
+                                "time_scalar": 4.0
+                            }
+                        ],
+                        "markers": [],
+                        "enabled": true,
+                        "color": null,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "ExternalReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null,
+                                "target_url": "/Volumes/Samsung-T3-1TB/stock-footage/ARRI_sample_footage/DW0001C006_251020_113547_c1I7H.mxf"
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "DW0001C001_251020_111956_c1I7H",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 190.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 979236.0
+                            }
+                        },
+                        "effects": [
+                            {
+                                "OTIO_SCHEMA": "LinearTimeWarp.1",
+                                "metadata": {
+                                    "flame": {
+                                        "timewarp": {
+                                            "input_fps": 24.0,
+                                            "mode": "speed",
+                                            "output_fps": 24.0,
+                                            "schema_version": 1,
+                                            "speed": 200.0
+                                        }
+                                    }
+                                },
+                                "name": "FlameTimewarp",
+                                "effect_name": "LinearTimeWarp",
+                                "enabled": true,
+                                "time_scalar": 2.0
+                            }
+                        ],
+                        "markers": [],
+                        "enabled": true,
+                        "color": null,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "ExternalReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null,
+                                "target_url": "/Volumes/Samsung-T3-1TB/stock-footage/ARRI_sample_footage/DW0001C001_251020_111956_c1I7H.mxf"
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "DW0001C035_251021_131623_c1I7H",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 323.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 43738.0
+                            }
+                        },
+                        "effects": [
+                            {
+                                "OTIO_SCHEMA": "LinearTimeWarp.1",
+                                "metadata": {
+                                    "flame": {
+                                        "timewarp": {
+                                            "input_fps": 24.0,
+                                            "mode": "timing",
+                                            "output_fps": 24.0,
+                                            "schema_version": 1,
+                                            "speed": 1100.0
+                                        }
+                                    }
+                                },
+                                "name": "FlameTimewarp",
+                                "effect_name": "LinearTimeWarp",
+                                "enabled": true,
+                                "time_scalar": 11.0
+                            }
+                        ],
+                        "markers": [],
+                        "enabled": true,
+                        "color": null,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "ExternalReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null,
+                                "target_url": "/Volumes/Samsung-T3-1TB/stock-footage/ARRI_sample_footage/DW0001C035_251021_131623_c1I7H.mxf"
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    }
+                ],
+                "kind": "Video"
+            }
+        ]
+    }
+}
