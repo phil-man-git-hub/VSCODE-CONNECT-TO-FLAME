@@ -1,0 +1,1709 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>understanding OTIO flame timewarps - FLAME-UTILITIES</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-what-otio-gives-you-out-of-the-box" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FLAME-UTILITIES" class="md-header__button md-logo" aria-label="FLAME-UTILITIES" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FLAME-UTILITIES
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              understanding OTIO flame timewarps
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FLAME-UTILITIES" class="md-nav__button md-logo" aria-label="FLAME-UTILITIES" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FLAME-UTILITIES
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/api_reports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/stubs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Stubs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/extension_dev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extension Dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Goals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Goals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../goals/vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../goals/grand-consolidation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../goals/flame-utilities-rebrand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rebrand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../goals/flame-mcp-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tasks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tasks/TODO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TODO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tasks/grand-consolidation-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidation Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tasks/flame-mcp-bridge-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Symbols
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Symbols
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/api/classes/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/api/functions/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/api/constants/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Constants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-otio-gives-you-out-of-the-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What OTIO gives you out of the box
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-where-to-hang-flame-timewarp-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Where to hang Flame timewarp metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Where to hang Flame timewarp metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-otio-object-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: OTIO object layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-designing-a-flame-timewarp-metadata-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Designing a Flame timewarp metadata schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Designing a Flame timewarp metadata schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#suggested-top-level-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Suggested top-level structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyframe-representation-for-retime-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyframe representation for retime curves
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-encoding-specific-flame-behaviors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Encoding specific Flame behaviors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Encoding specific Flame behaviors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-constant-speed-simple-retime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Constant speed (simple retime)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-freeze-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Freeze frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-variable-speed-ramp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Variable speed ramp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-optical-flow-motion-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Optical flow / motion estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-round-tripping-flame-timewarps-with-a-custom-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Round-tripping Flame timewarps with a custom adapter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Round-tripping Flame timewarps with a custom adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adapter-skeleton-python-side-otio-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adapter skeleton (Python-side OTIO plugin)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-practical-constraints-and-nice-to-haves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Practical constraints and nice-to-haves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-if-you-want-to-go-deeper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. If you want to go deeper
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>understanding OTIO flame timewarps</h1>
+
+<p>You’re speaking my language now—this is exactly where OTIO stops being “just an EDL” and becomes a carrier for real pipeline semantics.</p>
+<p>Let’s treat this as three layers:</p>
+<ol>
+<li><strong>How to structurally represent Flame-style timewarps in OTIO (with metadata).</strong>  </li>
+<li><strong>How to design a schema for retime curves, modes, and options.</strong>  </li>
+<li><strong>How to round-trip Flame Timewarp nodes via a custom OTIO adapter.</strong></li>
+</ol>
+<hr />
+<h2 id="1-what-otio-gives-you-out-of-the-box">1. What OTIO gives you out of the box</h2>
+<p>OTIO’s core model is deliberately minimal: it has <code>TimeEffect</code> and <code>LinearTimeWarp</code> for constant retimes, plus a rich metadata system and plugin-based adapters.</p>
+<p>So for Flame-style timewarps, you lean on:</p>
+<ul>
+<li><strong><code>TimeEffect</code> / <code>LinearTimeWarp</code></strong> for simple, constant retimes.</li>
+<li><strong><code>metadata</code></strong> on the <code>Clip</code> or <code>TimeEffect</code> to carry Flame-specific detail.</li>
+<li><strong>Adapters</strong> to translate between Flame’s internal representation and your OTIO schema.</li>
+</ul>
+<p>Think of OTIO as:</p>
+<ul>
+<li><strong>“Authoritative structure”</strong> for: clips, tracks, transitions, basic retimes.  </li>
+<li><strong>“Envelope”</strong> for: Flame’s full timewarp node graph, curves, and options.</li>
+</ul>
+<hr />
+<h2 id="2-where-to-hang-flame-timewarp-metadata">2. Where to hang Flame timewarp metadata</h2>
+<p>You’ve got two good attachment points:</p>
+<ul>
+<li><strong>On the <code>Clip</code></strong>: if the timewarp is conceptually part of the clip’s playback.  </li>
+<li><strong>On a <code>TimeEffect</code> attached to the <code>Clip</code></strong>: if you want a clear semantic “this is a retime effect” object.</li>
+</ul>
+<p>I’d strongly recommend:</p>
+<ul>
+<li>Use <strong><code>LinearTimeWarp</code></strong> when the Flame timewarp is effectively constant speed.  </li>
+<li>Use a generic <strong><code>TimeEffect</code></strong> plus metadata when it’s variable or complex.</li>
+</ul>
+<h3 id="example-otio-object-layout">Example: OTIO object layout</h3>
+<pre><code class="language-python">import opentimelineio as otio
+
+clip = otio.schema.Clip(
+    name=&quot;Shot_010&quot;,
+    media_reference=otio.schema.ExternalReference(
+        target_url=&quot;file:///path/to/shot_010.exr&quot;,
+        available_range=otio.opentime.TimeRange(
+            start_time=otio.opentime.RationalTime(0, 24),
+            duration=otio.opentime.RationalTime(240, 24),
+        ),
+    ),
+)
+
+timewarp = otio.schema.TimeEffect(
+    name=&quot;FlameTimewarp&quot;,
+    effect_name=&quot;FlameTimewarp&quot;,  # free-form string
+)
+
+clip.effects.append(timewarp)
+</code></pre>
+<p>Now the interesting part is the <strong>metadata payload</strong>.</p>
+<hr />
+<h2 id="3-designing-a-flame-timewarp-metadata-schema">3. Designing a Flame timewarp metadata schema</h2>
+<p>You want something:</p>
+<ul>
+<li><strong>Explicit</strong> (no guessing what a field means).  </li>
+<li><strong>Stable</strong> (versioned, so you can evolve it).  </li>
+<li><strong>Serializable</strong> (JSON-friendly, no Flame-only binary blobs unless absolutely necessary).</li>
+</ul>
+<h3 id="suggested-top-level-structure">Suggested top-level structure</h3>
+<p>Attach this under a dedicated namespace, e.g. <code>metadata["flame"]["timewarp"]</code>:</p>
+<pre><code class="language-python">timewarp.metadata[&quot;flame&quot;] = {
+    &quot;timewarp&quot;: {
+        &quot;schema_version&quot;: 1,
+        &quot;node_name&quot;: &quot;Timewarp1&quot;,
+        &quot;mode&quot;: &quot;curve&quot;,          # &quot;constant&quot;, &quot;curve&quot;, &quot;freeze&quot;, &quot;expression&quot;, &quot;optical_flow&quot;
+        &quot;input_fps&quot;: 24.0,
+        &quot;output_fps&quot;: 24.0,
+        &quot;reverse&quot;: False,
+        &quot;segments&quot;: [
+            # optional segmentation of behavior
+        ],
+        &quot;curve&quot;: {
+            &quot;time_domain&quot;: &quot;timeline&quot;,  # &quot;timeline&quot; or &quot;source&quot;
+            &quot;keyframes&quot;: [
+                # see below
+            ],
+        },
+        &quot;freeze&quot;: {
+            &quot;enabled&quot;: False,
+            &quot;frame&quot;: 100.0,
+        },
+        &quot;optical_flow&quot;: {
+            &quot;enabled&quot;: False,
+            &quot;quality&quot;: &quot;high&quot;,
+            &quot;smoothing&quot;: 0.5,
+        },
+        &quot;expression&quot;: {
+            &quot;enabled&quot;: False,
+            &quot;language&quot;: &quot;flame_expr&quot;,
+            &quot;source&quot;: &quot;t * 0.5&quot;,
+        },
+        &quot;raw_flame_data&quot;: {
+            # optional: original Flame node dump, if you want full fidelity
+        },
+    }
+}
+</code></pre>
+<h3 id="keyframe-representation-for-retime-curves">Keyframe representation for retime curves</h3>
+<p>You need a mapping between <strong>timeline time</strong> and <strong>source time</strong> (or vice versa). Flame’s Timewarp is essentially a function:</p>
+<p>[
+t_\text{source} = f(t_\text{timeline})
+]</p>
+<p>Represent that as keyframes:</p>
+<pre><code class="language-python">timewarp.metadata[&quot;flame&quot;][&quot;timewarp&quot;][&quot;curve&quot;][&quot;keyframes&quot;] = [
+    {
+        &quot;timeline_time&quot;: 0.0,      # in frames or seconds, but be explicit
+        &quot;source_time&quot;: 0.0,
+        &quot;interp&quot;: &quot;linear&quot;,        # &quot;linear&quot;, &quot;bezier&quot;, &quot;constant&quot;, etc.
+        &quot;bezier&quot;: {
+            &quot;in_tangent&quot;:  [0.0, 0.0],
+            &quot;out_tangent&quot;: [0.0, 0.0],
+        },
+    },
+    {
+        &quot;timeline_time&quot;: 50.0,
+        &quot;source_time&quot;: 25.0,
+        &quot;interp&quot;: &quot;linear&quot;,
+    },
+    {
+        &quot;timeline_time&quot;: 100.0,
+        &quot;source_time&quot;: 100.0,
+        &quot;interp&quot;: &quot;linear&quot;,
+    },
+]
+</code></pre>
+<p>You can choose:</p>
+<ul>
+<li><strong>Units</strong>: frames at a given FPS, or seconds. Just be consistent and store the FPS.  </li>
+<li><strong>Direction</strong>: timeline→source or source→timeline. I’d pick <strong>timeline→source</strong>, since that’s how playback works.</li>
+</ul>
+<hr />
+<h2 id="4-encoding-specific-flame-behaviors">4. Encoding specific Flame behaviors</h2>
+<p>Let’s map some common Flame Timewarp patterns into this schema.</p>
+<h3 id="41-constant-speed-simple-retime">4.1 Constant speed (simple retime)</h3>
+<p>If Flame’s Timewarp is just 50% speed:</p>
+<ul>
+<li>Use <strong><code>LinearTimeWarp</code></strong> for OTIO-native behavior.  </li>
+<li>Also store the Flame node metadata for round-trip fidelity.</li>
+</ul>
+<pre><code class="language-python">ltw = otio.schema.LinearTimeWarp(
+    name=&quot;FlameTimewarp_50pct&quot;,
+    time_scalar=0.5,
+    time_offset=0.0,
+)
+
+ltw.metadata[&quot;flame&quot;] = {
+    &quot;timewarp&quot;: {
+        &quot;schema_version&quot;: 1,
+        &quot;mode&quot;: &quot;constant&quot;,
+        &quot;speed&quot;: 0.5,
+        &quot;input_fps&quot;: 24.0,
+        &quot;output_fps&quot;: 24.0,
+    }
+}
+
+clip.effects.append(ltw)
+</code></pre>
+<p>On export back to Flame, your adapter can:</p>
+<ul>
+<li>Detect <code>LinearTimeWarp</code>.  </li>
+<li>Create a Flame Timewarp node with constant speed 0.5.  </li>
+</ul>
+<h3 id="42-freeze-frame">4.2 Freeze frame</h3>
+<p>Flame freeze at frame 100:</p>
+<pre><code class="language-python">timewarp.metadata[&quot;flame&quot;][&quot;timewarp&quot;].update({
+    &quot;mode&quot;: &quot;freeze&quot;,
+    &quot;freeze&quot;: {
+        &quot;enabled&quot;: True,
+        &quot;frame&quot;: 100.0,
+    },
+})
+</code></pre>
+<p>You can also encode this as a curve:</p>
+<pre><code class="language-python">&quot;curve&quot;: {
+    &quot;time_domain&quot;: &quot;timeline&quot;,
+    &quot;keyframes&quot;: [
+        {&quot;timeline_time&quot;: 0.0, &quot;source_time&quot;: 100.0, &quot;interp&quot;: &quot;constant&quot;},
+        {&quot;timeline_time&quot;: 200.0, &quot;source_time&quot;: 100.0, &quot;interp&quot;: &quot;constant&quot;},
+    ],
+}
+</code></pre>
+<h3 id="43-variable-speed-ramp">4.3 Variable speed ramp</h3>
+<p>Say Flame has a ramp:</p>
+<ul>
+<li>0–50 timeline frames: 50% speed  </li>
+<li>50–100 timeline frames: ramp to 200% speed  </li>
+</ul>
+<p>You can bake this into keyframes:</p>
+<pre><code class="language-python">&quot;curve&quot;: {
+    &quot;time_domain&quot;: &quot;timeline&quot;,
+    &quot;keyframes&quot;: [
+        {&quot;timeline_time&quot;: 0.0, &quot;source_time&quot;: 0.0, &quot;interp&quot;: &quot;linear&quot;},
+        {&quot;timeline_time&quot;: 50.0, &quot;source_time&quot;: 25.0, &quot;interp&quot;: &quot;linear&quot;},
+        {&quot;timeline_time&quot;: 100.0, &quot;source_time&quot;: 125.0, &quot;interp&quot;: &quot;linear&quot;},
+    ],
+}
+</code></pre>
+<p>Your adapter can reconstruct Flame’s curve from these points (or at least approximate it).</p>
+<h3 id="44-optical-flow-motion-estimation">4.4 Optical flow / motion estimation</h3>
+<p>OTIO will never “understand” optical flow, but it can <strong>carry the intent</strong>:</p>
+<pre><code class="language-python">&quot;optical_flow&quot;: {
+    &quot;enabled&quot;: True,
+    &quot;mode&quot;: &quot;motion_estimation&quot;,
+    &quot;quality&quot;: &quot;high&quot;,
+    &quot;smoothing&quot;: 0.75,
+}
+</code></pre>
+<p>On import:</p>
+<ul>
+<li>
+<p>You read Flame’s node settings and populate these fields.<br />
+On export:</p>
+</li>
+<li>
+<p>You recreate the Flame node with the same options.</p>
+</li>
+</ul>
+<p>Playback tools that don’t know Flame can ignore this block.</p>
+<hr />
+<h2 id="5-round-tripping-flame-timewarps-with-a-custom-adapter">5. Round-tripping Flame timewarps with a custom adapter</h2>
+<p>OTIO’s adapter system is exactly for this: a plugin that knows how to talk Flame’s language.</p>
+<p>Conceptually, your <strong>Flame OTIO adapter</strong> will:</p>
+<ol>
+<li><strong>Flame → OTIO (read)</strong>  </li>
+<li>Inspect the Flame timeline / Batch setup.  </li>
+<li>
+<p>For each clip with a Timewarp node:</p>
+<ul>
+<li>Extract: mode, speed, curve points, freeze frame, optical flow settings, etc.</li>
+<li>Create an OTIO <code>Clip</code> (or reference existing one).</li>
+<li>Attach a <code>TimeEffect</code> or <code>LinearTimeWarp</code>.</li>
+<li>Populate <code>metadata["flame"]["timewarp"]</code> with your schema.</li>
+</ul>
+</li>
+<li>
+<p><strong>OTIO → Flame (write)</strong>  </p>
+</li>
+<li>Walk the OTIO timeline.  </li>
+<li>
+<p>For each <code>Clip</code> with a <code>TimeEffect</code> or <code>LinearTimeWarp</code>:</p>
+<ul>
+<li>If <code>LinearTimeWarp</code> and <code>mode == "constant"</code>:  </li>
+<li>Create a Flame Timewarp node with constant speed.  </li>
+<li>If <code>mode == "curve"</code>:  </li>
+<li>Rebuild Flame’s curve from <code>curve["keyframes"]</code>.  </li>
+<li>If <code>freeze.enabled</code>:  </li>
+<li>Configure Flame’s freeze frame.  </li>
+<li>If <code>optical_flow.enabled</code>:  </li>
+<li>Re-enable motion estimation / optical flow with stored options.</li>
+</ul>
+</li>
+<li>
+<p><strong>Preserve unknowns</strong>  </p>
+</li>
+<li>If Flame adds new options later, you can stash them in <code>raw_flame_data</code> and just round-trip them without interpretation.</li>
+</ol>
+<h3 id="adapter-skeleton-python-side-otio-plugin">Adapter skeleton (Python-side OTIO plugin)</h3>
+<p>OTIO adapters are just Python modules that implement <code>read_from_file</code> and <code>write_to_file</code>.</p>
+<p>Very rough sketch:</p>
+<pre><code class="language-python"># flame_otio_adapter.py
+import opentimelineio as otio
+
+def read_from_file(filepath, **kwargs):
+    # 1. Use Flame’s Python API or an exported format (e.g. XML/JSON)
+    # 2. Parse timeline, clips, and timewarp nodes
+    # 3. Build an OTIO Timeline
+
+    timeline = otio.schema.Timeline(name=&quot;FlameTimeline&quot;)
+
+    # pseudo-code:
+    # for each flame_clip in flame_timeline:
+    #     clip = build_otio_clip(flame_clip)
+    #     if flame_clip.has_timewarp():
+    #         effect = build_otio_timewarp(flame_clip.timewarp)
+    #         clip.effects.append(effect)
+    #     add clip to track
+
+    return timeline
+
+
+def write_to_file(input_otio, filepath, **kwargs):
+    # 1. Walk OTIO timeline
+    # 2. For each clip/effect, create Flame nodes
+    # 3. Save or apply to Flame
+
+    # pseudo-code:
+    # for clip in input_otio.each_clip():
+    #     flame_clip = create_flame_clip(clip)
+    #     for effect in clip.effects:
+    #         if isinstance(effect, otio.schema.LinearTimeWarp):
+    #             apply_constant_timewarp(flame_clip, effect)
+    #         elif isinstance(effect, otio.schema.TimeEffect):
+    #             apply_flame_timewarp_from_metadata(flame_clip, effect.metadata)
+
+    # write out via Flame API or export format
+    pass
+</code></pre>
+<p>You’d register this as an OTIO adapter plugin so you can do:</p>
+<pre><code class="language-bash">otio cat flame_timeline.flame --adapter flame_otio
+</code></pre>
+<p>or in Python:</p>
+<pre><code class="language-python">timeline = otio.adapters.read_from_file(&quot;flame_timeline.flame&quot;, adapter_name=&quot;flame_otio&quot;)
+</code></pre>
+<hr />
+<h2 id="6-practical-constraints-and-nice-to-haves">6. Practical constraints and nice-to-haves</h2>
+<p>A few realities to keep in mind:</p>
+<ul>
+<li>
+<p><strong>Precision vs. simplicity:</strong><br />
+  You can choose to approximate Flame’s curve with fewer keyframes, or go full 1:1 sampling.</p>
+</li>
+<li>
+<p><strong>Versioning:</strong><br />
+  Always include <code>schema_version</code> in your <code>metadata["flame"]["timewarp"]</code> so you can evolve the schema without breaking old timelines.</p>
+</li>
+<li>
+<p><strong>Interoperability:</strong><br />
+  Other tools (Nuke Studio, Resolve, RV, etc.) can read the OTIO file and:</p>
+</li>
+<li>Use <code>LinearTimeWarp</code> directly where applicable.  </li>
+<li>Ignore <code>flame</code> metadata if they don’t care.  </li>
+<li>
+<p>Or implement their own mapping from your schema to their retime system.</p>
+</li>
+<li>
+<p><strong>AYON / pipeline integration:</strong><br />
+  If you’re already using AYON/Flame hooks (like the OpenTimelineIO install hook), this schema can live as a documented contract between your Flame integration and the rest of the pipeline.</p>
+</li>
+</ul>
+<hr />
+<h2 id="7-if-you-want-to-go-deeper">7. If you want to go deeper</h2>
+<p>I’d love to do one of these next with you:</p>
+<ul>
+<li>Design a <strong>concrete JSON example</strong> of a real Flame Timewarp node you’ve used (e.g., a hero ramp) and encode it fully in OTIO metadata.  </li>
+<li>Sketch the <strong>Flame-side Python</strong> that reads this metadata and rebuilds the node graph.  </li>
+<li>Define a <strong>mini spec</strong> for <code>flame.timewarp</code> that you can drop into LOGIK-PROJEKT docs.</li>
+</ul>
+<p>If you’ve got a specific Flame Timewarp setup in mind (e.g., “ramp from 100% to 400% over 2 seconds with freeze at the end”), describe it and we’ll encode it end-to-end.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
