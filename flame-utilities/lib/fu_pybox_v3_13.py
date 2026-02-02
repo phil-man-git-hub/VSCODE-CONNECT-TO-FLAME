@@ -217,6 +217,7 @@ def create_float_numeric(
     value: float = 0.0, 
     min_val: float = 0.0, 
     max_val: float = 100.0, 
+    inc: float = 1.0,
     row: int = 0, 
     col: int = 0, 
     page: int = 0,
@@ -224,11 +225,12 @@ def create_float_numeric(
 ) -> Dict[str, Any]:
     return {
         "type": "Float",
-        "name": name,
+        "name": str(name),
         "value": float(value),
         "default": float(value),
         "min": float(min_val),
         "max": float(max_val),
+        "inc": float(inc),
         "row": int(row),
         "col": int(col),
         "page": int(page),
@@ -241,16 +243,18 @@ def create_toggle_button(
     value: bool = False, 
     row: int = 0, 
     col: int = 0, 
-    page: int = 0
+    page: int = 0,
+    tooltip: str = ""
 ) -> Dict[str, Any]:
     return {
         "type": "Toggle",
-        "name": name,
+        "name": str(name),
         "value": bool(value),
         "default": bool(value),
         "row": int(row),
         "col": int(col),
-        "page": int(page)
+        "page": int(page),
+        "tooltip": str(tooltip)
     }
 
 def create_file_browser(
@@ -259,17 +263,20 @@ def create_file_browser(
     extension: str = "exr", 
     row: int = 0, 
     col: int = 0, 
-    page: int = 0
+    page: int = 0,
+    tooltip: str = ""
 ) -> Dict[str, Any]:
     return {
         "type": "Browser",
-        "name": name,
+        "name": str(name),
         "value": str(path),
         "extension": str(extension),
         "row": int(row),
         "col": int(col),
         "page": int(page),
-        "home": os.environ.get("HOME", "/")
+        "home": os.environ.get("HOME", "/"),
+        "tooltip": str(tooltip),
+        "isFileSelector": True
     }
 
 def create_text_field(
@@ -277,15 +284,19 @@ def create_text_field(
     value: str = "", 
     row: int = 0, 
     col: int = 0, 
-    page: int = 0
+    page: int = 0,
+    tooltip: str = "",
+    is_field: bool = True
 ) -> Dict[str, Any]:
     return {
         "type": "TextField",
-        "name": name,
+        "name": str(name),
         "value": str(value),
         "row": int(row),
         "col": int(col),
-        "page": int(page)
+        "page": int(page),
+        "tooltip": str(tooltip),
+        "isField": bool(is_field)
     }
 
 def create_vector_numeric(
@@ -294,14 +305,15 @@ def create_vector_numeric(
     values: Optional[List[float]] = None,
     min_val: float = -1000000.0,
     max_val: float = 1000000.0,
-    row: int = 0,
-    col: int = 0,
-    page: int = 0
+    inc: float = 1.0,
+    row: int = 0, 
+    col: int = 0, 
+    page: int = 0,
+    tooltip: str = ""
 ) -> Dict[str, Any]:
     if values is None:
         values = [0.0] * size
     
-    # Generate component info (x, y, z)
     suffixes = ["x", "y", "z"]
     info = []
     for i in range(size):
@@ -309,18 +321,65 @@ def create_vector_numeric(
             "min": float(min_val),
             "max": float(max_val),
             "default": float(values[i]),
-            "inc": 1.0,
+            "inc": float(inc),
             "channel_name": f"{name}_{suffixes[i]}",
             "display_name": suffixes[i].upper()
         })
 
     return {
         "type": "FloatVector",
-        "name": name,
+        "name": str(name),
         "row": int(row),
         "col": int(col),
         "page": int(page),
         "values": [float(v) for v in values],
         "info": info,
+        "tooltip": str(tooltip),
         "channel_name": name.replace(" ", "_") + "_chn"
+    }
+
+def create_popup_named(
+    name: str, 
+    items: List[str], 
+    value: int = 0, 
+    row: int = 0, 
+    col: int = 0, 
+    page: int = 0,
+    tooltip: str = ""
+) -> Dict[str, Any]:
+    """Standard popup with a visible label."""
+    return {
+        "type": "Pup",
+        "name": str(name),
+        "items": [str(i) for i in items],
+        "value": int(value),
+        "default": int(value),
+        "row": int(row),
+        "col": int(col),
+        "page": int(page),
+        "tooltip": str(tooltip)
+    }
+
+def create_popup_unnamed(
+    items: List[str], 
+    value: int = 0, 
+    row: int = 0, 
+    col: int = 0, 
+    page: int = 0,
+    tooltip: str = ""
+) -> Dict[str, Any]:
+    """
+    Creates a popup without a label. 
+    Flame expands widgets with name "" to fill the column.
+    """
+    return {
+        "type": "Pup",
+        "name": "",
+        "items": [str(i) for i in items],
+        "value": int(value),
+        "default": int(value),
+        "row": int(row),
+        "col": int(col),
+        "page": int(page),
+        "tooltip": str(tooltip)
     }
