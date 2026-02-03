@@ -17,65 +17,12 @@ import json
 import os
 import sys
 
-# Get the project root directory (which is two levels up from this script)
+# Find the project root to enable lp_bootstrap and src imports
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Add the project root to sys.path to allow for absolute imports
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# ========================================================================== #
-# This section defines some variables based on the date.
-# ========================================================================== #
-
-# Get today's date and time
-today_date = datetime.date.today().strftime("%Y-%m-%d")
-today_time = datetime.datetime.now().strftime("%H-%M-%S")
-
-from src.core.functions.get.pathfinder_abs import abs_path_info
-
-def get_absolute_info():
-    abs_info = abs_path_info(__file__)
-
-    abs_script_name = abs_info.script_name
-    abs_path_to_this_script = abs_info.abs_path_to_this_script
-    abs_script_dir = abs_info.abs_script_dir
-    abs_parent_dir = abs_info.abs_parent_dir
-    abs_config_dir = abs_info.abs_config_dir
-    abs_scripts_dir = abs_info.abs_scripts_dir
-    abs_modules_dir = abs_info.abs_modules_dir
-    abs_classes_dir = abs_info.abs_classes_dir
-    abs_functions_dir = abs_info.abs_functions_dir
-    abs_version_dir = abs_info.abs_version_dir
-
-    # abs_info.print_absolute_paths()
-
-    return (
-        abs_script_name,
-        abs_path_to_this_script,
-        abs_script_dir,
-        abs_parent_dir,
-        abs_config_dir,
-        abs_scripts_dir,
-        abs_modules_dir,
-        abs_classes_dir,
-        abs_functions_dir,
-        abs_version_dir
-    )
-
-# Get absolute path information
-(
-    abs_script_name,
-    abs_path_to_this_script,
-    abs_script_dir,
-    abs_parent_dir,
-    abs_config_dir,
-    abs_scripts_dir,
-    abs_modules_dir,
-    abs_classes_dir,
-    abs_functions_dir,
-    abs_version_dir
-) = get_absolute_info()
+import lp_bootstrap
 
 # ========================================================================== #
 # This section creates a decorative separator for blocks of text.
@@ -136,7 +83,7 @@ def create_or_validate_object(
 
                 if group.name == object_name:
 
-                    print(
+                    lp_bootstrap.logger.info(
                         f"Batch group '{object_name}' already exists in library "
                         f"'{library.name}'."
                     )
@@ -152,7 +99,7 @@ def create_or_validate_object(
 
                 new_group.colour = object_color
 
-            print(
+            lp_bootstrap.logger.info(
                 f"  New batch group '{object_name}' created successfully in library "
                 f"'{library.name}'."
             )
@@ -226,7 +173,7 @@ def create_or_validate_object(
             print(f"  New reel '{object_name}' created successfully in library "
                 f"'{library.name}'.")
     else:
-        print(
+        lp_bootstrap.logger.info(
             f"  New {object_type} '{object_name}' created successfully in library "
             f"'{library.name}'."
             )
@@ -448,21 +395,12 @@ def create_layout(*args):
     # ---------------------------------------------------------------------- #
 
     # If Flame passes any arguments, you can handle them here
+    # If Flame passes any arguments, you can handle them here
     if args:
-        print("Received arguments from Flame:", args)
+        lp_bootstrap.logger.info(f"Received arguments from Flame: {args}")
 
-    (
-        abs_script_name,
-        abs_path_to_this_script,
-        abs_script_dir,
-        abs_parent_dir,
-        abs_config_dir,
-        abs_scripts_dir,
-        abs_modules_dir,
-        abs_classes_dir,
-        abs_functions_dir,
-        abs_version_dir
-    ) = get_absolute_info()
+    # Use bootstrap paths
+    abs_config_dir = lp_bootstrap.paths["cfg"]
 
     # ---------------------------------------------------------------------- #
 
@@ -560,7 +498,7 @@ def create_layout(*args):
 
     # ---------------------------------------------------------------------- #
 
-    print("Project layout setup completed.")
+    lp_bootstrap.logger.info("Project layout setup completed.")
 
 # ========================================================================== #
 # This section defines custom flame menus.

@@ -10,73 +10,31 @@
 # Copyright: Copyright (c) 2026
 #
 ################################################################################
+# Find the project root to enable lp_bootstrap and src imports
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
 
-from __future__ import annotations
-
-import logging
-import os
-import sys
-import importlib.util
-from datetime import datetime
-from pathlib import Path
-from typing import Optional, Set, List
+import lp_bootstrap
 
 # Print module initialization debug message
 print("\n" + "="*80)
 print("[sync_assets] MODULE INITIALIZATION")
 print("="*80)
 
-# Get paths relative to this hook file
-hook_file = os.path.abspath(__file__)
-hook_dir = os.path.dirname(hook_file)
-logik_projekt_root = os.path.dirname(hook_dir)
-io_functions_dir = os.path.join(logik_projekt_root, 'src', 'core', 'functions', 'io')
+logger = lp_bootstrap.logger
+paths = lp_bootstrap.paths
 
-print(f"[sync_assets] hook_file: {hook_file}")
-print(f"[sync_assets] hook_dir: {hook_dir}")
-print(f"[sync_assets] logik_projekt_root: {logik_projekt_root}")
-print(f"[sync_assets] io_functions_dir: {io_functions_dir}")
-
-# Import supporting modules by loading them directly from disk
-print("[sync_assets] Loading supporting modules...")
-
-def load_module(module_name: str, file_path: str):
-    """Load a Python module directly from a file path."""
-    try:
-        spec = importlib.util.spec_from_file_location(module_name, file_path)
-        if spec and spec.loader:
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[module_name] = module
-            spec.loader.exec_module(module)
-            print(f"  ✓ {module_name} loaded from {file_path}")
-            return module
-        else:
-            print(f"  ✗ {module_name}: Could not create spec for {file_path}")
-            return None
-    except Exception as e:
-        import traceback
-        print(f"  ✗ {module_name}: {e}")
-        print(traceback.format_exc())
-        return None
-
-# Load the three supporting modules
-bookmark_manager = load_module(
-    'bookmark_manager',
-    os.path.join(io_functions_dir, 'bookmark_manager.py')
-)
-manifest_tracker = load_module(
-    'manifest_tracker',
-    os.path.join(io_functions_dir, 'manifest_tracker.py')
-)
-flame_importer = load_module(
-    'flame_importer',
-    os.path.join(io_functions_dir, 'flame_importer.py')
+# Import supporting modules from canonical src
+from src.core.functions.io import (
+    bookmark_manager,
+    manifest_tracker,
+    flame_importer
 )
 
-if all([bookmark_manager, manifest_tracker, flame_importer]):
-    print("[sync_assets] All supporting modules loaded successfully")
-else:
-    print("[sync_assets] ERROR: Some modules failed to load!")
+print("[sync_assets] All supporting modules loaded successfully from src")
+
+
 
 print("="*80 + "\n")
 

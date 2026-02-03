@@ -32,21 +32,22 @@ from PySide6 import (
 
 import flame
 
-# Get the project root directory (which is two levels up from this script)
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 # Add the project root to sys.path to allow for absolute imports
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
+import lp_bootstrap
+import lp_bootstrap
 
 # ========================================================================== #
 # This section enables debugging.
 # ========================================================================== #
 
 # Initiate script logging for debugging
-from src.core.functions.log.debugging_and_logging import (
-    setup_logging as setup_logging
-)
+# from src.core.functions.log.debugging_and_logging import (
+#     setup_logging as setup_logging
+# )
 
 # ========================================================================== #
 # This section defines the logik projekt job structure.
@@ -163,11 +164,11 @@ def create_openclips_and_scripts(*args, **kwargs):
     # job_root = "/PROJEKTS/dry_run_01"
 
     # Setup logging
-    logger = setup_logging()
+    logger = lp_bootstrap.logger
 
     # Define job structure using the function
     job_structure = define_job_structure(job_root)
-    logger.info("Job structure defined.")
+    lp_bootstrap.logger.info("Job structure defined.")
 
     # Define app_name and task_types_list
     app_name = "nuke"
@@ -197,9 +198,9 @@ def create_openclips_and_scripts(*args, **kwargs):
 
 
 def get_main_menu_custom_ui_actions():
-    print("\n" + "="*80)
-    print("DEBUG: get_main_menu_custom_ui_actions() called")
-    print("="*80)
+    lp_bootstrap.logger.info("\n" + "="*80)
+    lp_bootstrap.logger.info("DEBUG: get_main_menu_custom_ui_actions() called")
+    lp_bootstrap.logger.info("="*80)
     
     menu_structure = [
         {
@@ -230,13 +231,13 @@ def get_main_menu_custom_ui_actions():
         }
     ]
     
-    print("DEBUG: Menu structure with hierarchy approach")
+    lp_bootstrap.logger.info("DEBUG: Menu structure with hierarchy approach")
     for i, item in enumerate(menu_structure):
-        print(
+        lp_bootstrap.logger.info(
             f"  [{i}] name='{item.get('name')}', "
             f"hierarchy={item.get('hierarchy', 'N/A')}"
         )
-    print("="*80 + "\n")
+    lp_bootstrap.logger.info("="*80 + "\n")
     
     return menu_structure
 
@@ -245,9 +246,9 @@ def get_main_menu_custom_ui_actions():
 
 
 def get_media_panel_custom_ui_actions():
-    print("\n" + "="*80)
-    print("DEBUG: get_media_panel_custom_ui_actions() called")
-    print("="*80)
+    lp_bootstrap.logger.info("\n" + "="*80)
+    lp_bootstrap.logger.info("DEBUG: get_media_panel_custom_ui_actions() called")
+    lp_bootstrap.logger.info("="*80)
     
     menu_structure = [
         {
@@ -279,13 +280,13 @@ def get_media_panel_custom_ui_actions():
         }
     ]
     
-    print("DEBUG: Menu structure with hierarchy approach")
+    lp_bootstrap.logger.info("DEBUG: Menu structure with hierarchy approach")
     for i, item in enumerate(menu_structure):
-        print(
+        lp_bootstrap.logger.info(
             f"  [{i}] name='{item.get('name')}', "
             f"hierarchy={item.get('hierarchy', 'N/A')}"
         )
-    print("="*80 + "\n")
+    lp_bootstrap.logger.info("="*80 + "\n")
     
     return menu_structure
 

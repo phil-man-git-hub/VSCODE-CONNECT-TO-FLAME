@@ -21,83 +21,27 @@ import sys
 class abs_path_info:
     def __init__(self, script_name):
         """
-        Initializes the abs_path_info object with the path to
-        the running script which defines related directories.
-
-        Args:
-            script_name (str): The name of the running script.
-
-        Attributes:
-            script_name (str): The name of the running script.
-
-            abs_path_to_this_script (str): The absolute path to the directory of the running script.
-
-            abs_script_dir (str): The absolute directory of the running script.
-
-            abs_parent_dir (str): The absolute parent directory of the running script.
-
-            abs_config_dir (str): The absolute directory where configuration files are stored.
-
-            abs_scripts_dir (str): The absolute directory where other scripts are stored.
-
-            abs_modules_dir (str): The absolute directory where classes and functions are stored.
-
-            abs_classes_dir (str): The absolute directory where classes are stored.
-
-            abs_functions_dir (str): The absolute directory where functions are stored.
-
-            abs_version_dir (str): The absolute directory where version information is stored.
-
+        Initializes the abs_path_info object using lp_bootstrap for path resolution.
         """
-
-        # Get the directory of the calling script
-        caller_dir = os.path.dirname(
-            os.path.abspath(
-                script_name
-            )
-        )
-
+        import lp_bootstrap
+        
+        paths = lp_bootstrap.paths
+        
         self.script_name = script_name
+        self.abs_path_to_this_script = os.path.dirname(os.path.abspath(script_name))
+        self.abs_script_dir = os.path.dirname(script_name)
+        self.abs_parent_dir = str(paths["root"])
+        
+        # Use canonical paths from bootstrap
+        self.abs_config_dir = str(paths["cfg"])
+        self.abs_scripts_dir = str(paths["src"]) # Mapping 'scripts' to 'src' based on usage
+        
+        # Construct internal paths based on canonical src
+        self.abs_modules_dir = os.path.join(self.abs_scripts_dir, "core")
+        self.abs_classes_dir = os.path.join(self.abs_modules_dir, "classes")
+        self.abs_functions_dir = os.path.join(self.abs_modules_dir, "functions")
+        self.abs_version_dir = str(paths["root"] / "version")
 
-        self.abs_path_to_this_script = caller_dir
-
-        self.abs_script_dir = os.path.dirname(
-            script_name
-        )
-
-        self.abs_parent_dir = os.path.dirname(
-            self.abs_script_dir
-        )
-
-        self.abs_config_dir = os.path.join(
-            self.abs_parent_dir,
-            "config"
-        )
-
-        self.abs_scripts_dir = os.path.join(
-            self.abs_parent_dir,
-            "scripts"
-        )
-
-        self.abs_modules_dir = os.path.join(
-            self.abs_scripts_dir,
-            "modules"
-        )
-
-        self.abs_classes_dir = os.path.join(
-            self.abs_modules_dir,
-            "classes"
-        )
-
-        self.abs_functions_dir = os.path.join(
-            self.abs_modules_dir,
-            "functions"
-        )
-
-        self.abs_version_dir = os.path.join(
-            self.abs_parent_dir,
-            "version"
-        )
 
     # ---------------------------------------------------------------------- #
 

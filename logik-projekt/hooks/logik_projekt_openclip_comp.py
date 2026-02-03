@@ -27,10 +27,12 @@ import os
 import sys
 
 # Ensure the parent directory of 'src' is in sys.path for canonical imports
-current_file = os.path.abspath(__file__)
-src_parent = os.path.dirname(os.path.dirname(current_file))
-if src_parent not in sys.path:
-    sys.path.insert(0, src_parent)
+# Ensure the parent directory of 'src' is in sys.path for canonical imports
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
+import lp_bootstrap
 
 # Import the relevant OpenClip classes from the core module
 from src.core.logik.logik_projekt_openclip import (
@@ -46,12 +48,10 @@ from src.core.logik.logik_projekt_openclip import (
 # -------------------------------------------------------------------------- #
 
 # Get the config directory relative to this script
-cfg_dir = os.path.join(
-    os.path.dirname(current_file),
-    '../cfg/logik_projekt_openclip_comp'
-)
+# Get the config directory relative to this script
+cfg_dir = lp_bootstrap.paths["cfg"] / 'logik_projekt_openclip_comp'
 cfg_file = 'config.xml'
-config_path = os.path.join(cfg_dir, cfg_file)
+config_path = str(cfg_dir / cfg_file) # Convert to string for compatibility
 
 # # Define config path relative to this hook file
 # config_path = os.path.join(
@@ -96,9 +96,9 @@ def scope_clip(selection):
 
 
 def get_batch_custom_ui_actions():
-    print("\n" + "="*80)
-    print("DEBUG: get_batch_custom_ui_actions() called")
-    print("="*80)
+    lp_bootstrap.logger.info("\n" + "="*80)
+    lp_bootstrap.logger.info("DEBUG: get_batch_custom_ui_actions() called")
+    lp_bootstrap.logger.info("="*80)
     
     menu_structure = [
         # Root menu
@@ -133,13 +133,13 @@ def get_batch_custom_ui_actions():
         }
     ]
     
-    print("DEBUG: Menu structure with hierarchy approach")
+    lp_bootstrap.logger.info("DEBUG: Menu structure with hierarchy approach")
     for i, item in enumerate(menu_structure):
-        print(
+        lp_bootstrap.logger.info(
             f"  [{i}] name='{item.get('name')}', "
             f"hierarchy={item.get('hierarchy', 'N/A')}"
         )
-    print("="*80 + "\n")
+    lp_bootstrap.logger.info("="*80 + "\n")
     
     return menu_structure
 
@@ -148,9 +148,9 @@ def get_batch_custom_ui_actions():
 
 
 def get_main_menu_custom_ui_actions():
-    print("\n" + "="*80)
-    print("DEBUG: get_main_menu_custom_ui_actions() called")
-    print("="*80)
+    lp_bootstrap.logger.info("\n" + "="*80)
+    lp_bootstrap.logger.info("DEBUG: get_main_menu_custom_ui_actions() called")
+    lp_bootstrap.logger.info("="*80)
     
     menu_structure = [
         {
@@ -181,13 +181,13 @@ def get_main_menu_custom_ui_actions():
         }
     ]
     
-    print("DEBUG: Menu structure with hierarchy approach")
+    lp_bootstrap.logger.info("DEBUG: Menu structure with hierarchy approach")
     for i, item in enumerate(menu_structure):
-        print(
+        lp_bootstrap.logger.info(
             f"  [{i}] name='{item.get('name')}', "
             f"hierarchy={item.get('hierarchy', 'N/A')}"
         )
-    print("="*80 + "\n")
+    lp_bootstrap.logger.info("="*80 + "\n")
     
     return menu_structure
 
@@ -196,9 +196,9 @@ def get_main_menu_custom_ui_actions():
 
 
 def get_media_panel_custom_ui_actions():
-    print("\n" + "="*80)
-    print("DEBUG: get_media_panel_custom_ui_actions() called")
-    print("="*80)
+    lp_bootstrap.logger.info("\n" + "="*80)
+    lp_bootstrap.logger.info("DEBUG: get_media_panel_custom_ui_actions() called")
+    lp_bootstrap.logger.info("="*80)
     
     menu_structure = [
         {
@@ -230,13 +230,13 @@ def get_media_panel_custom_ui_actions():
         }
     ]
     
-    print("DEBUG: Menu structure with hierarchy approach")
+    lp_bootstrap.logger.info("DEBUG: Menu structure with hierarchy approach")
     for i, item in enumerate(menu_structure):
-        print(
+        lp_bootstrap.logger.info(
             f"  [{i}] name='{item.get('name')}', "
             f"hierarchy={item.get('hierarchy', 'N/A')}"
         )
-    print("="*80 + "\n")
+    lp_bootstrap.logger.info("="*80 + "\n")
     
     return menu_structure
 

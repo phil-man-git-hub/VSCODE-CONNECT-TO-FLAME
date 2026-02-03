@@ -26,6 +26,14 @@
 import os
 import sys
 import logging
+# Find the project root to enable lp_bootstrap and src imports
+# Navigate up from src/core/logik/ to logik-projekt/
+_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
+import lp_bootstrap 
+
 from pathlib import Path
 from typing import List
 
@@ -43,44 +51,13 @@ from src.core.ui.orchestrators.pyside6_qt_flame_ui import (
 # Logging Setup
 # ========================================================================== #
 
-def setup_logging(tool_name):
-    """Sets up logging to file and console."""
-    
-    # Determine the logs directory relative to the 'logik_projekt' directory
-    current_script_path = Path(__file__).resolve()
-    # Navigate up from 'scripts' -> 'logik_projekt_openclip' -> 'openclip_tools' -> 'logik_projekt'
-    logik_projekt_base_path = current_script_path.parent.parent.parent.parent
-    log_dir = logik_projekt_base_path / 'logs'
-    os.makedirs(log_dir, exist_ok=True)
-    
-    log_file = log_dir / f"{tool_name}.log"
+# ========================================================================== #
+# Logging Setup
+# ========================================================================== #
 
-    # Get the root logger
-    logger = logging.getLogger(tool_name)
-    
-    # Prevent adding handlers multiple times if the script is reloaded
-    if logger.hasHandlers():
-        logger.handlers.clear()
+# setup_logging removed - using lp_bootstrap.logger
 
-    logger.setLevel(logging.DEBUG)
-    logger.propagate = False # Prevent passing logs to the root logger in Flame
 
-    # Create formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    # Create file handler
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-
-    # Create stream handler for console output
-    stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.DEBUG) # User wants to see debug statements
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
-
-    return logger
 
 # ========================================================================== #
 # Base Class for OpenClip Operations
@@ -95,15 +72,13 @@ class LogikProjektOpenClipBase:
         self.selection = selection
         self.script_name = str(self.tool_name)
         
-        self.logger = setup_logging(self.script_name)
+        # Use the bootstrap logger
+        self.logger = lp_bootstrap.logger
         
         self.logger.info(f"--- Starting {self.script_name} {self.version} ---")
 
-        # Define paths relative to the script location
-        current_script_path = Path(__file__).resolve()
-        # The config directory is a sibling to the 'scripts' directory where this file lives
-        tool_family_path = current_script_path.parent.parent
-        self.config_path = str(tool_family_path / 'config' / self.tool_name)
+        # Define paths using bootstrap
+        self.config_path = str(lp_bootstrap.paths["cfg"] / self.tool_name)
         self.logger.debug(f"Config path set to: {self.config_path}")
 
         # Ensure the configuration directory exists to prevent FileNotFoundError

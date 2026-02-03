@@ -11,8 +11,17 @@
 # This section imports the necessary modules.
 # ========================================================================== #
 
+import os
+import sys
 import flame
 import datetime
+
+# Find the project root to enable lp_bootstrap and src imports
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+import lp_bootstrap
 
 # ========================================================================== #
 # This section defines some variables based on the date.
@@ -93,7 +102,7 @@ def create_or_validate_object(
 
                 if group.name == object_name:
 
-                    print(
+                    lp_bootstrap.logger.info(
                         f"Batch group '{object_name}' already exists in library "
                         f"'{library.name}'."
                     )
@@ -109,7 +118,7 @@ def create_or_validate_object(
 
                 new_group.colour = object_color
 
-            print(
+            lp_bootstrap.logger.info(
                 f"New batch group '{object_name}' created successfully in library "
                 f"'{library.name}'."
             )
@@ -124,7 +133,7 @@ def create_or_validate_object(
 
             if group.name == object_name:
 
-                print(
+                lp_bootstrap.logger.info(
                     f"Reel group '{object_name}' already exists in library "
                     f"'{library.name}'."
                     )
@@ -140,7 +149,7 @@ def create_or_validate_object(
 
             new_group.colour = object_color
 
-        print(
+        lp_bootstrap.logger.info(
             f"New reel group '{object_name}' created successfully in library "
             f"'{library.name}'.")
         return new_group
@@ -155,7 +164,7 @@ def create_or_validate_object(
 
         if obj.name == object_name:
 
-            print(
+            lp_bootstrap.logger.info(
                 f"{object_type.capitalize()} '{object_name}' already "
                 f"exists in library '{library.name}'."
                 )
@@ -177,13 +186,13 @@ def create_or_validate_object(
     if object_type == 'reel':
         if object_reel_type:
             new_object.attributes['Type'] = object_reel_type
-            print(f"New reel '{object_name}' created successfully in library "
+            lp_bootstrap.logger.info(f"New reel '{object_name}' created successfully in library "
                 f"'{library.name}' with Type '{object_reel_type}'.")
         else:
-            print(f"New reel '{object_name}' created successfully in library "
+            lp_bootstrap.logger.info(f"New reel '{object_name}' created successfully in library "
                 f"'{library.name}'.")
     else:
-        print(
+        lp_bootstrap.logger.info(
             f"New {object_type} '{object_name}' created successfully in library "
             f"'{library.name}'."
             )
@@ -208,7 +217,7 @@ def create_or_validate_library(
 
         if library.name == library_name:
 
-            print(
+            lp_bootstrap.logger.info(
                 f"Library '{library_name}' already exists in workspace "
                 f"'{workspace.name}'."
                 )
@@ -224,7 +233,7 @@ def create_or_validate_library(
 
     if object_color:
         new_library.colour = object_color
-    print(
+    lp_bootstrap.logger.info(
         f"New library '{library_name}' created successfully in workspace "
         f"'{workspace.name}'."
         )
@@ -240,7 +249,7 @@ def create_dated_desktop(*args):
 
     # If Flame passes any arguments, you can handle them here
     if args:
-        print("Received arguments from Flame:", args)
+        lp_bootstrap.logger.info(f"Received arguments from Flame: {args}")
 
     # ---------------------------------------------------------------------- #
 
@@ -281,7 +290,7 @@ def create_dated_desktop(*args):
     the_current_desktop.name = new_desktop_name
 
     # Print the name of the current desktop
-    print(f"Current desktop: {the_current_desktop.name}")
+    lp_bootstrap.logger.info(f"Current desktop: {the_current_desktop.name}")
 
     # Change the name and color of the reel group in the current desktop
     for desktop_reel_group in the_current_desktop.reel_groups:
@@ -337,7 +346,7 @@ def create_dated_ref_folder(*args):
 
     # If Flame passes any arguments, you can handle them here
     if args:
-        print("Received arguments from Flame:", args)
+        lp_bootstrap.logger.info(f"Received arguments from Flame: {args}")
 
     # ---------------------------------------------------------------------- #
 
@@ -374,7 +383,7 @@ def create_dated_conforms_reel_group(*args):
 
     # If Flame passes any arguments, you can handle them here
     if args:
-        print("Received arguments from Flame:", args)
+        lp_bootstrap.logger.info(f"Received arguments from Flame: {args}")
 
     # ---------------------------------------------------------------------- #
 
@@ -430,7 +439,7 @@ def create_dated_postings_reel(*args):
 
     # If Flame passes any arguments, you can handle them here
     if args:
-        print("Received arguments from Flame:", args)
+        lp_bootstrap.logger.info(f"Received arguments from Flame: {args}")
 
     # ---------------------------------------------------------------------- #
 
