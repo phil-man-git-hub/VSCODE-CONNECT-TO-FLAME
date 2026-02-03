@@ -24,8 +24,9 @@ def test_deploy_recursive():
         shutil.copytree(UTILITIES_SRC, target_dir)
         
         # Verify core files exist in target
-        assert (target_dir / 'fu_eavesdrop.py').exists()
-        assert (target_dir / 'fu_eavesdrop_init.py').exists()
+        assert (target_dir / 'service' / 'fu_eavesdrop.py').exists()
+        assert (target_dir / 'service' / 'fu_eavesdrop_init.py').exists()
         assert (target_dir / 'scripts' / 'fu_generate_stubs.py').exists()
+        assert (target_dir / 'fu_activate.py').exists()
         
         
