@@ -6,11 +6,11 @@ A professional suite of tools designed to bridge the gap between **Autodesk Flam
 
 ## The Suite
 
-*   **`fu_eavesdrop`**: The high-performance, thread-safe listener that runs inside Flame.
-*   **`fu_whisper`**: The Model Context Protocol (MCP) bridge that allows AI agents (Claude, Cursor, Gemini) to "talk" to Flame.
-*   **`fu_relay`**: The secure communication conduit between external tools and the Flame runtime.
-*   **Audit Logging**: Full JSON-formatted conversation logs for security and debugging.
-*   **Persistent Library**: A self-expanding library of successful Flame snippets built by the AI over time.
+*   **`fu_bootstrap`**: The central infrastructure layer that manages paths and overcomes Flame's `__init__.py` limitations.
+*   **`fu_eavesdrop`**: The high-performance, thread-safe listener running inside Flame (`service/`).
+*   **`fu_whisper`**: The Model Context Protocol (MCP) bridge for AI-native interaction.
+*   **Knowledge Layer (RAG)**: Semantic documentation search via `llama-index` and `chroma_db`.
+*   **Persistent Library**: A self-expanding library of successful Flame snippets.
 
 ## 📢 Commercial Support & Newsletter
 As the world's first AI-native bridge for Autodesk Flame, we are building a community of forward-thinking finishing artists and developers.
@@ -20,9 +20,9 @@ As the world's first AI-native bridge for Autodesk Flame, we are building a comm
 
 ## Quickstart
 
-1.  **Install Listener:** Deploy the `flame-utilities/` directory into Flame's Python startup hooks.
-2.  **Start the Bridge:** Navigate to `fu-whisper/` and run `python fu_whisper.py`.
-3.  **Connect AI:** Add the bridge to your AI client (see `HOWTO.md`).
+1.  **Install Listener:** Deploy the `flame-utilities/` directory and `fu_activate.py` hook into Flame's Python setup folder.
+2.  **Initialize Session:** Run `./scripts/initialize_session.py` to start the bridge and generate an AI handshake prompt.
+3.  **Connect AI:** Paste the generated handshake into your AI client (see `HOWTO.md`).
 4.  **Run Code:** Talk directly to your AI agent to manipulate Flame. Successful patterns are automatically saved to your local library.
 
 ## Goals

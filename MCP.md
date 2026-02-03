@@ -7,7 +7,7 @@ When you are connected to this repository via `fu_whisper`, you are an expert in
 
 ### Core Competencies
 - **API Knowledge:** Deep understanding of `flame.*` modules (up to version 2027).
-- **Architecture:** Understanding of the decoupled bridge between the local AI client and the remote Flame listener.
+- **Architecture:** Understanding of the decoupled bridge and the **Bootstrap Pattern** for path management.
 - **Safety:** Awareness of the Flame threading model and the requirement for main-thread execution.
 
 ## 🛠 Available MCP Tools
@@ -16,6 +16,7 @@ The `fu_whisper.py` server provides the following tools:
 | Tool | Purpose |
 | :--- | :--- |
 | `execute_python` | The primary tool. Executes arbitrary Python code inside Flame. |
+| `query_flame_docs` | **RAG Tool**: Queries the semantic documentation database for API details. |
 | `get_flame_context` | Quickly gets current Project, User, Version, and Host path. |
 | `list_desktop_clips` | Lists all clips/sequences on the current Flame Desktop. |
 | `inspect_symbol` | Introspects any symbol (e.g., `flame.PyClip`) to see its docstring and methods. |
@@ -33,27 +34,19 @@ Autodesk Flame's Python API is **not thread-safe**. All API calls must be execut
 
 ### 2. No `__init__.py` Files
 Flame's script loader (startup hooks) strictly prohibits `__init__.py` files in the search path.
-- Always use flat file structures or unique naming conventions (e.g., `fu_`).
+- **Bootstrap Pattern**: Use `import fu_bootstrap` to ensure correct path injection.
 - Packages should be managed by adding directories to `sys.path` rather than traditional Python package structures.
 
-### 3. Metadata Extraction (Wiretap vs. Python)
-The Python `flame.project` API is limited. It does **not** expose core project parameters like resolution, frame rate, or HDR settings.
-- **Solution:** Use the `wiretap_get_metadata` CLI tool via `subprocess` to extract XML metadata for the project or specific clips when precise technical parameters are needed.
-
 ## 🔄 Suggested Workflows
+
+### Task: "Initialize Session"
+1. Run `./scripts/initialize_session.py` to verify the bridge and generate context.
+2. Read `MCP.md` and `GEMINI.md` immediately upon entry.
 
 ### Task: "Check what is on the desktop and get its resolution"
 1. Call `list_desktop_clips()`.
 2. Use `execute_python` with a script that iterates over `flame.project.current_project.current_workspace.desktop.clips`.
-3. If resolution is not in the object properties, use `inspect_symbol("flame.PyClip")` to check for `width`/`height`.
-
-### Task: "Automate a repetitive task"
-1. Propose the Python code to the user.
-2. Once verified/executed successfully, call `save_snippet()` to remember the logic for later.
-
-## 🪵 Audit & Debugging
-- All your tool calls and the full Flame responses (stdout/stderr/exceptions) are logged to `fu-whisper/logs/mcp_audit.log`.
-- Use this log if you encounter persistent `ExecError` or `ModuleNotFoundError` to understand what the listener is seeing.
+3. If resolution is not in the object properties, use `query_flame_docs("PyClip resolution properties")`.
 
 ---
 *This guide ensures high-quality, safe, and autonomous interaction with Autodesk Flame.*

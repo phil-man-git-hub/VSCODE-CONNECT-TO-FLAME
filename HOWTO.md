@@ -13,27 +13,26 @@ This guide explains how to set up the **FLAME-UTILITIES** bridge, allowing AI ag
 The listener must run inside Autodesk Flame's Python environment.
 
 1.  **Locate the Files:**
-    The core files are in the `flame-utilities/` directory of this repository:
-    - `fu_eavesdrop.py` (The main listener logic)
-    - `fu_eavesdrop_init.py` (The startup hook)
+    The core files are in the `flame-utilities/` directory:
+    - `fu_activate.py` (The entry point hook)
+    - `fu_bootstrap.py` (The infrastructure layer)
+    - `service/fu_eavesdrop.py` (The listener logic)
 
 2.  **Deploy to Flame:**
-    You need to place these files where Flame can find and execute them.
-    
-    *   **Option A: Project Specific (Recommended)**
-        Copy `fu_eavesdrop.py` and `fu_eavesdrop_init.py` into your project's python setup folder.
-        Typically: `/opt/Autodesk/project/<project_name>/setups/python/`
-    
-    *   **Option B: Global**
-        Copy them to the shared python folder for all users/projects.
-        Typically: `/opt/Autodesk/shared/python/`
-        
-    *   **Option C: Configured Path**
-        Ensure the `flame-utilities/` folder path is added to the `python_path` in your Flame `init.cfg` file.
+    Use the provided automation script to deploy the toolkit to your project:
+    ```bash
+    python3 scripts/deploy_to_flame_project.py --copy --scripts-dir /path/to/project/setups/python/
+    ```
+    This script will:
+    - Copy the `flame-utilities/` folder.
+    - Deploy `fu_activate.py` to the parent folder.
 
 3.  **Verify:**
-    Start Autodesk Flame. Watch the shell output (or the Python console in Flame). You should see:
-    > `FU_Eavesdrop startup hook started in background thread`
+    Start Autodesk Flame. Watch the shell output. You should see the ignition sequence:
+    > `[fu_bootstrap] Setting up toolkit root...`
+    > `[fu_launcher] Igniting toolkit from...`
+    > `fu_eavesdrop_init.py version 0.1.0 (Ignited)`
+    > `fu_eavesdrop listening on 127.0.0.1:5555`
 
 ## Step 2: Set Up the MCP Bridge
 
