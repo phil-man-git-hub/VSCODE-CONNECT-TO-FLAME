@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#goal-the-grand-consolidation" class="md-skip">
+        <a href="#goal-the-grand-consolidation-complete" class="md-skip">
           Skip to content
         </a>
       
@@ -698,6 +698,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#status-completed-feb-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status: ✅ Completed (Feb 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vision" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -720,10 +731,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-structural-consolidation" class="md-nav__link">
+  <a href="#2-structural-consolidation-initial-phase" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Structural Consolidation
+        2. Structural Consolidation (Initial Phase)
       
     </span>
   </a>
@@ -731,10 +742,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-impact-reference-updates" class="md-nav__link">
+  <a href="#3-subsequent-evolution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Impact &amp; Reference Updates
+        3. Subsequent Evolution
       
     </span>
   </a>
@@ -1210,6 +1221,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#status-completed-feb-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status: ✅ Completed (Feb 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vision" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1232,10 +1254,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-structural-consolidation" class="md-nav__link">
+  <a href="#2-structural-consolidation-initial-phase" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Structural Consolidation
+        2. Structural Consolidation (Initial Phase)
       
     </span>
   </a>
@@ -1243,10 +1265,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-impact-reference-updates" class="md-nav__link">
+  <a href="#3-subsequent-evolution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Impact &amp; Reference Updates
+        3. Subsequent Evolution
       
     </span>
   </a>
@@ -1281,16 +1303,19 @@
 
 
 
-<h1 id="goal-the-grand-consolidation">Goal: The Grand Consolidation</h1>
+<h1 id="goal-the-grand-consolidation-complete">Goal: The Grand Consolidation [COMPLETE]</h1>
+<h2 id="status-completed-feb-2026">Status: ✅ Completed (Feb 2026)</h2>
+<p>This goal has been fully realized. All core components are now unified within the <code>flame-utilities/</code> and <code>fu-whisper/</code> hierarchies.</p>
+<hr />
 <h2 id="vision">Vision</h2>
 <p>To transform <code>FLAME-UTILITIES</code> into a self-contained, portable toolkit that can be archived and restored alongside Autodesk Flame projects. By moving all listener and AI bridge logic into a single directory hierarchy, we ensure that project-specific automation never breaks due to workstation-level changes.</p>
 <hr />
 <h2 id="1-architectural-pivot-project-centric-deployment">1. Architectural Pivot: Project-Centric Deployment</h2>
 <p>Instead of global workstation hooks, the entire <code>flame-utilities/</code> folder is copied into:
 <code>&lt;Flame_Project_Path&gt;/setups/python/flame-utilities/</code></p>
-<p>A lightweight loader (<code>fu_loader.py</code>) in the parent directory ensures that Flame "ignites" the tools from within the archived folder.</p>
+<p>A robust launcher (<code>fu_activate.py</code>) in the parent directory leverages the <strong>Bootstrap Pattern</strong> to "ignite" the tools.</p>
 <hr />
-<h2 id="2-structural-consolidation">2. Structural Consolidation</h2>
+<h2 id="2-structural-consolidation-initial-phase">2. Structural Consolidation (Initial Phase)</h2>
 <table>
 <thead>
 <tr>
@@ -1302,12 +1327,12 @@
 <tbody>
 <tr>
 <td style="text-align: left;"><code>flame-listener/fu_eavesdrop.py</code></td>
-<td style="text-align: left;"><code>flame-utilities/fu_eavesdrop.py</code></td>
+<td style="text-align: left;"><code>flame-utilities/service/fu_eavesdrop.py</code></td>
 <td style="text-align: left;">The Listener Logic</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>flame-listener/fu_eavesdrop_init.py</code></td>
-<td style="text-align: left;"><code>flame-utilities/fu_eavesdrop_init.py</code></td>
+<td style="text-align: left;"><code>flame-utilities/service/fu_eavesdrop_init.py</code></td>
 <td style="text-align: left;">The Hook Entry Point</td>
 </tr>
 <tr>
@@ -1323,19 +1348,17 @@
 </tbody>
 </table>
 <hr />
-<h2 id="3-impact-reference-updates">3. Impact &amp; Reference Updates</h2>
-<p>This move requires a coordinated update of:
-*   <strong>Imports</strong>: MCP tools and relay must find each other in the new hierarchy.
-*   <strong>Deployment Scripts</strong>: <code>deploy_to_flame_project.py</code> must be updated to copy the entire folder.
-*   <strong>CI/CD</strong>: Task runners and tests must look in the new paths.
-*   <strong>Documentation</strong>: All "Getting Started" guides must reflect the new structure.
-*   <strong>AI Handlers</strong>: Configuration for Claude/Cursor must be updated to the new <code>fu-whisper/</code> paths.</p>
+<h2 id="3-subsequent-evolution">3. Subsequent Evolution</h2>
+<p>Following the consolidation, the toolkit underwent a major <strong>Project Structure Refactoring</strong> (see <code>docs/goals/project-structure-refactoring.md</code>) which implemented:
+*   The <strong>Bootstrap Pattern</strong> for path management.
+*   Flattening of the <code>src/</code> directory for cleaner imports.
+*   Consolidation of background services into <code>service/</code>.</p>
 <hr />
 <h2 id="4-key-deliverables">4. Key Deliverables</h2>
 <ol>
-<li><strong>Consolidated Directory</strong>: All logic under <code>flame-utilities/</code>.</li>
-<li><strong>Portable Loader</strong>: <code>fu_loader.py</code> for easy activation.</li>
-<li><strong>Updated Automation</strong>: Fully functional deployment and versioning scripts.</li>
+<li><strong>Consolidated Directory</strong>: All logic under <code>flame-utilities/</code>. ✅</li>
+<li><strong>Portable Loader</strong>: <code>fu_activate.py</code> leveraging <code>fu_bootstrap.py</code>. ✅</li>
+<li><strong>Updated Automation</strong>: <code>deploy_to_flame_project.py</code> handles the new layout. ✅</li>
 </ol>
 
 

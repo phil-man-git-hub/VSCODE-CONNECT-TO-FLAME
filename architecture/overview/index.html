@@ -349,10 +349,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#intelligence-and-persistence" class="md-nav__link">
+  <a href="#the-bootstrap-pattern" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Intelligence and Persistence
+        The Bootstrap Pattern
       
     </span>
   </a>
@@ -1197,10 +1197,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#intelligence-and-persistence" class="md-nav__link">
+  <a href="#the-bootstrap-pattern" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Intelligence and Persistence
+        The Bootstrap Pattern
       
     </span>
   </a>
@@ -1236,28 +1236,29 @@
 
 
 <h1 id="architecture-flame-utilities">Architecture: FLAME-UTILITIES</h1>
-<p>The <strong>FLAME-UTILITIES</strong> suite uses a decoupled bridge architecture consisting of five core components:</p>
+<p>The <strong>FLAME-UTILITIES</strong> suite uses a decoupled bridge architecture consisting of six core components:</p>
 <ul>
-<li><strong>fu_eavesdrop</strong> (inside Flame): A high-performance JSON-over-TCP service that executes Python code on the Flame main thread and returns results.</li>
+<li><strong>fu_bootstrap</strong>: The foundational infrastructure layer that resolves paths and enables direct imports across the toolkit, bypassing Flame's <code>__init__.py</code> constraints.</li>
+<li><strong>fu_eavesdrop</strong> (inside Flame): A high-performance JSON-over-TCP service located in <code>service/</code> that executes Python code on the Flame main thread.</li>
 <li><strong>fu_whisper</strong> (MCP Bridge): An AI-native gateway using the Model Context Protocol (MCP) that allows Large Language Models to autonomously interact with the Flame API.</li>
-<li><strong>fu_relay</strong>: The secure communication conduit that manages TCP handshakes, token authentication, and data routing between the external tools and the internal listener.</li>
-<li><strong>Audit Logger</strong>: A persistent logging system that captures full conversation JSON for security auditing and debugging.</li>
-<li><strong>Persistent Code Library</strong>: A local repository of successful Python snippets, allowing the AI to build up and reuse its own toolset over time.</li>
+<li><strong>fu_relay</strong>: The secure communication conduit managing TCP handshakes and data routing.</li>
+<li><strong>Knowledge Layer (RAG)</strong>: A vector database (<code>chroma_db</code>) containing Flame API documentation and research insights, accessible via <code>fu_whisper</code>.</li>
+<li><strong>Audit Logger</strong>: A persistent system that captures conversation JSON for security and debugging.</li>
 </ul>
 <h2 id="threading-and-execution-model">Threading and Execution Model</h2>
 <p>All calls to the Flame Python API must be executed on Flame's <strong>main UI thread</strong>. </p>
 <p><code>fu_eavesdrop</code> receives code fragments and automatically schedules their execution using <code>flame.schedule_idle_event()</code>. This prevents the application from crashing due to non-thread-safe API access from the background TCP listener thread.</p>
-<h2 id="intelligence-and-persistence">Intelligence and Persistence</h2>
-<p>The system is designed to be self-learning:
-1.  <strong>Exploration:</strong> The AI uses <code>inspect_symbol</code> and <code>execute_python</code> to probe the Flame environment.
-2.  <strong>Success Logging:</strong> When a complex task is completed successfully, the resulting code is saved to the <strong>Code Library</strong>.
-3.  <strong>Auditability:</strong> Every tool call and response is recorded in the <strong>Audit Log</strong>, ensuring a complete history of AI-driven changes to the project.</p>
+<h2 id="the-bootstrap-pattern">The Bootstrap Pattern</h2>
+<p>Because Autodesk Flame prohibits traditional Python packages, the toolkit uses <code>fu_bootstrap.py</code>. This utility is imported by all internal scripts to:
+1.  Discover the absolute location of the <code>flame-utilities</code> folder.
+2.  Inject <code>src/</code>, <code>lib/</code>, and <code>service/</code> into <code>sys.path</code>.
+3.  Load configuration files from the <code>config/</code> directory.</p>
 <h2 id="component-map">Component Map</h2>
 <pre><code class="language-mermaid">graph TD
     subgraph External_Tools [External Tools]
         AI[AI Agent / Cursor / Claude]
         Whisper[FU_Whisper MCP Bridge]
-        Lib[(Code Library)]
+        RAG[(RAG Docs)]
         Log[(Audit Log)]
     end
 
@@ -1266,15 +1267,17 @@
     end
 
     subgraph Flame_Runtime [Autodesk Flame]
+        Boot[fu_bootstrap Infrastructure]
         List[fu_eavesdrop Listener]
         API[Flame Python API]
     end
 
     AI -- Tool Call --&gt; Whisper
-    Whisper -- Save/Read --&gt; Lib
+    Whisper -- Query --&gt; RAG
     Whisper -- Write JSON --&gt; Log
     Whisper -- JSON/TCP --&gt; Relay
     Relay -- JSON/TCP --&gt; List
+    List -- Bootstrap Path --&gt; Boot
     List -- Main Thread Dispatch --&gt; API
     API -- Results --&gt; List
     List -- JSON --&gt; Relay
