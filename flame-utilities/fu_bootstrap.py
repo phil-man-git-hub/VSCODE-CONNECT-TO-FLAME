@@ -22,15 +22,15 @@ def setup():
     
     # 1. Resolve Root (The folder containing this file)
     root = os.path.dirname(os.path.realpath(__file__))
+    print(f"[fu_bootstrap] Setting up toolkit root: {root}")
     
     # 2. Define Subdirectories to inject
-    # We include 'src' and 'service' so we can import modules directly
     subdirs = [
         root,
         os.path.join(root, 'src'),
         os.path.join(root, 'lib'),
         os.path.join(root, 'service'),
-        os.path.join(root, 'lib', 'ai'), # Include AI bridges
+        os.path.join(root, 'lib', 'ai'),
     ]
     
     # 3. Inject into sys.path
@@ -41,6 +41,7 @@ def setup():
     # 4. Set a persistent flag to avoid redundant path math
     sys._fu_bootstrap_done = True
     sys._fu_root = root
+    print("[fu_bootstrap] Path injection complete.")
 
 # Execute setup on import
 setup()

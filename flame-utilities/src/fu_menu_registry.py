@@ -1,6 +1,6 @@
 import fu_bootstrap
 
-class FuMenuRegistry(object):
+class FuMenuRegistry:
     """
     Singleton registry for Flame contextual menu actions.
     Stores actions registered via decorators and formats them for Flame hooks.
@@ -8,8 +8,8 @@ class FuMenuRegistry(object):
     _instance = None
 
     def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(FuMenuRegistry, cls).__new__(cls)
+        if not cls._instance:
+            cls._instance = object.__new__(cls)
             cls._instance._registry = {}
         return cls._instance
 

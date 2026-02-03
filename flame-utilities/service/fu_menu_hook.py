@@ -1,41 +1,27 @@
+"""
+FU_Menu_Hook: Contextual Menu Registration
+------------------------------------------
+Registers toolkit actions into Flame's UI menus (Media Panel, Timeline, Batch, etc.)
+Leverages the FuMenuRegistry singleton and auto-loads plugins from src/.
+"""
+
 import sys
 import os
+import fu_bootstrap
 
 # ------------------------------------------------------------------------------
-# BOOTSTRAP
-# ------------------------------------------------------------------------------
-# We need to ensure flame-utilities/src/core and src/utils are in sys.path
-# because this hook file is in flame-utilities/hooks/
-
-HOOK_DIR = os.path.dirname(os.path.realpath(__file__))
-FLAME_UTILS_ROOT = os.path.dirname(HOOK_DIR)
-SRC_CORE = os.path.join(FLAME_UTILS_ROOT, 'src', 'core')
-SRC_UTILS = os.path.join(FLAME_UTILS_ROOT, 'src', 'utils')
-
-if SRC_CORE not in sys.path:
-    sys.path.append(SRC_CORE)
-
-if SRC_UTILS not in sys.path:
-    sys.path.append(SRC_UTILS)
-
-# ------------------------------------------------------------------------------
-# IMPORTS
+# IMPORTS & INITIALIZATION
 # ------------------------------------------------------------------------------
 try:
     from fu_menu_registry import FuMenuRegistry
     import fu_plugin_loader as fu_loader
-except ImportError as e:
-    print(f"Flame Utilities Error: Could not import core modules. {e}")
-    FuMenuRegistry = None
-
-# ------------------------------------------------------------------------------
-# INITIALIZATION
-# ------------------------------------------------------------------------------
-# Trigger the loading of all utility scripts/plugins to register their actions
-if FuMenuRegistry:
+    
+    # Trigger the loading of all utility scripts/plugins to register their actions
     fu_loader.load_fu_plugins()
     registry = FuMenuRegistry()
-else:
+    
+except ImportError as e:
+    print(f"Flame Utilities Error: Could not initialize menu registry. {e}")
     registry = None
 
 # ------------------------------------------------------------------------------

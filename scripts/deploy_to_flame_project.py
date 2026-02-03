@@ -46,7 +46,10 @@ def ensure_dir(p: Path):
 def copy_recursive(src: Path, dst: Path):
     if dst.exists():
         shutil.rmtree(dst)
-    shutil.copytree(src, dst)
+    
+    # Use ignore to prevent fu_activate.py from being copied inside the subfolder
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns('fu_activate.py'))
+    
     # Ensure all files are readable
     for root, dirs, files in os.walk(dst):
         for d in dirs:
@@ -100,9 +103,9 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         copy_recursive(src, target_path)
     
     # 2. Deploy the activator to the parent level (standard Flame hook location)
-    activator_src = UTILITIES_SRC / "fu_activate.py"
+    activator_src = UTILITIES_SRC / "fu_launcher.py"
     if activator_src.exists():
-        dst_activator = target_parent / activator_src.name
+        dst_activator = target_parent / "fu_activate.py"
         print(f'Deploying activator {activator_src} -> {dst_activator}')
         shutil.copy2(activator_src, dst_activator)
         dst_activator.chmod(0o755)
