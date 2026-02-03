@@ -1,3 +1,4 @@
+import fu_bootstrap
 import flame
 from fu_decorators import fu_action
 

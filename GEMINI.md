@@ -15,13 +15,18 @@ As of January 2026, Gemini is configured as a specialized expert in the Autodesk
 
 ## Core Components: The "FU_" Suite
 
-### 1. fu_eavesdrop (`flame-listener/fu_eavesdrop.py`)
+### 1. fu_bootstrap (`flame-utilities/fu_bootstrap.py`)
+The central infrastructure component.
+- **Role**: Resolves the toolkit root and injects all core subdirectories into `sys.path`.
+- **Purpose**: Overcomes Flame's `__init__.py` prohibition while ensuring consistent imports across the suite.
+
+### 2. fu_eavesdrop (`flame-utilities/service/fu_eavesdrop.py`)
 A Python service designed to run inside Autodesk Flame.
 - **Role:** Listens on a local port (default 5555) for incoming Python code snippets.
 - **Key Feature:** Enforces **main-thread execution** via `flame.schedule_idle_event` to ensure API safety.
-- **Initialization:** Handled by `fu_eavesdrop_init.py`, a standard Flame startup hook.
+- **Initialization:** Handled by `fu_eavesdrop_init.py` (located in `service/`).
 
-### 2. FU_Whisper (`flame-mcp/fu_whisper.py`)
+### 3. FU_Whisper (`flame-mcp/fu_whisper.py`)
 An MCP-compliant server that connects AI models to Flame.
 - **Role:** Translates AI tool calls into Flame Python commands.
 - **Tools:** Includes `execute_python`, `get_flame_context`, `list_desktop_clips`, and `inspect_symbol`.

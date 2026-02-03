@@ -1,3 +1,4 @@
+import fu_bootstrap
 from fu_menu_registry import FuMenuRegistry
 
 def fu_action(menu="media_panel", path="Flame Utilities", is_visible=None, is_enabled=None, min_version=None, max_version=None, wait_cursor=None):

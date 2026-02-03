@@ -1,3 +1,4 @@
+import fu_bootstrap
 import flame
 import time
 from fu_decorators import fu_action

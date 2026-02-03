@@ -1,7 +1,7 @@
 """
 FU_Splat_Viewer
 ---------------
-Version: 1.0.1
+Version: 1.1.0
 SDK: fu_pybox_v3_13
 
 A secure, sandboxed visualization handler for Gaussian Splatting data.
@@ -16,38 +16,10 @@ import http.server
 import socketserver
 from pathlib import Path
 from typing import List, Dict, Any, Optional
+import fu_bootstrap
 
-def find_toolkit_root() -> Path:
-    """Finds the flame-utilities root even if executed from /var/tmp/."""
-    # 1. Try relative to this file
-    try_path = Path(__file__).resolve().parent.parent
-    if (try_path / "lib" / "fu_pybox_v3_13.py").exists():
-        return try_path
-    
-    # 2. Scan sys.path
-    for p in sys.path:
-        if p.endswith("flame-utilities") and os.path.isdir(p):
-            return Path(p)
-            
-    # 3. Scan standard Flame paths
-    search_bases = [
-        "/opt/Autodesk/shared/python",
-        "/opt/Autodesk/project",
-        "/Volumes/Samsung-T3-1TB/Autodesk/flame/projects"
-    ]
-
-    for base in search_bases:
-        base_path = Path(base)
-        if not base_path.exists():
-            continue
-        for found in base_path.rglob("flame-utilities"):
-            if (found / "lib" / "fu_pybox_v3_13.py").exists():
-                return found
-                
-    return try_path
-
-# Initialize Paths
-REPO_ROOT = find_toolkit_root()
+# Initialize Paths via Bootstrap
+REPO_ROOT = Path(fu_bootstrap.get_root())
 LIB_PATH = REPO_ROOT / "lib"
 
 # Ensure they are in sys.path

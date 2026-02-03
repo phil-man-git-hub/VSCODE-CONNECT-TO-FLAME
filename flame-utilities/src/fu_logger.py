@@ -2,31 +2,17 @@ import logging
 import logging.handlers
 import os
 import sys
+import fu_bootstrap
 
 """
 fu_logger.py
 
 A centralized logging utility for Flame Utilities.
 Ensures logs are written to both the file system and the console (stdout).
-
-Feature:
-    - Creates a separate log file for each module that requests a logger.
-    - Example: 'fu_export' -> logs/fu_export.log
-
-Usage:
-    from fu_logger import get_logger
-    log = get_logger(__name__)
-    log.info("Something happened")
 """
 
-# ------------------------------------------------------------------------------
-# CONFIGURATION
-# ------------------------------------------------------------------------------
-
-# Calculate paths relative to this file location
-# This file is in flame-utilities/src/utils/
-CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
-FLAME_UTILS_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, '..', '..'))
+# Calculate paths via Bootstrap
+FLAME_UTILS_ROOT = fu_bootstrap.get_root()
 LOG_DIR = os.path.join(FLAME_UTILS_ROOT, 'logs')
 
 # Ensure log directory exists

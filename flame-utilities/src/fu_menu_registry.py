@@ -1,3 +1,5 @@
+import fu_bootstrap
+
 class FuMenuRegistry(object):
     """
     Singleton registry for Flame contextual menu actions.

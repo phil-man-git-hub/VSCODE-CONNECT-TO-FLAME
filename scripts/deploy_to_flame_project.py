@@ -71,19 +71,25 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
     print(f'Deployment Parent: {target_parent}')
     
     if dry_run:
-        print('Dry run: The following directories would be copied:')
+        print('Dry run: The following operations would be performed:')
         for name, src in DEPLOY_DIRS:
             if src.exists():
-                print(f' - {src} -> {target_parent / name}')
+                print(f' - COPY DIR: {src} -> {target_parent / name}')
         
+        # Deployment of the activator
+        activator_src = UTILITIES_SRC / "fu_activate.py"
+        if activator_src.exists():
+            print(f' - COPY ACTIVATOR: {activator_src} -> {target_parent / activator_src.name}')
+
         secrets = REPO_ROOT / '.flame.secrets.json'
         if secrets.exists():
             # Secrets go into the core utilities folder
-            print(f' - {secrets} -> {target_parent / "flame-utilities" / secrets.name} (secrets)')
+            print(f' - COPY SECRETS: {secrets} -> {target_parent / "flame-utilities" / secrets.name}')
         return
 
     ensure_dir(target_parent)
     
+    # 1. Copy the core toolkit folder
     for name, src in DEPLOY_DIRS:
         if not src.exists():
             print(f'Skipping {name} (source not found at {src})')
@@ -93,7 +99,15 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         print(f'Copying {src} -> {target_path}')
         copy_recursive(src, target_path)
     
-    # Optional: copy secrets if present into the utilities folder
+    # 2. Deploy the activator to the parent level (standard Flame hook location)
+    activator_src = UTILITIES_SRC / "fu_activate.py"
+    if activator_src.exists():
+        dst_activator = target_parent / activator_src.name
+        print(f'Deploying activator {activator_src} -> {dst_activator}')
+        shutil.copy2(activator_src, dst_activator)
+        dst_activator.chmod(0o755)
+
+    # 3. Optional: copy secrets if present into the utilities folder
     secrets = REPO_ROOT / '.flame.secrets.json'
     if secrets.exists():
         dst_secrets = target_parent / 'flame-utilities' / secrets.name
@@ -102,8 +116,7 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         dst_secrets.chmod(dst_secrets.stat().st_mode | stat.S_IRUSR)
 
     print('\nDeployment complete.')
-    print('IMPORTANT: To activate the toolkit in Flame, ensure you have a loader script')
-    print('in the parent directory that adds flame-utilities to sys.path.')
+    print('The toolkit is now ready for project-level activation in Flame.')
 
 
 if __name__ == '__main__':
