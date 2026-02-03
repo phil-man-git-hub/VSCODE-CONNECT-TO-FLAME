@@ -103,7 +103,7 @@ def main(dry_run: bool, scripts_dir_arg: str = None):
         copy_recursive(src, target_path)
     
     # 2. Deploy the activator to the parent level (standard Flame hook location)
-    activator_src = UTILITIES_SRC / "fu_launcher.py"
+    activator_src = UTILITIES_SRC / "fu_activate.py"
     if activator_src.exists():
         dst_activator = target_parent / "fu_activate.py"
         print(f'Deploying activator {activator_src} -> {dst_activator}')

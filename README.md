@@ -21,7 +21,7 @@ As the world's first AI-native bridge for Autodesk Flame, we are building a comm
 ## Quickstart
 
 1.  **Install Listener:** Deploy the `flame-utilities/` directory and `fu_activate.py` hook into Flame's Python setup folder.
-2.  **Initialize Session:** Run `./scripts/initialize_session.py` to start the bridge and generate an AI handshake prompt.
+2.  **Initialize Session:** Run `.venv/bin/python scripts/initialize_session.py` to start the bridge and generate an AI handshake prompt.
 3.  **Connect AI:** Paste the generated handshake into your AI client (see `HOWTO.md`).
 4.  **Run Code:** Talk directly to your AI agent to manipulate Flame. Successful patterns are automatically saved to your local library.
 

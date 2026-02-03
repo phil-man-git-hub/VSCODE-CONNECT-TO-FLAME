@@ -30,7 +30,7 @@ The listener must run inside Autodesk Flame's Python environment.
 3.  **Verify:**
     Start Autodesk Flame. Watch the shell output. You should see the ignition sequence:
     > `[fu_bootstrap] Setting up toolkit root...`
-    > `[fu_launcher] Igniting toolkit from...`
+    > `[fu_activate] Igniting toolkit from...`
     > `fu_eavesdrop_init.py version 0.1.0 (Ignited)`
     > `fu_eavesdrop listening on 127.0.0.1:5555`
 

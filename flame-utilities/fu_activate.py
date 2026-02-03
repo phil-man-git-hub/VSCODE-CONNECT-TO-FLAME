@@ -21,7 +21,7 @@ def ignite():
         toolkit_root = os.path.join(here, 'flame-utilities')
 
     if not os.path.exists(toolkit_root):
-        print(f"[fu_launcher] Error: Toolkit root not found at {toolkit_root}")
+        print(f"[fu_activate] Error: Toolkit root not found at {toolkit_root}")
         return
 
     # 2. Setup Path
@@ -33,7 +33,7 @@ def ignite():
         import fu_bootstrap
         fu_bootstrap.setup()
     except Exception as e:
-        print(f"[fu_launcher] Error during bootstrap: {e}")
+        print(f"[fu_activate] Error during bootstrap: {e}")
         return
 
     # 4. Initialize Services (Idempotent)
@@ -45,14 +45,14 @@ def ignite():
     init_script = os.path.join(toolkit_root, 'service', 'fu_eavesdrop_init.py')
     if os.path.exists(init_script):
         try:
-            print(f"[fu_launcher] Igniting toolkit from: {init_script}")
+            print(f"[fu_activate] Igniting toolkit from: {init_script}")
             spec = importlib.util.spec_from_file_location("fu_init", init_script)
             fu_init = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(fu_init)
         except Exception as e:
-            print(f"[fu_launcher] Critical Error during ignition: {e}")
+            print(f"[fu_activate] Critical Error during ignition: {e}")
     else:
-        print(f"[fu_launcher] Error: service/fu_eavesdrop_init.py not found")
+        print(f"[fu_activate] Error: service/fu_eavesdrop_init.py not found")
 
 # Trigger ignition immediately on load (Standard Flame Hook behavior)
 ignite()

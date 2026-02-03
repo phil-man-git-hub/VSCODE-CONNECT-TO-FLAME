@@ -5,6 +5,11 @@ This document provides a technical overview and analysis of the `FLAME-UTILITIES
 ## Repository Purpose
 The primary goal of this repository is to bridge the gap between **Autodesk Flame's internal Python API** and modern development workflows. It provides a real-time execution bridge, comprehensive API documentation, and high-quality type stubs for local development, as well as an AI-native interface via the Model Context Protocol (MCP).
 
+> [!IMPORTANT]
+> **Virtual Environment Requirement**
+> All Python scripts in this repository MUST be executed using the local virtual environment to ensure all dependencies are met.
+> Always use: `.venv/bin/python <script_name.py>` instead of system `python` or `python3`.
+
 ## Gemini Expert Profile: Autodesk Flame Python Specialist
 As of January 2026, Gemini is configured as a specialized expert in the Autodesk Flame development ecosystem:
 - **API Deep Knowledge:** Full mastery of the Flame Python API (up to version 2027.0.0 preview release pr236), including class hierarchies, methods, and properties.
@@ -54,6 +59,9 @@ A TypeScript-based extension that provides the UI bridge for human developers.
 
 ### 6. API Intelligence Pipeline (`scripts/`)
 A robust data collection system that generates documentation and 2,400+ lines of `.pyi` stubs.
+
+### 7. Session Logging (`scripts/logs/`)
+All session initialization attempts are logged to `scripts/logs/` with timestamps (e.g., `session_init_20260203_122037.log`). These logs provide granular debugging info (DEBUG level) that is not visible in the standard console output.
 
 ## Key Technical Achievements (as of Feb 2026)
 

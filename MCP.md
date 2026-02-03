@@ -40,8 +40,9 @@ Flame's script loader (startup hooks) strictly prohibits `__init__.py` files in 
 ## 🔄 Suggested Workflows
 
 ### Task: "Initialize Session"
-1. Run `./scripts/initialize_session.py` to verify the bridge and generate context.
+1. Run `.venv/bin/python scripts/initialize_session.py` to verify the bridge and generate context.
 2. Read `MCP.md` and `GEMINI.md` immediately upon entry.
+3. *Tip: If connection fails, ask the user to show you the latest log in `scripts/logs/`.*
 
 ### Task: "Check what is on the desktop and get its resolution"
 1. Call `list_desktop_clips()`.
