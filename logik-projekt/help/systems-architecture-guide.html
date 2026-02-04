@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systems Architecture Guide | Logik-Projekt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f1117;
+            --bg-card: rgba(26, 29, 38, 0.7);
+            --accent-primary: #6366f1;
+            --accent-secondary: #a855f7;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1e2130 0%, #0f1117 100%);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .logo-glow {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* --- Grid Section --- */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--glow);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        /* --- Process Timeline --- */
+        .timeline {
+            margin-top: 4rem;
+            padding-left: 2rem;
+            border-left: 2px solid var(--glass-border);
+        }
+
+        .step {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        .step h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo-glow">Logik-Projekt</div>
+            <h1 style="font-size: 2.2rem; margin-top: -0.5rem; font-weight: 300;">Systems Architecture Guide</h1>
+            <p class="subtitle">A master blueprint for the mapping of scripts, relationships, and processes within the Autodesk Flame toolset.</p>
+        </header>
+
+        <section class="arch-grid">
+            <div class="card">
+                <h3><div class="icon-circle">01</div>Architectural Discovery</h3>
+                <p>The methodology of uncovering hidden system structures, identifying entry points, and tracing logic flows between components.</p>
+                <div style="margin-top: 1.5rem;"><a href="../docs/architectural-discovery.md" style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">VIEW ANALYSIS →</a></div>
+            </div>
+
+            <div class="card">
+                <h3><div class="icon-circle">02</div>Static Analysis</h3>
+                <p>Technical evaluation of codebase relationships, including path resolution strategies and structural dependency mapping.</p>
+                <div style="margin-top: 1.5rem;"><a href="../docs/static-analysis.md" style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">VIEW ANALYSIS →</a></div>
+            </div>
+
+            <div class="card">
+                <h3><div class="icon-circle">03</div>System Decomposition</h3>
+                <p>Breaking down the toolset into logical layers: Trigger, Logic, and Data. Understanding the "Decoupled Logic" pattern.</p>
+                <div style="margin-top: 1.5rem;"><a href="../docs/system-decomposition.md" style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">VIEW ANALYSIS →</a></div>
+            </div>
+
+            <div class="card">
+                <h3><div class="icon-circle">04</div>The Data Layer</h3>
+                <p>How JSON blueprints drive the creation of Flame project objects without the need for hardcoded logic paths.</p>
+                <div style="margin-top: 1.5rem;"><a href="../cfg/" style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">EXPLORE BLUEPRINTS →</a></div>
+            </div>
+        </section>
+
+        <section>
+            <h2 style="margin-bottom: 2rem;">The Master Execution Flow</h2>
+            <div class="timeline">
+                <div class="step">
+                    <h4>Trigger Event</h4>
+                    <p>User interacts with the Flame Media Panel or Main Menu. A lightweight hook script in <code>hooks/</code> acts as the system sensor.</p>
+                </div>
+                <div class="step">
+                    <h4>Environment Initialization</h4>
+                    <p>The <code>lp_bootstrap.py</code> module injects the core source library into the application runtime, resolving all internal dependencies.</p>
+                </div>
+                <div class="step">
+                    <h4>Process Execution</h4>
+                    <p>The core engine in <code>src/core/</code> receives the request and fetches the corresponding blueprint from the <code>cfg/</code> directory.</p>
+                </div>
+                <div class="step">
+                    <h4>API Fulfillment</h4>
+                    <p>The system executes targeted Flame Python API calls to construct, validate, or modify objects in the workspace.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Flame Utilities | Generated by Gemini AI | Version 1.0.0
+        </footer>
+    </div>
+
+</body>
+</html>

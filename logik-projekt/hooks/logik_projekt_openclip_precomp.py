@@ -33,6 +33,7 @@ if _root not in sys.path:
     sys.path.insert(0, _root)
 
 import lp_bootstrap
+lp_bootstrap.refresh()
 
 # Import the relevant OpenClip classes from the core module
 from src.core.logik.logik_projekt_openclip import (
@@ -275,4 +276,3 @@ def get_media_panel_custom_ui_actions():
 # C2 A9 32 30 32 35 53 54 52 45 4E 47 54 48 2D 49 4E 2D 4E 55 4D 42 45 52 53 #
 # -------------------------------------------------------------------------- #
 # Changelog:
-# -------------------------------------------------------------------------- #

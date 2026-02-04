@@ -16,6 +16,7 @@ import os
 # import pdb; pdb.set_trace()
 import re
 import fileinput
+from src.core.functions.io.render_template import render_template
 # import logging
 # from datetime import datetime
 
@@ -30,7 +31,9 @@ def create_nuke_shot_script(shot_name,
                        version_name,
                        shots_dir,
                        shot_renders_dir,
-                       shot_scripts_dir):
+                       shot_scripts_dir,
+                       nuke_start_frame=1001,
+                       nuke_end_frame=1100):
     """
     Create a shot script for nuke based on task.
 
@@ -42,6 +45,8 @@ def create_nuke_shot_script(shot_name,
         shots_dir        (str): The directory where shots are stored.
         shot_renders_dir (str): The directory for shot renders.
         shot_scripts_dir (str): The directory for shot scripts.
+        nuke_start_frame (int): The start frame for the script.
+        nuke_end_frame   (int): The end frame for the script.
 
     Returns:
     None
@@ -68,17 +73,19 @@ def create_nuke_shot_script(shot_name,
         '..', '..', '..', '..', 'cfg', 'templates', 'foundry', 'nuke', 'nuke_shot_script.nk.template'
     ))
 
-    with open(template_path, 'r') as f:
-        template_content = f.read()
+    # Prepare context for template rendering
+    context = {
+        'SHOT_NAME': shot_name,
+        'APP_NAME': app_name,
+        'TASK_TYPE': task_type,
+        'VERSION_NAME': version_name,
+        'SHOT_RENDERS_DIR': shot_renders_dir,
+        'NUKE_START_FRAME': nuke_start_frame,
+        'NUKE_END_FRAME': nuke_end_frame
+    }
 
-    # Replace placeholders
-    content = template_content.replace('@@SHOT_NAME@@', shot_name)
-    content = content.replace('@@APP_NAME@@', app_name)
-    content = content.replace('@@TASK_TYPE@@', task_type)
-    content = content.replace('@@VERSION_NAME@@', version_name)
-    content = content.replace('@@SHOT_RENDERS_DIR@@', shot_renders_dir)
-    content = content.replace('@@NUKE_START_FRAME@@', 'NUKE_START_FRAME')
-    content = content.replace('@@NUKE_END_FRAME@@', 'NUKE_END_FRAME')
+    # Render content
+    content = render_template(template_path, context)
     
     # Write the Nuke script content to the file
     with open(shot_scripts_app_task_file_path, 'w') as nuke_shot_script_file:

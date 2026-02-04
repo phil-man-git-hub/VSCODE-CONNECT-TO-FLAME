@@ -1,15 +1,9 @@
-################################################################################
-# Filename: sync_assets.py
-# Relative Path: hooks/sync_assets.py
-#
-# Purpose: Main orchestrator for automatic filesystem → Flame asset import.
-#          Reads bookmarks, monitors watched folders, and imports new files
-#          during Flame idle time.
-#
-# Author: phil_man@mac.com
-# Copyright: Copyright (c) 2026
-#
-################################################################################
+import os
+import sys
+import logging
+from pathlib import Path
+from typing import List, Set, Optional
+
 # Find the project root to enable lp_bootstrap and src imports
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _root not in sys.path:

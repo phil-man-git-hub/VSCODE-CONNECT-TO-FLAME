@@ -88,17 +88,24 @@ class LogikProjektOpenClipBase:
         self.logger.debug("Loading settings...")
         loaded_settings = pyside6_qt_load_config(self.script_name, self.config_path, self._get_default_settings())
 
-        # Workaround for pyside6_qt_load_config returning a function
+        # Workaround for pyside6_qt_load_config returning a function (singleton pattern)
         if callable(loaded_settings):
-            self.logger.warning("pyside6_qt_load_config returned a function. Falling back to default settings.")
-            self.settings = self._get_default_settings()
+            self.logger.debug("pyside6_qt_load_config returned a function attributes singleton. Extracting values...")
+            self.settings = {}
+            for key in self._get_default_settings().keys():
+                # Extract the value from the function attribute, fallback to default if missing
+                val = getattr(loaded_settings, key, self._get_default_settings()[key])
+                self.settings[key] = val
         else:
             self.settings = loaded_settings
-            self.logger.debug("Settings loaded successfully.")
+            self.logger.debug("Settings loaded successfully as dictionary.")
         
         # Sanitize settings by converting string booleans to actual booleans
         self.logger.debug("Sanitizing boolean settings.")
         def to_bool(value):
+            # Handle potential non-string values
+            if isinstance(value, bool):
+                return value
             return str(value).lower() in ('true', '1', 't', 'y', 'yes')
         
         boolean_keys = ['write_file_create_open_clip', 'write_file_include_setup']
@@ -107,6 +114,8 @@ class LogikProjektOpenClipBase:
                 original_value = self.settings[key]
                 self.settings[key] = to_bool(original_value)
                 self.logger.debug(f"Sanitized '{key}': '{original_value}' -> {self.settings[key]}")
+            else:
+                self.settings[key] = True # Default if missing
 
         # Init Variables
         self.y_position = 0
@@ -140,7 +149,9 @@ class LogikProjektOpenClipBase:
 
     def get_clip_info(self, clip):
         """Extracts necessary information from the clip."""
-        self.clip_name = str(clip.name)[1:-1]
+        # Clean up the clip name (remove potential wrapping quotes from Flame objects)
+        raw_name = str(clip.name)
+        self.clip_name = raw_name.strip("'")
         self.clip_duration = clip.duration
         self.clip_frame_rate = clip.clip.frame_rate
         self.clip_timecode = clip.clip.start_time
@@ -154,7 +165,17 @@ class LogikProjektOpenClipBase:
         self.batch_group = flame.batch
         self._setup_reels()
 
-        for clip in self.selection:
+        # Capture a static list of the initial selection to avoid loop pollution
+        # if we add new nodes to the batch during processing.
+        clips_to_process = list(self.selection)
+        self.logger.debug(f"Processing {len(clips_to_process)} clips.")
+
+        for clip in clips_to_process:
+            # Shield against non-clip nodes if the user selected everything
+            if hasattr(clip, 'type') and clip.type != 'Clip':
+                self.logger.debug(f"Skipping non-clip node: {clip.name}")
+                continue
+                
             self.x_position = clip.pos_x
             self.y_position = clip.pos_y
             self.get_clip_info(clip)
@@ -249,16 +270,68 @@ class LogikProjektOpenClipBase:
         return mux_node
 
     def _connect_nodes(self, clip, processing_node, render_node):
-        """Connects the nodes. Can be overridden."""
+        """Connects the nodes using a robust smart-connect strategy."""
         import flame
-        self.logger.debug(f"Connecting {clip.name} -> {processing_node.name} -> {render_node.name}")
-        flame.batch.connect_nodes(clip, 'Default', processing_node, 'Default')
-        flame.batch.connect_nodes(processing_node, 'Default', render_node, 'Default')
+        self.logger.debug(f"Connecting {self.clip_name} -> {processing_node.name} -> {render_node.name}")
+        
+        # 1. Connect Clip -> Processing Node
+        # Preferred output: 'Result', Preferred input: 'Input_0' (MUX) or 'Source' (OFX)
+        self._smart_connect(clip, processing_node, 
+                           preferred_out=['Result', 'Default'], 
+                           preferred_in=['Input_0', 'Source', '0', 'Default'])
+
+        # 2. Connect Processing Node -> Render Node
+        # Preferred output: 'Result', Preferred input: 'Front'
+        self._smart_connect(processing_node, render_node, 
+                           preferred_out=['Result', 'Default'], 
+                           preferred_in=['Front', 'Input', 'Default'])
+
+    def _smart_connect(self, out_node, in_node, preferred_out=None, preferred_in=None):
+        """Intelligently finds and connects sockets by inspecting node capabilities."""
+        import flame
+        
+        # Get available sockets (handle different API versions)
+        out_sockets = getattr(out_node, 'output_sockets', [])
+        in_sockets = getattr(in_node, 'input_sockets', [])
+        
+        # Find best output
+        final_out = 'Default'
+        if preferred_out:
+            for p in preferred_out:
+                if p in out_sockets:
+                    final_out = p
+                    break
+        
+        # Find best input
+        final_in = 'Default'
+        if preferred_in:
+            for p in preferred_in:
+                if p in in_sockets:
+                    final_in = p
+                    break
+
+        self.logger.debug(f"Smart Connect: {out_node.name} ({final_out}) -> {in_node.name} ({final_in})")
+        
+        # Attempt connection
+        success = flame.batch.connect_nodes(out_node, final_out, in_node, final_in)
+        if not success:
+            # Last ditch attempt with 'Default'
+            self.logger.warning(f"Connection failed ({final_out}->{final_in}). Trying Default->Default.")
+            flame.batch.connect_nodes(out_node, 'Default', in_node, 'Default')
+        return success
 
     def _add_render_node(self):
         import flame
         self.logger.debug("Adding Render node.")
         self.render_node = self.batch_group.create_node('Render')
+
+        # Flame 2027 requirement: Enable custom metadata before setting metadata values
+        try:
+            self.render_node.basic_metadata = 'Custom Values'
+            self.logger.debug("Set basic_metadata to 'Custom Values'")
+        except Exception as e:
+            self.logger.debug(f"Could not set basic_metadata (might be older Flame): {e}")
+
         self._configure_common_node_settings()
         
         self.render_node.destination = ('Libraries', 'Batch Renders')
@@ -271,6 +344,14 @@ class LogikProjektOpenClipBase:
         import flame
         self.logger.debug("Adding Write File node.")
         self.render_node = self.batch_group.create_node('Write File')
+        
+        # Flame 2027 requirement: Enable custom metadata before setting metadata values
+        try:
+            self.render_node.basic_metadata = 'Custom Values'
+            self.logger.debug("Set basic_metadata to 'Custom Values'")
+        except Exception as e:
+            self.logger.debug(f"Could not set basic_metadata (might be older Flame or different property): {e}")
+
         self._configure_common_node_settings()
 
         self.render_node.add_to_workspace = True
@@ -412,10 +493,20 @@ class LogikProjektOpenClipNeatVideo(LogikProjektOpenClipBase):
         return neat_video_node
 
     def _connect_nodes(self, clip, processing_node, render_node):
+        """Connects the nodes for Neat Video operation."""
         import flame
-        self.logger.debug(f"Connecting {clip.name} -> {processing_node.name} -> {render_node.name}")
-        flame.batch.connect_nodes(clip, 'Default', processing_node, 'Default')
-        flame.batch.connect_nodes(processing_node, 'Default', render_node, 'Default')
+        self.logger.debug(f"Connecting Neat Video: {self.clip_name} -> {processing_node.name} -> {render_node.name}")
+        
+        # 1. Connect Clip -> OpenFX (Reduce Noise)
+        # Reduce Noise v5 expects 'Source'
+        self._smart_connect(clip, processing_node, 
+                           preferred_out=['Result', 'Default'], 
+                           preferred_in=['Source', 'Input', 'In', 'Default'])
+
+        # 2. Connect OpenFX -> Write File
+        self._smart_connect(processing_node, render_node, 
+                           preferred_out=['Result', 'Default'], 
+                           preferred_in=['Front', 'Input', 'Default'])
 
     def _configure_specialized_render_node(self):
         self.logger.debug("Configuring specialized Render node for Neat Video.")

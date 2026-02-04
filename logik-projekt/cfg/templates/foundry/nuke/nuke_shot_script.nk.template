@@ -1,11 +1,11 @@
 # LOGIK-PROJEKT Nuke Shot Script
-# Task Name: @@SHOT_NAME@@_@@APP_NAME@@_@@TASK_TYPE@@
+# Task Name: ${SHOT_NAME}_${APP_NAME}_${TASK_TYPE}
 Root {
  inputs 0
- name "@@SHOT_NAME@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@.nk"
- frame @@NUKE_START_FRAME@@
- first_frame @@NUKE_START_FRAME@@
- last_frame @@NUKE_END_FRAME@@
+  name "${SHOT_NAME}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.nk"
+  frame ${NUKE_START_FRAME}
+  first_frame ${NUKE_START_FRAME}
+  last_frame ${NUKE_END_FRAME}
  lock_range true
  format "1920 1080 0 0 1920 1080 1 HD_1080"
  proxy_type scale
@@ -23,21 +23,21 @@ Root {
  floatLut "ACES - ACEScg"
 }
 Write {
- file "@@SHOT_RENDERS_DIR@@/@@SHOT_NAME@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@/@@SHOT_NAME@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@.%08d.exr"
+ file "${SHOT_RENDERS_DIR}/${SHOT_NAME}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}/${SHOT_NAME}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.%08d.exr"
  file_type exr
  write_ACES_compliant_EXR false
  metadata "all metadata"
  first_part rgba
  create_directories true
- first "@@NUKE_START_FRAME@@"
- last "@@NUKE_END_FRAME@@"
+ first "${NUKE_START_FRAME}"
+ last "${NUKE_END_FRAME}"
  use_limit true
  version 0
  ocioColorspace "ACES - ACEScg"
  display ACES
  view sRGB
  name Write_EXR
- label "@@SHOT_NAME@@_@@APP_NAME@@_@@TASK_TYPE@@"
+ label "${SHOT_NAME}_${APP_NAME}_${TASK_TYPE}"
  xpos 0
  ypos 240
  postage_stamp true

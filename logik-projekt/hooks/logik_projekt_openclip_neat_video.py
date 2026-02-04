@@ -33,6 +33,7 @@ if _root not in sys.path:
     sys.path.insert(0, _root)
 
 import lp_bootstrap
+lp_bootstrap.refresh()
 
 # Import the relevant OpenClip classes from the core module
 from src.core.logik.logik_projekt_openclip import (

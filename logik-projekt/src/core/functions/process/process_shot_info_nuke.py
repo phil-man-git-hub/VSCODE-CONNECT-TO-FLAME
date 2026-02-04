@@ -101,22 +101,6 @@ def process_shot_info(job_structure,
                                                    app_name,
                                                    task_type)
           
-            # Create openclip output clip
-            create_openclip_output_clip(shot_name,
-                                        app_name,
-                                        task_type,
-                                        shots_dir,
-                                        shot_structure["shot_output_clips_app_dir"])
-
-            # Create Nuke script for the shot
-            create_nuke_shot_script(shot_name,
-                               app_name,
-                               task_type,
-                               version_name,
-                               shots_dir,
-                               shot_structure["shot_renders_dir"],
-                               shot_structure["shot_scripts_dir"])
-
             # Construct the correct path for listing source directories
             shot_sources_dir = os.path.join(shots_dir,
                                             shot_structure["shot_sources_dir"])
@@ -124,38 +108,76 @@ def process_shot_info(job_structure,
             # List source directories
             shot_sources_dir_list = list_shot_sources_dir(shot_sources_dir)
 
-            # Call path_to_shot_source_openexr_sequences for each source directory
+            # Collect information for all sources
+            sources_info = []
+            final_start_frame = None
+            final_end_frame = None
+
             for shot_source_dir in shot_sources_dir_list:
                 shot_source_dir_path = os.path.join(shot_sources_dir,
                                                     shot_source_dir)
-                shot_source_version_openexr_sequences_info, \
-                    shot_source_version_start_frame, \
-                        shot_source_version_end_frame = path_to_shot_source_openexr_sequences(
-                            shot_source_dir_path,
-                            start_frame_min,
-                            end_frame_max)
+                seq_info, start, end = path_to_shot_source_openexr_sequences(
+                    shot_source_dir_path,
+                    start_frame_min,
+                    end_frame_max)
               
-                if shot_source_version_openexr_sequences_info:
-                    # Create openclip segment clip
-                    create_openclip_segment_clip(shot_source_dir,
-                                                 app_name,
-                                                 task_type,
-                                                 shots_dir,
-                                                 shot_dir,
-                                                 shot_structure["shot_segment_clips_app_dir"])
+                if seq_info:
+                    sources_info.append({
+                        'shot_source_dir': shot_source_dir,
+                        'seq_info': seq_info,
+                        'start_frame': start,
+                        'end_frame': end
+                    })
+                    # Update overall frame range
+                    if final_start_frame is None or start < final_start_frame:
+                        final_start_frame = start
+                    if final_end_frame is None or end > final_end_frame:
+                        final_end_frame = end
 
-                    # Create Nuke script for the shot
-                    create_nuke_source_script(shot_name,
-                                         shots_dir,
-                                         shot_sources_dir,
-                                         shot_source_dir,
-                                         app_name,
-                                         task_type,
-                                         version_name,
-                                         shot_structure["shot_scripts_dir"],
-                                         shot_source_version_openexr_sequences_info,
-                                         shot_source_version_start_frame,
-                                         shot_source_version_end_frame)
+            # Default to some frames if no sources found (though shouldn't happen based on logic)
+            if final_start_frame is None: final_start_frame = 1001
+            if final_end_frame is None: final_end_frame = 1100
+
+            # Create openclip output clip
+            create_openclip_output_clip(shot_name,
+                                        app_name,
+                                        task_type,
+                                        shots_dir,
+                                        shot_structure["shot_output_clips_app_dir"])
+
+            # 1. Create Nuke base script with final frame range
+            create_nuke_shot_script(shot_name,
+                               app_name,
+                               task_type,
+                               version_name,
+                               shots_dir,
+                               shot_structure["shot_renders_dir"],
+                               shot_structure["shot_scripts_dir"],
+                               final_start_frame,
+                               final_end_frame)
+
+            # 2. Add Read nodes for each source
+            for source in sources_info:
+                # Create openclip segment clip
+                create_openclip_segment_clip(source['shot_source_dir'],
+                                             app_name,
+                                             task_type,
+                                             shots_dir,
+                                             shot_dir,
+                                             shot_structure["shot_segment_clips_app_dir"])
+
+                # Create Nuke source script (adds Read node)
+                create_nuke_source_script(shot_name,
+                                     shots_dir,
+                                     shot_sources_dir,
+                                     source['shot_source_dir'],
+                                     app_name,
+                                     task_type,
+                                     version_name,
+                                     shot_structure["shot_scripts_dir"],
+                                     source['seq_info'],
+                                     source['start_frame'],
+                                     source['end_frame'])
 
 # ========================================================================== #
 # C2 A9 32 30 32 34 2D 4D 41 4E 2D 4D 41 44 45 2D 4D 45 4B 41 4E 59 5A 4D 53 #

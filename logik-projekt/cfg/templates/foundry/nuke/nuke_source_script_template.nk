@@ -2,10 +2,10 @@
 # Task Name: ${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}
 Root {
  inputs 0
- name "${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.nk"
- frame "${SHOT_SOURCE_VERSION_START_FRAME}"
- first_frame "${SHOT_SOURCE_VERSION_START_FRAME}"
- last_frame "${SHOT_SOURCE_VERSION_END_FRAME}"
+  name "${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.nk"
+  frame "${SHOT_SOURCE_VERSION_START_FRAME}"
+  first_frame "${SHOT_SOURCE_VERSION_START_FRAME}"
+  last_frame "${SHOT_SOURCE_VERSION_END_FRAME}"
  lock_range true
  format "1920 1080 0 0 1920 1080 1 HD_1080"
  proxy_type scale

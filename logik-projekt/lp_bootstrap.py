@@ -8,6 +8,7 @@ Ensures valid sys.path injection and standardizes configuration updates.
 import os
 import sys
 import logging
+import importlib
 from pathlib import Path
 
 # -------------------------------------------------------------------------- #
@@ -81,6 +82,17 @@ def bootstrap():
         sys.path.insert(0, root_str)
         
     return paths
+
+def refresh():
+    """Forces a reload of all logik-projekt modules."""
+    for mod_name in list(sys.modules.keys()):
+        if mod_name.startswith("src.core.logik") or mod_name.startswith("src.core.functions"):
+            print(f"[LP] UNLOADING: {mod_name}")
+            del sys.modules[mod_name]
+    
+    # Reload the openclip module specifically if it was already imported
+    if "src.core.logik.logik_projekt_openclip" in sys.modules:
+         importlib.reload(sys.modules["src.core.logik.logik_projekt_openclip"])
 
 # -------------------------------------------------------------------------- #
 # Module Exports

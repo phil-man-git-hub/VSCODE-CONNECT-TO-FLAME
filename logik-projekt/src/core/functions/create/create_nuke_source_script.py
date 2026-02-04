@@ -14,6 +14,7 @@
 import os
 import fileinput
 from pathlib import Path
+from src.core.functions.io.render_template import render_template
 # import logging
 
 # ========================================================================== #
@@ -60,13 +61,6 @@ def create_nuke_source_script(shot_name,
     shot_scripts_app_task_path = os.path.join(shot_scripts_app_task_dir,
                                               shot_scripts_app_task_file)
 
-    # Set the frame range in the main shot script
-    with fileinput.FileInput(shot_scripts_app_task_path, inplace=True) as file:
-        for line in file:
-            line = line.replace('NUKE_START_FRAME', str(shot_source_version_start_frame))
-            line = line.replace('NUKE_END_FRAME', str(shot_source_version_end_frame))
-            print(line, end='')
-
     # Define the path to the Read node template
     template_path = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
@@ -81,14 +75,18 @@ def create_nuke_source_script(shot_name,
     if shot_source_version_openexr_sequences_info:
         sequence_dir = shot_source_version_openexr_sequences_info[0].get('shot_source_version_sequence_dir', '')
 
+    # Prepare context for Read node template rendering
+    context = {
+        'SHOT_SOURCE_VERSION_SEQUENCE_DIR': sequence_dir,
+        'SHOT_SOURCE_VERSION_START_FRAME': shot_source_version_start_frame,
+        'SHOT_SOURCE_VERSION_END_FRAME': shot_source_version_end_frame,
+        'SHOT_SOURCE_DIR': shot_source_dir,
+        'TASK_TYPE': task_type,
+        'VERSION_NAME': version_name
+    }
 
-    # Replace placeholders in the Read node template
-    content = template_content.replace('@@SHOT_SOURCE_VERSION_SEQUENCE_DIR@@', sequence_dir)
-    content = content.replace('@@SHOT_SOURCE_VERSION_START_FRAME@@', str(shot_source_version_start_frame))
-    content = content.replace('@@SHOT_SOURCE_VERSION_END_FRAME@@', str(shot_source_version_end_frame))
-    content = content.replace('@@SHOT_SOURCE_DIR@@', shot_source_dir)
-    content = content.replace('@@TASK_TYPE@@', task_type)
-    content = content.replace('@@VERSION_NAME@@', version_name)
+    # Render Read node content
+    content = render_template(template_path, context)
 
     # Append the configured Read node to the main shot script
     with open(shot_scripts_app_task_path, 'a') as nuke_shot_script_file:
