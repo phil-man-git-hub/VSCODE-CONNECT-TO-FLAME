@@ -11,13 +11,8 @@
 # This section imports the necessary modules.
 # ========================================================================== #
 
-# import flame
 import os
-# import pdb; pdb.set_trace()
-import re
-import fileinput
-# import logging
-# from datetime import datetime
+from src.core.functions.io.render_template import render_template
 
 # ========================================================================== #
 # This section defines functions to create after effects scripts.
@@ -83,25 +78,24 @@ def create_after_effects_source_script(shot_name,
         '..', '..', '..', '..', 'cfg', 'templates', 'adobe', 'after-effects', 'after_effects_source_script.jsx.template'
     ))
 
-    with open(template_path, 'r') as f:
-        template_content = f.read()
+    # Define context for template replacement
+    context = {
+        'SOURCE_SCRIPTS_APP_TASK_SCRIPT': source_scripts_app_task_script,
+        'SHOT_SOURCES_DIR': shot_sources_dir,
+        'SHOT_SOURCE_DIR': shot_source_dir,
+        'APP_NAME': app_name,
+        'TASK_TYPE': task_type,
+        'VERSION_NAME': version_name,
+        'SHOT_SOURCE_VERSION_START_FRAME': str(shot_source_version_start_frame),
+        'SOURCE_SCRIPTS_APP_TASK_FILE_PATH': source_scripts_app_task_file_path
+    }
 
-    # Replace placeholders
-    content = template_content.replace('@@SOURCE_SCRIPTS_APP_TASK_SCRIPT@@', source_scripts_app_task_script)
-    content = content.replace('@@SHOT_SOURCES_DIR@@', shot_sources_dir)
-    content = content.replace('@@SHOT_SOURCE_DIR@@', shot_source_dir)
-    content = content.replace('@@APP_NAME@@', app_name)
-    content = content.replace('@@TASK_TYPE@@', task_type)
-    content = content.replace('@@VERSION_NAME@@', version_name)
-    content = content.replace('@@SHOT_SOURCE_VERSION_START_FRAME@@', str(shot_source_version_start_frame))
-    content = content.replace('@@SOURCE_SCRIPTS_APP_TASK_FILE_PATH@@', source_scripts_app_task_file_path)
+    # Render context into template content
+    content = render_template(template_path, context)
 
     # Write the After Effects script content to the file
     with open(source_scripts_app_task_script_path, 'w') as f:
         f.write(content)
-
-    # # This section is for logging purposes
-    # logging.debug(f"After Effects script created for:  {shot_source_dir}_{version_name}")
 
     print(f"After Effects Source script created:  {source_scripts_app_task_script}\n")
 

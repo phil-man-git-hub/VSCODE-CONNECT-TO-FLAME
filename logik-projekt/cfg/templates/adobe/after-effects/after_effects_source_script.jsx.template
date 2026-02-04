@@ -1,11 +1,11 @@
-{{
-    // @@SOURCE_SCRIPTS_APP_TASK_SCRIPT@@
+{
+    // ${SOURCE_SCRIPTS_APP_TASK_SCRIPT}
 
     function SmartImport() {
-        var scriptName = "@@SOURCE_SCRIPTS_APP_TASK_SCRIPT@@";
+        var scriptName = "${SOURCE_SCRIPTS_APP_TASK_SCRIPT}";
 
         // Define the source folder
-        var source_folder = "@@SHOT_SOURCES_DIR@@/@@SHOT_SOURCE_DIR@@";
+        var source_folder = "${SHOT_SOURCES_DIR}/${SHOT_SOURCE_DIR}";
 
         // If no project open, create a new project to import the files into.
         if (!app.project) {
@@ -19,12 +19,12 @@
                 var importedFootage = app.project.importFile(importOptions);
 
                 // Create a new composition
-                var compName = "@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@";
+                var compName = "${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}";
                 var compWidth = importedFootage.width;
                 var compHeight = importedFootage.height;
                 var compFrameRate = importedFootage.frameRate;
                 var compDuration = importedFootage.duration;
-                var compStartFrame = @@SHOT_SOURCE_VERSION_START_FRAME@@;
+                var compStartFrame = ${SHOT_SOURCE_VERSION_START_FRAME};
                 var newComp = app.project.items.addComp(compName, compWidth, compHeight, 1, compDuration, compFrameRate);
                 newComp.displayStartFrame = compStartFrame;
 
@@ -32,7 +32,7 @@
                 var footageLayer = newComp.layers.add(importedFootage);
 
                 // Set the target directory for the render output (including the subfolder)
-                var targetDirectory = new Folder("@@SHOT_SOURCES_DIR@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@");
+                var targetDirectory = new Folder("${SHOT_SOURCES_DIR}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}");
 
                 // Check if the target directory exists, and create it if it doesn't
                 if (!targetDirectory.exists) {
@@ -43,11 +43,11 @@
                 var renderQueueItem = app.project.renderQueue.items.add(newComp);
 
                 // Set render output settings
-                renderQueueItem.outputModule(1).file = new File("@@SHOT_SOURCES_DIR@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@.[########].exr");
+                renderQueueItem.outputModule(1).file = new File("${SHOT_SOURCES_DIR}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.[########].exr");
                 renderQueueItem.outputModule(1).applyTemplate("OpenEXR-PIZ");
 
                 // Save the After Effects project
-                app.project.save(new File("@@SOURCE_SCRIPTS_APP_TASK_FILE_PATH@@"));
+                app.project.save(new File("${SOURCE_SCRIPTS_APP_TASK_FILE_PATH}"));
             }} catch (error) {
                 alert(error.toString(), scriptName);
             }
@@ -119,12 +119,12 @@
                     var importedFootage = app.project.importFile(importOptions);
 
                     // Create a new composition
-                    var compName = "@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@";
+                    var compName = "${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}";
                     var compWidth = importedFootage.width;
                     var compHeight = importedFootage.height;
                     var compFrameRate = importedFootage.frameRate;
                     var compDuration = importedFootage.duration;
-                    var compStartFrame = @@SHOT_SOURCE_VERSION_START_FRAME@@;
+                    var compStartFrame = ${SHOT_SOURCE_VERSION_START_FRAME};
                     var newComp = app.project.items.addComp(compName, compWidth, compHeight, 1, compDuration, compFrameRate);
                     newComp.displayStartFrame = compStartFrame;
 
@@ -132,7 +132,7 @@
                     var footageLayer = newComp.layers.add(importedFootage);
 
                     // Set the target directory for the render output (including the subfolder)
-                    var targetDirectory = new Folder("@@SHOT_SOURCES_DIR@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@");
+                    var targetDirectory = new Folder("${SHOT_SOURCES_DIR}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}");
 
                     // Check if the target directory exists, and create it if it doesn't
                     if (!targetDirectory.exists) {
@@ -143,11 +143,11 @@
                     var renderQueueItem = app.project.renderQueue.items.add(newComp);
 
                     // Set render output settings
-                    renderQueueItem.outputModule(1).file = new File("@@SHOT_SOURCES_DIR@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@/@@SHOT_SOURCE_DIR@@_@@APP_NAME@@_@@TASK_TYPE@@_@@VERSION_NAME@@.[########].exr");
+                    renderQueueItem.outputModule(1).file = new File("${SHOT_SOURCES_DIR}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}/${SHOT_SOURCE_DIR}_${APP_NAME}_${TASK_TYPE}_${VERSION_NAME}.[########].exr");
                     renderQueueItem.outputModule(1).applyTemplate("OpenEXR-PIZ");
 
                     // Save the After Effects project
-                    app.project.save(new File("@@SOURCE_SCRIPTS_APP_TASK_FILE_PATH@@"));
+                    app.project.save(new File("${SOURCE_SCRIPTS_APP_TASK_FILE_PATH}"));
                 }} catch (error) {
                 }
             }}
@@ -164,11 +164,11 @@
                     processFolder(files[index]); // recursion
                 }
             }
-        }}
+        }
 
         // Recursively examine the source folder.
         processFolder(new Folder(source_folder));
     }
 
     SmartImport();
-}}
+}
